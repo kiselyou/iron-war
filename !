@@ -1,0 +1,6 @@
+<VirtualHost *:80>
+    ServerAdmin admin@example.com
+    ServerName iron-war
+    ServerAlias www.iw
+    DocumentRoot /var/www/iron-war
+</VirtualHost>
