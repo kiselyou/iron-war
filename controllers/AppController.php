@@ -12,9 +12,8 @@ class AppController extends Controller
 	 */
 	public function actionIndex()
 	{
-		var_dump('==================================================');
 		return $this->render('index', [
-			'test' => 'asdasda'
+			'test' => 'Страница пользователя'
 		]);
 	}
 }

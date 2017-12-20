@@ -1,10 +1,12 @@
 <?php
 
+$modules = require __DIR__ . '/modules.php';
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+	'layout' => 'app',
 	'defaultRoute' => 'app/index',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -52,6 +54,7 @@ $config = [
         ]
     ],
     'params' => $params,
+	'modules' => $modules
 ];
 
 if (YII_ENV_DEV) {
