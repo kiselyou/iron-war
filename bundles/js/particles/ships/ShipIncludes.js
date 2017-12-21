@@ -7,7 +7,7 @@ class ShipIncludes extends Includes {
 	constructor() {
 		super();
 		
-		this._includes = [
+		this.includes = [
 			new ShipExplorerI(),
 			new ShipExplorerII(),
 			new ShipExplorerIII()

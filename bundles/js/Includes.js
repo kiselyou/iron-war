@@ -4,9 +4,8 @@ class Includes {
 		/**
 		 *
 		 * @type {Array.<(Object|Particle)>}
-		 * @private
 		 */
-		this._includes = [];
+		this.includes = [];
 	}
 	
 	/**
@@ -16,7 +15,7 @@ class Includes {
 	 */
 	getKeyAndName() {
 		let data = {};
-		for (let element of this._includes) {
+		for (let element of this.includes) {
 			data[element.key] = element.name;
 		}
 		return data;
@@ -28,7 +27,7 @@ class Includes {
 	 * @returns {Array.<(Object|Particle)>}
 	 */
 	getAll() {
-		return this._includes;
+		return this.includes;
 	};
 	
 	/**
@@ -38,7 +37,7 @@ class Includes {
 	 * @returns {?Object}
 	 */
 	get(key) {
-		let element = this._includes.find((el) => {
+		let element = this.includes.find((el) => {
 			return el.key === key;
 		});
 		return element ? element : null;

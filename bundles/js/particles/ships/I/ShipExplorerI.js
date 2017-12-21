@@ -1,6 +1,7 @@
 import Ship from './../Ship';
+import Engine from "../../engine/Engine";
+import EngineIncludes from './../../engine/EngineIncludes';
 import ParticleClassI from './../../../classes/ParticleClassI';
-import EngineIM20 from './../../engine/I/EngineIM20';
 
 class ShipExplorerI extends Ship {
 	constructor() {
@@ -14,9 +15,15 @@ class ShipExplorerI extends Ship {
 		
 		/**
 		 *
+		 * @type {EngineIncludes}
+		 */
+		let engine = new EngineIncludes();
+		
+		/**
+		 *
 		 * @type {(EngineIM20|Engine)}
 		 */
-		this.engine = new EngineIM20();
+		this.engine = engine.get(Engine.I_M20);
 	}
 }
 

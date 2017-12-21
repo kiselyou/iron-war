@@ -7,7 +7,7 @@ class ParticleClassIncludes extends Includes {
 	constructor() {
 		super();
 		
-		this._includes = [
+		this.includes = [
 			new ParticleClassI(),
 			new ParticleClassII(),
 			new ParticleClassIII()
