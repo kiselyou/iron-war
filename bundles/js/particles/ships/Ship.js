@@ -21,8 +21,8 @@ class Ship extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static I_EXPLORER() {
-		return 'I_EXPLORER';
+	static I_EXPLORER_KEY() {
+		return 'I_EXPLORER_KEY';
 	}
 	
 	/**
@@ -30,8 +30,8 @@ class Ship extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static II_EXPLORER() {
-		return 'II_EXPLORER';
+	static II_EXPLORER_KEY() {
+		return 'II_EXPLORER_KEY';
 	}
 	
 	/**
@@ -39,8 +39,8 @@ class Ship extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static III_EXPLORER() {
-		return 'III_EXPLORER';
+	static III_EXPLORER_KEY() {
+		return 'III_EXPLORER_KEY';
 	}
 }
 

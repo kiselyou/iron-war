@@ -13,7 +13,7 @@ class Player extends User {
          *
          * @type {?Ship}
          */
-        this.ship = ships.get(Ship.I_EXPLORER);
+        this.ship = ships.get(Ship.I_EXPLORER_KEY);
     }
 }
 

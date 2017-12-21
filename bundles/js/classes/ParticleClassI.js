@@ -2,7 +2,7 @@ import ParticleClass from './ParticleClass';
 
 class ParticleClassI extends ParticleClass {
     constructor() {
-        super('ParticleClassI', ParticleClass.I_CLASS);
+        super('ParticleClassI', ParticleClass.I_CLASS_KEY);
 	
 	    /**
          *

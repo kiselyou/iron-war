@@ -15,7 +15,7 @@ class ParticleClass extends Particle {
      * @returns {number}
      * @constructor
      */
-    static I_CLASS() {
+    static I_CLASS_KEY() {
         return 1;
     };
 
@@ -24,7 +24,7 @@ class ParticleClass extends Particle {
      * @returns {number}
      * @constructor
      */
-    static II_CLASS() {
+    static II_CLASS_KEY() {
         return 2;
     }
 
@@ -33,7 +33,7 @@ class ParticleClass extends Particle {
      * @returns {number}
      * @constructor
      */
-    static III_CLASS() {
+    static III_CLASS_KEY() {
         return 3;
     }
 }

@@ -3,11 +3,11 @@ import ParticleClassIII from "../../../classes/ParticleClassIII";
 
 class EngineIIIM100 extends Engine {
     constructor() {
-	    super('EngineIIIM100', Engine.III_M100);
+	    super('EngineIIIM100', Engine.III_M100_KEY);
 	
 	    /**
 	     *
-	     * @type {(ParticleClassIII|ParticleClass)}
+	     * @type {ParticleClassIII}
 	     */
 	    this.particleClass = new ParticleClassIII();
     }

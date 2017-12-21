@@ -33,8 +33,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static I_M20() {
-        return 'I_M20';
+	static I_M20_KEY() {
+        return 'I_M20_KEY';
     }
 	
 	/**
@@ -42,8 +42,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static II_M20() {
-		return 'II_M20';
+	static II_M20_KEY() {
+		return 'II_M20_KEY';
 	}
 	
 	/**
@@ -51,8 +51,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static III_M20() {
-		return 'III_M20';
+	static III_M20_KEY() {
+		return 'III_M20_KEY';
 	}
 	
 	/**
@@ -60,8 +60,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static I_M50() {
-        return 'I_M50';
+	static I_M50_KEY() {
+        return 'I_M50_KEY';
     }
 	
 	/**
@@ -69,8 +69,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static II_M50() {
-		return 'II_M50';
+	static II_M50_KEY() {
+		return 'II_M50_KEY';
 	}
 	
 	/**
@@ -78,8 +78,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static III_M50() {
-		return 'III_M50';
+	static III_M50_KEY() {
+		return 'III_M50_KEY';
 	}
 	
 	/**
@@ -87,8 +87,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static I_M100() {
-		return 'I_M100';
+	static I_M100_KEY() {
+		return 'I_M100_KEY';
 	}
 	
 	/**
@@ -96,8 +96,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static II_M100() {
-		return 'II_M100';
+	static II_M100_KEY() {
+		return 'II_M100_KEY';
 	}
 	
 	/**
@@ -105,8 +105,8 @@ class Engine extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static III_M100() {
-		return 'III_M100';
+	static III_M100_KEY() {
+		return 'III_M100_KEY';
 	}
 }
 

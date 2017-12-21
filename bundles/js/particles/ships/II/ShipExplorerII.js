@@ -4,17 +4,17 @@ import EngineIIM20 from './../../engine/II/EngineIIM20';
 
 class ShipExplorerII extends Ship {
 	constructor() {
-		super('ShipExplorerII', Ship.II_EXPLORER);
+		super('ShipExplorerII', Ship.II_EXPLORER_KEY);
 		
 		/**
 		 *
-		 * @type {ParticleClassII|ParticleClass}
+		 * @type {ParticleClass}
 		 */
 		this.particleClass = new ParticleClassII();
 		
 		/**
 		 *
-		 * @type {(EngineIIM20|Engine)}
+		 * @type {Engine}
 		 */
 		this.engine = new EngineIIM20();
 	}
