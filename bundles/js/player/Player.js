@@ -1,19 +1,17 @@
 import User from './User';
 import Ship from './../particles/ships/Ship';
-import ShipIncludes from './../particles/ships/ShipIncludes';
+import ShipExplorerI from './../particles/ships/I/ShipExplorerI';
 
 class Player extends User {
 
     constructor() {
         super();
-
-        let ships = new ShipIncludes();
         
         /**
          *
          * @type {?Ship}
          */
-        this.ship = ships.get(Ship.I_EXPLORER_KEY);
+        this.ship = new ShipExplorerI();
     }
 }
 
