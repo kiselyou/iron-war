@@ -15,11 +15,11 @@ class Includes {
 	 * @returns {{(string|number): string}}
 	 */
 	getKeyAndName() {
-		let arr = {};
+		let data = {};
 		for (let element of this._includes) {
-			arr[element.key] = element.name;
+			data[element.key] = element.name;
 		}
-		return arr;
+		return data;
 	}
 	
 	/**
