@@ -1,3 +1,4 @@
+import ParticleError from './ParticleError';
 
 class Particle {
 	/**
@@ -47,6 +48,52 @@ class Particle {
 		 * @type {?ParticleClass}
 		 */
 		this.particleClass = null;
+	}
+	
+	/**
+	 *
+	 * @returns {Particle}
+	 */
+	clone() {
+		return Object.assign(Object.create(this), this);
+	}
+	
+	/**
+	 * Data to JSON
+	 *
+	 * @returns {string}
+	 */
+	toJson() {
+		return JSON.stringify(this);
+	}
+	
+	/**
+	 * Set data from JSON
+	 *
+	 * @param {string} str
+	 * @param {boolean} [strict]
+	 * @returns {Particle}
+	 */
+	fromJson(str, strict = true) {
+		try {
+			let data = JSON.parse(str);
+			if (data['type'] !== this.type && strict) {
+				new ParticleError('You tried to set not correct object');
+			}
+			
+			for (let property in data) {
+				if (data.hasOwnProperty(property)) {
+					if (this.hasOwnProperty(property)) {
+						this[property] = data[property];
+					} else if (strict) {
+						console.warn('Property "' + property + '" does not exists in the "' + this.type + '"');
+					}
+				}
+			}
+		} catch (e) {
+			console.log(e);
+		}
+		return this;
 	}
 }
 
