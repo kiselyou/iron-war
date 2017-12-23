@@ -48,9 +48,16 @@ class Particle {
 		 * @type {?ParticleClass}
 		 */
 		this.particleClass = null;
+		
+		/**
+		 *
+		 * @type {Array.<Particle>}
+		 */
+		this.children = [];
 	}
 	
 	/**
+	 * Clone Particle
 	 *
 	 * @returns {Particle}
 	 */
@@ -84,7 +91,14 @@ class Particle {
 			for (let property in data) {
 				if (data.hasOwnProperty(property)) {
 					if (this.hasOwnProperty(property)) {
-						this[property] = data[property];
+						switch (property) {
+							case 'children':
+								
+								break;
+							default:
+								this[property] = data[property];
+								break;
+						}
 					} else if (strict) {
 						console.warn('Property "' + property + '" does not exists in the "' + this.type + '"');
 					}
