@@ -1,376 +1,78 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-class Includes {
-	constructor() {
-		/**
-		 *
-		 * @type {Array.<(Object|Particle)>}
-		 */
-		this.includes = [];
-	}
-	
-	/**
-	 * Get list of elements {Particle.key: Particle.name}
-	 *
-	 * @returns {{(string|number): string}}
-	 */
-	getKeyAndName() {
-		let data = {};
-		for (let element of this.includes) {
-			data[element.key] = element.name;
-		}
-		return data;
-	}
-	
-	/**
-	 * Get list classes
-	 *
-	 * @returns {Array.<(Object|Particle)>}
-	 */
-	getAll() {
-		return this.includes;
-	};
-	
-	/**
-	 * Get specific object
-	 *
-	 * @param {(number|string)} key
-	 * @returns {?Object}
-	 */
-	get(key) {
-		let element = this.includes.find((el) => {
-			return el.key === key;
-		});
-		return element ? element : null;
-	}
-}
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(6);
 
-export default Includes;
-import ParticleError from './ParticleError';
 
-class Particle {
-	/**
-	 *
-	 * @param {string} type
-	 * @param {(string|number)} key
-	 */
-	constructor(type, key) {
-		/**
-		 *
-		 * @type {string}
-		 */
-		this.id = '';
-		
-		/**
-		 *
-		 * @type {string|number}
-		 */
-		this.key = key;
-		
-		/**
-		 *
-		 * @type {string}
-		 */
-		this.type = type;
-		
-		/**
-		 *
-		 * @type {?string}
-		 */
-		this.name = null;
-		
-		/**
-		 *
-		 * @type {?string}
-		 */
-		this.label = null;
-		
-		/**
-		 *
-		 * @type {?string}
-		 */
-		this.description = null;
-		
-		/**
-		 *
-		 * @type {?ParticleClass}
-		 */
-		this.particleClass = null;
-		
-		/**
-		 *
-		 * @type {Array.<Particle>}
-		 */
-		this.children = [];
-	}
-	
-	/**
-	 * Clone Particle
-	 *
-	 * @returns {Particle}
-	 */
-	clone() {
-		return Object.assign(Object.create(this), this);
-	}
-	
-	/**
-	 * Data to JSON
-	 *
-	 * @returns {string}
-	 */
-	toJson() {
-		return JSON.stringify(this);
-	}
-	
-	/**
-	 * Set data from JSON
-	 *
-	 * @param {string} str
-	 * @param {boolean} [strict]
-	 * @returns {Particle}
-	 */
-	fromJson(str, strict = true) {
-		try {
-			let data = JSON.parse(str);
-			if (data['type'] !== this.type && strict) {
-				new ParticleError('You tried to set not correct object');
-			}
-			
-			for (let property in data) {
-				if (data.hasOwnProperty(property)) {
-					if (this.hasOwnProperty(property)) {
-						switch (property) {
-							case 'children':
-								
-								break;
-							default:
-								this[property] = data[property];
-								break;
-						}
-					} else if (strict) {
-						console.warn('Property "' + property + '" does not exists in the "' + this.type + '"');
-					}
-				}
-			}
-		} catch (e) {
-			console.log(e);
-		}
-		return this;
-	}
-}
-
-export default Particle;
-
-class ParticleError extends Error {
-	/**
-	 *
-	 * @param {string} msg
-	 * @param {?(string|number)} [id]
-	 * @param {boolean} [strict]
-	 */
-	constructor(msg, id = null, strict = true) {
-		super(msg, id);
-		
-		if (strict) {
-			throw this;
-		}
-	}
-}
-
-export default ParticleError;
-import Particle from './../Particle';
-
-class ParticleClass extends Particle {
-    /**
-     *
-     * @param {string} type
-     * @param {string|number} key
-     */
-    constructor(type, key) {
-        super(type, key);
-    }
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static I_CLASS_KEY() {
-        return 1;
-    };
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static II_CLASS_KEY() {
-        return 2;
-    }
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static III_CLASS_KEY() {
-        return 3;
-    }
-}
-
-export default ParticleClass;
-import ParticleClass from './ParticleClass';
-
-class ParticleClassI extends ParticleClass {
-    constructor() {
-        super('ParticleClassI', ParticleClass.I_CLASS_KEY);
-	
-	    /**
-         *
-	     * @type {string}
-	     */
-	    this.name = 'I';
-    }
-}
-
-export default ParticleClassI;
-import ParticleClass from './ParticleClass';
-
-class ParticleClassII extends ParticleClass {
-    constructor() {
-	    super('ParticleClassII', ParticleClass.II_CLASS_KEY);
-	
-	    /**
-         *
-	     * @type {string}
-	     */
-	    this.name = 'II';
-    }
-}
-
-export default ParticleClassII;
-import ParticleClass from './ParticleClass';
-
-class ParticleClassIII extends ParticleClass {
-    constructor() {
-	    super('ParticleClassIII', ParticleClass.III_CLASS_KEY);
-	    
-	    this.name = 'III';
-    }
-}
-
-export default ParticleClassIII;
-import Includes from './../Includes';
-import ParticleClassI from './ParticleClassI';
-import ParticleClassII from './ParticleClassII';
-import ParticleClassIII from './ParticleClassIII';
-
-class ParticleClassIncludes extends Includes {
-	constructor() {
-		super();
-		
-		this.includes = [
-			new ParticleClassI(),
-			new ParticleClassII(),
-			new ParticleClassIII()
-		];
-	};
-}
-
-export default ParticleClassIncludes;
-import User from './User';
-import Ship from './../particles/ships/Ship';
-import ShipExplorerI from './../particles/ships/I/ShipExplorerI';
-
-class Player extends User {
-
-    constructor() {
-        super();
-        
-        /**
-         *
-         * @type {?Ship}
-         */
-        this.ship = new ShipExplorerI();
-    }
-}
-
-export default Player;
-
-class User {
-    constructor() {
-        
-    }
-}
-
-export default User;
-import Particle from './../../Particle';
-
-class Ship extends Particle {
-	/**
-	 *
-	 * @param {string} type
-	 * @param {(string|number)} key
-	 */
-	constructor(type, key) {
-		super(type, key);
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = null;
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static I_EXPLORER_KEY() {
-		return 'I_EXPLORER_KEY';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static II_EXPLORER_KEY() {
-		return 'II_EXPLORER_KEY';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static III_EXPLORER_KEY() {
-		return 'III_EXPLORER_KEY';
-	}
-}
-
-export default Ship;
-import Includes from './../../Includes';
-import ShipExplorerI from './I/ShipExplorerI';
-import ShipExplorerII from './II/ShipExplorerII';
-import ShipExplorerIII from './III/ShipExplorerIII';
-
-class ShipIncludes extends Includes {
-	constructor() {
-		super();
-		
-		this.includes = [
-			new ShipExplorerI(),
-			new ShipExplorerII(),
-			new ShipExplorerIII()
-		];
-	}
-}
-
-export default ShipIncludes;
-import Particle from './../../Particle';
-
-class Engine extends Particle {
+class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["default"] {
 	/**
 	 *
 	 * @param {string} type
@@ -480,248 +182,882 @@ class Engine extends Particle {
 	}
 }
 
-export default Engine;
-import Includes from './../../Includes';
-import EngineIM20 from "./I/EngineIM20";
-import EngineIM50 from "./I/EngineIM50";
-import EngineIM100 from "./I/EngineIM100";
-import EngineIIM20 from "./II/EngineIIM20";
-import EngineIIM50 from "./II/EngineIIM50";
-import EngineIIM100 from "./II/EngineIIM100";
-import EngineIIIM20 from "./III/EngineIIIM20";
-import EngineIIIM50 from "./III/EngineIIIM50";
-import EngineIIIM100 from "./III/EngineIIIM100";
+/* harmony default export */ __webpack_exports__["default"] = (Engine);
 
-class EngineIncludes extends Includes {
-	constructor() {
-		super();
-		
-		this.includes = [
-			new EngineIM20(),
-			new EngineIM50(),
-			new EngineIM100(),
-			new EngineIIM20(),
-			new EngineIIM50(),
-			new EngineIIM100(),
-			new EngineIIIM20(),
-			new EngineIIIM50(),
-			new EngineIIIM100(),
-		];
-	}
-}
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-export default EngineIncludes;
-import Ship from './../Ship';
-import EngineIM20 from './../../engine/I/EngineIM20';
-import ParticleClassI from './../../../classes/ParticleClassI';
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(7);
 
-class ShipExplorerI extends Ship {
-	constructor() {
-		super('ShipExplorerI', Ship.I_EXPLORER_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClass}
-		 */
-		this.particleClass = new ParticleClassI();
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = new EngineIM20();
-	}
-}
 
-export default ShipExplorerI;
-import Ship from './../Ship';
-import ParticleClassII from './../../../classes/ParticleClassII';
-import EngineIIM20 from './../../engine/II/EngineIIM20';
-
-class ShipExplorerII extends Ship {
-	constructor() {
-		super('ShipExplorerII', Ship.II_EXPLORER_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClass}
-		 */
-		this.particleClass = new ParticleClassII();
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = new EngineIIM20();
-	}
-}
-
-export default ShipExplorerII;
-import Ship from './../Ship';
-import ParticleClassIII from './../../../classes/ParticleClassIII';
-import EngineIIIM20 from './../../engine/III/EngineIIIM20';
-
-class ShipExplorerIII extends Ship {
-	constructor() {
-		super('ShipExplorerIII', Ship.III_EXPLORER_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClass}
-		 */
-		this.particleClass = new ParticleClassIII();
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = new EngineIIIM20();
-	}
-}
-
-export default ShipExplorerIII;
-import Engine from '../Engine';
-import ParticleClassII from "../../../classes/ParticleClassII";
-
-class EngineIIM100 extends Engine {
-	constructor() {
-		super('EngineIIM100', Engine.II_M100_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClassII}
-		 */
-		this.particleClass = new ParticleClassII();
-	}
-}
-
-export default EngineIIM100;
-import Engine from '../Engine';
-import ParticleClassII from "../../../classes/ParticleClassII";
-
-class EngineIIM20 extends Engine {
-	constructor() {
-		super('EngineIIM20', Engine.II_M20_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClassII}
-		 */
-		this.particleClass = new ParticleClassII();
-	}
-}
-
-export default EngineIIM20;
-import Engine from '../Engine';
-import ParticleClassII from "../../../classes/ParticleClassII";
-
-class EngineIIM50 extends Engine {
-	constructor() {
-		super('EngineIIM50', Engine.II_M50_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClassII}
-		 */
-		this.particleClass = new ParticleClassII();
-	}
-}
-
-export default EngineIIM50;
-import Engine from '../Engine';
-import ParticleClassI from "../../../classes/ParticleClassI";
-
-class EngineIM100 extends Engine {
+class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["default"] {
     constructor() {
-        super('EngineIM100', Engine.I_M100_KEY);
+        super('ParticleClassI', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["default"].I_CLASS_KEY);
 	
 	    /**
-	     *
-	     * @type {ParticleClassI}
+         *
+	     * @type {string}
 	     */
-	    this.particleClass = new ParticleClassI()
+	    this.name = 'I';
     }
 }
 
-export default EngineIM100;
-import Engine from '../Engine';
-import ParticleClassI from "../../../classes/ParticleClassI";
+/* harmony default export */ __webpack_exports__["default"] = (ParticleClassI);
 
-class EngineIM20 extends Engine {
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(7);
+
+
+class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["default"] {
     constructor() {
-        super('EngineIM20', Engine.I_M20_KEY);
+	    super('ParticleClassII', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["default"].II_CLASS_KEY);
+	
+	    /**
+         *
+	     * @type {string}
+	     */
+	    this.name = 'II';
+    }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ParticleClassII);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(7);
+
+
+class ParticleClassIII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["default"] {
+    constructor() {
+	    super('ParticleClassIII', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["default"].III_CLASS_KEY);
+	    
+	    this.name = 'III';
+    }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ParticleClassIII);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(6);
+
+
+class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["default"] {
+	/**
+	 *
+	 * @param {string} type
+	 * @param {(string|number)} key
+	 */
+	constructor(type, key) {
+		super(type, key);
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = null;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static I_EXPLORER_KEY() {
+		return 'I_EXPLORER_KEY';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static II_EXPLORER_KEY() {
+		return 'II_EXPLORER_KEY';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static III_EXPLORER_KEY() {
+		return 'III_EXPLORER_KEY';
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Ship);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+class Includes {
+	constructor() {
+		/**
+		 *
+		 * @type {Array.<(Object|Particle)>}
+		 */
+		this.includes = [];
+	}
+	
+	/**
+	 * Get list of elements {Particle.key: Particle.name}
+	 *
+	 * @returns {{(string|number): string}}
+	 */
+	getKeyAndName() {
+		let data = {};
+		for (let element of this.includes) {
+			data[element.key] = element.name;
+		}
+		return data;
+	}
+	
+	/**
+	 * Get list classes
+	 *
+	 * @returns {Array.<(Object|Particle)>}
+	 */
+	getAll() {
+		return this.includes;
+	};
+	
+	/**
+	 * Get specific object
+	 *
+	 * @param {(number|string)} key
+	 * @returns {?Object}
+	 */
+	get(key) {
+		let element = this.includes.find((el) => {
+			return el.key === key;
+		});
+		return element ? element : null;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Includes);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(12);
+
+
+class Particle {
+	/**
+	 *
+	 * @param {string} type
+	 * @param {(string|number)} key
+	 */
+	constructor(type, key) {
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.id = '';
+		
+		/**
+		 *
+		 * @type {string|number}
+		 */
+		this.key = key;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.type = type;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.name = null;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.label = null;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.description = null;
+		
+		/**
+		 *
+		 * @type {?ParticleClass}
+		 */
+		this.particleClass = null;
+		
+		/**
+		 *
+		 * @type {Array.<Particle>}
+		 */
+		this.children = [];
+	}
+	
+	/**
+	 * Clone Particle
+	 *
+	 * @returns {Particle}
+	 */
+	clone() {
+		return Object.assign(Object.create(this), this);
+	}
+	
+	/**
+	 * Data to JSON
+	 *
+	 * @returns {string}
+	 */
+	toJson() {
+		return JSON.stringify(this);
+	}
+	
+	/**
+	 * Set data from JSON
+	 *
+	 * @param {string} str
+	 * @param {boolean} [strict]
+	 * @returns {Particle}
+	 */
+	fromJson(str, strict = true) {
+		try {
+			let data = JSON.parse(str);
+			if (data['type'] !== this.type && strict) {
+				new __WEBPACK_IMPORTED_MODULE_0__ParticleError__["default"]('You tried to set not correct object');
+			}
+			
+			for (let property in data) {
+				if (data.hasOwnProperty(property)) {
+					if (this.hasOwnProperty(property)) {
+						switch (property) {
+							case 'children':
+								
+								break;
+							default:
+								this[property] = data[property];
+								break;
+						}
+					} else if (strict) {
+						console.warn('Property "' + property + '" does not exists in the "' + this.type + '"');
+					}
+				}
+			}
+		} catch (e) {
+			console.log(e);
+		}
+		return this;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Particle);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(6);
+
+
+class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["default"] {
+    /**
+     *
+     * @param {string} type
+     * @param {string|number} key
+     */
+    constructor(type, key) {
+        super(type, key);
+    }
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static I_CLASS_KEY() {
+        return 1;
+    };
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static II_CLASS_KEY() {
+        return 2;
+    }
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static III_CLASS_KEY() {
+        return 3;
+    }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ParticleClass);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(1);
+
+
+
+
+class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["default"] {
+	constructor() {
+		super('ShipExplorerI', __WEBPACK_IMPORTED_MODULE_0__Ship__["default"].I_EXPLORER_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__["default"]();
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = new __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__["default"]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ShipExplorerI);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(1);
+
+
+
+class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
+    constructor() {
+        super('EngineIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].I_M20_KEY);
 	
 	    /**
          *
 	     * @type {ParticleClassI}
 	     */
-	    this.particleClass = new ParticleClassI();
+	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["default"]();
     }
 }
 
-export default EngineIM20;
-import Engine from '../Engine';
-import ParticleClassI from "../../../classes/ParticleClassI";
+/* harmony default export */ __webpack_exports__["default"] = (EngineIM20);
 
-class EngineIM50 extends Engine {
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(2);
+
+
+
+class EngineIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
+	constructor() {
+		super('EngineIIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].II_M20_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["default"]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (EngineIIM20);
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(3);
+
+
+
+class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
+	constructor() {
+		super('EngineIIIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].III_M20_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassIII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["default"]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (EngineIIIM20);
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+class ParticleError extends Error {
+	/**
+	 *
+	 * @param {string} msg
+	 * @param {?(string|number)} [id]
+	 * @param {boolean} [strict]
+	 */
+	constructor(msg, id = null, strict = true) {
+		super(msg, id);
+		
+		if (strict) {
+			throw this;
+		}
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ParticleError);
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+class User {
     constructor() {
-        super('EngineIM50', Engine.I_M50_KEY);
+        
+    }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (User);
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(1);
+
+
+
+class EngineIM50 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
+    constructor() {
+        super('EngineIM50', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].I_M50_KEY);
 	
 	    /**
 	     *
 	     * @type {ParticleClassI}
 	     */
-	    this.particleClass = new ParticleClassI()
+	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["default"]()
     }
 }
 
-export default EngineIM50;
-import Engine from '../Engine';
-import ParticleClassIII from "../../../classes/ParticleClassIII";
+/* harmony default export */ __webpack_exports__["default"] = (EngineIM50);
 
-class EngineIIIM100 extends Engine {
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(1);
+
+
+
+class EngineIM100 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
     constructor() {
-	    super('EngineIIIM100', Engine.III_M100_KEY);
+        super('EngineIM100', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].I_M100_KEY);
+	
+	    /**
+	     *
+	     * @type {ParticleClassI}
+	     */
+	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["default"]()
+    }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (EngineIM100);
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(2);
+
+
+
+class EngineIIM50 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
+	constructor() {
+		super('EngineIIM50', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].II_M50_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["default"]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (EngineIIM50);
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(2);
+
+
+
+class EngineIIM100 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
+	constructor() {
+		super('EngineIIM100', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].II_M100_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["default"]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (EngineIIM100);
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(3);
+
+
+
+class EngineIIIM50 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
+	constructor() {
+		super('EngineIIIM50', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].III_M50_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassIII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["default"]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (EngineIIIM50);
+
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(3);
+
+
+
+class EngineIIIM100 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["default"] {
+    constructor() {
+	    super('EngineIIIM100', __WEBPACK_IMPORTED_MODULE_0__Engine__["default"].III_M100_KEY);
 	
 	    /**
 	     *
 	     * @type {ParticleClassIII}
 	     */
-	    this.particleClass = new ParticleClassIII();
+	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["default"]();
     }
 }
 
-export default EngineIIIM100;
-import Engine from '../Engine';
-import ParticleClassIII from "../../../classes/ParticleClassIII";
+/* harmony default export */ __webpack_exports__["default"] = (EngineIIIM100);
 
-class EngineIIIM20 extends Engine {
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(10);
+
+
+
+
+class ShipExplorerII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["default"] {
 	constructor() {
-		super('EngineIIIM20', Engine.III_M20_KEY);
+		super('ShipExplorerII', __WEBPACK_IMPORTED_MODULE_0__Ship__["default"].II_EXPLORER_KEY);
 		
 		/**
 		 *
-		 * @type {ParticleClassIII}
+		 * @type {ParticleClass}
 		 */
-		this.particleClass = new ParticleClassIII();
-	}
-}
-
-export default EngineIIIM20;
-import Engine from '../Engine';
-import ParticleClassIII from "../../../classes/ParticleClassIII";
-
-class EngineIIIM50 extends Engine {
-	constructor() {
-		super('EngineIIIM50', Engine.III_M50_KEY);
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["default"]();
 		
 		/**
 		 *
-		 * @type {ParticleClassIII}
+		 * @type {Engine}
 		 */
-		this.particleClass = new ParticleClassIII();
+		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__["default"]();
 	}
 }
 
-export default EngineIIIM50;
+/* harmony default export */ __webpack_exports__["default"] = (ShipExplorerII);
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(11);
+
+
+
+
+class ShipExplorerIII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["default"] {
+	constructor() {
+		super('ShipExplorerIII', __WEBPACK_IMPORTED_MODULE_0__Ship__["default"].III_EXPLORER_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["default"]();
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__["default"]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ShipExplorerIII);
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(5);
+__webpack_require__(6);
+__webpack_require__(12);
+__webpack_require__(7);
+__webpack_require__(1);
+__webpack_require__(2);
+__webpack_require__(3);
+__webpack_require__(23);
+__webpack_require__(24);
+__webpack_require__(13);
+__webpack_require__(0);
+__webpack_require__(25);
+__webpack_require__(4);
+__webpack_require__(26);
+__webpack_require__(17);
+__webpack_require__(10);
+__webpack_require__(16);
+__webpack_require__(19);
+__webpack_require__(11);
+__webpack_require__(18);
+__webpack_require__(20);
+__webpack_require__(15);
+__webpack_require__(9);
+__webpack_require__(14);
+__webpack_require__(8);
+module.exports = __webpack_require__(21);
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ParticleClassI__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ParticleClassII__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ParticleClassIII__ = __webpack_require__(3);
+
+
+
+
+
+class ParticleClassIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["default"] {
+	constructor() {
+		super();
+		
+		this.includes = [
+			new __WEBPACK_IMPORTED_MODULE_1__ParticleClassI__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_2__ParticleClassII__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_3__ParticleClassIII__["default"]()
+		];
+	};
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ParticleClassIncludes);
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_Ship__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__particles_ships_I_ShipExplorerI__ = __webpack_require__(8);
+
+
+
+
+class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["default"] {
+
+    constructor() {
+        super();
+        
+        /**
+         *
+         * @type {?Ship}
+         */
+        this.ship = new __WEBPACK_IMPORTED_MODULE_2__particles_ships_I_ShipExplorerI__["default"]();
+    }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Player);
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_EngineIM20__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__I_EngineIM50__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__I_EngineIM100__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__II_EngineIIM20__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__II_EngineIIM50__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__II_EngineIIM100__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__III_EngineIIIM20__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__III_EngineIIIM50__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__III_EngineIIIM100__ = __webpack_require__(19);
+
+
+
+
+
+
+
+
+
+
+
+class EngineIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["default"] {
+	constructor() {
+		super();
+		
+		this.includes = [
+			new __WEBPACK_IMPORTED_MODULE_1__I_EngineIM20__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_2__I_EngineIM50__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_3__I_EngineIM100__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_4__II_EngineIIM20__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_5__II_EngineIIM50__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_6__II_EngineIIM100__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_7__III_EngineIIIM20__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_8__III_EngineIIIM50__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_9__III_EngineIIIM100__["default"](),
+		];
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (EngineIncludes);
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(21);
+
+
+
+
+
+class ShipIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["default"] {
+	constructor() {
+		super();
+		
+		this.includes = [
+			new __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__["default"](),
+			new __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__["default"]()
+		];
+	}
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ShipIncludes);
+
+/***/ })
+/******/ ]);
 //# sourceMappingURL=maps/bundle.js.map

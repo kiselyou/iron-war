@@ -18,9 +18,6 @@ Thumbs.db
 # composer itself is not needed
 composer.phar
 
-# Mac DS_Store Files
-.DS_Store
-
 # phpunit itself is not needed
 phpunit.phar
 # local phpunit config
@@ -29,3 +26,4 @@ phpunit.phar
 tests/_output/*
 tests/_support/_generated
 /node_modules/
+/web/build/

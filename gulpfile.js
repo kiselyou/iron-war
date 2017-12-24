@@ -1,22 +1,48 @@
-let gulp = require('gulp');
-let concat = require('gulp-concat');
-let minify = require('gulp-minify');
-let sourcemaps = require('gulp-sourcemaps');
+const gulp = require('gulp');
+const minify = require('gulp-minify');
+const sourcemaps = require('gulp-sourcemaps');
+const webpack = require('webpack-stream');
 
-gulp.task('prepare:js', () => {
-	gulp.src('bundles/js/**/*.js')
-		.pipe(concat('bundle.js'))
-		.pipe(sourcemaps.init())
-		.pipe(minify())
-		.pipe(sourcemaps.write('maps'))
-		.pipe(gulp.dest('web/build'));
+const BUILD_DIR = 'web/build';
+let isProd = false;
+
+gulp.task('build:js', () => {
+	let build = gulp.src('bundles/js/**/*.js')
+		.pipe(webpack({
+			output: {
+				filename: 'bundle.js',
+			},
+			module: {
+				rules: [
+					{
+						// exclude: /(node_modules|bower_components|Particle)/,
+						exclude: /.js/,
+						use: {
+							loader: 'babel-loader',
+							options: {
+								presets: ['env']
+							}
+						}
+					}
+				]
+			}
+		}));
+	
+	if (isProd) {
+		return build
+			.pipe(sourcemaps.init({ loadMaps: true }))
+			.pipe(minify())
+			.pipe(sourcemaps.write('maps'))
+			.pipe(gulp.dest(BUILD_DIR));
+	}
+	
+	return build.pipe(gulp.dest(BUILD_DIR));
 });
 
-gulp.task('prepare:less', () => {
-	console.log('less');
+gulp.task('build:prod', () => {
+	isProd = true;
+	gulp.run('build:js');
 });
-
-gulp.task('prepare', ['prepare:js', 'prepare:less']);
 
 gulp.task('watch', function() {
 	gulp.watch(
@@ -25,14 +51,7 @@ gulp.task('watch', function() {
 			'bundles/ejs/**/*.ejs'
 		],
 		[
-			'prepare:js'
-		]
-	);
-	
-	gulp.watch(
-		'bundles/less/**/*.less',
-		[
-			'prepare:less'
+			'build:js'
 		]
 	);
 });
