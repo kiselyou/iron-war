@@ -60,154 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(8);
-
-
-class Particle {
-	/**
-	 *
-	 * @param {string} type
-	 * @param {(string|number)} key
-	 */
-	constructor(type, key) {
-		/**
-		 *
-		 * @type {string}
-		 */
-		this.id = '';
-		
-		/**
-		 *
-		 * @type {string|number}
-		 */
-		this.key = key;
-		
-		/**
-		 *
-		 * @type {string}
-		 */
-		this.type = type;
-		
-		/**
-		 *
-		 * @type {?string}
-		 */
-		this.name = null;
-		
-		/**
-		 *
-		 * @type {?string}
-		 */
-		this.label = null;
-		
-		/**
-		 *
-		 * @type {?string}
-		 */
-		this.description = null;
-		
-		/**
-		 *
-		 * @type {?ParticleClass}
-		 */
-		this.particleClass = null;
-		
-		/**
-		 *
-		 * @type {Array.<Particle>}
-		 */
-		this.children = [];
-	}
-	
-	/**
-	 * Clone Particle
-	 *
-	 * @returns {Particle}
-	 */
-	clone() {
-		return Object.assign(Object.create(this), this);
-	}
-	
-	/**
-	 * Data to JSON
-	 *
-	 * @returns {string}
-	 */
-	toJson() {
-		return JSON.stringify(this);
-	}
-	
-	/**
-	 * Set data from JSON
-	 *
-	 * @param {string} str
-	 * @param {boolean} [strict]
-	 * @returns {Particle}
-	 */
-	fromJson(str, strict = true) {
-		try {
-			let data = JSON.parse(str);
-			if (data['type'] !== this.type && strict) {
-				new __WEBPACK_IMPORTED_MODULE_0__ParticleError__["a" /* default */]('You tried to set not correct object');
-			}
-			
-			for (let property in data) {
-				if (data.hasOwnProperty(property)) {
-					if (this.hasOwnProperty(property)) {
-						switch (property) {
-							case 'children':
-								
-								break;
-							default:
-								this[property] = data[property];
-								break;
-						}
-					} else if (strict) {
-						console.warn('Property "' + property + '" does not exists in the "' + this.type + '"');
-					}
-				}
-			}
-		} catch (e) {
-			console.log(e);
-		}
-		return this;
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Particle);
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(11);
-
-
-class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
-    constructor() {
-        super('ParticleClassI', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */].I_CLASS_KEY);
-	
-	    /**
-         *
-	     * @type {string}
-	     */
-	    this.name = 'I';
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ParticleClassI);
-
-/***/ }),
-/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46188,52 +46045,64 @@ function CanvasRenderer() {
 
 
 /***/ }),
-/* 3 */
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_player_Player__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_three__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__js_controls_FlyControls__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(2);
+
+
+const main = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */]('main-container-canvas');
+main
+	.init()
+	.onWindowResize()
+	.animate();
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FlyControls__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__ = __webpack_require__(4);
 
 
 
 
-
-let player = new __WEBPACK_IMPORTED_MODULE_0__js_player_Player__["a" /* default */]();
-
-
-
-
-
-
-
-class Main {
+class SceneControls {
 	/**
 	 *
 	 * @param {string} [containerID]
 	 */
 	constructor(containerID) {
+		const FAR = 25000;
+		
 		/**
 		 *
 		 * @type {WebGLRenderer}
 		 */
-		this.renderer = new __WEBPACK_IMPORTED_MODULE_1_three__["q" /* WebGLRenderer */]({ antialias: true, alpha: true });
+		this.renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* WebGLRenderer */]({
+			antialias: true,
+			alpha: true
+		});
 		
 		/**
 		 *
 		 * @type {Scene}
 		 */
-		this.scene = new __WEBPACK_IMPORTED_MODULE_1_three__["n" /* Scene */]();
-		this.scene.background = new __WEBPACK_IMPORTED_MODULE_1_three__["d" /* Color */]().setHSL(0.5, 0.5, 0.03);
-		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_1_three__["f" /* Fog */](this.scene.background, 5500, 25000);
+		this.scene = new __WEBPACK_IMPORTED_MODULE_0_three__["n" /* Scene */]();
+		this.scene.background = new __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Color */]().setHSL(0.7, 0.4, 0.03);
+		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Fog */](this.scene.background, 15000, FAR);
+		
 		
 		/**
 		 *
 		 * @type {PerspectiveCamera}
 		 */
-		this.camera = new __WEBPACK_IMPORTED_MODULE_1_three__["k" /* PerspectiveCamera */](40, Main.width / Main.height, 1, 35000);
+		this.camera = new __WEBPACK_IMPORTED_MODULE_0_three__["k" /* PerspectiveCamera */](40, SceneControls.width / SceneControls.height, 1, FAR);
 		this.camera.lookAt(this.scene.position);
 		
 		/**
@@ -46246,29 +46115,39 @@ class Main {
 			throw new Error('Cannot find container with ID: ' + containerID);
 		}
 		
-		let textureLoader = new __WEBPACK_IMPORTED_MODULE_1_three__["o" /* TextureLoader */]();
-		this.textureFlare0 = textureLoader.load( "textures/lensflare/lensflare0.png" );
-		this.textureFlare2 = textureLoader.load( "textures/lensflare/lensflare2.png" );
-		this.textureFlare3 = textureLoader.load( "textures/lensflare/lensflare3.png" );
+		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* TextureLoader */]();
+		this.textureFlare0 = textureLoader.load("textures/lensflare/lensflare0.png");
+		this.textureFlare3 = textureLoader.load("textures/lensflare/lensflare3.png");
 		
-		this.controls = new __WEBPACK_IMPORTED_MODULE_2__js_controls_FlyControls__["a" /* default */](this.camera, this.container);
+		/**
+		 *
+		 * @type {FlyControls}
+		 */
+		this.controls = new __WEBPACK_IMPORTED_MODULE_1__FlyControls__["a" /* default */](this.camera, this.container);
 		this.controls.movementSpeed = 2500;
-		this.controls.rollSpeed = Math.PI / 6;
+		this.controls.rollSpeed = Math.PI / 16;
 		this.controls.autoForward = false;
 		this.controls.dragToLook = false;
 		
+		/**
+		 *
+		 * @type {Clock}
+		 */
+		this.clock = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* Clock */]();
 		
-		this.clock = new __WEBPACK_IMPORTED_MODULE_1_three__["c" /* Clock */]();
-		
+		/**
+		 *
+		 * @type {SkyeBoxControls}
+		 */
+		this.skyBoxControls = new __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__["a" /* default */](this.scene);
 	}
 	
 	init() {
-		
 		let s = 250;
-		let cube = new __WEBPACK_IMPORTED_MODULE_1_three__["b" /* BoxGeometry */](s, s, s);
-		let material = new __WEBPACK_IMPORTED_MODULE_1_three__["j" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 3000; i ++) {
-			let mesh = new __WEBPACK_IMPORTED_MODULE_1_three__["i" /* Mesh */](cube, material);
+		let cube = new __WEBPACK_IMPORTED_MODULE_0_three__["b" /* BoxGeometry */](s, s, s);
+		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["j" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		for (let i = 0; i < 300; i ++) {
+			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["i" /* Mesh */](cube, material);
 			mesh.position.x = 18000 * (2.0 * Math.random() - 1.0);
 			mesh.position.y = 18000 * (2.0 * Math.random() - 1.0);
 			mesh.position.z = 18000 * (2.0 * Math.random() - 1.0);
@@ -46281,91 +46160,56 @@ class Main {
 		}
 		
 		// lights
-		let dirLight = new __WEBPACK_IMPORTED_MODULE_1_three__["e" /* DirectionalLight */](0xffffff, 0.05);
+		let dirLight = new __WEBPACK_IMPORTED_MODULE_0_three__["e" /* DirectionalLight */](0xffffff, 0.05);
 		dirLight.position.set(0, -1, 0).normalize();
 		this.scene.add(dirLight);
 		dirLight.color.setHSL(0.1, 0.7, 0.5);
 		
-		
-		
-		
-		
-		// this.addLight( 0.55, 0.9, 0.5, 5000, 0, -1000 );
-		this.addLight( 0.08, 0.8, 0.5,    0, 0, -1000 );
-		// this.addLight( 0.995, 0.5, 0.9, 5000, 5000, -1000 );
-		
-		
 		this.renderer.setPixelRatio(window.devicePixelRatio);
-		this.renderer.setSize(Main.width, Main.height);
+		this.renderer.setSize(SceneControls.width, SceneControls.height);
 		this.container.appendChild(this.renderer.domElement);
-		//
 		this.renderer.gammaInput = true;
 		this.renderer.gammaOutput = true;
-		
-		
-		
-		
-		window.addEventListener(
-			'resize',
-			() => {
-				this.onWindowResize();
-			},
-			false
-		);
 		return this;
 	}
 	
-	addLight( h, s, l, x, y, z ) {
-		let light = new __WEBPACK_IMPORTED_MODULE_1_three__["l" /* PointLight */]( 0xffffff, 1.5, 2000 );
-		light.color.setHSL( h, s, l );
-		light.position.set( x, y, z );
-		this.scene.add( light );
-		let flareColor = new __WEBPACK_IMPORTED_MODULE_1_three__["d" /* Color */]( 0xffffff );
-		flareColor.setHSL( h, s, l + 0.5 );
-		let lensFlare = new __WEBPACK_IMPORTED_MODULE_1_three__["g" /* LensFlare */](this.textureFlare0, 700, 0.0, __WEBPACK_IMPORTED_MODULE_1_three__["a" /* AdditiveBlending */], flareColor );
-		lensFlare.add(this.textureFlare2, 512, 0.0, __WEBPACK_IMPORTED_MODULE_1_three__["a" /* AdditiveBlending */] );
-		lensFlare.add(this.textureFlare2, 512, 0.0, __WEBPACK_IMPORTED_MODULE_1_three__["a" /* AdditiveBlending */] );
-		lensFlare.add(this.textureFlare2, 512, 0.0, __WEBPACK_IMPORTED_MODULE_1_three__["a" /* AdditiveBlending */] );
-		lensFlare.add(this.textureFlare3, 60, 0.6, __WEBPACK_IMPORTED_MODULE_1_three__["a" /* AdditiveBlending */] );
-		lensFlare.add(this.textureFlare3, 70, 0.7, __WEBPACK_IMPORTED_MODULE_1_three__["a" /* AdditiveBlending */] );
-		lensFlare.add(this.textureFlare3, 120, 0.9, __WEBPACK_IMPORTED_MODULE_1_three__["a" /* AdditiveBlending */] );
-		lensFlare.add(this.textureFlare3, 70, 1.0, __WEBPACK_IMPORTED_MODULE_1_three__["a" /* AdditiveBlending */] );
-		
-		lensFlare.customUpdateCallback = (object) => {
-			let f, fl = object.lensFlares.length;
-			let flare;
-			let vecX = -object.positionScreen.x * 2;
-			let vecY = -object.positionScreen.y * 2;
-			for( f = 0; f < fl; f++ ) {
-				flare = object.lensFlares[ f ];
-				flare.x = object.positionScreen.x + vecX * flare.distance;
-				flare.y = object.positionScreen.y + vecY * flare.distance;
-				flare.rotation = 0;
-			}
-			object.lensFlares[ 2 ].y += 0.025;
-			object.lensFlares[ 3 ].rotation = object.positionScreen.x * 0.5 + __WEBPACK_IMPORTED_MODULE_1_three__["h" /* Math */].degToRad( 45 );
-		};
-		
-		lensFlare.position.copy( light.position );
-		this.scene.add( lensFlare );
-	}
-	
-	
+	/**
+	 * @returns {void}
+	 */
 	animate() {
 		window.requestAnimationFrame(() => {
 			this.animate();
 		});
 		
 		let delta = this.clock.getDelta();
-		// this.controls.update(delta);
-		
+		this.controls.update(delta);
+		this.skyBoxControls.update(this.camera.position);
 		this.renderer.render(this.scene, this.camera);
 	}
 	
+	/**
+	 *
+	 * @returns {SceneControls}
+	 */
 	onWindowResize() {
-		this.camera.aspect = Main.width / Main.height;
-		this.camera.updateProjectionMatrix();
-		this.renderer.setSize(Main.width, Main.height);
+		window.addEventListener(
+			'resize',
+			() => {
+				this.camera.aspect = SceneControls.aspect;
+				this.camera.updateProjectionMatrix();
+				this.renderer.setSize(SceneControls.width, SceneControls.height);
+			},
+			false
+		);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 */
+	static get aspect() {
+		return SceneControls.width / SceneControls.height;
 	}
 	
 	/**
@@ -46385,359 +46229,14 @@ class Main {
 	};
 }
 
-const main = new Main('main-container-canvas');
-main
-	.init()
-	.animate();
-
+/* harmony default export */ __webpack_exports__["a"] = (SceneControls);
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_I_ShipExplorerI__ = __webpack_require__(6);
-
-
-
-class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
-
-    constructor() {
-        super();
-        
-        /**
-         *
-         * @type {?Ship}
-         */
-        this.ship = new __WEBPACK_IMPORTED_MODULE_1__particles_ships_I_ShipExplorerI__["a" /* default */]();
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Player);
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-class User {
-    constructor() {
-    
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (User);
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(1);
-
-
-
-
-class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */] {
-	constructor() {
-		super('ShipExplorerI', __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].I_EXPLORER_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClass}
-		 */
-		this.particleClass = new __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__["a" /* default */]();
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = new __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__["a" /* default */]();
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ShipExplorerI);
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(0);
-
-
-class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
-	/**
-	 *
-	 * @param {string} type
-	 * @param {(string|number)} key
-	 */
-	constructor(type, key) {
-		super(type, key);
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = null;
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static I_EXPLORER_KEY() {
-		return 'I_EXPLORER_KEY';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static II_EXPLORER_KEY() {
-		return 'II_EXPLORER_KEY';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static III_EXPLORER_KEY() {
-		return 'III_EXPLORER_KEY';
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Ship);
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-class ParticleError extends Error {
-	/**
-	 *
-	 * @param {string} msg
-	 * @param {?(string|number)} [id]
-	 * @param {boolean} [strict]
-	 */
-	constructor(msg, id = null, strict = true) {
-		super(msg, id);
-		
-		if (strict) {
-			throw this;
-		}
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ParticleError);
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(1);
-
-
-
-class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
-    constructor() {
-        super('EngineIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].I_M20_KEY);
-	
-	    /**
-         *
-	     * @type {ParticleClassI}
-	     */
-	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (EngineIM20);
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(0);
-
-
-class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
-	/**
-	 *
-	 * @param {string} type
-	 * @param {(string|number)} key
-	 */
-    constructor(type, key) {
-        super(type, key);
-		
-		/**
-         *
-		 * @type {number}
-		 */
-		this.speedMin = 0;
-		
-		/**
-         *
-		 * @type {number}
-		 */
-        this.speedMax = 0;
-		
-		/**
-         *
-		 * @type {number}
-		 */
-		this.speed = 0;
-    }
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static I_M20_KEY() {
-        return 'I_M20_KEY';
-    }
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static II_M20_KEY() {
-		return 'II_M20_KEY';
-	}
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static III_M20_KEY() {
-		return 'III_M20_KEY';
-	}
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static I_M50_KEY() {
-        return 'I_M50_KEY';
-    }
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static II_M50_KEY() {
-		return 'II_M50_KEY';
-	}
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static III_M50_KEY() {
-		return 'III_M50_KEY';
-	}
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static I_M100_KEY() {
-		return 'I_M100_KEY';
-	}
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static II_M100_KEY() {
-		return 'II_M100_KEY';
-	}
-	
-	/**
-     *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static III_M100_KEY() {
-		return 'III_M100_KEY';
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Engine);
-
-/***/ }),
-/* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(0);
-
-
-class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
-    /**
-     *
-     * @param {string} type
-     * @param {string|number} key
-     */
-    constructor(type, key) {
-        super(type, key);
-    }
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static I_CLASS_KEY() {
-        return 1;
-    };
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static II_CLASS_KEY() {
-        return 2;
-    }
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static III_CLASS_KEY() {
-        return 3;
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ParticleClass);
-
-/***/ }),
-/* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 
 
 /**
@@ -47036,6 +46535,88 @@ let FlyControls = function ( object, domElement ) {
 
 /* harmony default export */ __webpack_exports__["a"] = (FlyControls);
 
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+
+
+class SkyeBoxControls {
+	/**
+	 *
+	 * @param {Scene} scene
+	 */
+	constructor(scene) {
+		/**
+		 *
+		 * @type {Scene}
+		 */
+		this.scene = scene;
+		
+		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* TextureLoader */]();
+		this.textureFlare0 = textureLoader.load('textures/lensflare/lensflare0.png');
+		this.textureFlare3 = textureLoader.load('textures/lensflare/lensflare3.png');
+		
+		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* Vector3 */](0, 0, -15000);
+		this.lensFlare = this.getLight(0.08, 0.8, 0.5, this.position);
+	}
+	
+	/**
+	 *
+	 * @param {number} h
+	 * @param {number} s
+	 * @param {number} l
+	 * @param {Vector3} v
+	 * @returns {LensFlare}
+	 */
+	getLight(h, s, l, v) {
+		let light = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* PointLight */](0xffffff, 1.4);
+		light.color.setHSL(h, s, l);
+		light.position.copy(v);
+		this.scene.add(light);
+		let flareColor = new __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Color */](0xffffff);
+		flareColor.setHSL(h, s, l + 0.5);
+		
+		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0_three__["g" /* LensFlare */](this.textureFlare0, 1000, 0.0, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */], flareColor);
+		lensFlare.add(this.textureFlare3, 60, 0.6, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
+		lensFlare.add(this.textureFlare3, 70, 0.7, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
+		lensFlare.add(this.textureFlare3, 120, 0.9, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
+		lensFlare.add(this.textureFlare3, 70, 1.0, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
+		
+		lensFlare.customUpdateCallback = (object) => {
+			let f, fl = object.lensFlares.length;
+			let flare;
+			let vecX = - object.positionScreen.x * 2;
+			let vecY = - object.positionScreen.y * 2;
+			for(f = 0; f < fl; f++) {
+				flare = object.lensFlares[f];
+				flare.x = object.positionScreen.x + vecX * flare.distance;
+				flare.y = object.positionScreen.y + vecY * flare.distance;
+				flare.rotation = 0;
+			}
+			object.lensFlares[2].y += 0.025;
+			object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + __WEBPACK_IMPORTED_MODULE_0_three__["h" /* Math */].degToRad(45);
+		};
+		
+		lensFlare.position.copy(light.position);
+		this.scene.add(lensFlare);
+		return lensFlare;
+	}
+	
+	/**
+	 *
+	 * @param {Vector3} v
+	 * @returns {void}
+	 */
+	update(v) {
+		this.lensFlare.position.set(v.x + this.position.x, v.y + this.position.y, v.z + this.position.z);
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (SkyeBoxControls);
 
 /***/ })
 /******/ ]);
