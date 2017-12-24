@@ -1,5 +1,4 @@
 import User from './User';
-import Ship from './../particles/ships/Ship';
 import ShipExplorerI from './../particles/ships/I/ShipExplorerI';
 
 class Player extends User {

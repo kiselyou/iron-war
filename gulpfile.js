@@ -7,7 +7,8 @@ const BUILD_DIR = 'web/build';
 let isProd = false;
 
 gulp.task('build:js', () => {
-	let build = gulp.src('bundles/js/**/*.js')
+	// let build = gulp.src('bundles/js/**/*.js')
+	let build = gulp.src('bundles/index.js')
 		.pipe(webpack({
 			output: {
 				filename: 'bundle.js',
@@ -47,8 +48,7 @@ gulp.task('build:prod', () => {
 gulp.task('watch', function() {
 	gulp.watch(
 		[
-			'bundles/js/**/*.js',
-			'bundles/ejs/**/*.ejs'
+			'bundles/**/*.js'
 		],
 		[
 			'build:js'

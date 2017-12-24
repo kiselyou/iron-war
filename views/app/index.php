@@ -1,5 +1,2 @@
-<?php
 
-/* @var $test string */
-
-var_dump($test);
+<div id="main-container-canvas"></div>
