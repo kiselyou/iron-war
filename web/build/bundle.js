@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -46049,26 +46049,496 @@ function CanvasRenderer() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
 
 
-const main = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */]('main-container-canvas');
-main
-	.init()
-	.onWindowResize()
-	.animate();
+class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
+	/**
+	 *
+	 * @param {string} type
+	 * @param {(string|number)} key
+	 */
+	constructor(type, key) {
+		super(type, key);
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = null;
+		
+		/**
+		 * This is base path to model e.g "models/explorer/"
+		 *
+		 * @type {?string}
+		 */
+		this.basePath = null;
+		
+		/**
+		 * This is a path to obj file
+		 *
+		 * @type {?string}
+		 */
+		this.objFileName = null;
+		
+		/**
+		 * This is a path to mtl file
+		 *
+		 * @type {?string}
+		 */
+		this.mtlFileName = null;
+		
+		/**
+		 *
+		 * @type {?(Mesh|Group)}
+		 */
+		this.model = null;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get I_EXPLORER_KEY() {
+		return 'I_EXPLORER_KEY';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get II_EXPLORER_KEY() {
+		return 'II_EXPLORER_KEY';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get III_EXPLORER_KEY() {
+		return 'III_EXPLORER_KEY';
+	}
+}
 
+/* harmony default export */ __webpack_exports__["a"] = (Ship);
 
 /***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(18);
+
+
+class Particle {
+	/**
+	 *
+	 * @param {string} type
+	 * @param {(string|number)} key
+	 */
+	constructor(type, key) {
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.id = '';
+		
+		/**
+		 *
+		 * @type {string|number}
+		 */
+		this.key = key;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.type = type;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.name = null;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.label = null;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.description = null;
+		
+		/**
+		 *
+		 * @type {?ParticleClass}
+		 */
+		this.particleClass = null;
+		
+		/**
+		 *
+		 * @type {Array.<Particle>}
+		 */
+		this.children = [];
+	}
+	
+	/**
+	 * Clone Particle
+	 *
+	 * @returns {Particle}
+	 */
+	clone() {
+		return Object.assign(Object.create(this), this);
+	}
+	
+	/**
+	 * Data to JSON
+	 *
+	 * @returns {string}
+	 */
+	toJson() {
+		return JSON.stringify(this);
+	}
+	
+	/**
+	 * Set data from JSON
+	 *
+	 * @param {string} str
+	 * @param {boolean} [strict]
+	 * @returns {Particle}
+	 */
+	fromJson(str, strict = true) {
+		try {
+			let data = JSON.parse(str);
+			if (data['type'] !== this.type && strict) {
+				new __WEBPACK_IMPORTED_MODULE_0__ParticleError__["a" /* default */]('You tried to set not correct object');
+			}
+			
+			for (let property in data) {
+				if (data.hasOwnProperty(property)) {
+					if (this.hasOwnProperty(property)) {
+						switch (property) {
+							case 'children':
+								
+								break;
+							default:
+								this[property] = data[property];
+								break;
+						}
+					} else if (strict) {
+						console.warn('Property "' + property + '" does not exists in the "' + this.type + '"');
+					}
+				}
+			}
+		} catch (e) {
+			console.log(e);
+		}
+		return this;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Particle);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
+
+
+class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
+	/**
+	 *
+	 * @param {string} type
+	 * @param {(string|number)} key
+	 */
+    constructor(type, key) {
+        super(type, key);
+		
+		/**
+         *
+		 * @type {number}
+		 */
+		this.speedMin = 0;
+		
+		/**
+         *
+		 * @type {number}
+		 */
+        this.speedMax = 0;
+		
+		/**
+         *
+		 * @type {number}
+		 */
+		this.speed = 0;
+    }
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static I_M20_KEY() {
+        return 'I_M20_KEY';
+    }
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static II_M20_KEY() {
+		return 'II_M20_KEY';
+	}
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static III_M20_KEY() {
+		return 'III_M20_KEY';
+	}
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static I_M50_KEY() {
+        return 'I_M50_KEY';
+    }
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static II_M50_KEY() {
+		return 'II_M50_KEY';
+	}
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static III_M50_KEY() {
+		return 'III_M50_KEY';
+	}
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static I_M100_KEY() {
+		return 'I_M100_KEY';
+	}
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static II_M100_KEY() {
+		return 'II_M100_KEY';
+	}
+	
+	/**
+     *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static III_M100_KEY() {
+		return 'III_M100_KEY';
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Engine);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
+
+
+class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
+    /**
+     *
+     * @param {string} type
+     * @param {string|number} key
+     */
+    constructor(type, key) {
+        super(type, key);
+    }
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static I_CLASS_KEY() {
+        return 1;
+    };
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static II_CLASS_KEY() {
+        return 2;
+    }
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static III_CLASS_KEY() {
+        return 3;
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ParticleClass);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(22);
+
+
+
+
+
+class ShipIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* default */] {
+	constructor() {
+		super('ShipIncludes');
+		
+		/**
+		 *
+		 * @type {Array.<Ship>}
+		 */
+		this.includes = [
+			new __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__["a" /* default */](),
+			new __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__["a" /* default */](),
+			new __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__["a" /* default */]()
+		];
+	}
+	
+	/**
+	 *
+	 * @returns {ShipIncludes}
+	 */
+	static get() {
+		return super.get('ShipIncludes');
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ShipIncludes);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(4);
+
+
+class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
+    constructor() {
+        super('ParticleClassI', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */].I_CLASS_KEY);
+	
+	    /**
+         *
+	     * @type {string}
+	     */
+	    this.name = 'I';
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ParticleClassI);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(4);
+
+
+class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
+    constructor() {
+	    super('ParticleClassII', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */].II_CLASS_KEY);
+	
+	    /**
+         *
+	     * @type {string}
+	     */
+	    this.name = 'II';
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ParticleClassII);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(4);
+
+
+class ParticleClassIII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
+    constructor() {
+	    super('ParticleClassIII', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */].III_CLASS_KEY);
+	    
+	    this.name = 'III';
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ParticleClassIII);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(10);
+
+
+const main = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */]('main-container-canvas');
+main
+	.init()
+	.start();
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FlyControls__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_PreLoader__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FlyControls__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_PreLoader__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(24);
+
 
 
 
@@ -46120,16 +46590,6 @@ class SceneControls {
 		this.textureFlare0 = textureLoader.load("textures/lensflare/lensflare0.png");
 		this.textureFlare3 = textureLoader.load("textures/lensflare/lensflare3.png");
 		
-		// /**
-		//  *
-		//  * @type {FlyControls}
-		//  */
-		// this.flyControls = new FlyControls(this.camera, this.container);
-		// this.flyControls.movementSpeed = 2500;
-		// this.flyControls.rollSpeed = Math.PI / 16;
-		// this.flyControls.autoForward = false;
-		// this.flyControls.dragToLook = false;
-		
 		/**
 		 *
 		 * @type {Clock}
@@ -46142,48 +46602,70 @@ class SceneControls {
 		 */
 		this.skyBoxControls = new __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__["a" /* default */](this.scene);
 		
+		/**
+		 *
+		 * @type {?FlyControls}
+		 */
 		this.flyControls = null;
+		
+		/**
+		 *
+		 * @type {?(Mesh|Group)}
+		 */
+		this.model = null;
+		
+		/**
+		 *
+		 * @type {Player}
+		 */
+		this.player = new __WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */]();
 		
 		/**
 		 *
 		 * @type {PreLoader}
 		 */
 		this.loader = new __WEBPACK_IMPORTED_MODULE_3__loader_PreLoader__["a" /* default */]();
-		
-		this.model = null;
-		
-		this.loader.load((object) => {
-			
-			this.model = object;
-			this.model.position.z = -35;
-			this.model.position.y = -10;
+	}
+	
+	/**
+	 *
+	 * @returns {SceneControls}
+	 */
+	start() {
+		this.loader.load(() => {
+			this.player.updateModel();
+			this.model = this.player.getModel();
+			this.model.position.z = 0;
+			this.model.position.y = -2;
 			this.model.rotation.y = Math.PI;
+			
+			this.flyControls = new __WEBPACK_IMPORTED_MODULE_1__FlyControls__["a" /* default */](this.camera, this.container);
+			this.flyControls.movementSpeed = 5500;
+			this.flyControls.rollSpeed = Math.PI / 15;
+			this.flyControls.autoForward = false;
+			this.flyControls.dragToLook = false;
 			
 			this.camera.add(this.model);
 			this.scene.add(this.camera);
-			
-			/**
-			 *
-			 * @type {FlyControls}
-			 */
-			this.flyControls = new __WEBPACK_IMPORTED_MODULE_1__FlyControls__["a" /* default */](this.camera, this.container);
-			this.flyControls.movementSpeed = 2500;
-			this.flyControls.rollSpeed = Math.PI / 16;
-			this.flyControls.autoForward = false;
-			this.flyControls.dragToLook = false;
+			this._animate();
 		});
 		
+		return this;
 	}
 	
+	/**
+	 *
+	 * @returns {SceneControls}
+	 */
 	init() {
 		let s = 250;
 		let cube = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* BoxGeometry */](s, s, s);
 		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["u" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 3000; i ++) {
+		for (let i = 0; i < 1000; i ++) {
 			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["t" /* Mesh */](cube, material);
-			mesh.position.x = 18000 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 18000 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = 18000 * (2.0 * Math.random() - 1.0);
+			mesh.position.x = 28000 * (2.0 * Math.random() - 1.0);
+			mesh.position.y = 28000 * (2.0 * Math.random() - 1.0);
+			mesh.position.z = 28000 * (2.0 * Math.random() - 1.0);
 			mesh.rotation.x = Math.random() * Math.PI;
 			mesh.rotation.y = Math.random() * Math.PI;
 			mesh.rotation.z = Math.random() * Math.PI;
@@ -46203,54 +46685,35 @@ class SceneControls {
 		this.container.appendChild(this.renderer.domElement);
 		this.renderer.gammaInput = true;
 		this.renderer.gammaOutput = true;
+		this._onWindowResize();
 		return this;
 	}
 	
 	/**
 	 * @returns {void}
+	 * @private
 	 */
-	animate() {
+	_animate() {
 		window.requestAnimationFrame(() => {
-			this.animate();
+			this._animate();
 		});
 		
 		let delta = this.clock.getDelta();
-		if (this.model) {
-			this.flyControls.update(delta);
-			this.skyBoxControls.update(this.camera.position);
-			
-			// console.log(this.flyControls.rotationVector.y * 180);
-			
-			let rad = this.flyControls.rotationVector.y * 180;
-			let modelRad = this.model.rotation.z * 180;
-			
-			if (rad > -90 && modelRad > -90) {
-				this.model.rotation.z -= 0.01;
-			} else if (rad < 90 && modelRad < 90) {
-				this.model.rotation.z += 0.01;
-			}
-				
-				// let rotMult = delta * this.flyControls.rollSpeed;
-				//
-				// this.flyControls.tmpQuaternion.set(
-				// 	0,
-				// 	this.flyControls.rotationVector.y * rotMult,
-				// 	0,
-				// 	1
-				// ).normalize();
-				//
-				// this.model.quaternion.multiply(this.flyControls.tmpQuaternion);
-				// this.model.rotation.setFromQuaternion( this.model.quaternion, this.model.rotation.order );
 		
+		if (this.model) {
+			this.skyBoxControls.update(this.camera.position);
+			this.flyControls.update(delta);
 		}
+		
 		this.renderer.render(this.scene, this.camera);
 	}
 	
 	/**
 	 *
-	 * @returns {SceneControls}
+	 * @returns {void}
+	 * @private
 	 */
-	onWindowResize() {
+	_onWindowResize() {
 		window.addEventListener(
 			'resize',
 			() => {
@@ -46260,7 +46723,6 @@ class SceneControls {
 			},
 			false
 		);
-		return this;
 	}
 	
 	/**
@@ -46291,7 +46753,7 @@ class SceneControls {
 /* harmony default export */ __webpack_exports__["a"] = (SceneControls);
 
 /***/ }),
-/* 3 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46596,7 +47058,7 @@ let FlyControls = function ( object, domElement ) {
 
 
 /***/ }),
-/* 4 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46726,23 +47188,27 @@ class SkyeBoxControls {
 /* harmony default export */ __webpack_exports__["a"] = (SkyeBoxControls);
 
 /***/ }),
-/* 5 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__OBJLoader__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MTLLoader__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__OBJLoader__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MTLLoader__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__particles_ships_ShipIncludes__ = __webpack_require__(5);
 
 
 
 
-let loader = null;
 
 class PreLoader {
 	constructor() {
 		
-		this.models = {};
+		/**
+		 *
+		 * @type {ShipIncludes}
+		 */
+		this.shipIncludes = new __WEBPACK_IMPORTED_MODULE_3__particles_ships_ShipIncludes__["a" /* default */]();
 		
 		/**
 		 *
@@ -46766,26 +47232,44 @@ class PreLoader {
 	}
 	
 	load(listener) {
-		this._mtl.setBaseUrl('models/explorer/');
-		this._mtl.load('models/explorer/explorer.mtl', (materials) => {
-			this._obj.setMaterials(materials);
-			this._obj.load('models/explorer/explorer.obj', (object) => {
-				listener(object);
-			})
-		});
-		
+		this.loadItem(0, listener);
 	}
 	
-	// static get() {
-	// 	return loader || (loader = new PreLoader());
-	// }
+	/**
+	 * @callback listenerPreLoader
+	 */
 	
+	/**
+	 *
+	 * @param {number} start
+	 * @param {listenerPreLoader} listener
+	 */
+	loadItem(start, listener) {
+		let ship = this.shipIncludes.includes[start];
+		if (ship) {
+			if (ship.objFileName) {
+				this._mtl.setBaseUrl(ship.basePath);
+				this._mtl.load(ship.basePath + ship.mtlFileName, (materials) => {
+					this._obj.setMaterials(materials);
+					this._obj.load(ship.basePath + ship.objFileName, (object) => {
+						ship.model = object;
+						this.loadItem(++start, listener);
+					});
+				});
+			} else {
+				console.warn('You have not correct configuration of ship: ' + ship.type);
+				this.loadItem(++start, listener);
+			}
+		} else {
+			listener();
+		}
+	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (PreLoader);
 
 /***/ }),
-/* 6 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47511,7 +47995,7 @@ let OBJLoader = ( function () {
 /* harmony default export */ __webpack_exports__["a"] = (OBJLoader);
 
 /***/ }),
-/* 7 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48071,6 +48555,362 @@ MTLLoader.MaterialCreator.prototype = {
 
 /* harmony default export */ __webpack_exports__["a"] = (MTLLoader);
 
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ *
+ * @type {Object}
+ */
+let include = {};
+
+class Includes {
+	/**
+	 *
+	 * @param {string} type
+	 */
+	constructor(type) {
+		/**
+		 *
+		 * @type {Array.<(Object|Particle)>}
+		 */
+		this.includes = [];
+		
+		if (include.hasOwnProperty(type)) {
+			throw new Error('Includes ' + type + ' has already exists. Try call static method Includes.get("' + type + '")');
+		}
+		
+		include[type] = this;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.type = type;
+	}
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @returns {*}
+	 */
+	static get(type) {
+		return include[type];
+	}
+	
+	/**
+	 * Get list of elements {Particle.key: Particle.name}
+	 *
+	 * @returns {{(string|number): string}}
+	 */
+	getKeyAndName() {
+		let data = {};
+		for (let element of this.includes) {
+			data[element.key] = element.name;
+		}
+		return data;
+	}
+	
+	/**
+	 * Get list classes
+	 *
+	 * @returns {Array.<(Object|Particle)>}
+	 */
+	getAll() {
+		return this.includes;
+	};
+
+	/**
+	 * Get specific object
+	 *
+	 * @param {number|string} key
+	 * @returns {?Object}
+	 */
+	getSpecific(key) {
+		let element = this.includes.find((el) => {
+			return el.key === key;
+		});
+		return element ? element : null;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Includes);
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(6);
+
+
+
+
+class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */] {
+	constructor() {
+		super('ShipExplorerI', __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].I_EXPLORER_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = new __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.basePath = 'models/explorer/';
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.objFileName = 'explorer.obj';
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.mtlFileName = 'explorer.mtl';
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ShipExplorerI);
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+class ParticleError extends Error {
+	/**
+	 *
+	 * @param {string} msg
+	 * @param {?(string|number)} [id]
+	 * @param {boolean} [strict]
+	 */
+	constructor(msg, id = null, strict = true) {
+		super(msg, id);
+		
+		if (strict) {
+			throw this;
+		}
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ParticleError);
+
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(6);
+
+
+
+class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
+    constructor() {
+        super('EngineIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].I_M20_KEY);
+	
+	    /**
+         *
+	     * @type {ParticleClassI}
+	     */
+	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (EngineIM20);
+
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(21);
+
+
+
+
+class ShipExplorerII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */] {
+	constructor() {
+		super('ShipExplorerII', __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].II_EXPLORER_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ShipExplorerII);
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(7);
+
+
+
+class EngineIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
+	constructor() {
+		super('EngineIIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].II_M20_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (EngineIIM20);
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(23);
+
+
+
+
+class ShipExplorerIII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */] {
+	constructor() {
+		super('ShipExplorerIII', __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].III_EXPLORER_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ShipExplorerIII);
+
+/***/ }),
+/* 23 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(8);
+
+
+
+class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
+	constructor() {
+		super('EngineIIIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].III_M20_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassIII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (EngineIIIM20);
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(5);
+
+
+
+class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
+	
+	constructor() {
+		super();
+		
+		/**
+		 *
+		 * @type {?Ship}
+		 */
+		this.ship = null;
+	}
+	
+	/**
+	 *
+	 * @returns {Mesh|Group}
+	 */
+	getModel() {
+		return this.ship.model;
+	}
+	
+	/**
+	 *
+	 * @returns {Player}
+	 */
+	updateModel() {
+		this.ship = __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__["a" /* default */].get().getSpecific(this.shipKey);
+		return this;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Player);
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particles_ships_Ship__ = __webpack_require__(1);
+
+
+class User {
+	constructor() {
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.shipKey = __WEBPACK_IMPORTED_MODULE_0__particles_ships_Ship__["a" /* default */].I_EXPLORER_KEY;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (User);
 
 /***/ })
 /******/ ]);

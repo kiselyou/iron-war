@@ -1,13 +1,16 @@
 import OBJLoader from './OBJLoader';
 import MTLLoader from './MTLLoader';
 import * as THREE from 'three';
-
-let loader = null;
+import ShipIncludes from './../particles/ships/ShipIncludes';
 
 class PreLoader {
 	constructor() {
 		
-		this.models = {};
+		/**
+		 *
+		 * @type {ShipIncludes}
+		 */
+		this.shipIncludes = new ShipIncludes();
 		
 		/**
 		 *
@@ -31,20 +34,38 @@ class PreLoader {
 	}
 	
 	load(listener) {
-		this._mtl.setBaseUrl('models/explorer/');
-		this._mtl.load('models/explorer/explorer.mtl', (materials) => {
-			this._obj.setMaterials(materials);
-			this._obj.load('models/explorer/explorer.obj', (object) => {
-				listener(object);
-			})
-		});
-		
+		this.loadItem(0, listener);
 	}
 	
-	// static get() {
-	// 	return loader || (loader = new PreLoader());
-	// }
+	/**
+	 * @callback listenerPreLoader
+	 */
 	
+	/**
+	 *
+	 * @param {number} start
+	 * @param {listenerPreLoader} listener
+	 */
+	loadItem(start, listener) {
+		let ship = this.shipIncludes.includes[start];
+		if (ship) {
+			if (ship.objFileName) {
+				this._mtl.setBaseUrl(ship.basePath);
+				this._mtl.load(ship.basePath + ship.mtlFileName, (materials) => {
+					this._obj.setMaterials(materials);
+					this._obj.load(ship.basePath + ship.objFileName, (object) => {
+						ship.model = object;
+						this.loadItem(++start, listener);
+					});
+				});
+			} else {
+				console.warn('You have not correct configuration of ship: ' + ship.type);
+				this.loadItem(++start, listener);
+			}
+		} else {
+			listener();
+		}
+	}
 }
 
 export default PreLoader;

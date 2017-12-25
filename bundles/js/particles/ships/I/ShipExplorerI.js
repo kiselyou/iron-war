@@ -17,6 +17,24 @@ class ShipExplorerI extends Ship {
 		 * @type {Engine}
 		 */
 		this.engine = new EngineIM20();
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.basePath = 'models/explorer/';
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.objFileName = 'explorer.obj';
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.mtlFileName = 'explorer.mtl';
 	}
 }
 

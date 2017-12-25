@@ -5,13 +5,25 @@ import ShipExplorerIII from './III/ShipExplorerIII';
 
 class ShipIncludes extends Includes {
 	constructor() {
-		super();
+		super('ShipIncludes');
 		
+		/**
+		 *
+		 * @type {Array.<Ship>}
+		 */
 		this.includes = [
 			new ShipExplorerI(),
 			new ShipExplorerII(),
 			new ShipExplorerIII()
 		];
+	}
+	
+	/**
+	 *
+	 * @returns {ShipIncludes}
+	 */
+	static get() {
+		return super.get('ShipIncludes');
 	}
 }
 

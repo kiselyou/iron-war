@@ -1,11 +1,41 @@
+/**
+ *
+ * @type {Object}
+ */
+let include = {};
 
 class Includes {
-	constructor() {
+	/**
+	 *
+	 * @param {string} type
+	 */
+	constructor(type) {
 		/**
 		 *
 		 * @type {Array.<(Object|Particle)>}
 		 */
 		this.includes = [];
+		
+		if (include.hasOwnProperty(type)) {
+			throw new Error('Includes ' + type + ' has already exists. Try call static method Includes.get("' + type + '")');
+		}
+		
+		include[type] = this;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.type = type;
+	}
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @returns {*}
+	 */
+	static get(type) {
+		return include[type];
 	}
 	
 	/**
@@ -29,14 +59,14 @@ class Includes {
 	getAll() {
 		return this.includes;
 	};
-	
+
 	/**
 	 * Get specific object
 	 *
-	 * @param {(number|string)} key
+	 * @param {number|string} key
 	 * @returns {?Object}
 	 */
-	get(key) {
+	getSpecific(key) {
 		let element = this.includes.find((el) => {
 			return el.key === key;
 		});
