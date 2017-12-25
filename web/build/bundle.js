@@ -70,21 +70,21 @@
 "use strict";
 /* unused harmony export WebGLRenderTargetCube */
 /* unused harmony export WebGLRenderTarget */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return WebGLRenderer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return WebGLRenderer; });
 /* unused harmony export ShaderLib */
 /* unused harmony export UniformsLib */
 /* unused harmony export UniformsUtils */
 /* unused harmony export ShaderChunk */
 /* unused harmony export FogExp2 */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return Fog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return Scene; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return LensFlare; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return Fog; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return Scene; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return LensFlare; });
 /* unused harmony export Sprite */
 /* unused harmony export LOD */
 /* unused harmony export SkinnedMesh */
 /* unused harmony export Skeleton */
 /* unused harmony export Bone */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return Mesh; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return Mesh; });
 /* unused harmony export LineSegments */
 /* unused harmony export LineLoop */
 /* unused harmony export Line */
@@ -100,7 +100,7 @@
 /* unused harmony export CompressedTextureLoader */
 /* unused harmony export DataTextureLoader */
 /* unused harmony export CubeTextureLoader */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return TextureLoader; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return TextureLoader; });
 /* unused harmony export ObjectLoader */
 /* unused harmony export MaterialLoader */
 /* unused harmony export BufferGeometryLoader */
@@ -117,16 +117,16 @@
 /* unused harmony export AudioLoader */
 /* unused harmony export SpotLightShadow */
 /* unused harmony export SpotLight */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return PointLight; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return PointLight; });
 /* unused harmony export RectAreaLight */
 /* unused harmony export HemisphereLight */
 /* unused harmony export DirectionalLightShadow */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return DirectionalLight; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return DirectionalLight; });
 /* unused harmony export AmbientLight */
 /* unused harmony export LightShadow */
 /* unused harmony export Light */
 /* unused harmony export StereoCamera */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return PerspectiveCamera; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return PerspectiveCamera; });
 /* unused harmony export OrthographicCamera */
 /* unused harmony export CubeCamera */
 /* unused harmony export ArrayCamera */
@@ -162,14 +162,14 @@
 /* unused harmony export Raycaster */
 /* unused harmony export Layers */
 /* unused harmony export EventDispatcher */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Clock; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Clock; });
 /* unused harmony export QuaternionLinearInterpolant */
 /* unused harmony export LinearInterpolant */
 /* unused harmony export DiscreteInterpolant */
 /* unused harmony export CubicInterpolant */
 /* unused harmony export Interpolant */
 /* unused harmony export Triangle */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return _Math; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return _Math; });
 /* unused harmony export Spherical */
 /* unused harmony export Cylindrical */
 /* unused harmony export Plane */
@@ -183,10 +183,10 @@
 /* unused harmony export Line3 */
 /* unused harmony export Euler */
 /* unused harmony export Vector4 */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return Vector3; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return Vector3; });
 /* unused harmony export Vector2 */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return Quaternion; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Color; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return Quaternion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return Color; });
 /* unused harmony export ImmediateRenderObject */
 /* unused harmony export VertexNormalsHelper */
 /* unused harmony export SpotLightHelper */
@@ -234,7 +234,7 @@
 /* unused harmony export TorusBufferGeometry */
 /* unused harmony export TextGeometry */
 /* unused harmony export TextBufferGeometry */
-/* unused harmony export SphereGeometry */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return SphereGeometry; });
 /* unused harmony export SphereBufferGeometry */
 /* unused harmony export RingGeometry */
 /* unused harmony export RingBufferGeometry */
@@ -253,7 +253,7 @@
 /* unused harmony export CylinderBufferGeometry */
 /* unused harmony export CircleGeometry */
 /* unused harmony export CircleBufferGeometry */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return BoxGeometry; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return BoxGeometry; });
 /* unused harmony export BoxBufferGeometry */
 /* unused harmony export ShadowMaterial */
 /* unused harmony export SpriteMaterial */
@@ -261,8 +261,8 @@
 /* unused harmony export ShaderMaterial */
 /* unused harmony export PointsMaterial */
 /* unused harmony export MeshPhysicalMaterial */
-/* unused harmony export MeshStandardMaterial */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return MeshPhongMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return MeshStandardMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return MeshPhongMaterial; });
 /* unused harmony export MeshToonMaterial */
 /* unused harmony export MeshNormalMaterial */
 /* unused harmony export MeshLambertMaterial */
@@ -304,7 +304,7 @@
 /* unused harmony export PCFShadowMap */
 /* unused harmony export PCFSoftShadowMap */
 /* unused harmony export FrontSide */
-/* unused harmony export BackSide */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return BackSide; });
 /* unused harmony export DoubleSide */
 /* unused harmony export FlatShading */
 /* unused harmony export SmoothShading */
@@ -46084,7 +46084,7 @@ class SceneControls {
 		 *
 		 * @type {WebGLRenderer}
 		 */
-		this.renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* WebGLRenderer */]({
+		this.renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["t" /* WebGLRenderer */]({
 			antialias: true,
 			alpha: true
 		});
@@ -46093,16 +46093,15 @@ class SceneControls {
 		 *
 		 * @type {Scene}
 		 */
-		this.scene = new __WEBPACK_IMPORTED_MODULE_0_three__["n" /* Scene */]();
-		this.scene.background = new __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Color */]().setHSL(0.7, 0.4, 0.03);
-		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Fog */](this.scene.background, 15000, FAR);
-		
+		this.scene = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* Scene */]();
+		this.scene.background = new __WEBPACK_IMPORTED_MODULE_0_three__["e" /* Color */]().setHSL(0.7, 0.4, 0.03);
+		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_0_three__["g" /* Fog */](this.scene.background, 15000, FAR);
 		
 		/**
 		 *
 		 * @type {PerspectiveCamera}
 		 */
-		this.camera = new __WEBPACK_IMPORTED_MODULE_0_three__["k" /* PerspectiveCamera */](40, SceneControls.width / SceneControls.height, 1, FAR);
+		this.camera = new __WEBPACK_IMPORTED_MODULE_0_three__["m" /* PerspectiveCamera */](40, SceneControls.width / SceneControls.height, 1, FAR);
 		this.camera.lookAt(this.scene.position);
 		
 		/**
@@ -46115,7 +46114,7 @@ class SceneControls {
 			throw new Error('Cannot find container with ID: ' + containerID);
 		}
 		
-		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* TextureLoader */]();
+		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["r" /* TextureLoader */]();
 		this.textureFlare0 = textureLoader.load("textures/lensflare/lensflare0.png");
 		this.textureFlare3 = textureLoader.load("textures/lensflare/lensflare3.png");
 		
@@ -46123,17 +46122,17 @@ class SceneControls {
 		 *
 		 * @type {FlyControls}
 		 */
-		this.controls = new __WEBPACK_IMPORTED_MODULE_1__FlyControls__["a" /* default */](this.camera, this.container);
-		this.controls.movementSpeed = 2500;
-		this.controls.rollSpeed = Math.PI / 16;
-		this.controls.autoForward = false;
-		this.controls.dragToLook = false;
+		this.flyControls = new __WEBPACK_IMPORTED_MODULE_1__FlyControls__["a" /* default */](this.camera, this.container);
+		this.flyControls.movementSpeed = 2500;
+		this.flyControls.rollSpeed = Math.PI / 16;
+		this.flyControls.autoForward = false;
+		this.flyControls.dragToLook = false;
 		
 		/**
 		 *
 		 * @type {Clock}
 		 */
-		this.clock = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* Clock */]();
+		this.clock = new __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Clock */]();
 		
 		/**
 		 *
@@ -46144,10 +46143,10 @@ class SceneControls {
 	
 	init() {
 		let s = 250;
-		let cube = new __WEBPACK_IMPORTED_MODULE_0_three__["b" /* BoxGeometry */](s, s, s);
-		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["j" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 300; i ++) {
-			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["i" /* Mesh */](cube, material);
+		let cube = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* BoxGeometry */](s, s, s);
+		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["k" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		for (let i = 0; i < 3000; i ++) {
+			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["j" /* Mesh */](cube, material);
 			mesh.position.x = 18000 * (2.0 * Math.random() - 1.0);
 			mesh.position.y = 18000 * (2.0 * Math.random() - 1.0);
 			mesh.position.z = 18000 * (2.0 * Math.random() - 1.0);
@@ -46160,7 +46159,7 @@ class SceneControls {
 		}
 		
 		// lights
-		let dirLight = new __WEBPACK_IMPORTED_MODULE_0_three__["e" /* DirectionalLight */](0xffffff, 0.05);
+		let dirLight = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* DirectionalLight */](0xffffff, 0.05);
 		dirLight.position.set(0, -1, 0).normalize();
 		this.scene.add(dirLight);
 		dirLight.color.setHSL(0.1, 0.7, 0.5);
@@ -46182,7 +46181,7 @@ class SceneControls {
 		});
 		
 		let delta = this.clock.getDelta();
-		this.controls.update(delta);
+		this.flyControls.update(delta);
 		this.skyBoxControls.update(this.camera.position);
 		this.renderer.render(this.scene, this.camera);
 	}
@@ -46262,13 +46261,13 @@ let FlyControls = function ( object, domElement ) {
 
 	// internals
 
-	this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0_three__["m" /* Quaternion */]();
+	this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* Quaternion */]();
 
 	this.mouseStatus = 0;
 
 	this.moveState = { up: 0, down: 0, left: 0, right: 0, forward: 0, back: 0, pitchUp: 0, pitchDown: 0, yawLeft: 0, yawRight: 0, rollLeft: 0, rollRight: 0 };
-	this.moveVector = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* Vector3 */]( 0, 0, 0 );
-	this.rotationVector = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* Vector3 */]( 0, 0, 0 );
+	this.moveVector = new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* Vector3 */]( 0, 0, 0 );
+	this.rotationVector = new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* Vector3 */]( 0, 0, 0 );
 
 	this.handleEvent = function ( event ) {
 
@@ -46550,37 +46549,67 @@ class SkyeBoxControls {
 	 * @param {Scene} scene
 	 */
 	constructor(scene) {
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this._size = 15000;
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this.wSegments = 25;
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this.hSegments = 25;
+		
 		/**
 		 *
 		 * @type {Scene}
 		 */
 		this.scene = scene;
 		
-		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* TextureLoader */]();
+		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["r" /* TextureLoader */]();
 		this.textureFlare0 = textureLoader.load('textures/lensflare/lensflare0.png');
 		this.textureFlare3 = textureLoader.load('textures/lensflare/lensflare3.png');
+		this.textureSky = textureLoader.load('textures/skybox/003_space.jpg');
 		
-		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* Vector3 */](0, 0, -15000);
-		this.lensFlare = this.getLight(0.08, 0.8, 0.5, this.position);
+		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* Vector3 */](0, 0, -10000);
+		
+		this.sky = this.initSky(this.textureSky);
+		this.initLight(this.sky, 0.1, 0.4, 0.8);
+		
+		// this.initLight(this.sky, 0.181, 0.100, 0.250);
+		
+		this.scene.add(this.sky);
 	}
 	
 	/**
 	 *
+	 * @param {Mesh} el
 	 * @param {number} h
 	 * @param {number} s
 	 * @param {number} l
-	 * @param {Vector3} v
 	 * @returns {LensFlare}
 	 */
-	getLight(h, s, l, v) {
-		let light = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* PointLight */](0xffffff, 1.4);
+	initLight(el, h, s, l) {
+		let light = new __WEBPACK_IMPORTED_MODULE_0_three__["n" /* PointLight */](0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
-		light.position.copy(v);
-		this.scene.add(light);
-		let flareColor = new __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Color */](0xffffff);
+		light.position.copy(this.position);
+		// this.scene.add(light);
+		el.add(light);
+		let flareColor = new __WEBPACK_IMPORTED_MODULE_0_three__["e" /* Color */](0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
 		
-		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0_three__["g" /* LensFlare */](this.textureFlare0, 1000, 0.0, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */], flareColor);
+		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0_three__["h" /* LensFlare */](this.textureFlare0, 1000, 0.0, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */], flareColor);
 		lensFlare.add(this.textureFlare3, 60, 0.6, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
 		lensFlare.add(this.textureFlare3, 70, 0.7, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
 		lensFlare.add(this.textureFlare3, 120, 0.9, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
@@ -46598,13 +46627,34 @@ class SkyeBoxControls {
 				flare.rotation = 0;
 			}
 			object.lensFlares[2].y += 0.025;
-			object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + __WEBPACK_IMPORTED_MODULE_0_three__["h" /* Math */].degToRad(45);
+			object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + __WEBPACK_IMPORTED_MODULE_0_three__["i" /* Math */].degToRad(45);
 		};
 		
 		lensFlare.position.copy(light.position);
-		this.scene.add(lensFlare);
+		// this.scene.add(lensFlare);
+		el.add(lensFlare);
 		return lensFlare;
 	}
+	
+	/**
+	 * Build sky box and add it to scene.
+	 *
+	 * @param {Texture} texture
+	 * @returns {Mesh}
+	 */
+	initSky(texture) {
+		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* MeshStandardMaterial */]({
+			map: texture
+		});
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* SphereGeometry */](this._size, this.wSegments, this.hSegments);
+		let sky = new __WEBPACK_IMPORTED_MODULE_0_three__["j" /* Mesh */](geometry, material);
+		sky.material.side = __WEBPACK_IMPORTED_MODULE_0_three__["b" /* BackSide */];
+		sky.material.depthWrite = false;
+		sky.material.roughness = 1;
+		sky.material.metalness = 0;
+		return sky;
+	}
+	
 	
 	/**
 	 *
@@ -46612,7 +46662,7 @@ class SkyeBoxControls {
 	 * @returns {void}
 	 */
 	update(v) {
-		this.lensFlare.position.set(v.x + this.position.x, v.y + this.position.y, v.z + this.position.z);
+		this.sky.position.set(v.x, v.y, v.z);
 	}
 }
 

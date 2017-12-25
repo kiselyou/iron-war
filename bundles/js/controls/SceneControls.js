@@ -27,7 +27,6 @@ class SceneControls {
 		this.scene.background = new THREE.Color().setHSL(0.7, 0.4, 0.03);
 		this.scene.fog = new THREE.Fog(this.scene.background, 15000, FAR);
 		
-		
 		/**
 		 *
 		 * @type {PerspectiveCamera}
@@ -53,11 +52,11 @@ class SceneControls {
 		 *
 		 * @type {FlyControls}
 		 */
-		this.controls = new FlyControls(this.camera, this.container);
-		this.controls.movementSpeed = 2500;
-		this.controls.rollSpeed = Math.PI / 16;
-		this.controls.autoForward = false;
-		this.controls.dragToLook = false;
+		this.flyControls = new FlyControls(this.camera, this.container);
+		this.flyControls.movementSpeed = 2500;
+		this.flyControls.rollSpeed = Math.PI / 16;
+		this.flyControls.autoForward = false;
+		this.flyControls.dragToLook = false;
 		
 		/**
 		 *
@@ -76,7 +75,7 @@ class SceneControls {
 		let s = 250;
 		let cube = new THREE.BoxGeometry(s, s, s);
 		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 300; i ++) {
+		for (let i = 0; i < 3000; i ++) {
 			let mesh = new THREE.Mesh(cube, material);
 			mesh.position.x = 18000 * (2.0 * Math.random() - 1.0);
 			mesh.position.y = 18000 * (2.0 * Math.random() - 1.0);
@@ -112,7 +111,7 @@ class SceneControls {
 		});
 		
 		let delta = this.clock.getDelta();
-		this.controls.update(delta);
+		this.flyControls.update(delta);
 		this.skyBoxControls.update(this.camera.position);
 		this.renderer.render(this.scene, this.camera);
 	}

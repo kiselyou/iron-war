@@ -6,6 +6,28 @@ class SkyeBoxControls {
 	 * @param {Scene} scene
 	 */
 	constructor(scene) {
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this._size = 15000;
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this.wSegments = 25;
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this.hSegments = 25;
+		
 		/**
 		 *
 		 * @type {Scene}
@@ -15,24 +37,32 @@ class SkyeBoxControls {
 		let textureLoader = new THREE.TextureLoader();
 		this.textureFlare0 = textureLoader.load('textures/lensflare/lensflare0.png');
 		this.textureFlare3 = textureLoader.load('textures/lensflare/lensflare3.png');
+		this.textureSky = textureLoader.load('textures/skybox/003_space.jpg');
 		
-		this.position = new THREE.Vector3(0, 0, -15000);
-		this.lensFlare = this.getLight(0.08, 0.8, 0.5, this.position);
+		this.position = new THREE.Vector3(0, 0, -10000);
+		
+		this.sky = this.initSky(this.textureSky);
+		this.initLight(this.sky, 0.1, 0.4, 0.8);
+		
+		// this.initLight(this.sky, 0.181, 0.100, 0.250);
+		
+		this.scene.add(this.sky);
 	}
 	
 	/**
 	 *
+	 * @param {Mesh} el
 	 * @param {number} h
 	 * @param {number} s
 	 * @param {number} l
-	 * @param {Vector3} v
 	 * @returns {LensFlare}
 	 */
-	getLight(h, s, l, v) {
+	initLight(el, h, s, l) {
 		let light = new THREE.PointLight(0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
-		light.position.copy(v);
-		this.scene.add(light);
+		light.position.copy(this.position);
+		// this.scene.add(light);
+		el.add(light);
 		let flareColor = new THREE.Color(0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
 		
@@ -58,9 +88,30 @@ class SkyeBoxControls {
 		};
 		
 		lensFlare.position.copy(light.position);
-		this.scene.add(lensFlare);
+		// this.scene.add(lensFlare);
+		el.add(lensFlare);
 		return lensFlare;
 	}
+	
+	/**
+	 * Build sky box and add it to scene.
+	 *
+	 * @param {Texture} texture
+	 * @returns {Mesh}
+	 */
+	initSky(texture) {
+		let material = new THREE.MeshStandardMaterial({
+			map: texture
+		});
+		let geometry = new THREE.SphereGeometry(this._size, this.wSegments, this.hSegments);
+		let sky = new THREE.Mesh(geometry, material);
+		sky.material.side = THREE.BackSide;
+		sky.material.depthWrite = false;
+		sky.material.roughness = 1;
+		sky.material.metalness = 0;
+		return sky;
+	}
+	
 	
 	/**
 	 *
@@ -68,7 +119,7 @@ class SkyeBoxControls {
 	 * @returns {void}
 	 */
 	update(v) {
-		this.lensFlare.position.set(v.x + this.position.x, v.y + this.position.y, v.z + this.position.z);
+		this.sky.position.set(v.x, v.y, v.z);
 	}
 }
 
