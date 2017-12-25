@@ -61,7 +61,6 @@ class SkyeBoxControls {
 		let light = new THREE.PointLight(0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
 		light.position.copy(this.position);
-		// this.scene.add(light);
 		el.add(light);
 		let flareColor = new THREE.Color(0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
@@ -88,7 +87,6 @@ class SkyeBoxControls {
 		};
 		
 		lensFlare.position.copy(light.position);
-		// this.scene.add(lensFlare);
 		el.add(lensFlare);
 		return lensFlare;
 	}
@@ -111,7 +109,6 @@ class SkyeBoxControls {
 		sky.material.metalness = 0;
 		return sky;
 	}
-	
 	
 	/**
 	 *

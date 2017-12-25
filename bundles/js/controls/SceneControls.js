@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import FlyControls from './FlyControls';
 import SkyeBoxControls from './SkyeBoxControls';
+import PreLoader from './../loader/PreLoader';
 
 class SceneControls {
 	/**
@@ -48,15 +49,15 @@ class SceneControls {
 		this.textureFlare0 = textureLoader.load("textures/lensflare/lensflare0.png");
 		this.textureFlare3 = textureLoader.load("textures/lensflare/lensflare3.png");
 		
-		/**
-		 *
-		 * @type {FlyControls}
-		 */
-		this.flyControls = new FlyControls(this.camera, this.container);
-		this.flyControls.movementSpeed = 2500;
-		this.flyControls.rollSpeed = Math.PI / 16;
-		this.flyControls.autoForward = false;
-		this.flyControls.dragToLook = false;
+		// /**
+		//  *
+		//  * @type {FlyControls}
+		//  */
+		// this.flyControls = new FlyControls(this.camera, this.container);
+		// this.flyControls.movementSpeed = 2500;
+		// this.flyControls.rollSpeed = Math.PI / 16;
+		// this.flyControls.autoForward = false;
+		// this.flyControls.dragToLook = false;
 		
 		/**
 		 *
@@ -69,6 +70,38 @@ class SceneControls {
 		 * @type {SkyeBoxControls}
 		 */
 		this.skyBoxControls = new SkyeBoxControls(this.scene);
+		
+		this.flyControls = null;
+		
+		/**
+		 *
+		 * @type {PreLoader}
+		 */
+		this.loader = new PreLoader();
+		
+		this.model = null;
+		
+		this.loader.load((object) => {
+			
+			this.model = object;
+			this.model.position.z = -35;
+			this.model.position.y = -10;
+			this.model.rotation.y = Math.PI;
+			
+			this.camera.add(this.model);
+			this.scene.add(this.camera);
+			
+			/**
+			 *
+			 * @type {FlyControls}
+			 */
+			this.flyControls = new FlyControls(this.camera, this.container);
+			this.flyControls.movementSpeed = 2500;
+			this.flyControls.rollSpeed = Math.PI / 16;
+			this.flyControls.autoForward = false;
+			this.flyControls.dragToLook = false;
+		});
+		
 	}
 	
 	init() {
@@ -111,8 +144,34 @@ class SceneControls {
 		});
 		
 		let delta = this.clock.getDelta();
-		this.flyControls.update(delta);
-		this.skyBoxControls.update(this.camera.position);
+		if (this.model) {
+			this.flyControls.update(delta);
+			this.skyBoxControls.update(this.camera.position);
+			
+			// console.log(this.flyControls.rotationVector.y * 180);
+			
+			let rad = this.flyControls.rotationVector.y * 180;
+			let modelRad = this.model.rotation.z * 180;
+			
+			if (rad > -90 && modelRad > -90) {
+				this.model.rotation.z -= 0.01;
+			} else if (rad < 90 && modelRad < 90) {
+				this.model.rotation.z += 0.01;
+			}
+				
+				// let rotMult = delta * this.flyControls.rollSpeed;
+				//
+				// this.flyControls.tmpQuaternion.set(
+				// 	0,
+				// 	this.flyControls.rotationVector.y * rotMult,
+				// 	0,
+				// 	1
+				// ).normalize();
+				//
+				// this.model.quaternion.multiply(this.flyControls.tmpQuaternion);
+				// this.model.rotation.setFromQuaternion( this.model.quaternion, this.model.rotation.order );
+		
+		}
 		this.renderer.render(this.scene, this.camera);
 	}
 	
