@@ -26,6 +26,18 @@ class Engine extends Particle {
 		 * @type {number}
 		 */
 		this.speed = 0;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.rollSpeed = Math.PI / 25;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.rollSpeedMax = Math.PI / 10;
     }
 	
 	/**

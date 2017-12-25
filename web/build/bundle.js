@@ -46277,6 +46277,18 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 		 * @type {number}
 		 */
 		this.speed = 0;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.rollSpeed = Math.PI / 25;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.rollSpeedMax = Math.PI / 10;
     }
 	
 	/**
@@ -46640,8 +46652,8 @@ class SceneControls {
 			this.model.rotation.y = Math.PI;
 			
 			this.flyControls = new __WEBPACK_IMPORTED_MODULE_1__FlyControls__["a" /* default */](this.camera, this.container);
-			this.flyControls.movementSpeed = 5500;
-			this.flyControls.rollSpeed = Math.PI / 15;
+			this.flyControls.movementSpeed = this.player.ship.engine.speed;
+			this.flyControls.rollSpeed = this.player.ship.engine.rollSpeed;
 			this.flyControls.autoForward = false;
 			this.flyControls.dragToLook = false;
 			
@@ -48732,6 +48744,30 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 	     * @type {ParticleClassI}
 	     */
 	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speed = 5500;
+	    
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMax = 6000;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.rollSpeed = Math.PI / 25;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.rollSpeedMax = Math.PI / 10;
     }
 }
 

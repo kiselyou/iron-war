@@ -100,8 +100,8 @@ class SceneControls {
 			this.model.rotation.y = Math.PI;
 			
 			this.flyControls = new FlyControls(this.camera, this.container);
-			this.flyControls.movementSpeed = 5500;
-			this.flyControls.rollSpeed = Math.PI / 15;
+			this.flyControls.movementSpeed = this.player.ship.engine.speed;
+			this.flyControls.rollSpeed = this.player.ship.engine.rollSpeed;
 			this.flyControls.autoForward = false;
 			this.flyControls.dragToLook = false;
 			
