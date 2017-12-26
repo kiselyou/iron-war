@@ -4,6 +4,8 @@ import SkyeBoxControls from './SkyeBoxControls';
 import PreLoader from './../loader/PreLoader';
 import Player from './../player/Player';
 
+import HelperPoints from './../helpers/HelperPoints';
+
 class SceneControls {
 	/**
 	 *
@@ -85,6 +87,13 @@ class SceneControls {
 		 * @type {PreLoader}
 		 */
 		this.loader = new PreLoader();
+		
+		/**
+		 *
+		 * @type {HelperPoints}
+		 * @private
+		 */
+		this._helperPoints = new HelperPoints(this.scene);
 	}
 	
 	/**
@@ -104,6 +113,8 @@ class SceneControls {
 			this.flyControls.rollSpeed = this.player.ship.engine.rollSpeed;
 			this.flyControls.autoForward = false;
 			this.flyControls.dragToLook = false;
+			
+			this.camera.add(this.player.getAim());
 			
 			this.camera.add(this.model);
 			this.scene.add(this.camera);
@@ -160,7 +171,7 @@ class SceneControls {
 		
 		let delta = this.clock.getDelta();
 		
-		if (this.model) {
+		if (this.player.isActiv) {
 			this.skyBoxControls.update(this.camera.position);
 			this.flyControls.update(delta);
 		}

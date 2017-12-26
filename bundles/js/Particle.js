@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import ParticleError from './ParticleError';
 
 class Particle {
@@ -48,6 +49,12 @@ class Particle {
 		 * @type {?ParticleClass}
 		 */
 		this.particleClass = null;
+		
+		/**
+		 * 
+		 * @type {Vector3}
+		 */
+		this.position = new THREE.Vector3();
 		
 		/**
 		 *

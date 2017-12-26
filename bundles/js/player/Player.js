@@ -8,6 +8,12 @@ class Player extends User {
 		
 		/**
 		 *
+		 * @type {boolean}
+		 */
+		this.isActiv = true;
+		
+		/**
+		 *
 		 * @type {?Ship}
 		 */
 		this.ship = null;
@@ -19,6 +25,14 @@ class Player extends User {
 	 */
 	getModel() {
 		return this.ship.model;
+	}
+	
+	/**
+	 *
+	 * @returns {Group}
+	 */
+	getAim() {
+		return this.ship.aim.model;
 	}
 	
 	/**

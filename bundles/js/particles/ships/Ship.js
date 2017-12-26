@@ -1,4 +1,5 @@
 import Particle from './../../Particle';
+import Aim from './../decoration/Aim';
 
 class Ship extends Particle {
 	/**
@@ -41,6 +42,22 @@ class Ship extends Particle {
 		 * @type {?(Mesh|Group)}
 		 */
 		this.model = null;
+		
+		/**
+		 *
+		 * @type {Aim}
+		 */
+		this.aim = new Aim();
+	}
+	
+	/**
+	 *
+	 * @param {(Mesh|Group)} obj
+	 * @returns {Ship}
+	 */
+	setModel(obj) {
+		this.model = obj;
+		return this;
 	}
 	
 	/**
