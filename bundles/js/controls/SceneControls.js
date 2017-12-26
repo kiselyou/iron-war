@@ -141,7 +141,9 @@ class SceneControls {
 		this.scene.add(dirLight);
 		dirLight.color.setHSL(0.1, 0.7, 0.5);
 		
+		
 		this.renderer.setPixelRatio(window.devicePixelRatio);
+		this.renderer.setClearColor(0xf0f0f0);
 		this.renderer.setSize(SceneControls.width, SceneControls.height);
 		this.container.appendChild(this.renderer.domElement);
 		this.renderer.gammaInput = true;

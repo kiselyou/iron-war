@@ -67,7 +67,58 @@ class Aim extends Particle {
 			i++;
 		}
 		
+		let elTopRight = this._drawUnderLine();
+		let elTopLeft = elTopRight.clone();
+		let elBottomRight = elTopRight.clone();
+		let elBottomLeft = elTopRight.clone();
+		
+		elTopRight.position.x = 100;
+		elTopRight.position.z = - 100;
+		elTopRight.rotation.x = - Math.PI / 2;
+		this.model.add(elTopRight);
+		
+		elTopLeft.position.x = - 100;
+		elTopLeft.position.z = - 100;
+		elTopLeft.rotation.x = Math.PI / 2;
+		elTopLeft.rotation.z = Math.PI;
+		this.model.add(elTopLeft);
+		
+		elBottomLeft.position.x = - 100;
+		elBottomLeft.position.z = 100;
+		elBottomLeft.rotation.x = - Math.PI / 2;
+		elBottomLeft.rotation.z = Math.PI;
+		this.model.add(elBottomLeft);
+		
+		elBottomRight.position.x = 100;
+		elBottomRight.position.z = 100;
+		elBottomRight.rotation.x = Math.PI / 2;
+		this.model.add(elBottomRight);
+		
+		
 		this.model.scale.set(this.scale, this.scale, this.scale);
+	}
+	
+	_drawUnderLine() {
+		let x = 0,
+			y = 0,
+			ax = 65,
+			ay = 60,
+			bx = 720,
+			by = 60;
+		
+		let geometry = new THREE.Geometry();
+		geometry.vertices.push(new THREE.Vector3(x, y, 0));
+		geometry.vertices.push(new THREE.Vector3(x + ax, x + ay, 0));
+		geometry.vertices.push(new THREE.Vector3(x + bx, x + by, 0));
+		
+		let line = new THREE.Line(geometry);
+		line.material.color = new THREE.Color(this.color);
+		line.material.needsUpdate = true;
+		
+		let el = new THREE.Object3D();
+		el.add(line);
+		
+		return el;
 	}
 	
 	/**
@@ -107,7 +158,7 @@ class Aim extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static AIM_KEY() {
+	static get AIM_KEY() {
 		return 'AIM_KEY';
 	}
 }
