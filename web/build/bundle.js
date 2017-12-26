@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -46050,7 +46050,7 @@ function CanvasRenderer() {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_Aim__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_Aim__ = __webpack_require__(21);
 
 
 
@@ -46101,6 +46101,48 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 		 * @type {Aim}
 		 */
 		this.aim = new __WEBPACK_IMPORTED_MODULE_1__decoration_Aim__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Array}
+		 */
+		this.listeners = [];
+	}
+	
+	/**
+	 * @param {Mesh|Group} model
+	 * @callback shipUpdateListener
+	 */
+	
+	/**
+	 *
+	 * @param {string} event
+	 * @param {shipUpdateListener} listener
+	 * @returns {Ship}
+	 */
+	addEventListener(event, listener) {
+		this.listeners.push({
+			event: event,
+			listener: listener
+		});
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {void}
+	 * @private
+	 */
+	_callListeners(event) {
+		for (let item of this.listeners) {
+			if (event === item.event) {
+				switch (item.event) {
+					case Ship.EVENT_MODEL_UPDATE:
+						item.listener(this.model);
+						break;
+				}
+			}
+		}
 	}
 	
 	/**
@@ -46110,7 +46152,17 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 	 */
 	setModel(obj) {
 		this.model = obj;
+		this._callListeners(Ship.EVENT_MODEL_UPDATE);
 		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static EVENT_MODEL_UPDATE() {
+		return 'EVENT_MODEL_UPDATE'
 	}
 	
 	/**
@@ -46145,9 +46197,7 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ParticleError__ = __webpack_require__(18);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(20);
 
 
 class Particle {
@@ -46200,12 +46250,6 @@ class Particle {
 		this.particleClass = null;
 		
 		/**
-		 * 
-		 * @type {Vector3}
-		 */
-		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* Vector3 */]();
-		
-		/**
 		 *
 		 * @type {Array.<Particle>}
 		 */
@@ -46241,7 +46285,7 @@ class Particle {
 		try {
 			let data = JSON.parse(str);
 			if (data['type'] !== this.type && strict) {
-				new __WEBPACK_IMPORTED_MODULE_1__ParticleError__["a" /* default */]('You tried to set not correct object');
+				new __WEBPACK_IMPORTED_MODULE_0__ParticleError__["a" /* default */]('You tried to set not correct object');
 			}
 			
 			for (let property in data) {
@@ -46290,31 +46334,72 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
          *
 		 * @type {number}
 		 */
-		this.speedMin = 0;
+		this.speedMinX = 0;
 		
 		/**
          *
 		 * @type {number}
 		 */
-        this.speedMax = 0;
+        this.speedMaxX = 0;
+        
+        /**
+         *
+		 * @type {number}
+		 */
+		this.speedMinY = 0;
 		
 		/**
          *
 		 * @type {number}
 		 */
-		this.speed = 0;
+        this.speedMaxY = 0;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.rollSpeed = Math.PI / 25;
+		this.speedMinZ = 0;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.rollSpeedMax = Math.PI / 10;
+		this.speedMaxZ = 0;
+		
+		/**
+		 * Left or right moving speed
+         *
+		 * @type {number}
+		 */
+		this.speedX = 0;
+		
+		/**
+		 * Up or Down moving speed
+		 *
+		 * @type {number}
+		 */
+		this.speedY = 0;
+		
+		/**
+		 * Direct moving speed
+         *
+		 * @type {number}
+		 */
+		this.speedZ = 0;
+		
+		/**
+		 * Speed rotate to X or Y
+		 *
+		 * @type {number}
+		 */
+		this.rollSpeedXY = Math.PI / 45;
+		
+		/**
+		 * Speed rotation around axis Z
+		 *
+		 * @type {number}
+		 */
+		this.rollSpeedZ = Math.PI / 5;
     }
 	
 	/**
@@ -46454,10 +46539,207 @@ class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* defau
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Keyboard__ = __webpack_require__(13);
+
+
+class KeyboardControls {
+	/**
+	 *
+	 * @param {HTMLElement} domElement
+	 */
+	constructor(domElement) {
+		
+		/**
+		 *
+		 * @type {Object}
+		 */
+		this.listeners = {};
+		
+		/**
+		 *
+		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
+		 */
+		this.fly = {
+			forward: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](87, 'W'),
+			back: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](83, 'S'),
+			left: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](65, 'A'),
+			right: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](68, 'D'),
+			rollLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](81, 'Q'),
+			rollRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](69, 'E'),
+			yawLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](37, 'Left'),
+			yawRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](39, 'Right'),
+			pitchUp: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](38, 'Up'),
+			pitchDown: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](40, 'Down'),
+			up: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](82, 'R'),
+			down: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](70, 'F'),
+			space: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](8, 'Back Space', __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].TYPE_SWITCH)
+		};
+		
+		
+		domElement.addEventListener('contextmenu', (event) => {
+			event.preventDefault();
+		}, false);
+		
+		domElement.addEventListener('mousemove', (event) => {
+			this._callListeners(KeyboardControls.EVENT_MOUSE_MOVE, event);
+		}, false);
+		
+		domElement.addEventListener('mousedown', (event) => {
+			this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN, event);
+		}, false);
+		
+		domElement.addEventListener('mouseup', (event) => {
+			this._callListeners(KeyboardControls.EVENT_MOUSE_UP, event);
+		}, false);
+		
+		window.addEventListener('keydown', (event) => {
+			this.keydown(event);
+		}, false);
+		
+		window.addEventListener('keyup', (event) => {
+			this.keyup(event);
+		}, false);
+	}
+	
+	/**
+	 * @param {KeyboardEvent|MouseEvent} event
+	 * @param {?Keyboard} [keyboard]
+	 * @callback keyboardControlsListener
+	 */
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @param {keyboardControlsListener} listener
+	 * @returns {KeyboardControls}
+	 */
+	addEventListener(type, listener) {
+		if (!this.listeners.hasOwnProperty(type)) {
+			this.listeners[type] = [];
+		}
+		this.listeners[type].push(listener);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @param {KeyboardEvent|MouseEvent} event
+	 * @param {Keyboard} [keyboard]
+	 * @private
+	 */
+	_callListeners(type, event, keyboard) {
+		if (!this.listeners.hasOwnProperty(type)) {
+			return;
+		}
+		for (let listener of this.listeners[type]) {
+			listener(event, keyboard);
+		}
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static EVENT_KEY_DOWN() {
+		return 'EVENT_KEY_DOWN';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static EVENT_KEY_UP() {
+		return 'EVENT_KEY_UP';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static EVENT_MOUSE_MOVE() {
+		return 'EVENT_MOUSE_MOVE';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static EVENT_MOUSE_DOWN() {
+		return 'EVENT_MOUSE_DOWN';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static EVENT_MOUSE_UP() {
+		return 'EVENT_MOUSE_UP';
+	}
+	
+	/**
+	 *
+	 * @param {KeyboardEvent} event
+	 */
+	keydown(event) {
+		if (event.altKey) {
+			return;
+		}
+		
+		let keyboard = this._findKeyboard(event.keyCode);
+		if (keyboard) {
+			keyboard.value = keyboard.valueDown;
+			this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+		}
+	}
+	
+	/**
+	 *
+	 * @param {KeyboardEvent} event
+	 */
+	keyup(event) {
+		let keyboard = this._findKeyboard(event.keyCode);
+		if (keyboard) {
+			keyboard.value = keyboard.valueUp;
+			this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+		}
+	}
+	
+	/**
+	 *
+	 * @param {number} keyCode
+	 * @returns {Keyboard}
+	 * @private
+	 */
+	_findKeyboard(keyCode) {
+		for (let key in this.fly) {
+			if (this.fly.hasOwnProperty(key)) {
+				let keyboard = this.fly[key];
+				if (this.fly[key]['keyCode'] === keyCode) {
+					return this.fly[key];
+				}
+			}
+		}
+		return null;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (KeyboardControls);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(25);
 
 
 
@@ -46490,7 +46772,7 @@ class ShipIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* defaul
 /* harmony default export */ __webpack_exports__["a"] = (ShipIncludes);
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46512,7 +46794,7 @@ class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /*
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassI);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46534,7 +46816,7 @@ class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassII);
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46552,12 +46834,12 @@ class ParticleClassIII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" 
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassIII);
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(11);
 
 
 const main = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */]('main-container-canvas');
@@ -46567,16 +46849,16 @@ main
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FlyControls__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_PreLoader__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FlyControls__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_PreLoader__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(29);
 
 
 
@@ -46659,7 +46941,7 @@ class SceneControls {
 		 *
 		 * @type {Player}
 		 */
-		this.player = new __WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */]();
+		this.player = new __WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */](this.container);
 		
 		/**
 		 *
@@ -46683,18 +46965,12 @@ class SceneControls {
 		this.loader.load(() => {
 			this.player.updateModel();
 			this.model = this.player.getModel();
-			this.model.position.z = 0;
-			this.model.position.y = -2;
-			this.model.rotation.y = Math.PI;
 			
-			this.flyControls = new __WEBPACK_IMPORTED_MODULE_1__FlyControls__["a" /* default */](this.camera, this.container);
-			this.flyControls.movementSpeed = this.player.ship.engine.speed;
-			this.flyControls.rollSpeed = this.player.ship.engine.rollSpeed;
+			this.flyControls = new __WEBPACK_IMPORTED_MODULE_1__FlyControls__["a" /* default */](this.camera, this.player);
 			this.flyControls.autoForward = false;
 			this.flyControls.dragToLook = false;
 			
 			this.camera.add(this.player.getAim());
-			
 			this.camera.add(this.model);
 			this.scene.add(this.camera);
 			this._animate();
@@ -46750,9 +47026,9 @@ class SceneControls {
 		
 		let delta = this.clock.getDelta();
 		
-		if (this.player.isActiv) {
-			this.skyBoxControls.update(this.camera.position);
+		if (this.player.isActiv && this.player.isFly) {
 			this.flyControls.update(delta);
+			this.skyBoxControls.update(this.camera.position);
 		}
 		
 		this.renderer.render(this.scene, this.camera);
@@ -46803,312 +47079,268 @@ class SceneControls {
 /* harmony default export */ __webpack_exports__["a"] = (SceneControls);
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__keyboard_KeyboardControls__ = __webpack_require__(5);
 
 
-/**
- * @author James Baicoianu / http://www.baicoianu.com/
- */
 
-let FlyControls = function ( object, domElement ) {
-
-	this.object = object;
-
-	this.domElement = ( domElement !== undefined ) ? domElement : document;
-	if ( domElement ) this.domElement.setAttribute( 'tabindex', - 1 );
-
-	// API
-
-	this.movementSpeed = 1.0;
-	this.rollSpeed = 0.005;
-
-	this.dragToLook = false;
-	this.autoForward = false;
-
-	// disable default target object behavior
-
-	// internals
-
-	this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* Quaternion */]();
-
-	this.mouseStatus = 0;
-
-	this.moveState = { up: 0, down: 0, left: 0, right: 0, forward: 0, back: 0, pitchUp: 0, pitchDown: 0, yawLeft: 0, yawRight: 0, rollLeft: 0, rollRight: 0 };
-	this.moveVector = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* Vector3 */]( 0, 0, 0 );
-	this.rotationVector = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* Vector3 */]( 0, 0, 0 );
-
-	this.handleEvent = function ( event ) {
-
-		if ( typeof this[ event.type ] == 'function' ) {
-
-			this[ event.type ]( event );
-
-		}
-
-	};
-
-	this.keydown = function( event ) {
-
-		if ( event.altKey ) {
-
-			return;
-
-		}
-
-		//event.preventDefault();
-
-		switch ( event.keyCode ) {
-
-			case 16: /* shift */ this.movementSpeedMultiplier = .1; break;
-
-			case 87: /*W*/ this.moveState.forward = 1; break;
-			case 83: /*S*/ this.moveState.back = 1; break;
-
-			case 65: /*A*/ this.moveState.left = 1; break;
-			case 68: /*D*/ this.moveState.right = 1; break;
-
-			case 82: /*R*/ this.moveState.up = 1; break;
-			case 70: /*F*/ this.moveState.down = 1; break;
-
-			case 38: /*up*/ this.moveState.pitchUp = 1; break;
-			case 40: /*down*/ this.moveState.pitchDown = 1; break;
-
-			case 37: /*left*/ this.moveState.yawLeft = 1; break;
-			case 39: /*right*/ this.moveState.yawRight = 1; break;
-
-			case 81: /*Q*/ this.moveState.rollLeft = 1; break;
-			case 69: /*E*/ this.moveState.rollRight = 1; break;
-
-		}
-
+class FlyControls {
+	
+	/**
+	 * @param {Camera} object
+	 * @param {Player} player
+	 */
+	constructor(object, player) {
+		
+		/**
+		 * @type {Camera}
+		 */
+		this.object = object;
+		
+		/**
+		 *
+		 * @type {Player}
+		 */
+		this.player = player;
+		
+		if (this.player.container) this.player.container.setAttribute('tabindex', '- 1');
+		
+		/**
+		 *
+		 * @type {KeyboardControls}
+		 */
+		this.keyboards = player.keyboards.fly;
+		
+		/**
+		 *
+		 * @type {boolean}
+		 */
+		this.dragToLook = false;
+		
+		/**
+		 *
+		 * @type {boolean}
+		 */
+		this.autoForward = false;
+		
+		/**
+		 *
+		 * @type {Quaternion}
+		 */
+		this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* Quaternion */]();
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.mouseStatus = 0;
+		
+		/**
+		 *
+		 * @type {Vector3}
+		 */
+		this.moveVector = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* Vector3 */](0, 0, 0);
+		
+		/**
+		 *
+		 * @type {Vector3}
+		 */
+		this.rotationVector = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* Vector3 */](0, 0, 0);
+		
 		this.updateMovementVector();
 		this.updateRotationVector();
-
-	};
-
-	this.keyup = function( event ) {
-
-		switch ( event.keyCode ) {
-
-			case 16: /* shift */ this.movementSpeedMultiplier = 1; break;
-
-			case 87: /*W*/ this.moveState.forward = 0; break;
-			case 83: /*S*/ this.moveState.back = 0; break;
-
-			case 65: /*A*/ this.moveState.left = 0; break;
-			case 68: /*D*/ this.moveState.right = 0; break;
-
-			case 82: /*R*/ this.moveState.up = 0; break;
-			case 70: /*F*/ this.moveState.down = 0; break;
-
-			case 38: /*up*/ this.moveState.pitchUp = 0; break;
-			case 40: /*down*/ this.moveState.pitchDown = 0; break;
-
-			case 37: /*left*/ this.moveState.yawLeft = 0; break;
-			case 39: /*right*/ this.moveState.yawRight = 0; break;
-
-			case 81: /*Q*/ this.moveState.rollLeft = 0; break;
-			case 69: /*E*/ this.moveState.rollRight = 0; break;
-
-		}
-
-		this.updateMovementVector();
-		this.updateRotationVector();
-
-	};
-
-	this.mousedown = function( event ) {
-
-		if ( this.domElement !== document ) {
-
-			this.domElement.focus();
-
-		}
-
-		event.preventDefault();
-		event.stopPropagation();
-
-		if ( this.dragToLook ) {
-
-			this.mouseStatus ++;
-
-		} else {
-
-			switch ( event.button ) {
-
-				case 0: this.moveState.forward = 1; break;
-				case 2: this.moveState.back = 1; break;
-
-			}
-
+		
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_1__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_MOVE, (event) => {
+			this.mousemove(event);
+		});
+		
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_1__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, () => {
 			this.updateMovementVector();
-
-		}
-
-	};
-
-	this.mousemove = function( event ) {
-
-		if ( ! this.dragToLook || this.mouseStatus > 0 ) {
-
-			var container = this.getContainerDimensions();
-			var halfWidth  = container.size[ 0 ] / 2;
-			var halfHeight = container.size[ 1 ] / 2;
-
-			this.moveState.yawLeft   = - ( ( event.pageX - container.offset[ 0 ] ) - halfWidth  ) / halfWidth;
-			this.moveState.pitchDown =   ( ( event.pageY - container.offset[ 1 ] ) - halfHeight ) / halfHeight;
-
 			this.updateRotationVector();
-
-		}
-
-	};
-
-	this.mouseup = function( event ) {
-
-		event.preventDefault();
-		event.stopPropagation();
-
-		if ( this.dragToLook ) {
-
-			this.mouseStatus --;
-
-			this.moveState.yawLeft = this.moveState.pitchDown = 0;
-
-		} else {
-
-			switch ( event.button ) {
-
-				case 0: this.moveState.forward = 0; break;
-				case 2: this.moveState.back = 0; break;
-
-			}
-
+		});
+		
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_1__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_DOWN, () => {
 			this.updateMovementVector();
-
+			this.updateRotationVector();
+		});
+	}
+	
+	/**
+	 *
+	 * @param {MouseEvent} event
+	 * @returns {void}
+	 */
+	mousemove(event) {
+		if (!this.dragToLook || this.mouseStatus > 0) {
+			let container = this.getContainerDimensions();
+			let halfWidth  = container.size[0] / 2;
+			let halfHeight = container.size[1] / 2;
+			this.keyboards.yawLeft.value = - ((event.pageX - container.offset[0]) - halfWidth) / halfWidth;
+			this.keyboards.pitchDown.value = ((event.pageY - container.offset[1]) - halfHeight) / halfHeight;
+			this.updateRotationVector();
 		}
+	}
+	
+	/**
+	 *
+	 * @param {number} delta
+	 */
+	update(delta) {
+		let moveMultX = delta * this.player.ship.engine.speedX;
+		let moveMultY = delta * this.player.ship.engine.speedY;
+		let moveMultZ = delta * this.player.ship.engine.speedZ;
+		let rotMultXY = delta * this.player.ship.engine.rollSpeedXY;
+		let rotMultZ = delta * this.player.ship.engine.rollSpeedZ;
 
-		this.updateRotationVector();
+		this.object.translateX(this.moveVector.x * moveMultX);
+		this.object.translateY(this.moveVector.y * moveMultY);
+		this.object.translateZ(this.moveVector.z * moveMultZ);
 
-	};
-
-	this.update = function( delta ) {
-
-		var moveMult = delta * this.movementSpeed;
-		var rotMult = delta * this.rollSpeed;
-
-		this.object.translateX( this.moveVector.x * moveMult );
-		this.object.translateY( this.moveVector.y * moveMult );
-		this.object.translateZ( this.moveVector.z * moveMult );
-
-		this.tmpQuaternion.set( this.rotationVector.x * rotMult, this.rotationVector.y * rotMult, this.rotationVector.z * rotMult, 1 ).normalize();
-		this.object.quaternion.multiply( this.tmpQuaternion );
+		this.tmpQuaternion.set(
+			this.rotationVector.x * rotMultXY,
+			this.rotationVector.y * rotMultXY,
+			this.rotationVector.z * rotMultZ,
+			1
+		).normalize();
+		this.object.quaternion.multiply(this.tmpQuaternion);
 
 		// expose the rotation vector for convenience
-		this.object.rotation.setFromQuaternion( this.object.quaternion, this.object.rotation.order );
-
-
-	};
-
-	this.updateMovementVector = function() {
-
-		var forward = ( this.moveState.forward || ( this.autoForward && ! this.moveState.back ) ) ? 1 : 0;
-
-		this.moveVector.x = ( - this.moveState.left    + this.moveState.right );
-		this.moveVector.y = ( - this.moveState.down    + this.moveState.up );
-		this.moveVector.z = ( - forward + this.moveState.back );
-
-		//console.log( 'move:', [ this.moveVector.x, this.moveVector.y, this.moveVector.z ] );
-
-	};
-
-	this.updateRotationVector = function() {
-
-		this.rotationVector.x = ( - this.moveState.pitchDown + this.moveState.pitchUp );
-		this.rotationVector.y = ( - this.moveState.yawRight  + this.moveState.yawLeft );
-		this.rotationVector.z = ( - this.moveState.rollRight + this.moveState.rollLeft );
-
-		//console.log( 'rotate:', [ this.rotationVector.x, this.rotationVector.y, this.rotationVector.z ] );
-
-	};
-
-	this.getContainerDimensions = function() {
-
-		if ( this.domElement != document ) {
-
+		this.object.rotation.setFromQuaternion(this.object.quaternion, this.object.rotation.order);
+	}
+	
+	/**
+	 * @returns {void}
+	 */
+	updateMovementVector() {
+		let forward = (this.keyboards.forward.value || (this.autoForward && ! this.keyboards.back.value)) ? 1 : 0;
+		this.moveVector.x = (- this.keyboards.left.value + this.keyboards.right.value);
+		this.moveVector.y = (- this.keyboards.down.value + this.keyboards.up.value);
+		this.moveVector.z = (- forward + this.keyboards.back.value);
+	}
+	
+	/**
+	 * @returns {void}
+	 */
+	updateRotationVector() {
+		this.rotationVector.x = (- this.keyboards.pitchDown.value + this.keyboards.pitchUp.value);
+		this.rotationVector.y = (- this.keyboards.yawRight.value  + this.keyboards.yawLeft.value);
+		this.rotationVector.z = (- this.keyboards.rollRight.value + this.keyboards.rollLeft.value);
+	}
+	
+	/**
+	 *
+	 * @returns {{size: Array, offset: Array}}
+	 */
+	getContainerDimensions() {
+		if (this.player.container !== document) {
 			return {
-				size	: [ this.domElement.offsetWidth, this.domElement.offsetHeight ],
-				offset	: [ this.domElement.offsetLeft,  this.domElement.offsetTop ]
+				size: [this.player.container.offsetWidth, this.player.container.offsetHeight],
+				offset: [this.player.container.offsetLeft, this.player.container.offsetTop]
 			};
-
 		} else {
-
 			return {
-				size	: [ window.innerWidth, window.innerHeight ],
-				offset	: [ 0, 0 ]
+				size: [window.innerWidth, window.innerHeight],
+				offset: [0, 0]
 			};
-
 		}
-
-	};
-
-	function bind( scope, fn ) {
-
-		return function () {
-
-			fn.apply( scope, arguments );
-
-		};
-
 	}
-
-	function contextmenu( event ) {
-
-		event.preventDefault();
-
-	}
-
-	this.dispose = function() {
-
-		this.domElement.removeEventListener( 'contextmenu', contextmenu, false );
-		this.domElement.removeEventListener( 'mousedown', _mousedown, false );
-		this.domElement.removeEventListener( 'mousemove', _mousemove, false );
-		this.domElement.removeEventListener( 'mouseup', _mouseup, false );
-
-		window.removeEventListener( 'keydown', _keydown, false );
-		window.removeEventListener( 'keyup', _keyup, false );
-
-	};
-
-	var _mousemove = bind( this, this.mousemove );
-	var _mousedown = bind( this, this.mousedown );
-	var _mouseup = bind( this, this.mouseup );
-	var _keydown = bind( this, this.keydown );
-	var _keyup = bind( this, this.keyup );
-
-	this.domElement.addEventListener( 'contextmenu', contextmenu, false );
-
-	this.domElement.addEventListener( 'mousemove', _mousemove, false );
-	this.domElement.addEventListener( 'mousedown', _mousedown, false );
-	this.domElement.addEventListener( 'mouseup',   _mouseup, false );
-
-	window.addEventListener( 'keydown', _keydown, false );
-	window.addEventListener( 'keyup',   _keyup, false );
-
-	this.updateMovementVector();
-	this.updateRotationVector();
-
-};
+}
 
 /* harmony default export */ __webpack_exports__["a"] = (FlyControls);
 
 
 /***/ }),
-/* 12 */
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+class Keyboard {
+	/**
+	 *
+	 * @param {number} keyCode
+	 * @param {string} name
+	 * @param {?string} [type]
+	 */
+	constructor(keyCode, name, type = Keyboard.TYPE_UP_AND_DOWN) {
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.keyCode = keyCode;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.name = name;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.type = type;
+		
+		/**
+		 *
+		 * @type {?number}
+		 */
+		this.valueDown = 1;
+		
+		/**
+		 *
+		 * @type {?number}
+		 */
+		this.valueUp = 0;
+		
+		/**
+		 *
+		 * @type {?number}
+		 */
+		this.value = 0;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static TYPE_SWITCH() {
+		return 'TYPE_SWITCH';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static TYPE_UP() {
+		return 'TYPE_UP';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static TYPE_DOWN() {
+		return 'TYPE_DOWN';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static TYPE_UP_AND_DOWN() {
+		return 'TYPE_UP_AND_DOWN';
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Keyboard);
+
+/***/ }),
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47238,14 +47470,14 @@ class SkyeBoxControls {
 /* harmony default export */ __webpack_exports__["a"] = (SkyeBoxControls);
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__OBJLoader__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MTLLoader__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__OBJLoader__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MTLLoader__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__particles_ships_ShipIncludes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__particles_ships_ShipIncludes__ = __webpack_require__(6);
 
 
 
@@ -47302,7 +47534,7 @@ class PreLoader {
 				this._mtl.load(ship.basePath + ship.mtlFileName, (materials) => {
 					this._obj.setMaterials(materials);
 					this._obj.load(ship.basePath + ship.objFileName, (object) => {
-						ship.model = object;
+						ship.setModel(object);
 						this.loadItem(++start, listener);
 					});
 				});
@@ -47319,7 +47551,7 @@ class PreLoader {
 /* harmony default export */ __webpack_exports__["a"] = (PreLoader);
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48045,7 +48277,7 @@ let OBJLoader = ( function () {
 /* harmony default export */ __webpack_exports__["a"] = (OBJLoader);
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48607,7 +48839,7 @@ MTLLoader.MaterialCreator.prototype = {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48683,20 +48915,20 @@ class Includes {
 		let element = this.includes.find((el) => {
 			return el.key === key;
 		});
-		return element ? element : null;
+		return element ? element.clone() : null;
 	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Includes);
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(7);
 
 
 
@@ -48734,13 +48966,19 @@ class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default *
 		 * @type {string}
 		 */
 		this.mtlFileName = 'explorer.mtl';
+		
+		this.addEventListener(__WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].EVENT_MODEL_UPDATE, (model) => {
+			model.position.z = 0;
+			model.position.y = -2;
+			model.rotation.y = Math.PI;
+		});
 	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerI);
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48764,7 +49002,7 @@ class ParticleError extends Error {
 /* harmony default export */ __webpack_exports__["a"] = (ParticleError);
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48887,12 +49125,12 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Aim);
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(7);
 
 
 
@@ -48910,38 +49148,62 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 	     *
 	     * @type {number}
 	     */
-	    this.speed = 5500;
+	    this.speedX = 1500;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxX = 2000;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedY = 200;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxY = 200;
 	    
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.speedMax = 6000;
+	    this.speedZ = 5500;
+	    
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxZ = 6000;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.rollSpeed = Math.PI / 25;
+	    this.rollSpeedXY = Math.PI / 15;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.rollSpeedMax = Math.PI / 10;
+	    this.rollSpeedZ = Math.PI / 5;
     }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (EngineIM20);
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(24);
 
 
 
@@ -48967,12 +49229,12 @@ class ShipExplorerII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerII);
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(8);
 
 
 
@@ -48991,13 +49253,13 @@ class EngineIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default *
 /* harmony default export */ __webpack_exports__["a"] = (EngineIIM20);
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(26);
 
 
 
@@ -49023,12 +49285,12 @@ class ShipExplorerIII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerIII);
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(9);
 
 
 
@@ -49047,31 +49309,56 @@ class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = (EngineIIIM20);
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(5);
+
 
 
 
 class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
-	
-	constructor() {
+	/**
+	 *
+	 * @param {HTMLElement} container
+	 */
+	constructor(container) {
 		super();
 		
 		/**
+		 *
+		 * @type {HTMLElement|HTMLDocument}
+		 */
+		this.container = container;
+		
+		/**
+		 * Disable player
 		 *
 		 * @type {boolean}
 		 */
 		this.isActiv = true;
 		
 		/**
+		 * Disable fly
+		 *
+		 * @type {boolean}
+		 */
+		this.isFly = true;
+		
+		/**
 		 *
 		 * @type {?Ship}
 		 */
 		this.ship = null;
+		
+		/**
+		 *
+		 * @type {KeyboardControls}
+		 */
+		this.keyboards = new __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */](this.container);
 	}
 	
 	/**
@@ -49103,7 +49390,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Player);
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49124,7 +49411,7 @@ class User {
 /* harmony default export */ __webpack_exports__["a"] = (User);
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

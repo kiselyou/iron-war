@@ -13,31 +13,72 @@ class Engine extends Particle {
          *
 		 * @type {number}
 		 */
-		this.speedMin = 0;
+		this.speedMinX = 0;
 		
 		/**
          *
 		 * @type {number}
 		 */
-        this.speedMax = 0;
+        this.speedMaxX = 0;
+        
+        /**
+         *
+		 * @type {number}
+		 */
+		this.speedMinY = 0;
 		
 		/**
          *
 		 * @type {number}
 		 */
-		this.speed = 0;
+        this.speedMaxY = 0;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.rollSpeed = Math.PI / 25;
+		this.speedMinZ = 0;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.rollSpeedMax = Math.PI / 10;
+		this.speedMaxZ = 0;
+		
+		/**
+		 * Left or right moving speed
+         *
+		 * @type {number}
+		 */
+		this.speedX = 0;
+		
+		/**
+		 * Up or Down moving speed
+		 *
+		 * @type {number}
+		 */
+		this.speedY = 0;
+		
+		/**
+		 * Direct moving speed
+         *
+		 * @type {number}
+		 */
+		this.speedZ = 0;
+		
+		/**
+		 * Speed rotate to X or Y
+		 *
+		 * @type {number}
+		 */
+		this.rollSpeedXY = Math.PI / 45;
+		
+		/**
+		 * Speed rotation around axis Z
+		 *
+		 * @type {number}
+		 */
+		this.rollSpeedZ = Math.PI / 5;
     }
 	
 	/**

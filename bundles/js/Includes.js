@@ -70,7 +70,7 @@ class Includes {
 		let element = this.includes.find((el) => {
 			return el.key === key;
 		});
-		return element ? element : null;
+		return element ? element.clone() : null;
 	}
 }
 

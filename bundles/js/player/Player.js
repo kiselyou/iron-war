@@ -1,22 +1,46 @@
 import User from './User';
 import ShipIncludes from './../particles/ships/ShipIncludes';
+import KeyboardControls from './../keyboard/KeyboardControls';
 
 class Player extends User {
-	
-	constructor() {
+	/**
+	 *
+	 * @param {HTMLElement} container
+	 */
+	constructor(container) {
 		super();
 		
 		/**
+		 *
+		 * @type {HTMLElement|HTMLDocument}
+		 */
+		this.container = container;
+		
+		/**
+		 * Disable player
 		 *
 		 * @type {boolean}
 		 */
 		this.isActiv = true;
 		
 		/**
+		 * Disable fly
+		 *
+		 * @type {boolean}
+		 */
+		this.isFly = true;
+		
+		/**
 		 *
 		 * @type {?Ship}
 		 */
 		this.ship = null;
+		
+		/**
+		 *
+		 * @type {KeyboardControls}
+		 */
+		this.keyboards = new KeyboardControls(this.container);
 	}
 	
 	/**

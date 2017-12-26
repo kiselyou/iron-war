@@ -54,7 +54,7 @@ class PreLoader {
 				this._mtl.load(ship.basePath + ship.mtlFileName, (materials) => {
 					this._obj.setMaterials(materials);
 					this._obj.load(ship.basePath + ship.objFileName, (object) => {
-						ship.model = object;
+						ship.setModel(object);
 						this.loadItem(++start, listener);
 					});
 				});

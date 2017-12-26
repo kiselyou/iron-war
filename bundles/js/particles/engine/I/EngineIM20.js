@@ -15,25 +15,49 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.speed = 5500;
+	    this.speedX = 1500;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxX = 2000;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedY = 200;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxY = 200;
 	    
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.speedMax = 6000;
+	    this.speedZ = 5500;
+	    
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxZ = 6000;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.rollSpeed = Math.PI / 25;
+	    this.rollSpeedXY = Math.PI / 15;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.rollSpeedMax = Math.PI / 10;
+	    this.rollSpeedZ = Math.PI / 5;
     }
 }
 

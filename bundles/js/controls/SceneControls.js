@@ -80,7 +80,7 @@ class SceneControls {
 		 *
 		 * @type {Player}
 		 */
-		this.player = new Player();
+		this.player = new Player(this.container);
 		
 		/**
 		 *
@@ -104,18 +104,12 @@ class SceneControls {
 		this.loader.load(() => {
 			this.player.updateModel();
 			this.model = this.player.getModel();
-			this.model.position.z = 0;
-			this.model.position.y = -2;
-			this.model.rotation.y = Math.PI;
 			
-			this.flyControls = new FlyControls(this.camera, this.container);
-			this.flyControls.movementSpeed = this.player.ship.engine.speed;
-			this.flyControls.rollSpeed = this.player.ship.engine.rollSpeed;
+			this.flyControls = new FlyControls(this.camera, this.player);
 			this.flyControls.autoForward = false;
 			this.flyControls.dragToLook = false;
 			
 			this.camera.add(this.player.getAim());
-			
 			this.camera.add(this.model);
 			this.scene.add(this.camera);
 			this._animate();
@@ -171,9 +165,9 @@ class SceneControls {
 		
 		let delta = this.clock.getDelta();
 		
-		if (this.player.isActiv) {
-			this.skyBoxControls.update(this.camera.position);
+		if (this.player.isActiv && this.player.isFly) {
 			this.flyControls.update(delta);
+			this.skyBoxControls.update(this.camera.position);
 		}
 		
 		this.renderer.render(this.scene, this.camera);

@@ -35,6 +35,12 @@ class ShipExplorerI extends Ship {
 		 * @type {string}
 		 */
 		this.mtlFileName = 'explorer.mtl';
+		
+		this.addEventListener(Ship.EVENT_MODEL_UPDATE, (model) => {
+			model.position.z = 0;
+			model.position.y = -2;
+			model.rotation.y = Math.PI;
+		});
 	}
 }
 
