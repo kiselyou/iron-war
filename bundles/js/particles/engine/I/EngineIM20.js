@@ -45,6 +45,12 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
+	    this.speedMinZ = - 1000;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
 	    this.speedMaxZ = 6000;
 	
 	    /**

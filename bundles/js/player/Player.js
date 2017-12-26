@@ -21,14 +21,7 @@ class Player extends User {
 		 *
 		 * @type {boolean}
 		 */
-		this.isActiv = true;
-		
-		/**
-		 * Disable fly
-		 *
-		 * @type {boolean}
-		 */
-		this.isFly = true;
+		this.isEnabled = true;
 		
 		/**
 		 *

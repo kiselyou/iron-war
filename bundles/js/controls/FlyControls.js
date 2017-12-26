@@ -24,15 +24,9 @@ class FlyControls {
 		
 		/**
 		 *
-		 * @type {KeyboardControls}
+		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
 		 */
 		this.keyboards = player.keyboards.fly;
-		
-		/**
-		 *
-		 * @type {boolean}
-		 */
-		this.dragToLook = false;
 		
 		/**
 		 *
@@ -45,12 +39,6 @@ class FlyControls {
 		 * @type {Quaternion}
 		 */
 		this.tmpQuaternion = new THREE.Quaternion();
-		
-		/**
-		 *
-		 * @type {number}
-		 */
-		this.mouseStatus = 0;
 		
 		/**
 		 *
@@ -71,14 +59,18 @@ class FlyControls {
 			this.mousemove(event);
 		});
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, () => {
+		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, (event, keyboard) => {
 			this.updateMovementVector();
 			this.updateRotationVector();
 		});
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_DOWN, () => {
+		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_DOWN, (event, keyboard) => {
 			this.updateMovementVector();
 			this.updateRotationVector();
+			
+			if (keyboard.key === 'space') {
+				this.player.container.style.cursor = (keyboard.value === 1) ? 'none' : '';
+			}
 		});
 	}
 	
@@ -88,7 +80,7 @@ class FlyControls {
 	 * @returns {void}
 	 */
 	mousemove(event) {
-		if (!this.dragToLook || this.mouseStatus > 0) {
+		if (this.keyboards.space.value === 1) {
 			let container = this.getContainerDimensions();
 			let halfWidth  = container.size[0] / 2;
 			let halfHeight = container.size[1] / 2;
@@ -103,6 +95,10 @@ class FlyControls {
 	 * @param {number} delta
 	 */
 	update(delta) {
+		if (this.keyboards.space.value === 0 || !this.player.isEnabled) {
+			return;
+		}
+		
 		let moveMultX = delta * this.player.ship.engine.speedX;
 		let moveMultY = delta * this.player.ship.engine.speedY;
 		let moveMultZ = delta * this.player.ship.engine.speedZ;

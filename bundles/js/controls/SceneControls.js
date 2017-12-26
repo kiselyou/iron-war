@@ -165,7 +165,7 @@ class SceneControls {
 		
 		let delta = this.clock.getDelta();
 		
-		if (this.player.isActiv && this.player.isFly) {
+		if (this.player.isEnabled) {
 			this.flyControls.update(delta);
 			this.skyBoxControls.update(this.camera.position);
 		}

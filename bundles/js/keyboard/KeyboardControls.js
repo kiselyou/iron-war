@@ -18,19 +18,19 @@ class KeyboardControls {
 		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
 		 */
 		this.fly = {
-			forward: new Keyboard(87, 'W'),
-			back: new Keyboard(83, 'S'),
-			left: new Keyboard(65, 'A'),
-			right: new Keyboard(68, 'D'),
-			rollLeft: new Keyboard(81, 'Q'),
-			rollRight: new Keyboard(69, 'E'),
-			yawLeft: new Keyboard(37, 'Left'),
-			yawRight: new Keyboard(39, 'Right'),
-			pitchUp: new Keyboard(38, 'Up'),
-			pitchDown: new Keyboard(40, 'Down'),
-			up: new Keyboard(82, 'R'),
-			down: new Keyboard(70, 'F'),
-			space: new Keyboard(8, 'Back Space', Keyboard.TYPE_SWITCH)
+			forward: new Keyboard(87, 'W', 'forward'),
+			back: new Keyboard(83, 'S', 'back'),
+			left: new Keyboard(65, 'A', 'left'),
+			right: new Keyboard(68, 'D', 'right'),
+			rollLeft: new Keyboard(81, 'Q', 'rollLeft'),
+			rollRight: new Keyboard(69, 'E', 'rollRight'),
+			yawLeft: new Keyboard(37, 'Left', 'yawLeft'),
+			yawRight: new Keyboard(39, 'Right', 'yawRight'),
+			pitchUp: new Keyboard(38, 'Up', 'pitchUp'),
+			pitchDown: new Keyboard(40, 'Down', 'pitchDown'),
+			up: new Keyboard(82, 'R', 'up'),
+			down: new Keyboard(70, 'F', 'down'),
+			space: new Keyboard(32, 'Space', 'space', Keyboard.DOWN_TOGGLE)
 		};
 		
 		domElement.addEventListener('contextmenu', (event) => {
@@ -66,7 +66,7 @@ class KeyboardControls {
 	
 	/**
 	 *
-	 * @param {string} type
+	 * @param {string} type - There are constants of current class
 	 * @param {keyboardControlsListener} listener
 	 * @returns {KeyboardControls}
 	 */
@@ -76,6 +76,58 @@ class KeyboardControls {
 		}
 		this.listeners[type].push(listener);
 		return this;
+	}
+	
+	/**
+	 *
+	 * @param {KeyboardEvent} event
+	 */
+	keydown(event) {
+		if (event.altKey) {
+			return;
+		}
+		
+		let keyboard = this._findKeyboard(event.keyCode);
+		if (keyboard) {
+			switch (keyboard.type) {
+				case Keyboard.DOWN_TOGGLE:
+					keyboard.toggle();
+					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+					break;
+				case Keyboard.DOWN_OR_UP_CHANGE:
+					keyboard.value = keyboard.valueOn;
+					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+					break;
+				case Keyboard.DOWN_CHANGE:
+					keyboard.value = keyboard.valueOn;
+					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+					break;
+			}
+		}
+	}
+	
+	/**
+	 *
+	 * @param {KeyboardEvent} event
+	 */
+	keyup(event) {
+		let keyboard = this._findKeyboard(event.keyCode);
+		if (keyboard) {
+			switch (keyboard.type) {
+				case Keyboard.UP_TOGGLE:
+					keyboard.toggle();
+					this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+					break;
+				case Keyboard.DOWN_OR_UP_CHANGE:
+					keyboard.value = keyboard.valueOff;
+					this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+					break;
+				case Keyboard.UP_CHANGE:
+					keyboard.value = keyboard.valueOff;
+					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+					break;
+			}
+		}
 	}
 	
 	/**
@@ -96,79 +148,6 @@ class KeyboardControls {
 	
 	/**
 	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_KEY_DOWN() {
-		return 'EVENT_KEY_DOWN';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_KEY_UP() {
-		return 'EVENT_KEY_UP';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_MOUSE_MOVE() {
-		return 'EVENT_MOUSE_MOVE';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_MOUSE_DOWN() {
-		return 'EVENT_MOUSE_DOWN';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_MOUSE_UP() {
-		return 'EVENT_MOUSE_UP';
-	}
-	
-	/**
-	 *
-	 * @param {KeyboardEvent} event
-	 */
-	keydown(event) {
-		if (event.altKey) {
-			return;
-		}
-		
-		let keyboard = this._findKeyboard(event.keyCode);
-		if (keyboard) {
-			keyboard.value = keyboard.valueDown;
-			this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-		}
-	}
-	
-	/**
-	 *
-	 * @param {KeyboardEvent} event
-	 */
-	keyup(event) {
-		let keyboard = this._findKeyboard(event.keyCode);
-		if (keyboard) {
-			keyboard.value = keyboard.valueUp;
-			this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
-		}
-	}
-	
-	/**
-	 *
 	 * @param {number} keyCode
 	 * @returns {Keyboard}
 	 * @private
@@ -177,12 +156,57 @@ class KeyboardControls {
 		for (let key in this.fly) {
 			if (this.fly.hasOwnProperty(key)) {
 				let keyboard = this.fly[key];
-				if (this.fly[key]['keyCode'] === keyCode) {
-					return this.fly[key];
+				if (keyboard['keyCode'] === keyCode) {
+					return keyboard;
 				}
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_KEY_DOWN() {
+		return 'EVENT_KEY_DOWN';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_KEY_UP() {
+		return 'EVENT_KEY_UP';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_MOVE() {
+		return 'EVENT_MOUSE_MOVE';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_DOWN() {
+		return 'EVENT_MOUSE_DOWN';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_UP() {
+		return 'EVENT_MOUSE_UP';
 	}
 }
 

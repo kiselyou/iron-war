@@ -4,14 +4,21 @@ class Keyboard {
 	 *
 	 * @param {number} keyCode
 	 * @param {string} name
-	 * @param {?string} [type]
+	 * @param {string} key
+	 * @param {string} [type]
 	 */
-	constructor(keyCode, name, type = Keyboard.TYPE_UP_AND_DOWN) {
+	constructor(keyCode, name, key, type = Keyboard.DOWN_OR_UP_CHANGE) {
 		/**
 		 *
 		 * @type {number}
 		 */
 		this.keyCode = keyCode;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.key = key;
 		
 		/**
 		 *
@@ -29,51 +36,68 @@ class Keyboard {
 		 *
 		 * @type {?number}
 		 */
-		this.valueDown = 1;
+		this.valueOn = 1;
 		
 		/**
 		 *
 		 * @type {?number}
 		 */
-		this.valueUp = 0;
+		this.valueOff = 0;
 		
 		/**
 		 *
 		 * @type {?number}
 		 */
-		this.value = 0;
+		this.value = this.valueOff;
+	}
+	
+	clear() {
+		this.value = this.valueOff;
+	}
+	
+	toggle() {
+		this.value = (this.value === this.valueOff) ? this.valueOn : this.valueOff;
+		return this;
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static TYPE_SWITCH() {
-		return 'TYPE_SWITCH';
+	static get DOWN_OR_UP_CHANGE() {
+		return 'DOWN_OR_UP_CHANGE';
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static TYPE_UP() {
-		return 'TYPE_UP';
+	static get DOWN_TOGGLE() {
+		return 'DOWN_TOGGLE';
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static TYPE_DOWN() {
-		return 'TYPE_DOWN';
+	static get UP_TOGGLE() {
+		return 'UP_TOGGLE';
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static TYPE_UP_AND_DOWN() {
-		return 'TYPE_UP_AND_DOWN';
+	static get UP_CHANGE() {
+		return 'UP_CHANGE';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get DOWN_CHANGE() {
+		return 'DOWN_CHANGE';
 	}
 }
 

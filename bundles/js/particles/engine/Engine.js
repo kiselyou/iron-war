@@ -71,14 +71,26 @@ class Engine extends Particle {
 		 *
 		 * @type {number}
 		 */
-		this.rollSpeedXY = Math.PI / 45;
+		this.rollSpeedXY = 0;
 		
 		/**
 		 * Speed rotation around axis Z
 		 *
 		 * @type {number}
 		 */
-		this.rollSpeedZ = Math.PI / 5;
+		this.rollSpeedZ = 0;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.acceleration = 0;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.deceleration = 0;
     }
 	
 	/**

@@ -46392,14 +46392,26 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 		 *
 		 * @type {number}
 		 */
-		this.rollSpeedXY = Math.PI / 45;
+		this.rollSpeedXY = 0;
 		
 		/**
 		 * Speed rotation around axis Z
 		 *
 		 * @type {number}
 		 */
-		this.rollSpeedZ = Math.PI / 5;
+		this.rollSpeedZ = 0;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.acceleration = 0;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.deceleration = 0;
     }
 	
 	/**
@@ -46560,21 +46572,20 @@ class KeyboardControls {
 		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
 		 */
 		this.fly = {
-			forward: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](87, 'W'),
-			back: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](83, 'S'),
-			left: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](65, 'A'),
-			right: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](68, 'D'),
-			rollLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](81, 'Q'),
-			rollRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](69, 'E'),
-			yawLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](37, 'Left'),
-			yawRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](39, 'Right'),
-			pitchUp: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](38, 'Up'),
-			pitchDown: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](40, 'Down'),
-			up: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](82, 'R'),
-			down: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](70, 'F'),
-			space: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](8, 'Back Space', __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].TYPE_SWITCH)
+			forward: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](87, 'W', 'forward'),
+			back: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](83, 'S', 'back'),
+			left: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](65, 'A', 'left'),
+			right: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](68, 'D', 'right'),
+			rollLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](81, 'Q', 'rollLeft'),
+			rollRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](69, 'E', 'rollRight'),
+			yawLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](37, 'Left', 'yawLeft'),
+			yawRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](39, 'Right', 'yawRight'),
+			pitchUp: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](38, 'Up', 'pitchUp'),
+			pitchDown: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](40, 'Down', 'pitchDown'),
+			up: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](82, 'R', 'up'),
+			down: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](70, 'F', 'down'),
+			space: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](32, 'Space', 'space', __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_TOGGLE)
 		};
-		
 		
 		domElement.addEventListener('contextmenu', (event) => {
 			event.preventDefault();
@@ -46609,7 +46620,7 @@ class KeyboardControls {
 	
 	/**
 	 *
-	 * @param {string} type
+	 * @param {string} type - There are constants of current class
 	 * @param {keyboardControlsListener} listener
 	 * @returns {KeyboardControls}
 	 */
@@ -46619,6 +46630,58 @@ class KeyboardControls {
 		}
 		this.listeners[type].push(listener);
 		return this;
+	}
+	
+	/**
+	 *
+	 * @param {KeyboardEvent} event
+	 */
+	keydown(event) {
+		if (event.altKey) {
+			return;
+		}
+		
+		let keyboard = this._findKeyboard(event.keyCode);
+		if (keyboard) {
+			switch (keyboard.type) {
+				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_TOGGLE:
+					keyboard.toggle();
+					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+					break;
+				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_OR_UP_CHANGE:
+					keyboard.value = keyboard.valueOn;
+					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+					break;
+				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_CHANGE:
+					keyboard.value = keyboard.valueOn;
+					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+					break;
+			}
+		}
+	}
+	
+	/**
+	 *
+	 * @param {KeyboardEvent} event
+	 */
+	keyup(event) {
+		let keyboard = this._findKeyboard(event.keyCode);
+		if (keyboard) {
+			switch (keyboard.type) {
+				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].UP_TOGGLE:
+					keyboard.toggle();
+					this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+					break;
+				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_OR_UP_CHANGE:
+					keyboard.value = keyboard.valueOff;
+					this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+					break;
+				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].UP_CHANGE:
+					keyboard.value = keyboard.valueOff;
+					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+					break;
+			}
+		}
 	}
 	
 	/**
@@ -46639,79 +46702,6 @@ class KeyboardControls {
 	
 	/**
 	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_KEY_DOWN() {
-		return 'EVENT_KEY_DOWN';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_KEY_UP() {
-		return 'EVENT_KEY_UP';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_MOUSE_MOVE() {
-		return 'EVENT_MOUSE_MOVE';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_MOUSE_DOWN() {
-		return 'EVENT_MOUSE_DOWN';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static EVENT_MOUSE_UP() {
-		return 'EVENT_MOUSE_UP';
-	}
-	
-	/**
-	 *
-	 * @param {KeyboardEvent} event
-	 */
-	keydown(event) {
-		if (event.altKey) {
-			return;
-		}
-		
-		let keyboard = this._findKeyboard(event.keyCode);
-		if (keyboard) {
-			keyboard.value = keyboard.valueDown;
-			this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-		}
-	}
-	
-	/**
-	 *
-	 * @param {KeyboardEvent} event
-	 */
-	keyup(event) {
-		let keyboard = this._findKeyboard(event.keyCode);
-		if (keyboard) {
-			keyboard.value = keyboard.valueUp;
-			this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
-		}
-	}
-	
-	/**
-	 *
 	 * @param {number} keyCode
 	 * @returns {Keyboard}
 	 * @private
@@ -46720,12 +46710,57 @@ class KeyboardControls {
 		for (let key in this.fly) {
 			if (this.fly.hasOwnProperty(key)) {
 				let keyboard = this.fly[key];
-				if (this.fly[key]['keyCode'] === keyCode) {
-					return this.fly[key];
+				if (keyboard['keyCode'] === keyCode) {
+					return keyboard;
 				}
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_KEY_DOWN() {
+		return 'EVENT_KEY_DOWN';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_KEY_UP() {
+		return 'EVENT_KEY_UP';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_MOVE() {
+		return 'EVENT_MOUSE_MOVE';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_DOWN() {
+		return 'EVENT_MOUSE_DOWN';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_UP() {
+		return 'EVENT_MOUSE_UP';
 	}
 }
 
@@ -47026,7 +47061,7 @@ class SceneControls {
 		
 		let delta = this.clock.getDelta();
 		
-		if (this.player.isActiv && this.player.isFly) {
+		if (this.player.isEnabled) {
 			this.flyControls.update(delta);
 			this.skyBoxControls.update(this.camera.position);
 		}
@@ -47111,15 +47146,9 @@ class FlyControls {
 		
 		/**
 		 *
-		 * @type {KeyboardControls}
+		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
 		 */
 		this.keyboards = player.keyboards.fly;
-		
-		/**
-		 *
-		 * @type {boolean}
-		 */
-		this.dragToLook = false;
 		
 		/**
 		 *
@@ -47132,12 +47161,6 @@ class FlyControls {
 		 * @type {Quaternion}
 		 */
 		this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* Quaternion */]();
-		
-		/**
-		 *
-		 * @type {number}
-		 */
-		this.mouseStatus = 0;
 		
 		/**
 		 *
@@ -47158,14 +47181,18 @@ class FlyControls {
 			this.mousemove(event);
 		});
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_1__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, () => {
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_1__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, (event, keyboard) => {
 			this.updateMovementVector();
 			this.updateRotationVector();
 		});
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_1__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_DOWN, () => {
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_1__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_DOWN, (event, keyboard) => {
 			this.updateMovementVector();
 			this.updateRotationVector();
+			
+			if (keyboard.key === 'space') {
+				this.player.container.style.cursor = (keyboard.value === 1) ? 'none' : '';
+			}
 		});
 	}
 	
@@ -47175,7 +47202,7 @@ class FlyControls {
 	 * @returns {void}
 	 */
 	mousemove(event) {
-		if (!this.dragToLook || this.mouseStatus > 0) {
+		if (this.keyboards.space.value === 1) {
 			let container = this.getContainerDimensions();
 			let halfWidth  = container.size[0] / 2;
 			let halfHeight = container.size[1] / 2;
@@ -47190,6 +47217,10 @@ class FlyControls {
 	 * @param {number} delta
 	 */
 	update(delta) {
+		if (this.keyboards.space.value === 0 || !this.player.isEnabled) {
+			return;
+		}
+		
 		let moveMultX = delta * this.player.ship.engine.speedX;
 		let moveMultY = delta * this.player.ship.engine.speedY;
 		let moveMultZ = delta * this.player.ship.engine.speedZ;
@@ -47264,14 +47295,21 @@ class Keyboard {
 	 *
 	 * @param {number} keyCode
 	 * @param {string} name
-	 * @param {?string} [type]
+	 * @param {string} key
+	 * @param {string} [type]
 	 */
-	constructor(keyCode, name, type = Keyboard.TYPE_UP_AND_DOWN) {
+	constructor(keyCode, name, key, type = Keyboard.DOWN_OR_UP_CHANGE) {
 		/**
 		 *
 		 * @type {number}
 		 */
 		this.keyCode = keyCode;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.key = key;
 		
 		/**
 		 *
@@ -47289,51 +47327,68 @@ class Keyboard {
 		 *
 		 * @type {?number}
 		 */
-		this.valueDown = 1;
+		this.valueOn = 1;
 		
 		/**
 		 *
 		 * @type {?number}
 		 */
-		this.valueUp = 0;
+		this.valueOff = 0;
 		
 		/**
 		 *
 		 * @type {?number}
 		 */
-		this.value = 0;
+		this.value = this.valueOff;
+	}
+	
+	clear() {
+		this.value = this.valueOff;
+	}
+	
+	toggle() {
+		this.value = (this.value === this.valueOff) ? this.valueOn : this.valueOff;
+		return this;
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static TYPE_SWITCH() {
-		return 'TYPE_SWITCH';
+	static get DOWN_OR_UP_CHANGE() {
+		return 'DOWN_OR_UP_CHANGE';
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static TYPE_UP() {
-		return 'TYPE_UP';
+	static get DOWN_TOGGLE() {
+		return 'DOWN_TOGGLE';
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static TYPE_DOWN() {
-		return 'TYPE_DOWN';
+	static get UP_TOGGLE() {
+		return 'UP_TOGGLE';
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static TYPE_UP_AND_DOWN() {
-		return 'TYPE_UP_AND_DOWN';
+	static get UP_CHANGE() {
+		return 'UP_CHANGE';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get DOWN_CHANGE() {
+		return 'DOWN_CHANGE';
 	}
 }
 
@@ -49178,6 +49233,12 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 	     *
 	     * @type {number}
 	     */
+	    this.speedMinZ = - 1000;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
 	    this.speedMaxZ = 6000;
 	
 	    /**
@@ -49339,14 +49400,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 *
 		 * @type {boolean}
 		 */
-		this.isActiv = true;
-		
-		/**
-		 * Disable fly
-		 *
-		 * @type {boolean}
-		 */
-		this.isFly = true;
+		this.isEnabled = true;
 		
 		/**
 		 *
