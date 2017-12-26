@@ -46908,7 +46908,7 @@ class SceneControls {
 	 * @param {string} [containerID]
 	 */
 	constructor(containerID) {
-		const FAR = 25000;
+		const FAR = 100000;
 		
 		/**
 		 *
@@ -46925,7 +46925,7 @@ class SceneControls {
 		 */
 		this.scene = new __WEBPACK_IMPORTED_MODULE_0_three__["C" /* Scene */]();
 		this.scene.background = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Color */]().setHSL(0.7, 0.4, 0.03);
-		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* Fog */](this.scene.background, 15000, FAR);
+		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* Fog */](this.scene.background, 35000, FAR);
 		
 		/**
 		 *
@@ -46943,10 +46943,6 @@ class SceneControls {
 		if (!this.container) {
 			throw new Error('Cannot find container with ID: ' + containerID);
 		}
-		
-		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["G" /* TextureLoader */]();
-		this.textureFlare0 = textureLoader.load("textures/lensflare/lensflare0.png");
-		this.textureFlare3 = textureLoader.load("textures/lensflare/lensflare3.png");
 		
 		/**
 		 *
@@ -47022,11 +47018,11 @@ class SceneControls {
 		let s = 250;
 		let cube = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* BoxGeometry */](s, s, s);
 		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["w" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 1000; i ++) {
+		for (let i = 0; i < 300; i ++) {
 			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["u" /* Mesh */](cube, material);
-			mesh.position.x = 28000 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 28000 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = 28000 * (2.0 * Math.random() - 1.0);
+			mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
+			mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
+			mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
 			mesh.rotation.x = Math.random() * Math.PI;
 			mesh.rotation.y = Math.random() * Math.PI;
 			mesh.rotation.z = Math.random() * Math.PI;
@@ -47414,7 +47410,7 @@ class SkyeBoxControls {
 		 * @type {number}
 		 * @private
 		 */
-		this._size = 15000;
+		this._size = 500;
 		
 		/**
 		 *
@@ -47441,12 +47437,10 @@ class SkyeBoxControls {
 		this.textureFlare3 = textureLoader.load('textures/lensflare/lensflare3.png');
 		this.textureSky = textureLoader.load('textures/skybox/003_space.jpg');
 		
-		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* Vector3 */](0, 0, -10000);
+		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* Vector3 */](0, -1500, -10000);
 		
 		this.sky = this.initSky(this.textureSky);
-		this.initLight(this.sky, 0.1, 0.4, 0.8);
-		
-		// this.initLight(this.sky, 0.181, 0.100, 0.250);
+		this.initLight(this.sky, 0.1, 0.4, 0.8, 700, new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* Vector3 */](-15, -60, -450));
 		
 		this.scene.add(this.sky);
 	}
@@ -47457,17 +47451,19 @@ class SkyeBoxControls {
 	 * @param {number} h
 	 * @param {number} s
 	 * @param {number} l
+	 * @param {number} size
+	 * @param {Vector3} v
 	 * @returns {LensFlare}
 	 */
-	initLight(el, h, s, l) {
+	initLight(el, h, s, l, size, v) {
 		let light = new __WEBPACK_IMPORTED_MODULE_0_three__["z" /* PointLight */](0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
-		light.position.copy(this.position);
+		light.position.copy(v);
 		el.add(light);
 		let flareColor = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Color */](0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
 		
-		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* LensFlare */](this.textureFlare0, 1000, 0.0, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */], flareColor);
+		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* LensFlare */](this.textureFlare0, size, 0.0, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */], flareColor);
 		lensFlare.add(this.textureFlare3, 60, 0.6, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
 		lensFlare.add(this.textureFlare3, 70, 0.7, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
 		lensFlare.add(this.textureFlare3, 120, 0.9, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
@@ -47503,6 +47499,7 @@ class SkyeBoxControls {
 		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* MeshStandardMaterial */]({
 			map: texture
 		});
+		
 		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["F" /* SphereGeometry */](this._size, this.wSegments, this.hSegments);
 		let sky = new __WEBPACK_IMPORTED_MODULE_0_three__["u" /* Mesh */](geometry, material);
 		sky.material.side = __WEBPACK_IMPORTED_MODULE_0_three__["b" /* BackSide */];

@@ -12,7 +12,7 @@ class SkyeBoxControls {
 		 * @type {number}
 		 * @private
 		 */
-		this._size = 15000;
+		this._size = 500;
 		
 		/**
 		 *
@@ -39,12 +39,10 @@ class SkyeBoxControls {
 		this.textureFlare3 = textureLoader.load('textures/lensflare/lensflare3.png');
 		this.textureSky = textureLoader.load('textures/skybox/003_space.jpg');
 		
-		this.position = new THREE.Vector3(0, 0, -10000);
+		this.position = new THREE.Vector3(0, -1500, -10000);
 		
 		this.sky = this.initSky(this.textureSky);
-		this.initLight(this.sky, 0.1, 0.4, 0.8);
-		
-		// this.initLight(this.sky, 0.181, 0.100, 0.250);
+		this.initLight(this.sky, 0.1, 0.4, 0.8, 700, new THREE.Vector3(-15, -60, -450));
 		
 		this.scene.add(this.sky);
 	}
@@ -55,17 +53,19 @@ class SkyeBoxControls {
 	 * @param {number} h
 	 * @param {number} s
 	 * @param {number} l
+	 * @param {number} size
+	 * @param {Vector3} v
 	 * @returns {LensFlare}
 	 */
-	initLight(el, h, s, l) {
+	initLight(el, h, s, l, size, v) {
 		let light = new THREE.PointLight(0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
-		light.position.copy(this.position);
+		light.position.copy(v);
 		el.add(light);
 		let flareColor = new THREE.Color(0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
 		
-		let lensFlare = new THREE.LensFlare(this.textureFlare0, 1000, 0.0, THREE.AdditiveBlending, flareColor);
+		let lensFlare = new THREE.LensFlare(this.textureFlare0, size, 0.0, THREE.AdditiveBlending, flareColor);
 		lensFlare.add(this.textureFlare3, 60, 0.6, THREE.AdditiveBlending);
 		lensFlare.add(this.textureFlare3, 70, 0.7, THREE.AdditiveBlending);
 		lensFlare.add(this.textureFlare3, 120, 0.9, THREE.AdditiveBlending);
@@ -101,6 +101,7 @@ class SkyeBoxControls {
 		let material = new THREE.MeshStandardMaterial({
 			map: texture
 		});
+		
 		let geometry = new THREE.SphereGeometry(this._size, this.wSegments, this.hSegments);
 		let sky = new THREE.Mesh(geometry, material);
 		sky.material.side = THREE.BackSide;
