@@ -84,7 +84,13 @@ class Engine extends Particle {
 		 *
 		 * @type {number}
 		 */
-		this.acceleration = 0;
+		this.accelerationForward = 0;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.accelerationBack = 0;
 		
 		/**
 		 *
@@ -94,9 +100,65 @@ class Engine extends Particle {
     }
 	
 	/**
+	 *
+	 * @param {string} direction
+	 * @param {number} delta
+	 * @returns {Engine}
+	 */
+	start(direction, delta) {
+        switch (direction) {
+	        case Engine.DIRECTION_FORWARD:
+		        this.speedZ += delta * this.accelerationForward;
+	        	break;
+	        case Engine.DIRECTION_BACK:
+		        this.speedZ -= delta * ((this.speedZ > 0) ? this.deceleration : this.accelerationBack);
+		        break;
+        }
+	    return this;
+    }
+	
+	/**
+	 *
+	 * @param {number} delta
+	 * @returns {Engine}
+	 */
+	stop(delta) {
+    	let v = Math.round(delta * this.deceleration);
+    	if (this.speedZ > 0) {
+    		if (this.speedZ - v > 0) {
+			    this.speedZ -= v;
+		    } else {
+			    this.speedZ = 0;
+		    }
+    	} else if (this.speedZ < 0) {
+    		if (this.speedZ + v < 0) {
+			    this.speedZ += v;
+		    } else {
+			    this.speedZ = 0;
+		    }
+	    }
+	    return this;
+    }
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+    static get DIRECTION_FORWARD() {
+    	return 'DIRECTION_FORWARD';
+    }
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get DIRECTION_BACK() {
+		return 'DIRECTION_BACK';
+	}
+	
+	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static I_M20_KEY() {
         return 'I_M20_KEY';
@@ -105,7 +167,6 @@ class Engine extends Particle {
 	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static II_M20_KEY() {
 		return 'II_M20_KEY';
@@ -114,7 +175,6 @@ class Engine extends Particle {
 	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static III_M20_KEY() {
 		return 'III_M20_KEY';
@@ -123,7 +183,6 @@ class Engine extends Particle {
 	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static I_M50_KEY() {
         return 'I_M50_KEY';
@@ -132,7 +191,6 @@ class Engine extends Particle {
 	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static II_M50_KEY() {
 		return 'II_M50_KEY';
@@ -141,7 +199,6 @@ class Engine extends Particle {
 	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static III_M50_KEY() {
 		return 'III_M50_KEY';
@@ -150,7 +207,6 @@ class Engine extends Particle {
 	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static I_M100_KEY() {
 		return 'I_M100_KEY';
@@ -159,7 +215,6 @@ class Engine extends Particle {
 	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static II_M100_KEY() {
 		return 'II_M100_KEY';
@@ -168,7 +223,6 @@ class Engine extends Particle {
 	/**
      *
 	 * @returns {string}
-	 * @constructor
 	 */
 	static III_M100_KEY() {
 		return 'III_M100_KEY';

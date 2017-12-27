@@ -39,7 +39,7 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.speedZ = 5500;
+	    this.speedZ = 0;
 	    
 	    /**
 	     *
@@ -64,6 +64,24 @@ class EngineIM20 extends Engine {
 	     * @type {number}
 	     */
 	    this.rollSpeedZ = Math.PI / 5;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.accelerationForward = 150;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.accelerationBack = 50;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.deceleration = 300;
     }
 }
 

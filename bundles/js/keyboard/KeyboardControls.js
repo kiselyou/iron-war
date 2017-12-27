@@ -30,7 +30,7 @@ class KeyboardControls {
 			pitchDown: new Keyboard(40, 'Down', 'pitchDown'),
 			up: new Keyboard(82, 'R', 'up'),
 			down: new Keyboard(70, 'F', 'down'),
-			space: new Keyboard(32, 'Space', 'space', Keyboard.DOWN_TOGGLE)
+			space: new Keyboard(32, 'Space', 'space')
 		};
 		
 		domElement.addEventListener('contextmenu', (event) => {

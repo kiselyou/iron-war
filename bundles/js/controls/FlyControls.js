@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import Engine from './../particles/engine/Engine';
 import KeyboardControls from './../keyboard/KeyboardControls';
 
 class FlyControls {
@@ -59,7 +60,7 @@ class FlyControls {
 			this.mousemove(event);
 		});
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, (event, keyboard) => {
+		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, () => {
 			this.updateMovementVector();
 			this.updateRotationVector();
 		});
@@ -68,9 +69,9 @@ class FlyControls {
 			this.updateMovementVector();
 			this.updateRotationVector();
 			
-			if (keyboard.key === 'space') {
-				this.player.container.style.cursor = (keyboard.value === 1) ? 'none' : '';
-			}
+			// if (keyboard.key === 'space') {
+			// 	this.player.container.style.cursor = (keyboard.value === 1) ? 'none' : '';
+			// }
 		});
 	}
 	
@@ -80,23 +81,33 @@ class FlyControls {
 	 * @returns {void}
 	 */
 	mousemove(event) {
-		if (this.keyboards.space.value === 1) {
-			let container = this.getContainerDimensions();
-			let halfWidth  = container.size[0] / 2;
-			let halfHeight = container.size[1] / 2;
-			this.keyboards.yawLeft.value = - ((event.pageX - container.offset[0]) - halfWidth) / halfWidth;
-			this.keyboards.pitchDown.value = ((event.pageY - container.offset[1]) - halfHeight) / halfHeight;
-			this.updateRotationVector();
+		if (!this.player.isEnabled) {
+			return;
 		}
+		let container = this.getContainerDimensions();
+		let halfWidth  = container.size[0] / 2;
+		let halfHeight = container.size[1] / 2;
+		this.keyboards.yawLeft.value = - ((event.pageX - container.offset[0]) - halfWidth) / halfWidth;
+		this.keyboards.pitchDown.value = ((event.pageY - container.offset[1]) - halfHeight) / halfHeight;
+		this.updateRotationVector();
 	}
 	
 	/**
 	 *
 	 * @param {number} delta
+	 * @returns {void}
 	 */
 	update(delta) {
-		if (this.keyboards.space.value === 0 || !this.player.isEnabled) {
+		if (!this.player.isEnabled) {
 			return;
+		}
+		
+		if (this.keyboards.forward.value === this.keyboards.forward.valueOn) {
+			this.player.ship.engine.start(Engine.DIRECTION_FORWARD, delta);
+		} else if (this.keyboards.back.value === this.keyboards.back.valueOn) {
+			this.player.ship.engine.start(Engine.DIRECTION_BACK, delta);
+		} else if (this.keyboards.space.value === this.keyboards.space.valueOn) {
+			this.player.ship.engine.stop(delta);
 		}
 		
 		let moveMultX = delta * this.player.ship.engine.speedX;
@@ -125,10 +136,11 @@ class FlyControls {
 	 * @returns {void}
 	 */
 	updateMovementVector() {
-		let forward = (this.keyboards.forward.value || (this.autoForward && ! this.keyboards.back.value)) ? 1 : 0;
+		// let forward = (this.keyboards.forward.value || (this.autoForward && ! this.keyboards.back.value)) ? 1 : 0;
 		this.moveVector.x = (- this.keyboards.left.value + this.keyboards.right.value);
 		this.moveVector.y = (- this.keyboards.down.value + this.keyboards.up.value);
-		this.moveVector.z = (- forward + this.keyboards.back.value);
+		// this.moveVector.z = (- forward + this.keyboards.back.value);
+		this.moveVector.z = -1;
 	}
 	
 	/**

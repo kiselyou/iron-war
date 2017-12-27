@@ -110,18 +110,19 @@ class Aim extends Particle {
 		this.model.add(this.signatureLeftTop.model);
 		
 		this.signatureLeftBottom
-			.setText(100, 'health')
+			.setText(0, 'health')
 			.setColor(this.color);
 		
 		this.model.add(this.signatureLeftBottom.model);
 		
 		this.signatureRightBottom
-			.setText(100, 'health')
+			.setText(0, 'health')
 			.setColor(this.color);
 		
 		this.model.add(this.signatureRightBottom.model);
 		
 		this.model.scale.set(this.scale, this.scale, this.scale);
+		
 		return this;
 	}
 	
@@ -191,7 +192,6 @@ class Aim extends Particle {
 			overdraw: 0.5,
 			side: THREE.DoubleSide
 		});
-		
 		return new THREE.Mesh(geometry, material);
 	}
 	
