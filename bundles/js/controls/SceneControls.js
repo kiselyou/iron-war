@@ -166,6 +166,8 @@ class SceneControls {
 		if (this.player.isEnabled) {
 			this.flyControls.update(delta);
 			this.skyBoxControls.update(this.camera.position);
+			
+			this.player.ship.aim.signatureLeftTop.update(this.player.ship.engine.speedZ);
 		}
 		
 		this.renderer.render(this.scene, this.camera);

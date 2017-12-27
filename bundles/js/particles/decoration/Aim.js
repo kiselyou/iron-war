@@ -42,25 +42,25 @@ class Aim extends Particle {
 		 *
 		 * @type {AimSignature}
 		 */
-		this.signatureLeftTop = new AimSignature().draw();
+		this.signatureLeftTop = new AimSignature(AimSignature.SIDE_TL);
 		
 		/**
 		 *
 		 * @type {AimSignature}
 		 */
-		this.signatureLeftBottom = new AimSignature().draw();
+		this.signatureLeftBottom = new AimSignature(AimSignature.SIDE_BL);
 		
 		/**
 		 *
 		 * @type {AimSignature}
 		 */
-		this.signatureRightTop = new AimSignature().draw();
+		this.signatureRightTop = new AimSignature(AimSignature.SIDE_TR);
 		
 		/**
 		 *
 		 * @type {AimSignature}
 		 */
-		this.signatureRightBottom = new AimSignature().draw();
+		this.signatureRightBottom = new AimSignature(AimSignature.SIDE_BR);
 		
 		/**
 		 *
@@ -97,24 +97,28 @@ class Aim extends Particle {
 			i++;
 		}
 		
-		this.signatureRightTop.setPosition(new THREE.Vector3(this.signatureDistance, 0, - this.signatureDistance));
-		this.signatureRightTop.setRotation(new THREE.Vector3(- Math.PI / 2, 0, 0));
-		this.signatureRightTop.setColor(this.color);
+		this.signatureRightTop
+			.setText(0, 'speed')
+			.setColor(this.color);
+		
 		this.model.add(this.signatureRightTop.model);
 		
-		this.signatureLeftTop.setPosition(new THREE.Vector3(- this.signatureDistance, 0, - this.signatureDistance));
-		this.signatureLeftTop.setRotation(new THREE.Vector3(Math.PI / 2, 0, Math.PI));
-		this.signatureLeftTop.setColor(this.color);
+		this.signatureLeftTop
+			.setText(0, 'speed')
+			.setColor(this.color);
+		
 		this.model.add(this.signatureLeftTop.model);
 		
-		this.signatureLeftBottom.setPosition(new THREE.Vector3(- this.signatureDistance, 0, this.signatureDistance));
-		this.signatureLeftBottom.setRotation(new THREE.Vector3(- Math.PI / 2, 0, Math.PI));
-		this.signatureLeftBottom.setColor(this.color);
+		this.signatureLeftBottom
+			.setText(100, 'health')
+			.setColor(this.color);
+		
 		this.model.add(this.signatureLeftBottom.model);
 		
-		this.signatureRightBottom.setPosition(new THREE.Vector3(this.signatureDistance, 0, this.signatureDistance));
-		this.signatureRightBottom.setRotation(new THREE.Vector3(Math.PI / 2, 0, 0));
-		this.signatureRightBottom.setColor(this.color);
+		this.signatureRightBottom
+			.setText(100, 'health')
+			.setColor(this.color);
+		
 		this.model.add(this.signatureRightBottom.model);
 		
 		this.model.scale.set(this.scale, this.scale, this.scale);

@@ -1,6 +1,7 @@
+import * as THREE from 'three';
 import OBJLoader from './OBJLoader';
 import MTLLoader from './MTLLoader';
-import * as THREE from 'three';
+import FontLoader from './FontLoader';
 import ShipIncludes from './../particles/ships/ShipIncludes';
 
 class PreLoader {
@@ -33,8 +34,15 @@ class PreLoader {
 		this._obj = new OBJLoader(this._manager);
 	}
 	
+	/**
+	 *
+	 * @param listener
+	 */
 	load(listener) {
-		this.loadItem(0, listener);
+		new FontLoader().load(() => {
+			this._loadItem(0, listener);
+		});
+		return this;
 	}
 	
 	/**
@@ -45,8 +53,9 @@ class PreLoader {
 	 *
 	 * @param {number} start
 	 * @param {listenerPreLoader} listener
+	 * @private
 	 */
-	loadItem(start, listener) {
+	_loadItem(start, listener) {
 		let ship = this.shipIncludes.includes[start];
 		if (ship) {
 			if (ship.objFileName) {
@@ -55,12 +64,12 @@ class PreLoader {
 					this._obj.setMaterials(materials);
 					this._obj.load(ship.basePath + ship.objFileName, (object) => {
 						ship.setModel(object);
-						this.loadItem(++start, listener);
+						this._loadItem(++start, listener);
 					});
 				});
 			} else {
 				console.warn('You have not correct configuration of ship: ' + ship.type);
-				this.loadItem(++start, listener);
+				this._loadItem(++start, listener);
 			}
 		} else {
 			listener();

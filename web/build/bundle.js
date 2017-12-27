@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,54 +70,54 @@
 "use strict";
 /* unused harmony export WebGLRenderTargetCube */
 /* unused harmony export WebGLRenderTarget */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return WebGLRenderer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return WebGLRenderer; });
 /* unused harmony export ShaderLib */
 /* unused harmony export UniformsLib */
 /* unused harmony export UniformsUtils */
 /* unused harmony export ShaderChunk */
 /* unused harmony export FogExp2 */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return Fog; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return Scene; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return LensFlare; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return Scene; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return LensFlare; });
 /* unused harmony export Sprite */
 /* unused harmony export LOD */
 /* unused harmony export SkinnedMesh */
 /* unused harmony export Skeleton */
 /* unused harmony export Bone */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return Mesh; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return LineSegments; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return Mesh; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return LineSegments; });
 /* unused harmony export LineLoop */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return Line; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return Line; });
 /* unused harmony export Points */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return Group; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return Group; });
 /* unused harmony export VideoTexture */
 /* unused harmony export DataTexture */
 /* unused harmony export CompressedTexture */
 /* unused harmony export CubeTexture */
 /* unused harmony export CanvasTexture */
 /* unused harmony export DepthTexture */
-/* unused harmony export Texture */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return Texture; });
 /* unused harmony export CompressedTextureLoader */
 /* unused harmony export DataTextureLoader */
 /* unused harmony export CubeTextureLoader */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return TextureLoader; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return TextureLoader; });
 /* unused harmony export ObjectLoader */
 /* unused harmony export MaterialLoader */
 /* unused harmony export BufferGeometryLoader */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return DefaultLoadingManager; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return LoadingManager; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return LoadingManager; });
 /* unused harmony export JSONLoader */
 /* unused harmony export ImageLoader */
 /* unused harmony export ImageBitmapLoader */
-/* unused harmony export FontLoader */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return FontLoader; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return FileLoader; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return Loader; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return Loader; });
 /* unused harmony export LoaderUtils */
 /* unused harmony export Cache */
 /* unused harmony export AudioLoader */
 /* unused harmony export SpotLightShadow */
 /* unused harmony export SpotLight */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return PointLight; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return PointLight; });
 /* unused harmony export RectAreaLight */
 /* unused harmony export HemisphereLight */
 /* unused harmony export DirectionalLightShadow */
@@ -126,7 +126,7 @@
 /* unused harmony export LightShadow */
 /* unused harmony export Light */
 /* unused harmony export StereoCamera */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return PerspectiveCamera; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return PerspectiveCamera; });
 /* unused harmony export OrthographicCamera */
 /* unused harmony export CubeCamera */
 /* unused harmony export ArrayCamera */
@@ -152,7 +152,7 @@
 /* unused harmony export Uniform */
 /* unused harmony export InstancedBufferGeometry */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return BufferGeometry; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return Geometry; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return Geometry; });
 /* unused harmony export InterleavedBufferAttribute */
 /* unused harmony export InstancedInterleavedBuffer */
 /* unused harmony export InterleavedBuffer */
@@ -169,7 +169,7 @@
 /* unused harmony export CubicInterpolant */
 /* unused harmony export Interpolant */
 /* unused harmony export Triangle */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return _Math; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return _Math; });
 /* unused harmony export Spherical */
 /* unused harmony export Cylindrical */
 /* unused harmony export Plane */
@@ -183,9 +183,9 @@
 /* unused harmony export Line3 */
 /* unused harmony export Euler */
 /* unused harmony export Vector4 */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return Vector3; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return Vector2; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return Quaternion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return Vector3; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return Vector2; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return Quaternion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return Color; });
 /* unused harmony export ImmediateRenderObject */
 /* unused harmony export VertexNormalsHelper */
@@ -204,7 +204,7 @@
 /* unused harmony export PlaneHelper */
 /* unused harmony export ArrowHelper */
 /* unused harmony export AxesHelper */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return Shape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return Shape; });
 /* unused harmony export Path */
 /* unused harmony export ShapePath */
 /* unused harmony export Font */
@@ -234,15 +234,15 @@
 /* unused harmony export TorusBufferGeometry */
 /* unused harmony export TextGeometry */
 /* unused harmony export TextBufferGeometry */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return SphereGeometry; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return SphereGeometry; });
 /* unused harmony export SphereBufferGeometry */
 /* unused harmony export RingGeometry */
 /* unused harmony export RingBufferGeometry */
-/* unused harmony export PlaneGeometry */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return PlaneGeometry; });
 /* unused harmony export PlaneBufferGeometry */
 /* unused harmony export LatheGeometry */
 /* unused harmony export LatheBufferGeometry */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return ShapeGeometry; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return ShapeGeometry; });
 /* unused harmony export ShapeBufferGeometry */
 /* unused harmony export ExtrudeGeometry */
 /* unused harmony export ExtrudeBufferGeometry */
@@ -261,16 +261,16 @@
 /* unused harmony export ShaderMaterial */
 /* unused harmony export PointsMaterial */
 /* unused harmony export MeshPhysicalMaterial */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return MeshStandardMaterial; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return MeshPhongMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return MeshStandardMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return MeshPhongMaterial; });
 /* unused harmony export MeshToonMaterial */
 /* unused harmony export MeshNormalMaterial */
 /* unused harmony export MeshLambertMaterial */
 /* unused harmony export MeshDepthMaterial */
 /* unused harmony export MeshDistanceMaterial */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return MeshBasicMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return MeshBasicMaterial; });
 /* unused harmony export LineDashedMaterial */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return LineBasicMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return LineBasicMaterial; });
 /* unused harmony export Material */
 /* unused harmony export Float64BufferAttribute */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return Float32BufferAttribute; });
@@ -303,7 +303,7 @@
 /* unused harmony export BasicShadowMap */
 /* unused harmony export PCFShadowMap */
 /* unused harmony export PCFSoftShadowMap */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return FrontSide; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return FrontSide; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return BackSide; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return DoubleSide; });
 /* unused harmony export FlatShading */
@@ -357,7 +357,7 @@
 /* unused harmony export SphericalReflectionMapping */
 /* unused harmony export CubeUVReflectionMapping */
 /* unused harmony export CubeUVRefractionMapping */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return RepeatWrapping; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return RepeatWrapping; });
 /* unused harmony export ClampToEdgeWrapping */
 /* unused harmony export MirroredRepeatWrapping */
 /* unused harmony export NearestFilter */
@@ -46049,7 +46049,7 @@ function CanvasRenderer() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(21);
 
 
 class Particle {
@@ -46171,7 +46171,7 @@ class Particle {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_Aim__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_Aim__ = __webpack_require__(22);
 
 
 
@@ -46551,7 +46551,7 @@ class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* defau
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Keyboard__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Keyboard__ = __webpack_require__(14);
 
 
 class KeyboardControls {
@@ -46771,10 +46771,73 @@ class KeyboardControls {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+
+const FONT = 'fonts/Audiowide/Audiowide_Regular.json';
+
+/**
+ *
+ * @type {FontLoader}
+ */
+let fontLoader = null;
+
+class FontLoader {
+	constructor() {
+		/**
+		 *
+		 * @type {?Font}
+		 * @private
+		 */
+		this._font = null;
+		
+		if (fontLoader) {
+			throw new Error('This class has already called. Try use FontLoader.font');
+		}
+		
+		fontLoader = this;
+	}
+	
+	/**
+	 *
+	 * @returns {?Font}
+	 */
+	static get font() {
+		return fontLoader ? fontLoader._font : null;
+	}
+	
+	/**
+	 * @param {Font} font
+	 * @callback fontLoadListener
+	 */
+	
+	/**
+	 *
+	 * @param {fontLoadListener} listener
+	 */
+	load(listener) {
+		if (this._font) {
+			listener(this._font);
+			return;
+		}
+		let loader = new __WEBPACK_IMPORTED_MODULE_0_three__["m" /* FontLoader */]();
+		loader.load(FONT, (font) => {
+			this._font = font;
+			listener(this._font);
+		});
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (FontLoader);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(28);
 
 
 
@@ -46807,7 +46870,7 @@ class ShipIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* defaul
 /* harmony default export */ __webpack_exports__["a"] = (ShipIncludes);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46829,7 +46892,7 @@ class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /*
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassI);
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46851,7 +46914,7 @@ class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassII);
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46869,12 +46932,12 @@ class ParticleClassIII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" 
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassIII);
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(12);
 
 
 const main = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */]('main-container-canvas');
@@ -46884,16 +46947,16 @@ main
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FlyControls__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_PreLoader__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FlyControls__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_PreLoader__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(32);
 
 
 
@@ -46914,7 +46977,7 @@ class SceneControls {
 		 *
 		 * @type {WebGLRenderer}
 		 */
-		this.renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["L" /* WebGLRenderer */]({
+		this.renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["O" /* WebGLRenderer */]({
 			antialias: true,
 			alpha: true
 		});
@@ -46923,7 +46986,7 @@ class SceneControls {
 		 *
 		 * @type {Scene}
 		 */
-		this.scene = new __WEBPACK_IMPORTED_MODULE_0_three__["E" /* Scene */]();
+		this.scene = new __WEBPACK_IMPORTED_MODULE_0_three__["G" /* Scene */]();
 		this.scene.background = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Color */]().setHSL(0.7, 0.4, 0.03);
 		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* Fog */](this.scene.background, 35000, FAR);
 		
@@ -46931,7 +46994,7 @@ class SceneControls {
 		 *
 		 * @type {PerspectiveCamera}
 		 */
-		this.camera = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* PerspectiveCamera */](40, SceneControls.width / SceneControls.height, 1, FAR);
+		this.camera = new __WEBPACK_IMPORTED_MODULE_0_three__["B" /* PerspectiveCamera */](40, SceneControls.width / SceneControls.height, 1, FAR);
 		this.camera.lookAt(this.scene.position);
 		
 		/**
@@ -47017,9 +47080,9 @@ class SceneControls {
 	init() {
 		let s = 250;
 		let cube = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* BoxGeometry */](s, s, s);
-		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["z" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
 		for (let i = 0; i < 300; i ++) {
-			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["w" /* Mesh */](cube, material);
+			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* Mesh */](cube, material);
 			mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
 			mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
 			mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
@@ -47062,6 +47125,8 @@ class SceneControls {
 		if (this.player.isEnabled) {
 			this.flyControls.update(delta);
 			this.skyBoxControls.update(this.camera.position);
+			
+			this.player.ship.aim.signatureLeftTop.update(this.player.ship.engine.speedZ);
 		}
 		
 		this.renderer.render(this.scene, this.camera);
@@ -47112,7 +47177,7 @@ class SceneControls {
 /* harmony default export */ __webpack_exports__["a"] = (SceneControls);
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47158,19 +47223,19 @@ class FlyControls {
 		 *
 		 * @type {Quaternion}
 		 */
-		this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0_three__["C" /* Quaternion */]();
+		this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0_three__["E" /* Quaternion */]();
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.moveVector = new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](0, 0, 0);
+		this.moveVector = new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](0, 0, 0);
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.rotationVector = new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](0, 0, 0);
+		this.rotationVector = new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](0, 0, 0);
 		
 		this.updateMovementVector();
 		this.updateRotationVector();
@@ -47283,7 +47348,7 @@ class FlyControls {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47393,7 +47458,7 @@ class Keyboard {
 /* harmony default export */ __webpack_exports__["a"] = (Keyboard);
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47412,7 +47477,7 @@ class SkyeBoxControls {
 		 * @type {number}
 		 * @private
 		 */
-		this._size = 500;
+		this._size = 1500;
 		
 		/**
 		 *
@@ -47434,15 +47499,15 @@ class SkyeBoxControls {
 		 */
 		this.scene = scene;
 		
-		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* TextureLoader */]();
+		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0_three__["L" /* TextureLoader */]();
 		this.textureFlare0 = textureLoader.load('textures/lensflare/lensflare0.png');
 		this.textureFlare3 = textureLoader.load('textures/lensflare/lensflare3.png');
 		this.textureSky = textureLoader.load('textures/skybox/003_space.jpg');
 		
-		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](0, -1500, -10000);
+		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](0, -1500, -10000);
 		
 		this.sky = this.initSky(this.textureSky);
-		this.initLight(this.sky, 0.1, 0.4, 0.8, 700, new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](-15, -60, -450));
+		this.initLight(this.sky, 0.1, 0.4, 0.8, 1700, new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](-15, -60, -1450));
 		
 		this.scene.add(this.sky);
 	}
@@ -47458,14 +47523,14 @@ class SkyeBoxControls {
 	 * @returns {LensFlare}
 	 */
 	initLight(el, h, s, l, size, v) {
-		let light = new __WEBPACK_IMPORTED_MODULE_0_three__["B" /* PointLight */](0xffffff, 1.4);
+		let light = new __WEBPACK_IMPORTED_MODULE_0_three__["D" /* PointLight */](0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
 		light.position.copy(v);
 		el.add(light);
 		let flareColor = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Color */](0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
 		
-		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* LensFlare */](this.textureFlare0, size, 0.0, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */], flareColor);
+		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* LensFlare */](this.textureFlare0, size, 0.0, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */], flareColor);
 		lensFlare.add(this.textureFlare3, 60, 0.6, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
 		lensFlare.add(this.textureFlare3, 70, 0.7, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
 		lensFlare.add(this.textureFlare3, 120, 0.9, __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]);
@@ -47483,7 +47548,7 @@ class SkyeBoxControls {
 				flare.rotation = 0;
 			}
 			object.lensFlares[2].y += 0.025;
-			object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + __WEBPACK_IMPORTED_MODULE_0_three__["v" /* Math */].degToRad(45);
+			object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + __WEBPACK_IMPORTED_MODULE_0_three__["w" /* Math */].degToRad(45);
 		};
 		
 		lensFlare.position.copy(light.position);
@@ -47498,12 +47563,12 @@ class SkyeBoxControls {
 	 * @returns {Mesh}
 	 */
 	initSky(texture) {
-		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["z" /* MeshStandardMaterial */]({
+		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* MeshStandardMaterial */]({
 			map: texture
 		});
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["H" /* SphereGeometry */](this._size, this.wSegments, this.hSegments);
-		let sky = new __WEBPACK_IMPORTED_MODULE_0_three__["w" /* Mesh */](geometry, material);
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["J" /* SphereGeometry */](this._size, this.wSegments, this.hSegments);
+		let sky = new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* Mesh */](geometry, material);
 		sky.material.side = __WEBPACK_IMPORTED_MODULE_0_three__["b" /* BackSide */];
 		sky.material.depthWrite = false;
 		sky.material.roughness = 1;
@@ -47524,14 +47589,16 @@ class SkyeBoxControls {
 /* harmony default export */ __webpack_exports__["a"] = (SkyeBoxControls);
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__OBJLoader__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MTLLoader__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__particles_ships_ShipIncludes__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__OBJLoader__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MTLLoader__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FontLoader__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__ = __webpack_require__(7);
+
 
 
 
@@ -47544,31 +47611,38 @@ class PreLoader {
 		 *
 		 * @type {ShipIncludes}
 		 */
-		this.shipIncludes = new __WEBPACK_IMPORTED_MODULE_3__particles_ships_ShipIncludes__["a" /* default */]();
+		this.shipIncludes = new __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__["a" /* default */]();
 		
 		/**
 		 *
 		 * @type {LoadingManager}
 		 */
-		this._manager = new __WEBPACK_IMPORTED_MODULE_2_three__["u" /* LoadingManager */]();
+		this._manager = new __WEBPACK_IMPORTED_MODULE_0_three__["v" /* LoadingManager */]();
 		
 		/**
 		 *
 		 * @type {MTLLoader}
 		 * @private
 		 */
-		this._mtl = new __WEBPACK_IMPORTED_MODULE_1__MTLLoader__["a" /* default */](this._manager);
+		this._mtl = new __WEBPACK_IMPORTED_MODULE_2__MTLLoader__["a" /* default */](this._manager);
 		
 		/**
 		 *
 		 * @type {OBJLoader}
 		 * @private
 		 */
-		this._obj = new __WEBPACK_IMPORTED_MODULE_0__OBJLoader__["a" /* default */](this._manager);
+		this._obj = new __WEBPACK_IMPORTED_MODULE_1__OBJLoader__["a" /* default */](this._manager);
 	}
 	
+	/**
+	 *
+	 * @param listener
+	 */
 	load(listener) {
-		this.loadItem(0, listener);
+		new __WEBPACK_IMPORTED_MODULE_3__FontLoader__["a" /* default */]().load(() => {
+			this._loadItem(0, listener);
+		});
+		return this;
 	}
 	
 	/**
@@ -47579,8 +47653,9 @@ class PreLoader {
 	 *
 	 * @param {number} start
 	 * @param {listenerPreLoader} listener
+	 * @private
 	 */
-	loadItem(start, listener) {
+	_loadItem(start, listener) {
 		let ship = this.shipIncludes.includes[start];
 		if (ship) {
 			if (ship.objFileName) {
@@ -47589,12 +47664,12 @@ class PreLoader {
 					this._obj.setMaterials(materials);
 					this._obj.load(ship.basePath + ship.objFileName, (object) => {
 						ship.setModel(object);
-						this.loadItem(++start, listener);
+						this._loadItem(++start, listener);
 					});
 				});
 			} else {
 				console.warn('You have not correct configuration of ship: ' + ship.type);
-				this.loadItem(++start, listener);
+				this._loadItem(++start, listener);
 			}
 		} else {
 			listener();
@@ -47605,7 +47680,7 @@ class PreLoader {
 /* harmony default export */ __webpack_exports__["a"] = (PreLoader);
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48213,7 +48288,7 @@ let OBJLoader = ( function () {
 
 			state.finalize();
 
-			var container = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* Group */]();
+			var container = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* Group */]();
 			container.materialLibraries = [].concat( state.materialLibraries );
 
 			for ( var i = 0, l = state.objects.length; i < l; i ++ ) {
@@ -48266,9 +48341,9 @@ let OBJLoader = ( function () {
 						material = this.materials.create( sourceMaterial.name );
 
 						// mtl etc. loaders probably can't create line materials correctly, copy properties to a line material.
-						if ( isLine && material && ! ( material instanceof __WEBPACK_IMPORTED_MODULE_0_three__["r" /* LineBasicMaterial */] ) ) {
+						if ( isLine && material && ! ( material instanceof __WEBPACK_IMPORTED_MODULE_0_three__["s" /* LineBasicMaterial */] ) ) {
 
-							var materialLine = new __WEBPACK_IMPORTED_MODULE_0_three__["r" /* LineBasicMaterial */]();
+							var materialLine = new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* LineBasicMaterial */]();
 							materialLine.copy( material );
 							material = materialLine;
 
@@ -48278,7 +48353,7 @@ let OBJLoader = ( function () {
 
 					if ( ! material ) {
 
-						material = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* MeshPhongMaterial */]() : new __WEBPACK_IMPORTED_MODULE_0_three__["r" /* LineBasicMaterial */]() );
+						material = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0_three__["z" /* MeshPhongMaterial */]() : new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* LineBasicMaterial */]() );
 						material.name = sourceMaterial.name;
 
 					}
@@ -48302,11 +48377,11 @@ let OBJLoader = ( function () {
 
 					}
 
-					mesh = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0_three__["w" /* Mesh */]( buffergeometry, createdMaterials ) : new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* LineSegments */]( buffergeometry, createdMaterials ) );
+					mesh = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* Mesh */]( buffergeometry, createdMaterials ) : new __WEBPACK_IMPORTED_MODULE_0_three__["t" /* LineSegments */]( buffergeometry, createdMaterials ) );
 
 				} else {
 
-					mesh = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0_three__["w" /* Mesh */]( buffergeometry, createdMaterials[ 0 ] ) : new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* LineSegments */]( buffergeometry, createdMaterials[ 0 ] ) );
+					mesh = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* Mesh */]( buffergeometry, createdMaterials[ 0 ] ) : new __WEBPACK_IMPORTED_MODULE_0_three__["t" /* LineSegments */]( buffergeometry, createdMaterials[ 0 ] ) );
 
 				}
 
@@ -48331,7 +48406,7 @@ let OBJLoader = ( function () {
 /* harmony default export */ __webpack_exports__["a"] = (OBJLoader);
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48533,8 +48608,8 @@ MTLLoader.MaterialCreator = function ( baseUrl, options ) {
 	this.materialsArray = [];
 	this.nameLookup = {};
 
-	this.side = ( this.options && this.options.side ) ? this.options.side : __WEBPACK_IMPORTED_MODULE_0_three__["m" /* FrontSide */];
-	this.wrap = ( this.options && this.options.wrap ) ? this.options.wrap : __WEBPACK_IMPORTED_MODULE_0_three__["D" /* RepeatWrapping */];
+	this.side = ( this.options && this.options.side ) ? this.options.side : __WEBPACK_IMPORTED_MODULE_0_three__["n" /* FrontSide */];
+	this.wrap = ( this.options && this.options.wrap ) ? this.options.wrap : __WEBPACK_IMPORTED_MODULE_0_three__["F" /* RepeatWrapping */];
 
 };
 
@@ -48818,7 +48893,7 @@ MTLLoader.MaterialCreator.prototype = {
 
 		}
 
-		this.materials[ materialName ] = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* MeshPhongMaterial */]( params );
+		this.materials[ materialName ] = new __WEBPACK_IMPORTED_MODULE_0_three__["z" /* MeshPhongMaterial */]( params );
 		return this.materials[ materialName ];
 
 	},
@@ -48827,8 +48902,8 @@ MTLLoader.MaterialCreator.prototype = {
 
 		var texParams = {
 
-			scale: new __WEBPACK_IMPORTED_MODULE_0_three__["J" /* Vector2 */]( 1, 1 ),
-			offset: new __WEBPACK_IMPORTED_MODULE_0_three__["J" /* Vector2 */]( 0, 0 )
+			scale: new __WEBPACK_IMPORTED_MODULE_0_three__["M" /* Vector2 */]( 1, 1 ),
+			offset: new __WEBPACK_IMPORTED_MODULE_0_three__["M" /* Vector2 */]( 0, 0 )
 
 		 };
 
@@ -48870,12 +48945,12 @@ MTLLoader.MaterialCreator.prototype = {
 	loadTexture: function ( url, mapping, onLoad, onProgress, onError ) {
 
 		var texture;
-		var loader = __WEBPACK_IMPORTED_MODULE_0_three__["t" /* Loader */].Handlers.get( url );
+		var loader = __WEBPACK_IMPORTED_MODULE_0_three__["u" /* Loader */].Handlers.get( url );
 		var manager = ( this.manager !== undefined ) ? this.manager : __WEBPACK_IMPORTED_MODULE_0_three__["g" /* DefaultLoadingManager */];
 
 		if ( loader === null ) {
 
-			loader = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* TextureLoader */]( manager );
+			loader = new __WEBPACK_IMPORTED_MODULE_0_three__["L" /* TextureLoader */]( manager );
 
 		}
 
@@ -48893,7 +48968,7 @@ MTLLoader.MaterialCreator.prototype = {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48976,13 +49051,13 @@ class Includes {
 /* harmony default export */ __webpack_exports__["a"] = (Includes);
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(8);
 
 
 
@@ -49032,7 +49107,7 @@ class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default *
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerI);
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49056,13 +49131,13 @@ class ParticleError extends Error {
 /* harmony default export */ __webpack_exports__["a"] = (ParticleError);
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AimSignature__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AimSignature__ = __webpack_require__(23);
 
 
 
@@ -49075,7 +49150,7 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		 *
 		 * @type {Group}
 		 */
-		this.model = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* Group */]();
+		this.model = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* Group */]();
 		this.model.position.z = -900;
 		this.model.rotation.x = Math.PI / 2;
 		
@@ -49107,25 +49182,25 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		 *
 		 * @type {AimSignature}
 		 */
-		this.signatureLeftTop = new __WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */]().draw();
+		this.signatureLeftTop = new __WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */].SIDE_TL);
 		
 		/**
 		 *
 		 * @type {AimSignature}
 		 */
-		this.signatureLeftBottom = new __WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */]().draw();
+		this.signatureLeftBottom = new __WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */].SIDE_BL);
 		
 		/**
 		 *
 		 * @type {AimSignature}
 		 */
-		this.signatureRightTop = new __WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */]().draw();
+		this.signatureRightTop = new __WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */].SIDE_TR);
 		
 		/**
 		 *
 		 * @type {AimSignature}
 		 */
-		this.signatureRightBottom = new __WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */]().draw();
+		this.signatureRightBottom = new __WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__AimSignature__["a" /* default */].SIDE_BR);
 		
 		/**
 		 *
@@ -49140,8 +49215,8 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 	 * @returns {Aim}
 	 */
 	draw() {
-		let center = new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](0, 0, 0),
-			axis = new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](1, 0, 0);
+		let center = new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](0, 0, 0),
+			axis = new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](1, 0, 0);
 		
 		let i = 0,
 			x = 0,
@@ -49162,24 +49237,28 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 			i++;
 		}
 		
-		this.signatureRightTop.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](this.signatureDistance, 0, - this.signatureDistance));
-		this.signatureRightTop.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](- Math.PI / 2, 0, 0));
-		this.signatureRightTop.setColor(this.color);
+		this.signatureRightTop
+			.setText(0, 'speed')
+			.setColor(this.color);
+		
 		this.model.add(this.signatureRightTop.model);
 		
-		this.signatureLeftTop.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](- this.signatureDistance, 0, - this.signatureDistance));
-		this.signatureLeftTop.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](Math.PI / 2, 0, Math.PI));
-		this.signatureLeftTop.setColor(this.color);
+		this.signatureLeftTop
+			.setText(0, 'speed')
+			.setColor(this.color);
+		
 		this.model.add(this.signatureLeftTop.model);
 		
-		this.signatureLeftBottom.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](- this.signatureDistance, 0, this.signatureDistance));
-		this.signatureLeftBottom.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](- Math.PI / 2, 0, Math.PI));
-		this.signatureLeftBottom.setColor(this.color);
+		this.signatureLeftBottom
+			.setText(100, 'health')
+			.setColor(this.color);
+		
 		this.model.add(this.signatureLeftBottom.model);
 		
-		this.signatureRightBottom.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](this.signatureDistance, 0, this.signatureDistance));
-		this.signatureRightBottom.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](Math.PI / 2, 0, 0));
-		this.signatureRightBottom.setColor(this.color);
+		this.signatureRightBottom
+			.setText(100, 'health')
+			.setColor(this.color);
+		
 		this.model.add(this.signatureRightBottom.model);
 		
 		this.model.scale.set(this.scale, this.scale, this.scale);
@@ -49236,7 +49315,7 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		let x = 0,
 			y = 0;
 		
-		let triangleShape = new __WEBPACK_IMPORTED_MODULE_0_three__["F" /* Shape */]();
+		let triangleShape = new __WEBPACK_IMPORTED_MODULE_0_three__["H" /* Shape */]();
 		triangleShape.moveTo(x, y);
 		triangleShape.lineTo(x + w, y + l);
 		triangleShape.lineTo(x + tw, y + l);
@@ -49246,14 +49325,14 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		triangleShape.lineTo(x - w, y + l);
 		triangleShape.moveTo(x, y);
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["G" /* ShapeGeometry */](triangleShape);
-		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* MeshBasicMaterial */]({
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["I" /* ShapeGeometry */](triangleShape);
+		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* MeshBasicMaterial */]({
 			color: this.color,
 			overdraw: 0.5,
 			side: __WEBPACK_IMPORTED_MODULE_0_three__["i" /* DoubleSide */]
 		});
 		
-		return new __WEBPACK_IMPORTED_MODULE_0_three__["w" /* Mesh */](geometry, material);
+		return new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* Mesh */](geometry, material);
 	}
 	
 	/**
@@ -49269,24 +49348,66 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Aim);
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_TextCanvas__ = __webpack_require__(24);
+
 
 
 
 class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
-	constructor() {
+	/**
+	 *
+	 * @param {number} side - possible values constants of current class
+	 */
+	constructor(side) {
 		super('AimSignature', AimSignature.AIM_SIGNATURE_KEY);
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.side = side;
 		
 		/**
 		 *
 		 * @type {Line}
 		 */
-		this.model = new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* Line */]();
+		this.model = new __WEBPACK_IMPORTED_MODULE_0_three__["r" /* Line */]();
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.color = 0xFFFFFF;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.moveDistance = 300;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.label = null;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.msg = null;
+		
+		/**
+		 *
+		 * @type {TextCanvas}
+		 */
+		this.text = new __WEBPACK_IMPORTED_MODULE_2__text_TextCanvas__["a" /* default */]();
 	}
 	
 	/**
@@ -49307,6 +49428,27 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 		this.model.material.transparent = false;
 		this.model.material.opacity = 1;
 		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string|number} msg
+	 * @param {?string|number} label
+	 */
+	setText(msg, label = null) {
+		this.msg = msg;
+		this.label = label;
+		this._moveTo(this.side);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string|number} msg
+	 */
+	update(msg) {
+		this.msg = msg;
+		this.text.rewrite(this._getLabel());
 	}
 	
 	/**
@@ -49340,29 +49482,134 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 		return this;
 	}
 	
-	draw() {
+	/**
+	 *
+	 * @returns {AimSignature}
+	 * @private
+	 */
+	_draw() {
 		let x = 0,
 			y = 0,
 			ax = 65,
 			ay = 60,
-			bx = 720,
+			bx = 900,
 			by = 60;
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["n" /* Geometry */]();
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](x, y, 0));
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](x + ax, x + ay, 0));
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0_three__["K" /* Vector3 */](x + bx, x + by, 0));
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* Geometry */]();
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](x, y, 0));
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](x + ax, x + ay, 0));
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](x + bx, x + by, 0));
 		
 		this.model.geometry = geometry;
-		this.model.material.color = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Color */](0xFFFFFF);
-		this.model.material.needsUpdate = true;
 		return this;
 	}
 	
 	/**
 	 *
 	 * @returns {string}
-	 * @constructor
+	 * @private
+	 */
+	_getLabel() {
+		if (this.label !== null && this.msg !== null) {
+			return this.label + ': ' + this.msg;
+		} else if (this.label !== null && this.msg === null) {
+			return this.label;
+		} else if (this.label === null && this.msg !== null) {
+			return this.msg;
+		}
+		return '';
+	}
+	
+	/**
+	 *
+	 * @param {number} side - possible values constants of current class
+	 * @returns {AimSignature}
+	 * @private
+	 */
+	_moveTo(side) {
+		switch (side) {
+			case AimSignature.SIDE_TL:
+				this
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](- this.moveDistance, 0, - this.moveDistance))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](Math.PI / 2, 0, Math.PI));
+				
+				this.text
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](900, 100, 0))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](0, Math.PI, 0))
+					.write(this._getLabel());
+				
+				break;
+			case AimSignature.SIDE_TR:
+				this
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](this.moveDistance, 0, - this.moveDistance))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](- Math.PI / 2, 0, 0));
+				
+				this.text
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](100, 100, 0))
+					.write(this._getLabel());
+				
+				break;
+			case AimSignature.SIDE_BL:
+				this
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](- this.moveDistance, 0, this.moveDistance))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](- Math.PI / 2, 0, Math.PI));
+				
+				this.text
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](900, 10, 0))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](Math.PI, Math.PI, 0))
+					.write(this._getLabel());
+				break;
+			case AimSignature.SIDE_BR:
+				this
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](this.moveDistance, 0, this.moveDistance))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](Math.PI / 2, 0, 0));
+				
+				this.text
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](100, 10, 0))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](Math.PI, 0, 0))
+					.write(this._getLabel());
+				break;
+		}
+		this.model.add(this.text.model);
+		this._draw();
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 */
+	static get SIDE_TL() {
+		return 0;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 */
+	static get SIDE_TR() {
+		return 1;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 */
+	static get SIDE_BL() {
+		return 2;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 */
+	static get SIDE_BR() {
+		return 3;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
 	 */
 	static get AIM_SIGNATURE_KEY() {
 		return 'AIM_SIGNATURE_KEY';
@@ -49373,12 +49620,185 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 
 
 /***/ }),
-/* 23 */
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loader_FontLoader__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_three__ = __webpack_require__(0);
+
+
+
+class TextCanvas {
+	constructor() {
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.size = 90;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.font = 'Audiowide';
+		
+		/**
+		 *
+		 * @type {Mesh}
+		 */
+		this.model = new __WEBPACK_IMPORTED_MODULE_1_three__["x" /* Mesh */]();
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.color = '#F5F5F5';
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.bold = 'bold';
+		
+		/**
+		 *
+		 * @type {Element}
+		 */
+		this.canvas = document.createElement('canvas');
+		this.setWidth(2048);
+		this.setHeight(128);
+		
+		/**
+		 *
+		 * @type {CanvasRenderingContext2D}
+		 */
+		this.context = this.canvas.getContext('2d');
+	}
+	
+	/**
+	 *
+	 * @param {number} width
+	 * @returns {TextCanvas}
+	 */
+	setWidth(width) {
+		this.canvas.width = width;
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {number} height
+	 * @returns {TextCanvas}
+	 */
+	setHeight(height) {
+		this.canvas.height = height;
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {Vector3} v
+	 * @returns {TextCanvas}
+	 */
+	setPosition(v) {
+		this.model.position.copy(v);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {Vector3} v
+	 * @returns {TextCanvas}
+	 */
+	setRotation(v) {
+		this.model.rotation.set(v.x, v.y, v.z);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string|number} text
+	 * @returns {Mesh}
+	 */
+	write(text) {
+		this.model.geometry = new __WEBPACK_IMPORTED_MODULE_1_three__["C" /* PlaneGeometry */](this.canvas.width, this.canvas.height, 1, 1);
+		this._prepareBackground()._updateText(text);
+		this.model.material = new __WEBPACK_IMPORTED_MODULE_1_three__["y" /* MeshBasicMaterial */]({
+			transparent: true,
+			map: new __WEBPACK_IMPORTED_MODULE_1_three__["K" /* Texture */](this.canvas)
+		});
+		
+		this.model.material.map.needsUpdate = true;
+		return this.model;
+	}
+	
+	/**
+	 * @param {string|number} text
+	 * @returns {TextCanvas}
+	 */
+	rewrite(text) {
+		this._updateText(text);
+		this.model.material.map.needsUpdate = true;
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {TextCanvas}
+	 * @private
+	 */
+	_prepareBackground() {
+		let context = this.canvas.getContext('2d');
+		context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string|number} text
+	 * @returns {TextCanvas}
+	 * @private
+	 */
+	_updateText(text) {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.context.font = this.bold + ' ' + this.size + 'px ' + this.font;
+		this.context.fillStyle = this.color;
+		this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2);
+		return this;
+	}
+	
+	// /**
+	//  *
+	//  * @param {string} text
+	//  * @returns {TextCanvas}
+	//  */
+	// write3D(text) {
+	// 	this.model.geometry = new THREE.TextGeometry(
+	// 		text,
+	// 		{
+	// 			font: FontLoader.font,
+	// 			size: this.size,
+	// 			height: 1
+	// 		}
+	// 	);
+	// 	this.model.material = new THREE.MeshBasicMaterial({color: this.color});
+	// 	return this;
+	// }
+	
+	
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (TextCanvas);
+
+/***/ }),
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(8);
 
 
 
@@ -49451,13 +49871,13 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 /* harmony default export */ __webpack_exports__["a"] = (EngineIM20);
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(27);
 
 
 
@@ -49483,12 +49903,12 @@ class ShipExplorerII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerII);
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(9);
 
 
 
@@ -49507,13 +49927,13 @@ class EngineIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default *
 /* harmony default export */ __webpack_exports__["a"] = (EngineIIM20);
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(29);
 
 
 
@@ -49539,12 +49959,12 @@ class ShipExplorerIII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerIII);
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(10);
 
 
 
@@ -49563,12 +49983,12 @@ class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = (EngineIIIM20);
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(5);
 
 
@@ -49638,7 +50058,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Player);
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49659,7 +50079,7 @@ class User {
 /* harmony default export */ __webpack_exports__["a"] = (User);
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49706,9 +50126,9 @@ class HelperPoints {
 	 * @returns {HelperPoints}
 	 */
 	add(position, group = 1, color = 0xff0000, size = 1) {
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["H" /* SphereGeometry */](size, 15, 15);
-		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* MeshBasicMaterial */]({color: color});
-		let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["w" /* Mesh */](geometry, material);
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["J" /* SphereGeometry */](size, 15, 15);
+		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* MeshBasicMaterial */]({color: color});
+		let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* Mesh */](geometry, material);
 		this._addToGroup(group, mesh);
 		mesh.position.copy(position);
 		this._obj.add(mesh);
