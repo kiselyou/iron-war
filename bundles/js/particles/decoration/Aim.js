@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Particle from './../../Particle';
+import AimSignature from './AimSignature';
 
 class Aim extends Particle {
 	constructor() {
@@ -35,16 +36,45 @@ class Aim extends Particle {
 		 *
 		 * @type {number}
 		 */
-		this.color = 0xFF0000;
-		this.update();
+		this.color = Aim.COLOR_DEFAULT;
+		
+		/**
+		 *
+		 * @type {AimSignature}
+		 */
+		this.signatureLeftTop = new AimSignature().draw();
+		
+		/**
+		 *
+		 * @type {AimSignature}
+		 */
+		this.signatureLeftBottom = new AimSignature().draw();
+		
+		/**
+		 *
+		 * @type {AimSignature}
+		 */
+		this.signatureRightTop = new AimSignature().draw();
+		
+		/**
+		 *
+		 * @type {AimSignature}
+		 */
+		this.signatureRightBottom = new AimSignature().draw();
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.signatureDistance = 300;
 	}
 	
 	/**
 	 * Build aim
 	 *
-	 * @returns {void}
+	 * @returns {Aim}
 	 */
-	update() {
+	draw() {
 		let center = new THREE.Vector3(0, 0, 0),
 			axis = new THREE.Vector3(1, 0, 0);
 		
@@ -67,58 +97,65 @@ class Aim extends Particle {
 			i++;
 		}
 		
-		let elTopRight = this._drawUnderLine();
-		let elTopLeft = elTopRight.clone();
-		let elBottomRight = elTopRight.clone();
-		let elBottomLeft = elTopRight.clone();
+		this.signatureRightTop.setPosition(new THREE.Vector3(this.signatureDistance, 0, - this.signatureDistance));
+		this.signatureRightTop.setRotation(new THREE.Vector3(- Math.PI / 2, 0, 0));
+		this.signatureRightTop.setColor(this.color);
+		this.model.add(this.signatureRightTop.model);
 		
-		elTopRight.position.x = 100;
-		elTopRight.position.z = - 100;
-		elTopRight.rotation.x = - Math.PI / 2;
-		this.model.add(elTopRight);
+		this.signatureLeftTop.setPosition(new THREE.Vector3(- this.signatureDistance, 0, - this.signatureDistance));
+		this.signatureLeftTop.setRotation(new THREE.Vector3(Math.PI / 2, 0, Math.PI));
+		this.signatureLeftTop.setColor(this.color);
+		this.model.add(this.signatureLeftTop.model);
 		
-		elTopLeft.position.x = - 100;
-		elTopLeft.position.z = - 100;
-		elTopLeft.rotation.x = Math.PI / 2;
-		elTopLeft.rotation.z = Math.PI;
-		this.model.add(elTopLeft);
+		this.signatureLeftBottom.setPosition(new THREE.Vector3(- this.signatureDistance, 0, this.signatureDistance));
+		this.signatureLeftBottom.setRotation(new THREE.Vector3(- Math.PI / 2, 0, Math.PI));
+		this.signatureLeftBottom.setColor(this.color);
+		this.model.add(this.signatureLeftBottom.model);
 		
-		elBottomLeft.position.x = - 100;
-		elBottomLeft.position.z = 100;
-		elBottomLeft.rotation.x = - Math.PI / 2;
-		elBottomLeft.rotation.z = Math.PI;
-		this.model.add(elBottomLeft);
-		
-		elBottomRight.position.x = 100;
-		elBottomRight.position.z = 100;
-		elBottomRight.rotation.x = Math.PI / 2;
-		this.model.add(elBottomRight);
-		
+		this.signatureRightBottom.setPosition(new THREE.Vector3(this.signatureDistance, 0, this.signatureDistance));
+		this.signatureRightBottom.setRotation(new THREE.Vector3(Math.PI / 2, 0, 0));
+		this.signatureRightBottom.setColor(this.color);
+		this.model.add(this.signatureRightBottom.model);
 		
 		this.model.scale.set(this.scale, this.scale, this.scale);
+		return this;
 	}
 	
-	_drawUnderLine() {
-		let x = 0,
-			y = 0,
-			ax = 65,
-			ay = 60,
-			bx = 720,
-			by = 60;
-		
-		let geometry = new THREE.Geometry();
-		geometry.vertices.push(new THREE.Vector3(x, y, 0));
-		geometry.vertices.push(new THREE.Vector3(x + ax, x + ay, 0));
-		geometry.vertices.push(new THREE.Vector3(x + bx, x + by, 0));
-		
-		let line = new THREE.Line(geometry);
-		line.material.color = new THREE.Color(this.color);
-		line.material.needsUpdate = true;
-		
-		let el = new THREE.Object3D();
-		el.add(line);
-		
-		return el;
+	/**
+	 *
+	 * @param {number} color
+	 * @returns {Aim}
+	 */
+	setColor(color) {
+		for (let model of this.model.children) {
+			model.material.color = new THREE.Color(color);
+			model.material.needsUpdate = true;
+		}
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 */
+	static get COLOR_DANGER() {
+		return 0xFA0000;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 */
+	static get COLOR_WARNING() {
+		return 0xFAA000;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 */
+	static get COLOR_DEFAULT() {
+		return 0x0A9B9B;
 	}
 	
 	/**
@@ -150,6 +187,7 @@ class Aim extends Particle {
 			overdraw: 0.5,
 			side: THREE.DoubleSide
 		});
+		
 		return new THREE.Mesh(geometry, material);
 	}
 	

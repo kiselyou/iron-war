@@ -58,6 +58,7 @@ class Player extends User {
 	 */
 	updateModel() {
 		this.ship = ShipIncludes.get().getSpecific(this.shipKey);
+		this.ship.aim.draw();
 		return this;
 	}
 }
