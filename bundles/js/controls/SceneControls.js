@@ -138,7 +138,7 @@ class SceneControls {
 					this.player.cursor(false);
 					this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
 				})
-				.enable(true);
+				.enable(true, true);
 			
 			
 			// Disable fly actions before start

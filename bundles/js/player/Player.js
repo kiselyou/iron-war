@@ -66,11 +66,14 @@ class Player extends User {
 	/**
 	 *
 	 * @param {boolean} value
+	 * @param {boolean} tornOonListener
 	 * @returns {Player}
 	 */
-	enable(value) {
+	enable(value, tornOonListener = true) {
 		this._isEnabled = value;
-		this._events.callListeners(value ? Player.EVENT_ENABLED : Player.EVENT_DISABLED);
+		if (tornOonListener) {
+			this._events.callListeners(value ? Player.EVENT_ENABLED : Player.EVENT_DISABLED);
+		}
 		return this;
 	}
 	

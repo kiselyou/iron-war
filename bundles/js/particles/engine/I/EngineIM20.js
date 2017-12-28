@@ -69,19 +69,19 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.accelerationForward = 150;
+	    this.accelerationForward = 1500;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.accelerationBack = 50;
+	    this.accelerationBack = 500;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.deceleration = 300;
+	    this.deceleration = 1000;
     }
 }
 

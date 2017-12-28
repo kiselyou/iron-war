@@ -46279,12 +46279,23 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 	 * @returns {Engine}
 	 */
 	start(direction, delta) {
+		let v;
         switch (direction) {
 	        case Engine.DIRECTION_FORWARD:
-		        this.speedZ += delta * this.accelerationForward;
+	        	v = delta * this.accelerationForward;
+	        	if (this.speedZ + v < this.speedMaxZ) {
+			        this.speedZ += v;
+		        } else {
+	        		this.speedZ = this.speedMaxZ;
+		        }
 	        	break;
 	        case Engine.DIRECTION_BACK:
-		        this.speedZ -= delta * ((this.speedZ > 0) ? this.deceleration : this.accelerationBack);
+	        	v = delta * ((this.speedZ > 0) ? this.deceleration : this.accelerationBack);
+	        	if (this.speedZ - v > this.speedMinZ) {
+	        		this.speedZ -= v;
+		        } else {
+	        		this.speedZ = this.speedMinZ;
+		        }
 		        break;
         }
 	    return this;
@@ -47268,7 +47279,7 @@ class SceneControls {
 					this.player.cursor(false);
 					this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
 				})
-				.enable(true);
+				.enable(true, true);
 			
 			
 			// Disable fly actions before start
@@ -47427,6 +47438,13 @@ class FlyControls {
 		 */
 		this.keyboards = player.keyboards.fly;
 		
+		/**
+		 *
+		 * @type {Vector2}
+		 * @private
+		 */
+		this._mousePosition = new __WEBPACK_IMPORTED_MODULE_0_three__["M" /* Vector2 */]();
+		
 		// /**
 		//  *
 		//  * @type {boolean}
@@ -47458,7 +47476,7 @@ class FlyControls {
 			__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_MOVE,
 			__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY,
 			(event) => {
-				this.mousemove(event);
+				this.mouseMove(event);
 			}
 		);
 		
@@ -47486,10 +47504,14 @@ class FlyControls {
 	 * @param {MouseEvent} event
 	 * @returns {void}
 	 */
-	mousemove(event) {
+	mouseMove(event) {
 		if (!this.player.isEnabled) {
 			return;
 		}
+		
+		this._mousePosition.setX(event.pageX);
+		this._mousePosition.setY(event.pageY);
+		
 		let container = this.getContainerDimensions();
 		let halfWidth  = container.size[0] / 2;
 		let halfHeight = container.size[1] / 2;
@@ -50205,19 +50227,19 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 	     *
 	     * @type {number}
 	     */
-	    this.accelerationForward = 150;
+	    this.accelerationForward = 1500;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.accelerationBack = 50;
+	    this.accelerationBack = 500;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.deceleration = 300;
+	    this.deceleration = 1000;
     }
 }
 
@@ -50412,11 +50434,14 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	/**
 	 *
 	 * @param {boolean} value
+	 * @param {boolean} tornOonListener
 	 * @returns {Player}
 	 */
-	enable(value) {
+	enable(value, tornOonListener = true) {
 		this._isEnabled = value;
-		this._events.callListeners(value ? Player.EVENT_ENABLED : Player.EVENT_DISABLED);
+		if (tornOonListener) {
+			this._events.callListeners(value ? Player.EVENT_ENABLED : Player.EVENT_DISABLED);
+		}
 		return this;
 	}
 	

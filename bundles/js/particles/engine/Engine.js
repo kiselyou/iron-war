@@ -106,12 +106,23 @@ class Engine extends Particle {
 	 * @returns {Engine}
 	 */
 	start(direction, delta) {
+		let v;
         switch (direction) {
 	        case Engine.DIRECTION_FORWARD:
-		        this.speedZ += delta * this.accelerationForward;
+	        	v = delta * this.accelerationForward;
+	        	if (this.speedZ + v < this.speedMaxZ) {
+			        this.speedZ += v;
+		        } else {
+	        		this.speedZ = this.speedMaxZ;
+		        }
 	        	break;
 	        case Engine.DIRECTION_BACK:
-		        this.speedZ -= delta * ((this.speedZ > 0) ? this.deceleration : this.accelerationBack);
+	        	v = delta * ((this.speedZ > 0) ? this.deceleration : this.accelerationBack);
+	        	if (this.speedZ - v > this.speedMinZ) {
+	        		this.speedZ -= v;
+		        } else {
+	        		this.speedZ = this.speedMinZ;
+		        }
 		        break;
         }
 	    return this;

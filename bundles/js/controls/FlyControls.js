@@ -29,6 +29,13 @@ class FlyControls {
 		 */
 		this.keyboards = player.keyboards.fly;
 		
+		/**
+		 *
+		 * @type {Vector2}
+		 * @private
+		 */
+		this._mousePosition = new THREE.Vector2();
+		
 		// /**
 		//  *
 		//  * @type {boolean}
@@ -60,7 +67,7 @@ class FlyControls {
 			KeyboardControls.EVENT_MOUSE_MOVE,
 			KeyboardControls.GROUP_FLY,
 			(event) => {
-				this.mousemove(event);
+				this.mouseMove(event);
 			}
 		);
 		
@@ -88,10 +95,14 @@ class FlyControls {
 	 * @param {MouseEvent} event
 	 * @returns {void}
 	 */
-	mousemove(event) {
+	mouseMove(event) {
 		if (!this.player.isEnabled) {
 			return;
 		}
+		
+		this._mousePosition.setX(event.pageX);
+		this._mousePosition.setY(event.pageY);
+		
 		let container = this.getContainerDimensions();
 		let halfWidth  = container.size[0] / 2;
 		let halfHeight = container.size[1] / 2;
