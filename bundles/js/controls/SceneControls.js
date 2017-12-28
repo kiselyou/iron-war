@@ -12,10 +12,18 @@ const FPS = 1000 / 30;
 class SceneControls {
 	/**
 	 *
+	 * @param {string|number} playerId - Socket ID
+	 * @param {Socket} socket
 	 * @param {string} [containerID]
 	 */
-	constructor(containerID) {
+	constructor(playerId, socket, containerID) {
 		const FAR = 100000;
+		
+		/**
+		 *
+		 * @type {Socket}
+		 */
+		this.socket = socket;
 		
 		/**
 		 *
@@ -39,7 +47,6 @@ class SceneControls {
 		 * @type {PerspectiveCamera}
 		 */
 		this.camera = new THREE.PerspectiveCamera(40, SceneControls.width / SceneControls.height, 1, FAR);
-		this.camera.lookAt(this.scene.position);
 		
 		/**
 		 *
@@ -73,12 +80,6 @@ class SceneControls {
 		
 		/**
 		 *
-		 * @type {?FlyControls}
-		 */
-		this.flyControls = null;
-		
-		/**
-		 *
 		 * @type {?(Mesh|Group)}
 		 */
 		this.model = null;
@@ -87,7 +88,26 @@ class SceneControls {
 		 *
 		 * @type {Player}
 		 */
-		this.player = new Player(this.container);
+		this.player = new Player(true, playerId, this.container);
+		this.camera.position.set(
+			this.player.position.x,
+			this.player.position.y,
+			this.player.position.z
+		);
+		this.camera.rotation.set(
+			this.player.rotation.x,
+			this.player.rotation.y,
+			this.player.rotation.z
+		);
+		this.camera.lookAt(this.player.lookAt);
+		
+		/**
+		 *
+		 * @type {?FlyControls}
+		 */
+		this.flyControls = new FlyControls(this.camera, this.player);
+		this.flyControls.autoForward = false;
+		this.flyControls.dragToLook = false;
 		
 		/**
 		 *
@@ -101,6 +121,47 @@ class SceneControls {
 		 * @private
 		 */
 		this._helperPoints = new HelperPoints(this.scene);
+		
+		/**
+		 *
+		 * @type {Array}
+		 * @private
+		 */
+		this._players = [];
+	}
+	
+	/**
+	 *
+	 * @param {PlayerInfo} playerInfo
+	 * @return {SceneControls}
+	 */
+	addPlayer(playerInfo) {
+		
+		let player = new Player(false, playerInfo['id'], this.container);
+		player.copy(playerInfo);
+		player.prepareModel();
+		
+		this.scene.add(player.getModel());
+		
+		this._players.push(playerInfo);
+		
+		// console.log(this._players, player.getModel());
+		
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string|number} id
+	 * @return {SceneControls}
+	 */
+	removePlayer(id) {
+		for (let i = 0; i < this._players.length; i++) {
+			if (this._players[i]['id'] === id) {
+				this._players.splice(i, 1);
+			}
+		}
+		return this;
 	}
 	
 	/**
@@ -109,12 +170,8 @@ class SceneControls {
 	 */
 	start() {
 		this.loader.load(() => {
-			this.player.updateModel();
+			this.player.prepareModel();
 			this.model = this.player.getModel();
-			
-			this.flyControls = new FlyControls(this.camera, this.player);
-			this.flyControls.autoForward = false;
-			this.flyControls.dragToLook = false;
 			
 			this.camera.add(this.player.getAim());
 			this.camera.add(this.model);
@@ -233,8 +290,13 @@ class SceneControls {
 		});
 		
 		let delta = this._clockRender.getDelta();
-		this.flyControls.update(delta);
-		this.skyBoxControls.update(this.camera.position);
+		if (this.player.isEnabled) {
+			this.flyControls.update(delta);
+			this.skyBoxControls.update(this.camera.position);
+			this.player.position.copy(this.camera.position);
+			this.player.rotation.copy(this.camera.rotation);
+		}
+		
 		this.renderer.render(this.scene, this.camera);
 	}
 	

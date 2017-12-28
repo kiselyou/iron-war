@@ -2,14 +2,36 @@ import User from './User';
 import ShipIncludes from './../particles/ships/ShipIncludes';
 import KeyboardControls from './../keyboard/KeyboardControls';
 import Listener from './../systems/Listener';
+import Ship from './../particles/ships/Ship';
+import * as THREE from 'three';
 
 class Player extends User {
 	/**
 	 *
+	 * @param {boolean} isUser
+	 * @param {string|number} id
 	 * @param {HTMLElement} container
 	 */
-	constructor(container) {
+	constructor(isUser, id, container) {
 		super();
+		
+		/**
+		 *
+		 * @type {boolean}
+		 */
+		this.isUser = isUser;
+		
+		/**
+		 *
+		 * @type {string|number}
+		 */
+		this.id = id;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.shipKey = Ship.I_EXPLORER_KEY;
 		
 		/**
 		 *
@@ -43,6 +65,56 @@ class Player extends User {
 		 * @private
 		 */
 		this._events = new Listener();
+		
+		/**
+		 * Current position
+		 *
+		 * @type {Vector3}
+		 */
+		this.position = new THREE.Vector3(
+			0,// * (2.0 * Math.random() - 1.0),
+			0,// * (2.0 * Math.random() - 1.0),
+			2000 * (2.0 * Math.random() - 1.0)
+		);
+		
+		/**
+		 * Current rotation
+		 *
+		 * @type {Vector3}
+		 */
+		this.rotation = new THREE.Vector3(
+			Math.random() * Math.PI,
+			Math.random() * Math.PI,
+			Math.random() * Math.PI
+		);
+		
+		/**
+		 *
+		 * @type {Vector3}
+		 */
+		this.lookAt = new THREE.Vector3();
+	}
+	
+	/**
+	 *
+	 * @param {PlayerInfo} data
+	 * @return {Player}
+	 */
+	copy(data) {
+		this.position.x = data['p']['x'];
+		this.position.y = data['p']['y'];
+		this.position.z = data['p']['z'];
+		
+		this.rotation.x = data['r']['x'];
+		this.rotation.y = data['r']['y'];
+		this.rotation.z = data['r']['z'];
+		
+		this.lookAt.x = data['l']['x'];
+		this.lookAt.y = data['l']['y'];
+		this.lookAt.z = data['l']['z'];
+		
+		this.shipKey = data['sk'];
+		return this;
 	}
 	
 	/**
@@ -126,11 +198,13 @@ class Player extends User {
 	
 	/**
 	 *
-	 * @returns {Player}
+	 * @return {Player}
 	 */
-	updateModel() {
+	prepareModel() {
 		this.ship = ShipIncludes.get().getSpecific(this.shipKey);
-		this.ship.aim.draw();
+		if (this.isUser) {
+			this.ship.aim.draw();
+		}
 		return this;
 	}
 }

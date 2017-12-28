@@ -29,13 +29,6 @@ class FlyControls {
 		 */
 		this.keyboards = player.keyboards.fly;
 		
-		/**
-		 *
-		 * @type {Vector2}
-		 * @private
-		 */
-		this._mousePosition = new THREE.Vector2();
-		
 		// /**
 		//  *
 		//  * @type {boolean}
@@ -99,9 +92,6 @@ class FlyControls {
 		if (!this.player.isEnabled) {
 			return;
 		}
-		
-		this._mousePosition.setX(event.pageX);
-		this._mousePosition.setY(event.pageY);
 		
 		let container = this.getContainerDimensions();
 		let halfWidth = container.size[0] / 2;
