@@ -47312,14 +47312,14 @@ class SceneControls {
 	 * @returns {SceneControls}
 	 */
 	init() {
-		let s = 250;
+		let s = 150;
 		let cube = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* BoxGeometry */](s, s, s);
 		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["z" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 300; i ++) {
+		for (let i = 0; i < 500; i ++) {
 			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["x" /* Mesh */](cube, material);
-			mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
+			mesh.position.x = 35000 * (2.0 * Math.random() - 1.0);
+			mesh.position.y = 35000 * (2.0 * Math.random() - 1.0);
+			mesh.position.z = 35000 * (2.0 * Math.random() - 1.0);
 			mesh.rotation.x = Math.random() * Math.PI;
 			mesh.rotation.y = Math.random() * Math.PI;
 			mesh.rotation.z = Math.random() * Math.PI;
@@ -47346,7 +47346,7 @@ class SceneControls {
 	}
 	
 	/**
-	 * Set calculations
+	 * Animation elements
 	 *
 	 * @private
 	 */
@@ -47363,6 +47363,8 @@ class SceneControls {
 	}
 	
 	/**
+	 * Main render elements
+	 *
 	 * @returns {void}
 	 * @private
 	 */
