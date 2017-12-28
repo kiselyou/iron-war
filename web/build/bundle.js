@@ -46557,54 +46557,6 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(1);
-
-
-class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
-    /**
-     *
-     * @param {string} type
-     * @param {string|number} key
-     */
-    constructor(type, key) {
-        super(type, key);
-    }
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static I_CLASS_KEY() {
-        return 1;
-    };
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static II_CLASS_KEY() {
-        return 2;
-    }
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static III_CLASS_KEY() {
-        return 3;
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ParticleClass);
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Keyboard__ = __webpack_require__(15);
 
 
@@ -46617,28 +46569,79 @@ class KeyboardControls {
 		
 		/**
 		 *
-		 * @type {Object}
+		 * @type {Array}
+		 * @private
 		 */
-		this.listeners = {};
+		this._disabledGroups = [];
 		
 		/**
 		 *
-		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
+		 * @type {Object.<Object.<Array>>}
+		 * @private
+		 */
+		this._listeners = {};
+		
+		/**
+		 *
+		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, up: Keyboard, down: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, stop: Keyboard, openConsole: Keyboard}}
 		 */
 		this.fly = {
-			forward: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](87, 'W', 'forward'),
-			back: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](83, 'S', 'back'),
-			left: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](65, 'A', 'left'),
-			right: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](68, 'D', 'right'),
-			rollLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](81, 'Q', 'rollLeft'),
-			rollRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](69, 'E', 'rollRight'),
-			yawLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](37, 'Left', 'yawLeft'),
-			yawRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](39, 'Right', 'yawRight'),
-			pitchUp: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](38, 'Up', 'pitchUp'),
-			pitchDown: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](40, 'Down', 'pitchDown'),
-			up: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](82, 'R', 'up'),
-			down: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](70, 'F', 'down'),
-			space: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](32, 'Space', 'space')
+			forward: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](87, 'W', 'forward')
+				.setDescription('Увеличение скорости. Движение вперед.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			back: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](83, 'S', 'back')
+				.setDescription('Торможение или движение назад.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			left: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](65, 'A', 'left')
+				.setDescription('Баковые двигатели. Движение влево.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			right: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](68, 'D', 'right')
+				.setDescription('Баковые двигатели. Движение вправо.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			up: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](82, 'R', 'up')
+				.setDescription('Баковые двигатели. Движение вверх.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			down: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](70, 'F', 'down')
+				.setDescription('Баковые двигатели. Движение вниз.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			rollLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](81, 'Q', 'rollLeft')
+				.setDescription('Вращение вокруг оси Z влево')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			rollRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](69, 'E', 'rollRight')
+				.setDescription('Вращение вокруг оси Z вправо')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			yawLeft: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](37, 'Left', 'yawLeft')
+				.setDescription('Изменение направления влево')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			yawRight: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](39, 'Right', 'yawRight')
+				.setDescription('Изменение направления вправо')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			pitchUp: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](38, 'Up', 'pitchUp')
+				.setDescription('Изменение направления вверх')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			pitchDown: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](40, 'Down', 'pitchDown')
+				.setDescription('Изменение направления вниз')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			stop: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](32, 'Space', 'stop')
+				.setDescription('Торможение')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			openConsole: new __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */](66, 'B', 'openConsole')
+				.setEventType(__WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].EVENT_TYPE_UP_TOGGLE)
+				.setDescription('Открыть консоль бортового компъютера')
+				.setGroup(KeyboardControls.GROUP_PK)
 		};
 		
 		domElement.addEventListener('contextmenu', (event) => {
@@ -46658,12 +46661,38 @@ class KeyboardControls {
 		}, false);
 		
 		window.addEventListener('keydown', (event) => {
-			this.keydown(event);
+			this._keyDown(event);
 		}, false);
 		
 		window.addEventListener('keyup', (event) => {
-			this.keyup(event);
+			this._keyUp(event);
 		}, false);
+	}
+	
+	/**
+	 * Disable group events and buttons
+	 *
+	 * @param {number} groupName - Constants of current class
+	 * @return {KeyboardControls}
+	 */
+	disableGroup(groupName) {
+		this._disabledGroups.push(groupName);
+		return this;
+	}
+	
+	/**
+	 * Enable group events and buttons
+	 *
+	 * @param {number} groupName - Constants of current class
+	 * @return {KeyboardControls}
+	 */
+	enableGroup(groupName) {
+		for (let i = 0; i < this._disabledGroups.length; i++) {
+			if (this._disabledGroups[i] === groupName) {
+				this._disabledGroups.splice(i, 1);
+			}
+		}
+		return this;
 	}
 	
 	/**
@@ -46675,82 +46704,103 @@ class KeyboardControls {
 	/**
 	 *
 	 * @param {string} type - There are constants of current class
+	 * @param {string|number} group - Constants of current class
 	 * @param {keyboardControlsListener} listener
 	 * @returns {KeyboardControls}
 	 */
-	addEventListener(type, listener) {
-		if (!this.listeners.hasOwnProperty(type)) {
-			this.listeners[type] = [];
+	addEventListener(type, group, listener) {
+		if (!this._listeners.hasOwnProperty(type)) {
+			this._listeners[type] = {};
 		}
-		this.listeners[type].push(listener);
+		if (!this._listeners[type].hasOwnProperty(group)) {
+			this._listeners[type][group] = [];
+		}
+		this._listeners[type][group].push(listener);
 		return this;
 	}
 	
 	/**
 	 *
 	 * @param {KeyboardEvent} event
+	 * @private
 	 */
-	keydown(event) {
+	_keyDown(event) {
 		if (event.altKey) {
 			return;
 		}
 		
 		let keyboard = this._findKeyboard(event.keyCode);
-		if (keyboard) {
-			switch (keyboard.type) {
-				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_TOGGLE:
-					keyboard.toggle();
-					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-					break;
-				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_OR_UP_CHANGE:
-					keyboard.value = keyboard.valueOn;
-					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-					break;
-				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_CHANGE:
-					keyboard.value = keyboard.valueOn;
-					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-					break;
-			}
+		
+		if (!keyboard || this._disabledGroups.indexOf(keyboard.group) >= 0) {
+			return;
+		}
+		
+		switch (keyboard.eventType) {
+			case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].EVENT_TYPE_DOWN_TOGGLE:
+				keyboard.toggle();
+				this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+				break;
+			case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].EVENT_TYPE_DOWN_OR_UP_CHANGE:
+				keyboard.value = keyboard.valueOn;
+				this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+				break;
+			case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].EVENT_TYPE_DOWN_CHANGE:
+				keyboard.value = keyboard.valueOn;
+				this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+				break;
 		}
 	}
 	
 	/**
 	 *
 	 * @param {KeyboardEvent} event
+	 * @private
 	 */
-	keyup(event) {
+	_keyUp(event) {
 		let keyboard = this._findKeyboard(event.keyCode);
-		if (keyboard) {
-			switch (keyboard.type) {
-				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].UP_TOGGLE:
-					keyboard.toggle();
-					this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
-					break;
-				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].DOWN_OR_UP_CHANGE:
-					keyboard.value = keyboard.valueOff;
-					this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
-					break;
-				case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].UP_CHANGE:
-					keyboard.value = keyboard.valueOff;
-					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-					break;
-			}
+		
+		if (!keyboard || this._disabledGroups.indexOf(keyboard.group) >= 0) {
+			return;
+		}
+		
+		switch (keyboard.eventType) {
+			case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].EVENT_TYPE_UP_TOGGLE:
+				keyboard.toggle();
+				this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+				break;
+			case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].EVENT_TYPE_DOWN_OR_UP_CHANGE:
+				keyboard.value = keyboard.valueOff;
+				this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+				break;
+			case __WEBPACK_IMPORTED_MODULE_0__Keyboard__["a" /* default */].EVENT_TYPE_UP_CHANGE:
+				keyboard.value = keyboard.valueOff;
+				this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+				break;
 		}
 	}
 	
 	/**
 	 *
-	 * @param {string} type
+	 * @param {string} type - this is event name, the constants of current class
 	 * @param {KeyboardEvent|MouseEvent} event
-	 * @param {Keyboard} [keyboard]
+	 * @param {?Keyboard} [keyboard]
 	 * @private
 	 */
-	_callListeners(type, event, keyboard) {
-		if (!this.listeners.hasOwnProperty(type)) {
+	_callListeners(type, event, keyboard = null) {
+		if (!this._listeners.hasOwnProperty(type)) {
 			return;
 		}
-		for (let listener of this.listeners[type]) {
-			listener(event, keyboard);
+		let arr = this._listeners[type];
+		for (let group in arr) {
+			if (!arr.hasOwnProperty(group) || (keyboard && keyboard.group !== Number(group))) {
+				continue;
+			}
+			
+			if (this._disabledGroups.indexOf(Number(group)) < 0) {
+				for (let listener of arr[group]) {
+					listener(event, keyboard);
+				}
+			}
 		}
 	}
 	
@@ -46770,6 +46820,24 @@ class KeyboardControls {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * The group buttons to fly
+	 *
+	 * @returns {number}
+	 */
+	static get GROUP_FLY() {
+		return 1;
+	}
+	
+	/**
+	 * The group buttons to console of ship
+	 *
+	 * @returns {number}
+	 */
+	static get GROUP_PK() {
+		return 2;
 	}
 	
 	/**
@@ -46819,6 +46887,54 @@ class KeyboardControls {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (KeyboardControls);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(1);
+
+
+class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
+    /**
+     *
+     * @param {string} type
+     * @param {string|number} key
+     */
+    constructor(type, key) {
+        super(type, key);
+    }
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static I_CLASS_KEY() {
+        return 1;
+    };
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static II_CLASS_KEY() {
+        return 2;
+    }
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static III_CLASS_KEY() {
+        return 3;
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ParticleClass);
 
 /***/ }),
 /* 6 */
@@ -46928,7 +47044,7 @@ class ShipIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* defaul
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(5);
 
 
 class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
@@ -46950,7 +47066,7 @@ class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /*
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(5);
 
 
 class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
@@ -46972,7 +47088,7 @@ class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(5);
 
 
 class ParticleClassIII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
@@ -47010,7 +47126,9 @@ main
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SkyeBoxControls__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_PreLoader__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__ = __webpack_require__(4);
+
 
 
 
@@ -47121,6 +47239,44 @@ class SceneControls {
 			this.camera.add(this.player.getAim());
 			this.camera.add(this.model);
 			this.scene.add(this.camera);
+			
+			this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_PK, (event, keyboard) => {
+				if (keyboard.key === 'openConsole') {
+					if (keyboard.value === keyboard.valueOn) {
+						// Enable fly actions
+						this.player.cursor(true);
+						this.player.keyboards.enableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+					} else {
+						// Disable fly actions
+						this.player.cursor(false);
+						this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+						// Open console of ship
+						// ...
+					}
+				}
+			});
+			
+			
+			this.player
+				.addEventListener(__WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */].EVENT_ENABLED, () => {
+					// Enable fly actions
+					this.player.cursor(true);
+					this.player.keyboards.enableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+				})
+				.addEventListener(__WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */].EVENT_DISABLED, () => {
+					// Disable fly actions
+					this.player.cursor(false);
+					this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+				})
+				.enable(true);
+			
+			
+			// Disable fly actions before start
+			this.player.cursor(false);
+			this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+			// Open console of ship before start fly
+			// ...
+			
 			this._animate();
 		});
 		
@@ -47239,7 +47395,7 @@ class SceneControls {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_engine_Engine__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(4);
 
 
 
@@ -47267,15 +47423,15 @@ class FlyControls {
 		
 		/**
 		 *
-		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
+		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, up: Keyboard, down: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, stop: Keyboard, openConsole: Keyboard}}
 		 */
 		this.keyboards = player.keyboards.fly;
 		
-		/**
-		 *
-		 * @type {boolean}
-		 */
-		this.autoForward = false;
+		// /**
+		//  *
+		//  * @type {boolean}
+		//  */
+		// this.autoForward = false;
 		
 		/**
 		 *
@@ -47298,23 +47454,31 @@ class FlyControls {
 		this.updateMovementVector();
 		this.updateRotationVector();
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_MOVE, (event) => {
-			this.mousemove(event);
-		});
+		this.player.keyboards.addEventListener(
+			__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_MOVE,
+			__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY,
+			(event) => {
+				this.mousemove(event);
+			}
+		);
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, () => {
-			this.updateMovementVector();
-			this.updateRotationVector();
-		});
+		this.player.keyboards.addEventListener(
+			__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP,
+			__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY,
+			() => {
+				this.updateMovementVector();
+				this.updateRotationVector();
+			}
+		);
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_DOWN, (event, keyboard) => {
-			this.updateMovementVector();
-			this.updateRotationVector();
-			
-			// if (keyboard.key === 'space') {
-			// 	this.player.container.style.cursor = (keyboard.value === 1) ? 'none' : '';
-			// }
-		});
+		this.player.keyboards.addEventListener(
+			__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_DOWN,
+			__WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY,
+			() => {
+				this.updateMovementVector();
+				this.updateRotationVector();
+			}
+		);
 	}
 	
 	/**
@@ -47348,7 +47512,7 @@ class FlyControls {
 			this.player.ship.engine.start(__WEBPACK_IMPORTED_MODULE_1__particles_engine_Engine__["a" /* default */].DIRECTION_FORWARD, delta);
 		} else if (this.keyboards.back.value === this.keyboards.back.valueOn) {
 			this.player.ship.engine.start(__WEBPACK_IMPORTED_MODULE_1__particles_engine_Engine__["a" /* default */].DIRECTION_BACK, delta);
-		} else if (this.keyboards.space.value === this.keyboards.space.valueOn) {
+		} else if (this.keyboards.stop.value === this.keyboards.stop.valueOn) {
 			this.player.ship.engine.stop(delta);
 		}
 		
@@ -47452,9 +47616,8 @@ class Keyboard {
 	 * @param {number} keyCode
 	 * @param {string} name
 	 * @param {string} key
-	 * @param {string} [type]
 	 */
-	constructor(keyCode, name, key, type = Keyboard.DOWN_OR_UP_CHANGE) {
+	constructor(keyCode, name, key) {
 		/**
 		 *
 		 * @type {number}
@@ -47477,7 +47640,7 @@ class Keyboard {
 		 *
 		 * @type {?string}
 		 */
-		this.type = type;
+		this.eventType = Keyboard.EVENT_TYPE_DOWN_OR_UP_CHANGE;
 		
 		/**
 		 *
@@ -47496,6 +47659,48 @@ class Keyboard {
 		 * @type {?number}
 		 */
 		this.value = this.valueOff;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.description = null;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.group = 0;
+	}
+	
+	/**
+	 *
+	 * @param {number} value
+	 * @returns {Keyboard}
+	 */
+	setGroup(value) {
+		this.group = Number(value);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @returns {Keyboard}
+	 */
+	setEventType(type) {
+		this.eventType = type;
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string} value
+	 * @returns {Keyboard}
+	 */
+	setDescription(value) {
+		this.description = value;
+		return this;
 	}
 	
 	clear() {
@@ -47511,7 +47716,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get DOWN_OR_UP_CHANGE() {
+	static get EVENT_TYPE_DOWN_OR_UP_CHANGE() {
 		return 'DOWN_OR_UP_CHANGE';
 	}
 	
@@ -47519,7 +47724,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get DOWN_TOGGLE() {
+	static get EVENT_TYPE_DOWN_TOGGLE() {
 		return 'DOWN_TOGGLE';
 	}
 	
@@ -47527,7 +47732,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get UP_TOGGLE() {
+	static get EVENT_TYPE_UP_TOGGLE() {
 		return 'UP_TOGGLE';
 	}
 	
@@ -47535,7 +47740,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get UP_CHANGE() {
+	static get EVENT_TYPE_UP_CHANGE() {
 		return 'UP_CHANGE';
 	}
 	
@@ -47543,7 +47748,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get DOWN_CHANGE() {
+	static get EVENT_TYPE_DOWN_CHANGE() {
 		return 'DOWN_CHANGE';
 	}
 }
@@ -47600,7 +47805,7 @@ class SkyeBoxControls {
 		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](0, -1500, -10000);
 		
 		this.sky = this.initSky(this.textureSky);
-		this.initLight(this.sky, 0.1, 0.4, 0.8, 1700, new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](-15, -60, -1450));
+		this.initLight(this.sky, 0.1, 0.4, 0.8, 1700, new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](0, 1300, -100));
 		
 		this.scene.add(this.sky);
 	}
@@ -49307,8 +49512,9 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		}
 		
 		this.signatureRightTop
-			.setText(0, 'speed')
+			.setText(0, 'distance')
 			.setColor(this.color);
+			// .hide();
 		
 		this.model.add(this.signatureRightTop.model);
 		
@@ -49319,14 +49525,16 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		this.model.add(this.signatureLeftTop.model);
 		
 		this.signatureLeftBottom
-			.setText(0, 'health')
-			.setColor(this.color);
+			.setText(0)
+			.setColor(this.color)
+			.hide();
 		
 		this.model.add(this.signatureLeftBottom.model);
 		
 		this.signatureRightBottom
-			.setText(0, 'health')
-			.setColor(this.color);
+			.setText(0)
+			.setColor(this.color)
+			.hide();
 		
 		this.model.add(this.signatureRightBottom.model);
 		
@@ -49486,6 +49694,7 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 	hide() {
 		this.model.material.transparent = true;
 		this.model.material.opacity = 0;
+		this.text.model.material.opacity = 0;
 		return this;
 	}
 	
@@ -49496,13 +49705,15 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 	show() {
 		this.model.material.transparent = false;
 		this.model.material.opacity = 1;
+		this.text.model.material.opacity = 1;
 		return this;
 	}
 	
 	/**
 	 *
 	 * @param {string|number} msg
-	 * @param {?string|number} label
+	 * @param {?string|number} [label]
+	 * @returns {AimSignature}
 	 */
 	setText(msg, label = null) {
 		this.msg = msg;
@@ -49514,10 +49725,12 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 	/**
 	 *
 	 * @param {string|number} msg
+	 * @returns {AimSignature}
 	 */
 	update(msg) {
 		this.msg = msg;
 		this.text.rewrite(this._getLabel());
+		return this;
 	}
 	
 	/**
@@ -49561,7 +49774,7 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 			y = 0,
 			ax = 65,
 			ay = 60,
-			bx = 900,
+			bx = 1024,
 			by = 60;
 		
 		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* Geometry */]();
@@ -49603,7 +49816,8 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](Math.PI / 2, 0, Math.PI));
 				
 				this.text
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](900, 100, 0))
+					.alignLeft()
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](500, 100, 0))
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](0, Math.PI, 0))
 					.write(this._getLabel());
 				
@@ -49614,7 +49828,8 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](- Math.PI / 2, 0, 0));
 				
 				this.text
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](100, 100, 0))
+					.alignRight()
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](500, 100, 0))
 					.write(this._getLabel());
 				
 				break;
@@ -49624,7 +49839,8 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](- Math.PI / 2, 0, Math.PI));
 				
 				this.text
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](900, 10, 0))
+					.alignLeft()
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](500, 10, 0))
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](Math.PI, Math.PI, 0))
 					.write(this._getLabel());
 				break;
@@ -49634,7 +49850,8 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](Math.PI / 2, 0, 0));
 				
 				this.text
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](100, 10, 0))
+					.alignRight()
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](500, 10, 0))
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* Vector3 */](Math.PI, 0, 0))
 					.write(this._getLabel());
 				break;
@@ -49733,10 +49950,17 @@ class TextCanvas {
 		
 		/**
 		 *
+		 * @type {string}
+		 * @private
+		 */
+		this._align = 'left';
+		
+		/**
+		 *
 		 * @type {Element}
 		 */
 		this.canvas = document.createElement('canvas');
-		this.setWidth(2048);
+		this.setWidth(1024);
 		this.setHeight(128);
 		
 		/**
@@ -49744,6 +49968,33 @@ class TextCanvas {
 		 * @type {CanvasRenderingContext2D}
 		 */
 		this.context = this.canvas.getContext('2d');
+	}
+	
+	/**
+	 *
+	 * @returns {TextCanvas}
+	 */
+	alignCenter() {
+		this._align = 'center';
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {TextCanvas}
+	 */
+	alignLeft() {
+		this._align = 'left';
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {TextCanvas}
+	 */
+	alignRight() {
+		this._align = 'right';
+		return this;
 	}
 	
 	/**
@@ -49834,7 +50085,22 @@ class TextCanvas {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.context.font = this.bold + ' ' + this.size + 'px ' + this.font;
 		this.context.fillStyle = this.color;
-		this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2);
+		
+		let x = 0,
+			y = this.canvas.height / 2;
+		
+		switch (this._align) {
+			case 'right':
+			case 'end':
+				x = this.canvas.width;
+				break;
+			case 'center':
+				x = this.canvas.width / 2;
+				break;
+		}
+		
+		this.context.textAlign = this._align;
+		this.context.fillText(text, x, y);
 		return this;
 	}
 	
@@ -50076,7 +50342,9 @@ class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__systems_Listener__ = __webpack_require__(32);
+
 
 
 
@@ -50099,8 +50367,9 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 * Disable player
 		 *
 		 * @type {boolean}
+		 * @private
 		 */
-		this.isEnabled = true;
+		this._isEnabled = false;
 		
 		/**
 		 *
@@ -50113,6 +50382,73 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 * @type {KeyboardControls}
 		 */
 		this.keyboards = new __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__["a" /* default */](this.container);
+		
+		/**
+		 *
+		 * @type {Listener}
+		 * @private
+		 */
+		this._events = new __WEBPACK_IMPORTED_MODULE_3__systems_Listener__["a" /* default */]();
+	}
+	
+	/**
+	 *
+	 * @returns {boolean}
+	 */
+	get isEnabled() {
+		return this._isEnabled;
+	}
+	
+	/**
+	 *
+	 * @param {boolean} hide
+	 * @return {Player}
+	 */
+	cursor(hide) {
+		this.container.style.cursor = hide ? 'none'  : '';
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {boolean} value
+	 * @returns {Player}
+	 */
+	enable(value) {
+		this._isEnabled = value;
+		this._events.callListeners(value ? Player.EVENT_ENABLED : Player.EVENT_DISABLED);
+		return this;
+	}
+	
+	/**
+	 * @callback playerListener
+	 */
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @param {playerListener} listener
+	 * @returns {Player}
+	 */
+	addEventListener(type, listener) {
+		this._events.addEventListener(type, listener);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get EVENT_ENABLED() {
+		return 'EVENT_ENABLED';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get EVENT_DISABLED() {
+		return 'EVENT_DISABLED';
 	}
 	
 	/**
@@ -50167,6 +50503,58 @@ class User {
 
 /***/ }),
 /* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+class Listener {
+	constructor() {
+		/**
+		 *
+		 * @type {Object.<Array.<eventListener>>}
+		 * @private
+		 */
+		this._events = {};
+	}
+	
+	/**
+	 * @param {*} params
+	 * @callback eventListener
+	 */
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @param {playerListener} listener
+	 * @returns {Listener}
+	 */
+	addEventListener(type, listener) {
+		if (!this._events.hasOwnProperty(type)) {
+			this._events[type] = [];
+		}
+		this._events[type].push(listener);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @param {*} [params]
+	 * @returns {void}
+	 */
+	callListeners(type, params = null) {
+		if (this._events.hasOwnProperty(type)) {
+			for (let listener of this._events[type]) {
+				listener(params);
+			}
+		}
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Listener);
+
+/***/ }),
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

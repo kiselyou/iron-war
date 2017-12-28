@@ -36,10 +36,17 @@ class TextCanvas {
 		
 		/**
 		 *
+		 * @type {string}
+		 * @private
+		 */
+		this._align = 'left';
+		
+		/**
+		 *
 		 * @type {Element}
 		 */
 		this.canvas = document.createElement('canvas');
-		this.setWidth(2048);
+		this.setWidth(1024);
 		this.setHeight(128);
 		
 		/**
@@ -47,6 +54,33 @@ class TextCanvas {
 		 * @type {CanvasRenderingContext2D}
 		 */
 		this.context = this.canvas.getContext('2d');
+	}
+	
+	/**
+	 *
+	 * @returns {TextCanvas}
+	 */
+	alignCenter() {
+		this._align = 'center';
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {TextCanvas}
+	 */
+	alignLeft() {
+		this._align = 'left';
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {TextCanvas}
+	 */
+	alignRight() {
+		this._align = 'right';
+		return this;
 	}
 	
 	/**
@@ -137,7 +171,22 @@ class TextCanvas {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.context.font = this.bold + ' ' + this.size + 'px ' + this.font;
 		this.context.fillStyle = this.color;
-		this.context.fillText(text, this.canvas.width / 2, this.canvas.height / 2);
+		
+		let x = 0,
+			y = this.canvas.height / 2;
+		
+		switch (this._align) {
+			case 'right':
+			case 'end':
+				x = this.canvas.width;
+				break;
+			case 'center':
+				x = this.canvas.width / 2;
+				break;
+		}
+		
+		this.context.textAlign = this._align;
+		this.context.fillText(text, x, y);
 		return this;
 	}
 	

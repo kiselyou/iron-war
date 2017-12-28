@@ -5,9 +5,8 @@ class Keyboard {
 	 * @param {number} keyCode
 	 * @param {string} name
 	 * @param {string} key
-	 * @param {string} [type]
 	 */
-	constructor(keyCode, name, key, type = Keyboard.DOWN_OR_UP_CHANGE) {
+	constructor(keyCode, name, key) {
 		/**
 		 *
 		 * @type {number}
@@ -30,7 +29,7 @@ class Keyboard {
 		 *
 		 * @type {?string}
 		 */
-		this.type = type;
+		this.eventType = Keyboard.EVENT_TYPE_DOWN_OR_UP_CHANGE;
 		
 		/**
 		 *
@@ -49,6 +48,48 @@ class Keyboard {
 		 * @type {?number}
 		 */
 		this.value = this.valueOff;
+		
+		/**
+		 *
+		 * @type {?string}
+		 */
+		this.description = null;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.group = 0;
+	}
+	
+	/**
+	 *
+	 * @param {number} value
+	 * @returns {Keyboard}
+	 */
+	setGroup(value) {
+		this.group = Number(value);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @returns {Keyboard}
+	 */
+	setEventType(type) {
+		this.eventType = type;
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string} value
+	 * @returns {Keyboard}
+	 */
+	setDescription(value) {
+		this.description = value;
+		return this;
 	}
 	
 	clear() {
@@ -64,7 +105,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get DOWN_OR_UP_CHANGE() {
+	static get EVENT_TYPE_DOWN_OR_UP_CHANGE() {
 		return 'DOWN_OR_UP_CHANGE';
 	}
 	
@@ -72,7 +113,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get DOWN_TOGGLE() {
+	static get EVENT_TYPE_DOWN_TOGGLE() {
 		return 'DOWN_TOGGLE';
 	}
 	
@@ -80,7 +121,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get UP_TOGGLE() {
+	static get EVENT_TYPE_UP_TOGGLE() {
 		return 'UP_TOGGLE';
 	}
 	
@@ -88,7 +129,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get UP_CHANGE() {
+	static get EVENT_TYPE_UP_CHANGE() {
 		return 'UP_CHANGE';
 	}
 	
@@ -96,7 +137,7 @@ class Keyboard {
 	 *
 	 * @returns {string}
 	 */
-	static get DOWN_CHANGE() {
+	static get EVENT_TYPE_DOWN_CHANGE() {
 		return 'DOWN_CHANGE';
 	}
 }

@@ -9,28 +9,79 @@ class KeyboardControls {
 		
 		/**
 		 *
-		 * @type {Object}
+		 * @type {Array}
+		 * @private
 		 */
-		this.listeners = {};
+		this._disabledGroups = [];
 		
 		/**
 		 *
-		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
+		 * @type {Object.<Object.<Array>>}
+		 * @private
+		 */
+		this._listeners = {};
+		
+		/**
+		 *
+		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, up: Keyboard, down: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, stop: Keyboard, openConsole: Keyboard}}
 		 */
 		this.fly = {
-			forward: new Keyboard(87, 'W', 'forward'),
-			back: new Keyboard(83, 'S', 'back'),
-			left: new Keyboard(65, 'A', 'left'),
-			right: new Keyboard(68, 'D', 'right'),
-			rollLeft: new Keyboard(81, 'Q', 'rollLeft'),
-			rollRight: new Keyboard(69, 'E', 'rollRight'),
-			yawLeft: new Keyboard(37, 'Left', 'yawLeft'),
-			yawRight: new Keyboard(39, 'Right', 'yawRight'),
-			pitchUp: new Keyboard(38, 'Up', 'pitchUp'),
-			pitchDown: new Keyboard(40, 'Down', 'pitchDown'),
-			up: new Keyboard(82, 'R', 'up'),
-			down: new Keyboard(70, 'F', 'down'),
-			space: new Keyboard(32, 'Space', 'space')
+			forward: new Keyboard(87, 'W', 'forward')
+				.setDescription('Увеличение скорости. Движение вперед.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			back: new Keyboard(83, 'S', 'back')
+				.setDescription('Торможение или движение назад.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			left: new Keyboard(65, 'A', 'left')
+				.setDescription('Баковые двигатели. Движение влево.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			right: new Keyboard(68, 'D', 'right')
+				.setDescription('Баковые двигатели. Движение вправо.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			up: new Keyboard(82, 'R', 'up')
+				.setDescription('Баковые двигатели. Движение вверх.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			down: new Keyboard(70, 'F', 'down')
+				.setDescription('Баковые двигатели. Движение вниз.')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			rollLeft: new Keyboard(81, 'Q', 'rollLeft')
+				.setDescription('Вращение вокруг оси Z влево')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			rollRight: new Keyboard(69, 'E', 'rollRight')
+				.setDescription('Вращение вокруг оси Z вправо')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			yawLeft: new Keyboard(37, 'Left', 'yawLeft')
+				.setDescription('Изменение направления влево')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			yawRight: new Keyboard(39, 'Right', 'yawRight')
+				.setDescription('Изменение направления вправо')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			pitchUp: new Keyboard(38, 'Up', 'pitchUp')
+				.setDescription('Изменение направления вверх')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			pitchDown: new Keyboard(40, 'Down', 'pitchDown')
+				.setDescription('Изменение направления вниз')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			stop: new Keyboard(32, 'Space', 'stop')
+				.setDescription('Торможение')
+				.setGroup(KeyboardControls.GROUP_FLY),
+			
+			openConsole: new Keyboard(66, 'B', 'openConsole')
+				.setEventType(Keyboard.EVENT_TYPE_UP_TOGGLE)
+				.setDescription('Открыть консоль бортового компъютера')
+				.setGroup(KeyboardControls.GROUP_PK)
 		};
 		
 		domElement.addEventListener('contextmenu', (event) => {
@@ -50,12 +101,38 @@ class KeyboardControls {
 		}, false);
 		
 		window.addEventListener('keydown', (event) => {
-			this.keydown(event);
+			this._keyDown(event);
 		}, false);
 		
 		window.addEventListener('keyup', (event) => {
-			this.keyup(event);
+			this._keyUp(event);
 		}, false);
+	}
+	
+	/**
+	 * Disable group events and buttons
+	 *
+	 * @param {number} groupName - Constants of current class
+	 * @return {KeyboardControls}
+	 */
+	disableGroup(groupName) {
+		this._disabledGroups.push(groupName);
+		return this;
+	}
+	
+	/**
+	 * Enable group events and buttons
+	 *
+	 * @param {number} groupName - Constants of current class
+	 * @return {KeyboardControls}
+	 */
+	enableGroup(groupName) {
+		for (let i = 0; i < this._disabledGroups.length; i++) {
+			if (this._disabledGroups[i] === groupName) {
+				this._disabledGroups.splice(i, 1);
+			}
+		}
+		return this;
 	}
 	
 	/**
@@ -67,82 +144,103 @@ class KeyboardControls {
 	/**
 	 *
 	 * @param {string} type - There are constants of current class
+	 * @param {string|number} group - Constants of current class
 	 * @param {keyboardControlsListener} listener
 	 * @returns {KeyboardControls}
 	 */
-	addEventListener(type, listener) {
-		if (!this.listeners.hasOwnProperty(type)) {
-			this.listeners[type] = [];
+	addEventListener(type, group, listener) {
+		if (!this._listeners.hasOwnProperty(type)) {
+			this._listeners[type] = {};
 		}
-		this.listeners[type].push(listener);
+		if (!this._listeners[type].hasOwnProperty(group)) {
+			this._listeners[type][group] = [];
+		}
+		this._listeners[type][group].push(listener);
 		return this;
 	}
 	
 	/**
 	 *
 	 * @param {KeyboardEvent} event
+	 * @private
 	 */
-	keydown(event) {
+	_keyDown(event) {
 		if (event.altKey) {
 			return;
 		}
 		
 		let keyboard = this._findKeyboard(event.keyCode);
-		if (keyboard) {
-			switch (keyboard.type) {
-				case Keyboard.DOWN_TOGGLE:
-					keyboard.toggle();
-					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-					break;
-				case Keyboard.DOWN_OR_UP_CHANGE:
-					keyboard.value = keyboard.valueOn;
-					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-					break;
-				case Keyboard.DOWN_CHANGE:
-					keyboard.value = keyboard.valueOn;
-					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-					break;
-			}
+		
+		if (!keyboard || this._disabledGroups.indexOf(keyboard.group) >= 0) {
+			return;
+		}
+		
+		switch (keyboard.eventType) {
+			case Keyboard.EVENT_TYPE_DOWN_TOGGLE:
+				keyboard.toggle();
+				this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+				break;
+			case Keyboard.EVENT_TYPE_DOWN_OR_UP_CHANGE:
+				keyboard.value = keyboard.valueOn;
+				this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+				break;
+			case Keyboard.EVENT_TYPE_DOWN_CHANGE:
+				keyboard.value = keyboard.valueOn;
+				this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+				break;
 		}
 	}
 	
 	/**
 	 *
 	 * @param {KeyboardEvent} event
+	 * @private
 	 */
-	keyup(event) {
+	_keyUp(event) {
 		let keyboard = this._findKeyboard(event.keyCode);
-		if (keyboard) {
-			switch (keyboard.type) {
-				case Keyboard.UP_TOGGLE:
-					keyboard.toggle();
-					this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
-					break;
-				case Keyboard.DOWN_OR_UP_CHANGE:
-					keyboard.value = keyboard.valueOff;
-					this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
-					break;
-				case Keyboard.UP_CHANGE:
-					keyboard.value = keyboard.valueOff;
-					this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
-					break;
-			}
+		
+		if (!keyboard || this._disabledGroups.indexOf(keyboard.group) >= 0) {
+			return;
+		}
+		
+		switch (keyboard.eventType) {
+			case Keyboard.EVENT_TYPE_UP_TOGGLE:
+				keyboard.toggle();
+				this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+				break;
+			case Keyboard.EVENT_TYPE_DOWN_OR_UP_CHANGE:
+				keyboard.value = keyboard.valueOff;
+				this._callListeners(KeyboardControls.EVENT_KEY_UP, event, keyboard);
+				break;
+			case Keyboard.EVENT_TYPE_UP_CHANGE:
+				keyboard.value = keyboard.valueOff;
+				this._callListeners(KeyboardControls.EVENT_KEY_DOWN, event, keyboard);
+				break;
 		}
 	}
 	
 	/**
 	 *
-	 * @param {string} type
+	 * @param {string} type - this is event name, the constants of current class
 	 * @param {KeyboardEvent|MouseEvent} event
-	 * @param {Keyboard} [keyboard]
+	 * @param {?Keyboard} [keyboard]
 	 * @private
 	 */
-	_callListeners(type, event, keyboard) {
-		if (!this.listeners.hasOwnProperty(type)) {
+	_callListeners(type, event, keyboard = null) {
+		if (!this._listeners.hasOwnProperty(type)) {
 			return;
 		}
-		for (let listener of this.listeners[type]) {
-			listener(event, keyboard);
+		let arr = this._listeners[type];
+		for (let group in arr) {
+			if (!arr.hasOwnProperty(group) || (keyboard && keyboard.group !== Number(group))) {
+				continue;
+			}
+			
+			if (this._disabledGroups.indexOf(Number(group)) < 0) {
+				for (let listener of arr[group]) {
+					listener(event, keyboard);
+				}
+			}
 		}
 	}
 	
@@ -162,6 +260,24 @@ class KeyboardControls {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * The group buttons to fly
+	 *
+	 * @returns {number}
+	 */
+	static get GROUP_FLY() {
+		return 1;
+	}
+	
+	/**
+	 * The group buttons to console of ship
+	 *
+	 * @returns {number}
+	 */
+	static get GROUP_PK() {
+		return 2;
 	}
 	
 	/**

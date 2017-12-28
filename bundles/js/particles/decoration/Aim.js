@@ -98,8 +98,9 @@ class Aim extends Particle {
 		}
 		
 		this.signatureRightTop
-			.setText(0, 'speed')
+			.setText(0, 'distance')
 			.setColor(this.color);
+			// .hide();
 		
 		this.model.add(this.signatureRightTop.model);
 		
@@ -110,14 +111,16 @@ class Aim extends Particle {
 		this.model.add(this.signatureLeftTop.model);
 		
 		this.signatureLeftBottom
-			.setText(0, 'health')
-			.setColor(this.color);
+			.setText(0)
+			.setColor(this.color)
+			.hide();
 		
 		this.model.add(this.signatureLeftBottom.model);
 		
 		this.signatureRightBottom
-			.setText(0, 'health')
-			.setColor(this.color);
+			.setText(0)
+			.setColor(this.color)
+			.hide();
 		
 		this.model.add(this.signatureRightBottom.model);
 		

@@ -60,6 +60,7 @@ class AimSignature extends Particle {
 	hide() {
 		this.model.material.transparent = true;
 		this.model.material.opacity = 0;
+		this.text.model.material.opacity = 0;
 		return this;
 	}
 	
@@ -70,13 +71,15 @@ class AimSignature extends Particle {
 	show() {
 		this.model.material.transparent = false;
 		this.model.material.opacity = 1;
+		this.text.model.material.opacity = 1;
 		return this;
 	}
 	
 	/**
 	 *
 	 * @param {string|number} msg
-	 * @param {?string|number} label
+	 * @param {?string|number} [label]
+	 * @returns {AimSignature}
 	 */
 	setText(msg, label = null) {
 		this.msg = msg;
@@ -88,10 +91,12 @@ class AimSignature extends Particle {
 	/**
 	 *
 	 * @param {string|number} msg
+	 * @returns {AimSignature}
 	 */
 	update(msg) {
 		this.msg = msg;
 		this.text.rewrite(this._getLabel());
+		return this;
 	}
 	
 	/**
@@ -135,7 +140,7 @@ class AimSignature extends Particle {
 			y = 0,
 			ax = 65,
 			ay = 60,
-			bx = 900,
+			bx = 1024,
 			by = 60;
 		
 		let geometry = new THREE.Geometry();
@@ -177,7 +182,8 @@ class AimSignature extends Particle {
 					.setRotation(new THREE.Vector3(Math.PI / 2, 0, Math.PI));
 				
 				this.text
-					.setPosition(new THREE.Vector3(900, 100, 0))
+					.alignLeft()
+					.setPosition(new THREE.Vector3(500, 100, 0))
 					.setRotation(new THREE.Vector3(0, Math.PI, 0))
 					.write(this._getLabel());
 				
@@ -188,7 +194,8 @@ class AimSignature extends Particle {
 					.setRotation(new THREE.Vector3(- Math.PI / 2, 0, 0));
 				
 				this.text
-					.setPosition(new THREE.Vector3(100, 100, 0))
+					.alignRight()
+					.setPosition(new THREE.Vector3(500, 100, 0))
 					.write(this._getLabel());
 				
 				break;
@@ -198,7 +205,8 @@ class AimSignature extends Particle {
 					.setRotation(new THREE.Vector3(- Math.PI / 2, 0, Math.PI));
 				
 				this.text
-					.setPosition(new THREE.Vector3(900, 10, 0))
+					.alignLeft()
+					.setPosition(new THREE.Vector3(500, 10, 0))
 					.setRotation(new THREE.Vector3(Math.PI, Math.PI, 0))
 					.write(this._getLabel());
 				break;
@@ -208,7 +216,8 @@ class AimSignature extends Particle {
 					.setRotation(new THREE.Vector3(Math.PI / 2, 0, 0));
 				
 				this.text
-					.setPosition(new THREE.Vector3(100, 10, 0))
+					.alignRight()
+					.setPosition(new THREE.Vector3(500, 10, 0))
 					.setRotation(new THREE.Vector3(Math.PI, 0, 0))
 					.write(this._getLabel());
 				break;

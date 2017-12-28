@@ -5,6 +5,7 @@ import PreLoader from './../loader/PreLoader';
 import Player from './../player/Player';
 
 import HelperPoints from './../helpers/HelperPoints';
+import KeyboardControls from "../keyboard/KeyboardControls";
 
 class SceneControls {
 	/**
@@ -108,6 +109,44 @@ class SceneControls {
 			this.camera.add(this.player.getAim());
 			this.camera.add(this.model);
 			this.scene.add(this.camera);
+			
+			this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, KeyboardControls.GROUP_PK, (event, keyboard) => {
+				if (keyboard.key === 'openConsole') {
+					if (keyboard.value === keyboard.valueOn) {
+						// Enable fly actions
+						this.player.cursor(true);
+						this.player.keyboards.enableGroup(KeyboardControls.GROUP_FLY);
+					} else {
+						// Disable fly actions
+						this.player.cursor(false);
+						this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
+						// Open console of ship
+						// ...
+					}
+				}
+			});
+			
+			
+			this.player
+				.addEventListener(Player.EVENT_ENABLED, () => {
+					// Enable fly actions
+					this.player.cursor(true);
+					this.player.keyboards.enableGroup(KeyboardControls.GROUP_FLY);
+				})
+				.addEventListener(Player.EVENT_DISABLED, () => {
+					// Disable fly actions
+					this.player.cursor(false);
+					this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
+				})
+				.enable(true);
+			
+			
+			// Disable fly actions before start
+			this.player.cursor(false);
+			this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
+			// Open console of ship before start fly
+			// ...
+			
 			this._animate();
 		});
 		

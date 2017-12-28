@@ -25,15 +25,15 @@ class FlyControls {
 		
 		/**
 		 *
-		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, up: Keyboard, down: Keyboard, space: Keyboard}}
+		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, up: Keyboard, down: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, stop: Keyboard, openConsole: Keyboard}}
 		 */
 		this.keyboards = player.keyboards.fly;
 		
-		/**
-		 *
-		 * @type {boolean}
-		 */
-		this.autoForward = false;
+		// /**
+		//  *
+		//  * @type {boolean}
+		//  */
+		// this.autoForward = false;
 		
 		/**
 		 *
@@ -56,23 +56,31 @@ class FlyControls {
 		this.updateMovementVector();
 		this.updateRotationVector();
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_MOVE, (event) => {
-			this.mousemove(event);
-		});
+		this.player.keyboards.addEventListener(
+			KeyboardControls.EVENT_MOUSE_MOVE,
+			KeyboardControls.GROUP_FLY,
+			(event) => {
+				this.mousemove(event);
+			}
+		);
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, () => {
-			this.updateMovementVector();
-			this.updateRotationVector();
-		});
+		this.player.keyboards.addEventListener(
+			KeyboardControls.EVENT_KEY_UP,
+			KeyboardControls.GROUP_FLY,
+			() => {
+				this.updateMovementVector();
+				this.updateRotationVector();
+			}
+		);
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_DOWN, (event, keyboard) => {
-			this.updateMovementVector();
-			this.updateRotationVector();
-			
-			// if (keyboard.key === 'space') {
-			// 	this.player.container.style.cursor = (keyboard.value === 1) ? 'none' : '';
-			// }
-		});
+		this.player.keyboards.addEventListener(
+			KeyboardControls.EVENT_KEY_DOWN,
+			KeyboardControls.GROUP_FLY,
+			() => {
+				this.updateMovementVector();
+				this.updateRotationVector();
+			}
+		);
 	}
 	
 	/**
@@ -106,7 +114,7 @@ class FlyControls {
 			this.player.ship.engine.start(Engine.DIRECTION_FORWARD, delta);
 		} else if (this.keyboards.back.value === this.keyboards.back.valueOn) {
 			this.player.ship.engine.start(Engine.DIRECTION_BACK, delta);
-		} else if (this.keyboards.space.value === this.keyboards.space.valueOn) {
+		} else if (this.keyboards.stop.value === this.keyboards.stop.valueOn) {
 			this.player.ship.engine.stop(delta);
 		}
 		

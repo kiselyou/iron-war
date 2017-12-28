@@ -42,7 +42,7 @@ class SkyeBoxControls {
 		this.position = new THREE.Vector3(0, -1500, -10000);
 		
 		this.sky = this.initSky(this.textureSky);
-		this.initLight(this.sky, 0.1, 0.4, 0.8, 1700, new THREE.Vector3(-15, -60, -1450));
+		this.initLight(this.sky, 0.1, 0.4, 0.8, 1700, new THREE.Vector3(0, 1300, -100));
 		
 		this.scene.add(this.sky);
 	}
