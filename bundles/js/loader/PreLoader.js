@@ -59,7 +59,7 @@ class PreLoader {
 		let ship = this.shipIncludes.includes[start];
 		if (ship) {
 			if (ship.objFileName) {
-				this._mtl.setBaseUrl(ship.basePath);
+				this._mtl.setTexturePath(ship.basePath);
 				this._mtl.load(ship.basePath + ship.mtlFileName, (materials) => {
 					this._obj.setMaterials(materials);
 					this._obj.load(ship.basePath + ship.objFileName, (object) => {

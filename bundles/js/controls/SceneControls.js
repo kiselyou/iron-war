@@ -7,6 +7,8 @@ import Player from './../player/Player';
 import HelperPoints from './../helpers/HelperPoints';
 import KeyboardControls from "../keyboard/KeyboardControls";
 
+const FPS = 1000 / 30;
+
 class SceneControls {
 	/**
 	 *
@@ -52,8 +54,16 @@ class SceneControls {
 		/**
 		 *
 		 * @type {Clock}
+		 * @private
 		 */
-		this.clock = new THREE.Clock();
+		this._clockRender = new THREE.Clock();
+		
+		/**
+		 *
+		 * @type {Clock}
+		 * @private
+		 */
+		this._clockAnimate = new THREE.Clock();
 		
 		/**
 		 *
@@ -147,7 +157,10 @@ class SceneControls {
 			// Open console of ship before start fly
 			// ...
 			
+			
 			this._animate();
+			this._render();
+			
 		});
 		
 		return this;
@@ -192,25 +205,34 @@ class SceneControls {
 	}
 	
 	/**
-	 * @returns {void}
+	 * Set calculations
+	 *
 	 * @private
 	 */
 	_animate() {
-		window.requestAnimationFrame(() => {
+		setTimeout(() => {
 			this._animate();
+			let delta = this._clockAnimate.getDelta();
+			if (this.player.isEnabled) {
+				this.player.ship.aim.signatureLeftTop.update(
+					Math.round(this.player.ship.engine.speedZ)
+				);
+			}
+		}, FPS);
+	}
+	
+	/**
+	 * @returns {void}
+	 * @private
+	 */
+	_render() {
+		window.requestAnimationFrame(() => {
+			this._render();
 		});
 		
-		let delta = this.clock.getDelta();
-		
-		if (this.player.isEnabled) {
-			this.flyControls.update(delta);
-			this.skyBoxControls.update(this.camera.position);
-			
-			this.player.ship.aim.signatureLeftTop.update(
-				Math.round(this.player.ship.engine.speedZ)
-			);
-		}
-		
+		let delta = this._clockRender.getDelta();
+		this.flyControls.update(delta);
+		this.skyBoxControls.update(this.camera.position);
 		this.renderer.render(this.scene, this.camera);
 	}
 	

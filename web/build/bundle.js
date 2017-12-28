@@ -47148,6 +47148,8 @@ main
 
 
 
+const FPS = 1000 / 30;
+
 class SceneControls {
 	/**
 	 *
@@ -47193,8 +47195,16 @@ class SceneControls {
 		/**
 		 *
 		 * @type {Clock}
+		 * @private
 		 */
-		this.clock = new __WEBPACK_IMPORTED_MODULE_0_three__["e" /* Clock */]();
+		this._clockRender = new __WEBPACK_IMPORTED_MODULE_0_three__["e" /* Clock */]();
+		
+		/**
+		 *
+		 * @type {Clock}
+		 * @private
+		 */
+		this._clockAnimate = new __WEBPACK_IMPORTED_MODULE_0_three__["e" /* Clock */]();
 		
 		/**
 		 *
@@ -47288,7 +47298,10 @@ class SceneControls {
 			// Open console of ship before start fly
 			// ...
 			
+			
 			this._animate();
+			this._render();
+			
 		});
 		
 		return this;
@@ -47333,25 +47346,34 @@ class SceneControls {
 	}
 	
 	/**
-	 * @returns {void}
+	 * Set calculations
+	 *
 	 * @private
 	 */
 	_animate() {
-		window.requestAnimationFrame(() => {
+		setTimeout(() => {
 			this._animate();
+			let delta = this._clockAnimate.getDelta();
+			if (this.player.isEnabled) {
+				this.player.ship.aim.signatureLeftTop.update(
+					Math.round(this.player.ship.engine.speedZ)
+				);
+			}
+		}, FPS);
+	}
+	
+	/**
+	 * @returns {void}
+	 * @private
+	 */
+	_render() {
+		window.requestAnimationFrame(() => {
+			this._render();
 		});
 		
-		let delta = this.clock.getDelta();
-		
-		if (this.player.isEnabled) {
-			this.flyControls.update(delta);
-			this.skyBoxControls.update(this.camera.position);
-			
-			this.player.ship.aim.signatureLeftTop.update(
-				Math.round(this.player.ship.engine.speedZ)
-			);
-		}
-		
+		let delta = this._clockRender.getDelta();
+		this.flyControls.update(delta);
+		this.skyBoxControls.update(this.camera.position);
 		this.renderer.render(this.scene, this.camera);
 	}
 	
@@ -47513,7 +47535,7 @@ class FlyControls {
 		this._mousePosition.setY(event.pageY);
 		
 		let container = this.getContainerDimensions();
-		let halfWidth  = container.size[0] / 2;
+		let halfWidth = container.size[0] / 2;
 		let halfHeight = container.size[1] / 2;
 		this.keyboards.yawLeft.value = - ((event.pageX - container.offset[0]) - halfWidth) / halfWidth;
 		this.keyboards.pitchDown.value = ((event.pageY - container.offset[1]) - halfHeight) / halfHeight;
@@ -47979,7 +48001,7 @@ class PreLoader {
 		let ship = this.shipIncludes.includes[start];
 		if (ship) {
 			if (ship.objFileName) {
-				this._mtl.setBaseUrl(ship.basePath);
+				this._mtl.setTexturePath(ship.basePath);
 				this._mtl.load(ship.basePath + ship.mtlFileName, (materials) => {
 					this._obj.setMaterials(materials);
 					this._obj.load(ship.basePath + ship.objFileName, (object) => {

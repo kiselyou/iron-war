@@ -104,7 +104,7 @@ class FlyControls {
 		this._mousePosition.setY(event.pageY);
 		
 		let container = this.getContainerDimensions();
-		let halfWidth  = container.size[0] / 2;
+		let halfWidth = container.size[0] / 2;
 		let halfHeight = container.size[1] / 2;
 		this.keyboards.yawLeft.value = - ((event.pageX - container.offset[0]) - halfWidth) / halfWidth;
 		this.keyboards.pitchDown.value = ((event.pageY - container.offset[1]) - halfHeight) / halfHeight;
