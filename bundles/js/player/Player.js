@@ -97,7 +97,7 @@ class Player extends User {
 		 *
 		 * @type {Vector3}
 		 */
-		this.lookAt = new THREE.Vector3();
+		this.lookAt = new THREE.Vector3(0, 1, 0);
 		
 		/**
 		 *
@@ -214,6 +214,14 @@ class Player extends User {
 	 */
 	prepareModel() {
 		this.ship = ShipIncludes.get().getSpecificShip(this.shipKey);
+		
+		this.ship.model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+		this.ship.model.position.y = -2;
+		
+		// this.ship.model.position.z = 0;
+		
+		// this.ship.model.rotation.y = Math.PI;
+		
 		if (this.isUser) {
 			this.ship.aim.draw();
 		} else {
@@ -229,8 +237,8 @@ class Player extends User {
 	update(delta) {
 		if (!this.isUser) {
 			this.flyControls
-				.updateRotationVector()
-				.updateMovementVector()
+				// .updateRotationVector()
+				// .updateMovementVector()
 				.updatePlayerControl(delta);
 		}
 	}

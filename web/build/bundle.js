@@ -48969,6 +48969,9 @@ class FlyControls {
 		this.moveVector.x = data['mv']['x'];
 		this.moveVector.y = data['mv']['y'];
 		this.moveVector.z = data['mv']['z'];
+		
+		// console.log('Other player: ', this.rotationVector, this.moveVector);
+		
 		return this;
 	}
 	
@@ -50837,6 +50840,8 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			
 			const controls = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */](playerId, 'main-container-canvas');
 			
+			console.log('Current Player: ', controls.player);
+			
 			controls
 				.init()
 				.start()
@@ -50850,6 +50855,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 				});
 			
 			socket.on('update-player-info', (data) => {
+				
 				let player = controls.getPlayer(data['id']);
 				if (player) {
 					player.ship.engine.setSocketInfo(data['e']);
@@ -50859,7 +50865,6 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			
 			// Set default parameters of current player and send it info to other players
 			socket.emit('set-player-info', {
-				
 				p: controls.player.position,
 				r: {
 					x: controls.player.rotation.x,
@@ -51000,18 +51005,13 @@ class SceneControls {
 		
 		/**
 		 *
-		 * @type {?(Mesh|Group)}
-		 */
-		this.model = null;
-		
-		/**
-		 *
 		 * @type {Player}
 		 */
 		this.player = new __WEBPACK_IMPORTED_MODULE_3__player_Player__["a" /* default */](true, playerId, this.container);
 		this.camera.position.copy(this.player.position);
 		this.camera.rotation.copy(this.player.rotation);
-		// this.camera.lookAt(this.player.lookAt);
+		this.camera.lookAt(this.player.lookAt);
+		// console.log(this.camera);
 		
 		/**
 		 *
@@ -51040,6 +51040,8 @@ class SceneControls {
 		 * @private
 		 */
 		this._updateListener = [];
+		
+		this.testIsSend = 0;
 	}
 	
 	/**
@@ -51066,12 +51068,16 @@ class SceneControls {
 		let player = new __WEBPACK_IMPORTED_MODULE_3__player_Player__["a" /* default */](false, id, this.container);
 		player.setSocketInfo(playerInfo);
 		player.prepareModel();
-		let model = player.getModel();
 		player.enable(true, false);
-		// model.lookAt(player.lookAt);
+		
+		let model = player.getModel();
+		// model.rotation.y = -Math.PI;
+		
+		// model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+		// model.position.y = -2;
+		
 		this.scene.add(model);
 		this._players[id] = player;
-		// console.log(this.player, player);
 		return this;
 	}
 	
@@ -51102,10 +51108,8 @@ class SceneControls {
 	 */
 	start() {
 		this.player.prepareModel();
-		this.model = this.player.getModel();
-		
 		this.camera.add(this.player.getAim());
-		this.camera.add(this.model);
+		this.camera.add(this.player.getModel());
 		this.scene.add(this.camera);
 		
 		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_PK, (event, keyboard) => {
@@ -51123,7 +51127,6 @@ class SceneControls {
 				}
 			}
 		});
-		
 		
 		this.player
 			.addEventListener(__WEBPACK_IMPORTED_MODULE_3__player_Player__["a" /* default */].EVENT_ENABLED, () => {
@@ -51145,7 +51148,6 @@ class SceneControls {
 		// Open console of ship before start fly
 		// ...
 		
-		
 		this._animate();
 		this._render();
 		
@@ -51162,9 +51164,9 @@ class SceneControls {
 		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
 		for (let i = 0; i < 500; i ++) {
 			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* Mesh */](cube, material);
-			mesh.position.x = 35000 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 35000 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = 35000 * (2.0 * Math.random() - 1.0);
+			mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
+			mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
+			mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
 			mesh.rotation.x = Math.random() * Math.PI;
 			mesh.rotation.y = Math.random() * Math.PI;
 			mesh.rotation.z = Math.random() * Math.PI;
@@ -51184,8 +51186,9 @@ class SceneControls {
 		this.renderer.setClearColor(0xf0f0f0);
 		this.renderer.setSize(SceneControls.width, SceneControls.height);
 		this.container.appendChild(this.renderer.domElement);
-		this.renderer.gammaInput = true;
-		this.renderer.gammaOutput = true;
+		this.renderer.gammaInput = false;
+		this.renderer.gammaOutput = false;
+		// this.renderer.sortObjects = false;
 		this._onWindowResize();
 		return this;
 	}
@@ -51531,15 +51534,19 @@ class SkyeBoxControls {
 		
 		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["P" /* Vector3 */](0, -1500, -10000);
 		
-		this.sky = this.initSky(this.textureSky);
-		this.initLight(this.sky, 0.1, 0.4, 0.8, 1700, new __WEBPACK_IMPORTED_MODULE_0_three__["P" /* Vector3 */](0, 1300, -100));
+		this.sky = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* Mesh */]();
+		
+		this.sky.renderOrder = -100000;
+		
+		this.initSky(this.textureSky);
+		
+		this.initLight(0.1, 0.4, 0.8, 1700, new __WEBPACK_IMPORTED_MODULE_0_three__["P" /* Vector3 */](0, 1300, -100));
 		
 		this.scene.add(this.sky);
 	}
 	
 	/**
 	 *
-	 * @param {Mesh} el
 	 * @param {number} h
 	 * @param {number} s
 	 * @param {number} l
@@ -51547,11 +51554,11 @@ class SkyeBoxControls {
 	 * @param {Vector3} v
 	 * @returns {LensFlare}
 	 */
-	initLight(el, h, s, l, size, v) {
+	initLight(h, s, l, size, v) {
 		let light = new __WEBPACK_IMPORTED_MODULE_0_three__["F" /* PointLight */](0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
 		light.position.copy(v);
-		el.add(light);
+		this.sky.add(light);
 		let flareColor = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Color */](0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
 		
@@ -51577,7 +51584,7 @@ class SkyeBoxControls {
 		};
 		
 		lensFlare.position.copy(light.position);
-		el.add(lensFlare);
+		this.sky.add(lensFlare);
 		return lensFlare;
 	}
 	
@@ -51585,20 +51592,18 @@ class SkyeBoxControls {
 	 * Build sky box and add it to scene.
 	 *
 	 * @param {Texture} texture
-	 * @returns {Mesh}
+	 * @returns {void}
 	 */
 	initSky(texture) {
-		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["B" /* MeshStandardMaterial */]({
-			map: texture
+		this.sky.material = new __WEBPACK_IMPORTED_MODULE_0_three__["B" /* MeshStandardMaterial */]({
+			map: texture,
+			side: __WEBPACK_IMPORTED_MODULE_0_three__["b" /* BackSide */],
+			depthWrite: false,
+			roughness: 1,
+			metalness: 0
 		});
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["L" /* SphereGeometry */](this._size, this.wSegments, this.hSegments);
-		let sky = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* Mesh */](geometry, material);
-		sky.material.side = __WEBPACK_IMPORTED_MODULE_0_three__["b" /* BackSide */];
-		sky.material.depthWrite = false;
-		sky.material.roughness = 1;
-		sky.material.metalness = 0;
-		return sky;
+		this.sky.geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["L" /* SphereGeometry */](this._size, this.wSegments, this.hSegments);
 	}
 	
 	/**
@@ -51724,7 +51729,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 *
 		 * @type {Vector3}
 		 */
-		this.lookAt = new __WEBPACK_IMPORTED_MODULE_6_three__["P" /* Vector3 */]();
+		this.lookAt = new __WEBPACK_IMPORTED_MODULE_6_three__["P" /* Vector3 */](0, 1, 0);
 		
 		/**
 		 *
@@ -51841,6 +51846,14 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	 */
 	prepareModel() {
 		this.ship = __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__["a" /* default */].get().getSpecificShip(this.shipKey);
+		
+		this.ship.model.rotateOnAxis(new __WEBPACK_IMPORTED_MODULE_6_three__["P" /* Vector3 */](0, 1, 0), Math.PI);
+		this.ship.model.position.y = -2;
+		
+		// this.ship.model.position.z = 0;
+		
+		// this.ship.model.rotation.y = Math.PI;
+		
 		if (this.isUser) {
 			this.ship.aim.draw();
 		} else {
@@ -51856,8 +51869,8 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	update(delta) {
 		if (!this.isUser) {
 			this.flyControls
-				.updateRotationVector()
-				.updateMovementVector()
+				// .updateRotationVector()
+				// .updateMovementVector()
 				.updatePlayerControl(delta);
 		}
 	}
@@ -51972,6 +51985,8 @@ class Includes {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_three__ = __webpack_require__(0);
+
 
 
 
@@ -52016,9 +52031,11 @@ class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default *
 		
 		
 		this.addEventListener(__WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].EVENT_MODEL_UPDATE, (model) => {
-			model.position.z = 0;
-			model.position.y = -2;
-			model.rotation.y = Math.PI;
+			// model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+			// model.position.y = -2;
+			// model.position.z = 0;
+			// model.position.y = -2;
+			// model.rotation.y = Math.PI;
 		});
 	}
 }
@@ -52772,7 +52789,7 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 	     *
 	     * @type {number}
 	     */
-	    this.speedX = 5;
+	    this.speedX = 15;
 	
 	    /**
 	     *
@@ -52784,7 +52801,7 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 	     *
 	     * @type {number}
 	     */
-	    this.speedY = 5;
+	    this.speedY = 15;
 	
 	    /**
 	     *
@@ -52808,7 +52825,7 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 	     *
 	     * @type {number}
 	     */
-	    this.speedMaxZ = 30;
+	    this.speedMaxZ = 150;
 	
 	    /**
 	     *

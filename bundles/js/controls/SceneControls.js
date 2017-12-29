@@ -72,18 +72,13 @@ class SceneControls {
 		
 		/**
 		 *
-		 * @type {?(Mesh|Group)}
-		 */
-		this.model = null;
-		
-		/**
-		 *
 		 * @type {Player}
 		 */
 		this.player = new Player(true, playerId, this.container);
 		this.camera.position.copy(this.player.position);
 		this.camera.rotation.copy(this.player.rotation);
-		// this.camera.lookAt(this.player.lookAt);
+		this.camera.lookAt(this.player.lookAt);
+		// console.log(this.camera);
 		
 		/**
 		 *
@@ -112,6 +107,8 @@ class SceneControls {
 		 * @private
 		 */
 		this._updateListener = [];
+		
+		this.testIsSend = 0;
 	}
 	
 	/**
@@ -138,12 +135,16 @@ class SceneControls {
 		let player = new Player(false, id, this.container);
 		player.setSocketInfo(playerInfo);
 		player.prepareModel();
-		let model = player.getModel();
 		player.enable(true, false);
-		// model.lookAt(player.lookAt);
+		
+		let model = player.getModel();
+		// model.rotation.y = -Math.PI;
+		
+		// model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+		// model.position.y = -2;
+		
 		this.scene.add(model);
 		this._players[id] = player;
-		// console.log(this.player, player);
 		return this;
 	}
 	
@@ -174,10 +175,8 @@ class SceneControls {
 	 */
 	start() {
 		this.player.prepareModel();
-		this.model = this.player.getModel();
-		
 		this.camera.add(this.player.getAim());
-		this.camera.add(this.model);
+		this.camera.add(this.player.getModel());
 		this.scene.add(this.camera);
 		
 		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, KeyboardControls.GROUP_PK, (event, keyboard) => {
@@ -195,7 +194,6 @@ class SceneControls {
 				}
 			}
 		});
-		
 		
 		this.player
 			.addEventListener(Player.EVENT_ENABLED, () => {
@@ -217,7 +215,6 @@ class SceneControls {
 		// Open console of ship before start fly
 		// ...
 		
-		
 		this._animate();
 		this._render();
 		
@@ -234,9 +231,9 @@ class SceneControls {
 		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
 		for (let i = 0; i < 500; i ++) {
 			let mesh = new THREE.Mesh(cube, material);
-			mesh.position.x = 35000 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 35000 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = 35000 * (2.0 * Math.random() - 1.0);
+			mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
+			mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
+			mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
 			mesh.rotation.x = Math.random() * Math.PI;
 			mesh.rotation.y = Math.random() * Math.PI;
 			mesh.rotation.z = Math.random() * Math.PI;
@@ -256,8 +253,9 @@ class SceneControls {
 		this.renderer.setClearColor(0xf0f0f0);
 		this.renderer.setSize(SceneControls.width, SceneControls.height);
 		this.container.appendChild(this.renderer.domElement);
-		this.renderer.gammaInput = true;
-		this.renderer.gammaOutput = true;
+		this.renderer.gammaInput = false;
+		this.renderer.gammaOutput = false;
+		// this.renderer.sortObjects = false;
 		this._onWindowResize();
 		return this;
 	}

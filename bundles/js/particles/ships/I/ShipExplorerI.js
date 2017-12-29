@@ -1,6 +1,7 @@
 import Ship from './../Ship';
 import EngineIM20 from './../../engine/I/EngineIM20';
 import ParticleClassI from './../../../classes/ParticleClassI';
+import * as THREE from 'three';
 
 class ShipExplorerI extends Ship {
 	constructor() {
@@ -42,9 +43,11 @@ class ShipExplorerI extends Ship {
 		
 		
 		this.addEventListener(Ship.EVENT_MODEL_UPDATE, (model) => {
-			model.position.z = 0;
-			model.position.y = -2;
-			model.rotation.y = Math.PI;
+			// model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+			// model.position.y = -2;
+			// model.position.z = 0;
+			// model.position.y = -2;
+			// model.rotation.y = Math.PI;
 		});
 	}
 }

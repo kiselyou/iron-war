@@ -239,6 +239,9 @@ class FlyControls {
 		this.moveVector.x = data['mv']['x'];
 		this.moveVector.y = data['mv']['y'];
 		this.moveVector.z = data['mv']['z'];
+		
+		// console.log('Other player: ', this.rotationVector, this.moveVector);
+		
 		return this;
 	}
 	

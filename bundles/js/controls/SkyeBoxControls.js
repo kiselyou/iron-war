@@ -41,15 +41,19 @@ class SkyeBoxControls {
 		
 		this.position = new THREE.Vector3(0, -1500, -10000);
 		
-		this.sky = this.initSky(this.textureSky);
-		this.initLight(this.sky, 0.1, 0.4, 0.8, 1700, new THREE.Vector3(0, 1300, -100));
+		this.sky = new THREE.Mesh();
+		
+		this.sky.renderOrder = -100000;
+		
+		this.initSky(this.textureSky);
+		
+		this.initLight(0.1, 0.4, 0.8, 1700, new THREE.Vector3(0, 1300, -100));
 		
 		this.scene.add(this.sky);
 	}
 	
 	/**
 	 *
-	 * @param {Mesh} el
 	 * @param {number} h
 	 * @param {number} s
 	 * @param {number} l
@@ -57,11 +61,11 @@ class SkyeBoxControls {
 	 * @param {Vector3} v
 	 * @returns {LensFlare}
 	 */
-	initLight(el, h, s, l, size, v) {
+	initLight(h, s, l, size, v) {
 		let light = new THREE.PointLight(0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
 		light.position.copy(v);
-		el.add(light);
+		this.sky.add(light);
 		let flareColor = new THREE.Color(0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
 		
@@ -87,7 +91,7 @@ class SkyeBoxControls {
 		};
 		
 		lensFlare.position.copy(light.position);
-		el.add(lensFlare);
+		this.sky.add(lensFlare);
 		return lensFlare;
 	}
 	
@@ -95,20 +99,18 @@ class SkyeBoxControls {
 	 * Build sky box and add it to scene.
 	 *
 	 * @param {Texture} texture
-	 * @returns {Mesh}
+	 * @returns {void}
 	 */
 	initSky(texture) {
-		let material = new THREE.MeshStandardMaterial({
-			map: texture
+		this.sky.material = new THREE.MeshStandardMaterial({
+			map: texture,
+			side: THREE.BackSide,
+			depthWrite: false,
+			roughness: 1,
+			metalness: 0
 		});
 		
-		let geometry = new THREE.SphereGeometry(this._size, this.wSegments, this.hSegments);
-		let sky = new THREE.Mesh(geometry, material);
-		sky.material.side = THREE.BackSide;
-		sky.material.depthWrite = false;
-		sky.material.roughness = 1;
-		sky.material.metalness = 0;
-		return sky;
+		this.sky.geometry = new THREE.SphereGeometry(this._size, this.wSegments, this.hSegments);
 	}
 	
 	/**

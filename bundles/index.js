@@ -15,6 +15,8 @@ new PreLoader().load(() => {
 			
 			const controls = new SceneControls(playerId, 'main-container-canvas');
 			
+			console.log('Current Player: ', controls.player);
+			
 			controls
 				.init()
 				.start()
@@ -28,6 +30,7 @@ new PreLoader().load(() => {
 				});
 			
 			socket.on('update-player-info', (data) => {
+				
 				let player = controls.getPlayer(data['id']);
 				if (player) {
 					player.ship.engine.setSocketInfo(data['e']);
@@ -37,7 +40,6 @@ new PreLoader().load(() => {
 			
 			// Set default parameters of current player and send it info to other players
 			socket.emit('set-player-info', {
-				
 				p: controls.player.position,
 				r: {
 					x: controls.player.rotation.x,

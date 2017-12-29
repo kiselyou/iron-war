@@ -15,7 +15,7 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.speedX = 5;
+	    this.speedX = 15;
 	
 	    /**
 	     *
@@ -27,7 +27,7 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.speedY = 5;
+	    this.speedY = 15;
 	
 	    /**
 	     *
@@ -51,7 +51,7 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.speedMaxZ = 30;
+	    this.speedMaxZ = 150;
 	
 	    /**
 	     *
