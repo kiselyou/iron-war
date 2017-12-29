@@ -12,7 +12,7 @@ class Includes {
 	constructor(type) {
 		/**
 		 *
-		 * @type {Array.<(Object|Particle)>}
+		 * @type {Array.<Particle>}
 		 */
 		this.includes = [];
 		
@@ -66,10 +66,11 @@ class Includes {
 	 * @param {number|string} key
 	 * @returns {?Object}
 	 */
-	getSpecific(key) {
+	getSpecificShip(key) {
 		let element = this.includes.find((el) => {
 			return el.key === key;
 		});
+		
 		return element ? element.clone() : null;
 	}
 }

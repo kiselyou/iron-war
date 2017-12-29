@@ -62,6 +62,30 @@ class Keyboard {
 		this.group = 0;
 	}
 	
+	// /**
+	//  *
+	//  * @param {{v: number, vOn: number, vOff: number}} data
+	//  * @returns {Keyboard}
+	//  */
+	// setSocketInfo(data) {
+	// 	this.value = data['v'];
+	// 	this.valueOn = data['vOn'];
+	// 	this.valueOff = data['vOff'];
+	// 	return this;
+	// }
+	//
+	// /**
+	//  *
+	//  * @returns {{v: number, vOn: number, vOff: number}}
+	//  */
+	// getSocketInfo() {
+	// 	return {
+	// 		v: this.value,
+	// 		vOn: this.valueOn,
+	// 		vOff: this.valueOff
+	// 	}
+	// }
+	
 	/**
 	 *
 	 * @param {number} value

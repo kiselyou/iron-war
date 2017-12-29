@@ -15,25 +15,25 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.speedX = 1500;
+	    this.speedX = 5;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.speedMaxX = 2000;
+	    this.speedMaxX = 5;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.speedY = 200;
+	    this.speedY = 5;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.speedMaxY = 200;
+	    this.speedMaxY = 5;
 	    
 	    /**
 	     *
@@ -45,13 +45,13 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.speedMinZ = - 1000;
+	    this.speedMinZ = - 10;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.speedMaxZ = 6000;
+	    this.speedMaxZ = 30;
 	
 	    /**
 	     *
@@ -69,19 +69,19 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.accelerationForward = 1500;
+	    this.accelerationForward = 25;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.accelerationBack = 500;
+	    this.accelerationBack = 15;
 	
 	    /**
 	     *
 	     * @type {number}
 	     */
-	    this.deceleration = 1000;
+	    this.deceleration = 30;
     }
 }
 

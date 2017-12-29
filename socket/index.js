@@ -46,17 +46,23 @@ io.on('connection', (client) => {
 	// Give specific id to player
 	client.emit('entry', client.id);
 	
-	client.on('update-player-info', (data) => {
+	client.on('set-player-info', (data) => {
 		players[client.id].copy(data);
 		// Send to all except me
 		client.broadcast.emit('add-new-player', players[client.id]);
 	});
-	
+
 	client.on('send-player-info', (data) => {
 		// Send to specific player
 		client.broadcast.to(data['to']).emit('add-old-player', data);
 	});
 	
+	client.on('send-updated-player-info', (data) => {
+		players[client.id].copyE(data);
+		// Send to all except me
+		client.broadcast.emit('update-player-info', data);
+	});
+
 	client.on('remove-player', (playerId) => {
 		// Send to all except me
 		client.broadcast.emit('remove-specific-player', playerId);

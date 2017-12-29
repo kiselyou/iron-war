@@ -36,6 +36,11 @@ class ShipExplorerI extends Ship {
 		 */
 		this.mtlFileName = 'explorer.mtl';
 		
+		// this.calibration.position.z = 0;
+		// this.calibration.position.y = -2;
+		// this.calibration.rotation.y = Math.PI;
+		
+		
 		this.addEventListener(Ship.EVENT_MODEL_UPDATE, (model) => {
 			model.position.z = 0;
 			model.position.y = -2;

@@ -5,7 +5,7 @@ import KeyboardControls from './../keyboard/KeyboardControls';
 class FlyControls {
 	
 	/**
-	 * @param {Camera} object
+	 * @param {(Camera|Mesh|Group)} object
 	 * @param {Player} player
 	 */
 	constructor(object, player) {
@@ -55,7 +55,14 @@ class FlyControls {
 		
 		this.updateMovementVector();
 		this.updateRotationVector();
-		
+	}
+	
+	/**
+	 * Add events to page. Use this method only for current user
+	 *
+	 * @return {FlyControls}
+	 */
+	initEvents() {
 		this.player.keyboards.addEventListener(
 			KeyboardControls.EVENT_MOUSE_MOVE,
 			KeyboardControls.GROUP_FLY,
@@ -81,6 +88,7 @@ class FlyControls {
 				this.updateRotationVector();
 			}
 		);
+		return this;
 	}
 	
 	/**
@@ -102,11 +110,12 @@ class FlyControls {
 	}
 	
 	/**
+	 * Call animation. Use this method only for current user
 	 *
 	 * @param {number} delta
 	 * @returns {void}
 	 */
-	update(delta) {
+	updateUserControl(delta) {
 		if (!this.player.isEnabled) {
 			return;
 		}
@@ -142,23 +151,62 @@ class FlyControls {
 	}
 	
 	/**
+	 * Call animation. Use this method for any players except current user
+	 *
+	 * @param {number} delta
 	 * @returns {void}
 	 */
+	updatePlayerControl(delta) {
+		let moveMultX = delta * this.player.ship.engine.speedX;
+		let moveMultY = delta * this.player.ship.engine.speedY;
+		let moveMultZ = delta * this.player.ship.engine.speedZ;
+		let rotMultXY = delta * this.player.ship.engine.rollSpeedXY;
+		let rotMultZ = delta * this.player.ship.engine.rollSpeedZ;
+		
+		this.object.translateX(this.moveVector.x * moveMultX);
+		this.object.translateY(this.moveVector.y * moveMultY);
+		this.object.translateZ(this.moveVector.z * moveMultZ);
+		
+		this.tmpQuaternion.set(
+			this.rotationVector.x * rotMultXY,
+			this.rotationVector.y * rotMultXY,
+			this.rotationVector.z * rotMultZ,
+			1
+		).normalize();
+		this.object.quaternion.multiply(this.tmpQuaternion);
+		
+		// expose the rotation vector for convenience
+		this.object.rotation.setFromQuaternion(this.object.quaternion, this.object.rotation.order);
+	}
+	
+	/**
+	 *
+	 * @returns {FlyControls}
+	 */
 	updateMovementVector() {
+		if (!this.player.isEnabled) {
+			return this;
+		}
 		// let forward = (this.keyboards.forward.value || (this.autoForward && ! this.keyboards.back.value)) ? 1 : 0;
 		this.moveVector.x = (- this.keyboards.left.value + this.keyboards.right.value);
 		this.moveVector.y = (- this.keyboards.down.value + this.keyboards.up.value);
 		// this.moveVector.z = (- forward + this.keyboards.back.value);
 		this.moveVector.z = -1;
+		return this;
 	}
 	
 	/**
-	 * @returns {void}
+	 *
+	 * @returns {FlyControls}
 	 */
 	updateRotationVector() {
+		if (!this.player.isEnabled) {
+			return this;
+		}
 		this.rotationVector.x = (- this.keyboards.pitchDown.value + this.keyboards.pitchUp.value);
 		this.rotationVector.y = (- this.keyboards.yawRight.value  + this.keyboards.yawLeft.value);
 		this.rotationVector.z = (- this.keyboards.rollRight.value + this.keyboards.rollLeft.value);
+		return this;
 	}
 	
 	/**
@@ -176,6 +224,40 @@ class FlyControls {
 				size: [window.innerWidth, window.innerHeight],
 				offset: [0, 0]
 			};
+		}
+	}
+	
+	/**
+	 *
+	 * @param {{rv: {x: *, y: *, z: *}, mv: {x: *, y: *, z: *}}} data
+	 * @returns {FlyControls}
+	 */
+	setSocketInfo(data) {
+		this.rotationVector.x = data['rv']['x'];
+		this.rotationVector.y = data['rv']['y'];
+		this.rotationVector.z = data['rv']['z'];
+		this.moveVector.x = data['mv']['x'];
+		this.moveVector.y = data['mv']['y'];
+		this.moveVector.z = data['mv']['z'];
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {{rv: {x: *, y: *, z: *}, mv: {x: *, y: *, z: *}}}
+	 */
+	getSocketInfo() {
+		return {
+			rv: {
+				x: this.rotationVector.x,
+				y: this.rotationVector.y,
+				z: this.rotationVector.z
+			},
+			mv: {
+				x: this.moveVector.x,
+				y: this.moveVector.y,
+				z: this.moveVector.z
+			}
 		}
 	}
 }

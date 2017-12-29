@@ -101,6 +101,34 @@ class Engine extends Particle {
 	
 	/**
 	 *
+	 * @return {{sx: number, sy: number, sz: number, rxy: number, rz: number}}
+	 */
+	getSocketInfo() {
+	    return {
+		    sx: this.speedX,
+		    sy: this.speedY,
+		    sz: this.speedZ,
+		    rxy: this.rollSpeedXY,
+		    rz: this.rollSpeedZ
+	    }
+    }
+	
+	/**
+	 *
+	 * @param {{sx: number, sy: number, sz: number, rxy: number, rz: number}} data
+	 * @return {Engine}
+	 */
+	setSocketInfo(data) {
+	    this.speedX = data['sx'];
+	    this.speedY = data['sy'];
+	    this.speedZ = data['sz'];
+	    this.rollSpeedZ = data['rz'];
+	    this.rollSpeedXY = data['rxy'];
+	    return this;
+    }
+	
+	/**
+	 *
 	 * @param {string} direction
 	 * @param {number} delta
 	 * @returns {Engine}

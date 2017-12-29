@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import FlyControls from './FlyControls';
 import SkyeBoxControls from './SkyeBoxControls';
-import PreLoader from './../loader/PreLoader';
 import Player from './../player/Player';
 
 import HelperPoints from './../helpers/HelperPoints';
@@ -13,17 +12,10 @@ class SceneControls {
 	/**
 	 *
 	 * @param {string|number} playerId - Socket ID
-	 * @param {Socket} socket
 	 * @param {string} [containerID]
 	 */
-	constructor(playerId, socket, containerID) {
+	constructor(playerId, containerID) {
 		const FAR = 100000;
-		
-		/**
-		 *
-		 * @type {Socket}
-		 */
-		this.socket = socket;
 		
 		/**
 		 *
@@ -89,31 +81,16 @@ class SceneControls {
 		 * @type {Player}
 		 */
 		this.player = new Player(true, playerId, this.container);
-		this.camera.position.set(
-			this.player.position.x,
-			this.player.position.y,
-			this.player.position.z
-		);
-		this.camera.rotation.set(
-			this.player.rotation.x,
-			this.player.rotation.y,
-			this.player.rotation.z
-		);
-		this.camera.lookAt(this.player.lookAt);
+		this.camera.position.copy(this.player.position);
+		this.camera.rotation.copy(this.player.rotation);
+		// this.camera.lookAt(this.player.lookAt);
 		
 		/**
 		 *
 		 * @type {?FlyControls}
 		 */
 		this.flyControls = new FlyControls(this.camera, this.player);
-		this.flyControls.autoForward = false;
-		this.flyControls.dragToLook = false;
-		
-		/**
-		 *
-		 * @type {PreLoader}
-		 */
-		this.loader = new PreLoader();
+		this.flyControls.initEvents();
 		
 		/**
 		 *
@@ -124,10 +101,31 @@ class SceneControls {
 		
 		/**
 		 *
-		 * @type {Array}
+		 * @type {Object.<Player>}
 		 * @private
 		 */
-		this._players = [];
+		this._players = {};
+		
+		/**
+		 *
+		 * @type {Array.<updatePlayerListener>}
+		 * @private
+		 */
+		this._updateListener = [];
+	}
+	
+	/**
+	 * @callback updatePlayerListener
+	 */
+	
+	/**
+	 *
+	 * @param {updatePlayerListener} listener
+	 * @return {SceneControls}
+	 */
+	addPlayerListener(listener) {
+		this._updateListener.push(listener);
+		return this;
 	}
 	
 	/**
@@ -136,18 +134,26 @@ class SceneControls {
 	 * @return {SceneControls}
 	 */
 	addPlayer(playerInfo) {
-		
-		let player = new Player(false, playerInfo['id'], this.container);
-		player.copy(playerInfo);
+		let id = playerInfo['id'];
+		let player = new Player(false, id, this.container);
+		player.setSocketInfo(playerInfo);
 		player.prepareModel();
-		
-		this.scene.add(player.getModel());
-		
-		this._players.push(playerInfo);
-		
-		// console.log(this._players, player.getModel());
-		
+		let model = player.getModel();
+		player.enable(true, false);
+		// model.lookAt(player.lookAt);
+		this.scene.add(model);
+		this._players[id] = player;
+		// console.log(this.player, player);
 		return this;
+	}
+	
+	/**
+	 *
+	 * @param {string|number} id
+	 * @returns {?Player}
+	 */
+	getPlayer(id) {
+		return this._players.hasOwnProperty(id) ? this._players[id] : null;
 	}
 	
 	/**
@@ -156,10 +162,8 @@ class SceneControls {
 	 * @return {SceneControls}
 	 */
 	removePlayer(id) {
-		for (let i = 0; i < this._players.length; i++) {
-			if (this._players[i]['id'] === id) {
-				this._players.splice(i, 1);
-			}
+		if (this._players.hasOwnProperty(id)) {
+			delete this._players[id];
 		}
 		return this;
 	}
@@ -169,56 +173,53 @@ class SceneControls {
 	 * @returns {SceneControls}
 	 */
 	start() {
-		this.loader.load(() => {
-			this.player.prepareModel();
-			this.model = this.player.getModel();
-			
-			this.camera.add(this.player.getAim());
-			this.camera.add(this.model);
-			this.scene.add(this.camera);
-			
-			this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, KeyboardControls.GROUP_PK, (event, keyboard) => {
-				if (keyboard.key === 'openConsole') {
-					if (keyboard.value === keyboard.valueOn) {
-						// Enable fly actions
-						this.player.cursor(true);
-						this.player.keyboards.enableGroup(KeyboardControls.GROUP_FLY);
-					} else {
-						// Disable fly actions
-						this.player.cursor(false);
-						this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
-						// Open console of ship
-						// ...
-					}
-				}
-			});
-			
-			
-			this.player
-				.addEventListener(Player.EVENT_ENABLED, () => {
+		this.player.prepareModel();
+		this.model = this.player.getModel();
+		
+		this.camera.add(this.player.getAim());
+		this.camera.add(this.model);
+		this.scene.add(this.camera);
+		
+		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, KeyboardControls.GROUP_PK, (event, keyboard) => {
+			if (keyboard.key === 'openConsole') {
+				if (keyboard.value === keyboard.valueOn) {
 					// Enable fly actions
 					this.player.cursor(true);
 					this.player.keyboards.enableGroup(KeyboardControls.GROUP_FLY);
-				})
-				.addEventListener(Player.EVENT_DISABLED, () => {
+				} else {
 					// Disable fly actions
 					this.player.cursor(false);
 					this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
-				})
-				.enable(true, true);
-			
-			
-			// Disable fly actions before start
-			this.player.cursor(false);
-			this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
-			// Open console of ship before start fly
-			// ...
-			
-			
-			this._animate();
-			this._render();
-			
+					// Open console of ship
+					// ...
+				}
+			}
 		});
+		
+		
+		this.player
+			.addEventListener(Player.EVENT_ENABLED, () => {
+				// Enable fly actions
+				this.player.cursor(true);
+				this.player.keyboards.enableGroup(KeyboardControls.GROUP_FLY);
+			})
+			.addEventListener(Player.EVENT_DISABLED, () => {
+				// Disable fly actions
+				this.player.cursor(false);
+				this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
+			})
+			.enable(true, true);
+		
+		
+		// Disable fly actions before start
+		this.player.cursor(false);
+		this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
+		// Open console of ship before start fly
+		// ...
+		
+		
+		this._animate();
+		this._render();
 		
 		return this;
 	}
@@ -274,6 +275,16 @@ class SceneControls {
 				this.player.ship.aim.signatureLeftTop.update(
 					Math.round(this.player.ship.engine.speedZ)
 				);
+				
+				for (let listener of this._updateListener) {
+					listener();
+				}
+				
+				for (let playerId in this._players) {
+					if (this._players.hasOwnProperty(playerId)) {
+						this._players[playerId].update(delta);
+					}
+				}
 			}
 		}, FPS);
 	}
@@ -291,7 +302,7 @@ class SceneControls {
 		
 		let delta = this._clockRender.getDelta();
 		if (this.player.isEnabled) {
-			this.flyControls.update(delta);
+			this.flyControls.updateUserControl(delta);
 			this.skyBoxControls.update(this.camera.position);
 			this.player.position.copy(this.camera.position);
 			this.player.rotation.copy(this.camera.rotation);

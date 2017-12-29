@@ -1,4 +1,6 @@
 import ParticleError from './ParticleError';
+import Listener from './systems/Listener';
+import * as THREE from 'three';
 
 class Particle {
 	/**
@@ -12,6 +14,12 @@ class Particle {
 		 * @type {string}
 		 */
 		this.id = '';
+		
+		/**
+		 *
+		 * @type {boolean}
+		 */
+		this.isClone = false;
 		
 		/**
 		 *
@@ -54,6 +62,47 @@ class Particle {
 		 * @type {Array.<Particle>}
 		 */
 		this.children = [];
+		
+		/**
+		 *
+		 * @type {?(Mesh|Group)}
+		 */
+		this.model = null;
+		
+		/**
+		 *
+		 * @type {Listener}
+		 * @private
+		 */
+		this._events = new Listener();
+	}
+	
+	/**
+	 * @param {Mesh|Group} model
+	 * @callback shipUpdateListener
+	 */
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @param {shipUpdateListener} listener
+	 * @returns {Particle}
+	 */
+	addEventListener(type, listener) {
+		this._events.addEventListener(type, listener);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {(Mesh|Group)} obj
+	 * @param {string|number} eventType
+	 * @returns {Particle}
+	 */
+	setModel(obj, eventType) {
+		this.model = obj;
+		this._events.callListeners(eventType, this.model);
+		return this;
 	}
 	
 	/**
@@ -62,7 +111,22 @@ class Particle {
 	 * @returns {Particle}
 	 */
 	clone() {
-		return Object.assign(Object.create(this), this);
+		/**
+		 *
+		 * @type {Particle}
+		 */
+		let clone = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+		clone.isClone = true;
+		for (let property in this) {
+			if (this.hasOwnProperty(property)) {
+				if (this[property] instanceof Particle) {
+					clone[property] = clone[property].clone();
+				} else if (this[property] instanceof THREE.Object3D) {
+					clone[property] = clone[property].clone();
+				}
+			}
+		}
+		return clone;
 	}
 	
 	/**

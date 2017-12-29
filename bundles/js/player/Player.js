@@ -1,6 +1,7 @@
 import User from './User';
 import ShipIncludes from './../particles/ships/ShipIncludes';
 import KeyboardControls from './../keyboard/KeyboardControls';
+import FlyControls from './../controls/FlyControls';
 import Listener from './../systems/Listener';
 import Ship from './../particles/ships/Ship';
 import * as THREE from 'three';
@@ -59,6 +60,10 @@ class Player extends User {
 		 */
 		this.keyboards = new KeyboardControls(this.container);
 		
+		if (isUser) {
+			this.keyboards.initEvents();
+		}
+		
 		/**
 		 *
 		 * @type {Listener}
@@ -74,18 +79,18 @@ class Player extends User {
 		this.position = new THREE.Vector3(
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
-			2000 * (2.0 * Math.random() - 1.0)
+			1000 * (2.0 * Math.random() - 1.0)
 		);
 		
 		/**
 		 * Current rotation
 		 *
-		 * @type {Vector3}
+		 * @type {Euler}
 		 */
-		this.rotation = new THREE.Vector3(
-			Math.random() * Math.PI,
-			Math.random() * Math.PI,
-			Math.random() * Math.PI
+		this.rotation = new THREE.Euler(
+			// Math.random() * Math.PI,
+			// Math.random() * Math.PI,
+			// Math.random() * Math.PI
 		);
 		
 		/**
@@ -93,6 +98,12 @@ class Player extends User {
 		 * @type {Vector3}
 		 */
 		this.lookAt = new THREE.Vector3();
+		
+		/**
+		 *
+		 * @type {?FlyControls}
+		 */
+		this.flyControls = null;
 	}
 	
 	/**
@@ -100,7 +111,7 @@ class Player extends User {
 	 * @param {PlayerInfo} data
 	 * @return {Player}
 	 */
-	copy(data) {
+	setSocketInfo(data) {
 		this.position.x = data['p']['x'];
 		this.position.y = data['p']['y'];
 		this.position.z = data['p']['z'];
@@ -108,6 +119,7 @@ class Player extends User {
 		this.rotation.x = data['r']['x'];
 		this.rotation.y = data['r']['y'];
 		this.rotation.z = data['r']['z'];
+		this.rotation.order = data['r']['o'];
 		
 		this.lookAt.x = data['l']['x'];
 		this.lookAt.y = data['l']['y'];
@@ -201,11 +213,26 @@ class Player extends User {
 	 * @return {Player}
 	 */
 	prepareModel() {
-		this.ship = ShipIncludes.get().getSpecific(this.shipKey);
+		this.ship = ShipIncludes.get().getSpecificShip(this.shipKey);
 		if (this.isUser) {
 			this.ship.aim.draw();
+		} else {
+			this.flyControls = new FlyControls(this.getModel(), this);
 		}
 		return this;
+	}
+	
+	/**
+	 *
+	 * @param {number} delta
+	 */
+	update(delta) {
+		if (!this.isUser) {
+			this.flyControls
+				.updateRotationVector()
+				.updateMovementVector()
+				.updatePlayerControl(delta);
+		}
 	}
 }
 

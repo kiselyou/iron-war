@@ -3,9 +3,14 @@ import Keyboard from './Keyboard';
 class KeyboardControls {
 	/**
 	 *
-	 * @param {HTMLElement} domElement
+	 * @param {HTMLElement|HTMLDocument} container
 	 */
-	constructor(domElement) {
+	constructor(container) {
+		/**
+		 *
+		 * @type {HTMLElement|HTMLDocument}
+		 */
+		this.container = container;
 		
 		/**
 		 *
@@ -83,20 +88,27 @@ class KeyboardControls {
 				.setDescription('Открыть консоль бортового компъютера')
 				.setGroup(KeyboardControls.GROUP_PK)
 		};
-		
-		domElement.addEventListener('contextmenu', (event) => {
+	}
+	
+	/**
+	 * Add events to page. Use this method only for current user
+	 *
+	 * @return {KeyboardControls}
+	 */
+	initEvents() {
+		this.container.addEventListener('contextmenu', (event) => {
 			event.preventDefault();
 		}, false);
 		
-		domElement.addEventListener('mousemove', (event) => {
+		this.container.addEventListener('mousemove', (event) => {
 			this._callListeners(KeyboardControls.EVENT_MOUSE_MOVE, event);
 		}, false);
 		
-		domElement.addEventListener('mousedown', (event) => {
+		this.container.addEventListener('mousedown', (event) => {
 			this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN, event);
 		}, false);
 		
-		domElement.addEventListener('mouseup', (event) => {
+		this.container.addEventListener('mouseup', (event) => {
 			this._callListeners(KeyboardControls.EVENT_MOUSE_UP, event);
 		}, false);
 		
@@ -107,6 +119,8 @@ class KeyboardControls {
 		window.addEventListener('keyup', (event) => {
 			this._keyUp(event);
 		}, false);
+		
+		return this;
 	}
 	
 	/**
@@ -261,6 +275,52 @@ class KeyboardControls {
 		}
 		return null;
 	}
+	
+	// /**
+	//  *
+	//  * @param {{fly: {forward: {v: number, vOn: number, vOff: number}, back: {v: number, vOn: number, vOff: number}, stop: {v: number, vOn: number, vOff: number}, left: {v: number, vOn: number, vOff: number}, right: {v: number, vOn: number, vOff: number}, down: {v: number, vOn: number, vOff: number}, up: {v: number, vOn: number, vOff: number}, pitchDown: {v: number, vOn: number, vOff: number}, pitchUp: {v: number, vOn: number, vOff: number}, yawRight: {v: number, vOn: number, vOff: number}, yawLeft: {v: number, vOn: number, vOff: number}, rollRight: {v: number, vOn: number, vOff: number}, rollLeft: {v: number, vOn: number, vOff: number}}}} data
+	//  * @returns {KeyboardControls}
+	//  */
+	// setSocketInfo(data) {
+	// 	this.fly.forward.setSocketInfo(data['fly']['forward']);
+	// 	this.fly.back.setSocketInfo(data['fly']['back']);
+	// 	this.fly.stop.setSocketInfo(data['fly']['stop']);
+	// 	this.fly.left.setSocketInfo(data['fly']['left']);
+	// 	this.fly.right.setSocketInfo(data['fly']['right']);
+	// 	this.fly.down.setSocketInfo(data['fly']['down']);
+	// 	this.fly.up.setSocketInfo(data['fly']['up']);
+	// 	this.fly.pitchDown.setSocketInfo(data['fly']['pitchDown']);
+	// 	this.fly.pitchUp.setSocketInfo(data['fly']['pitchUp']);
+	// 	this.fly.yawRight.setSocketInfo(data['fly']['yawRight']);
+	// 	this.fly.yawLeft.setSocketInfo(data['fly']['yawLeft']);
+	// 	this.fly.rollRight.setSocketInfo(data['fly']['rollRight']);
+	// 	this.fly.rollLeft.setSocketInfo(data['fly']['rollLeft']);
+	// 	return this;
+	// }
+	//
+	// /**
+	//  *
+	//  * @returns {{fly: {forward: {v: number, vOn: number, vOff: number}, back: {v: number, vOn: number, vOff: number}, stop: {v: number, vOn: number, vOff: number}, left: {v: number, vOn: number, vOff: number}, right: {v: number, vOn: number, vOff: number}, down: {v: number, vOn: number, vOff: number}, up: {v: number, vOn: number, vOff: number}, pitchDown: {v: number, vOn: number, vOff: number}, pitchUp: {v: number, vOn: number, vOff: number}, yawRight: {v: number, vOn: number, vOff: number}, yawLeft: {v: number, vOn: number, vOff: number}, rollRight: {v: number, vOn: number, vOff: number}, rollLeft: {v: number, vOn: number, vOff: number}}}}
+	//  */
+	// getSocketInfo() {
+	// 	return {
+	// 		fly: {
+	// 			forward: this.fly.forward.getSocketInfo(),
+	// 			back: this.fly.back.getSocketInfo(),
+	// 			stop: this.fly.stop.getSocketInfo(),
+	// 			left: this.fly.left.getSocketInfo(),
+	// 			right: this.fly.right.getSocketInfo(),
+	// 			down: this.fly.down.getSocketInfo(),
+	// 			up: this.fly.up.getSocketInfo(),
+	// 			pitchDown: this.fly.pitchDown.getSocketInfo(),
+	// 			pitchUp: this.fly.pitchUp.getSocketInfo(),
+	// 			yawRight: this.fly.yawRight.getSocketInfo(),
+	// 			yawLeft: this.fly.yawLeft.getSocketInfo(),
+	// 			rollRight: this.fly.rollRight.getSocketInfo(),
+	// 			rollLeft: this.fly.rollLeft.getSocketInfo()
+	// 		}
+	// 	};
+	// }
 	
 	/**
 	 * The group buttons to fly
