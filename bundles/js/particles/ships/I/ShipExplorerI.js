@@ -37,17 +37,9 @@ class ShipExplorerI extends Ship {
 		 */
 		this.mtlFileName = 'explorer.mtl';
 		
-		// this.calibration.position.z = 0;
-		// this.calibration.position.y = -2;
-		// this.calibration.rotation.y = Math.PI;
-		
-		
 		this.addEventListener(Ship.EVENT_MODEL_UPDATE, (model) => {
-			// model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
-			// model.position.y = -2;
-			// model.position.z = 0;
-			// model.position.y = -2;
-			// model.rotation.y = Math.PI;
+			model.children[0].rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+			model.children[0].position.y = -2;
 		});
 	}
 }

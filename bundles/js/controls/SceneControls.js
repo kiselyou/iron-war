@@ -131,18 +131,22 @@ class SceneControls {
 	 * @return {SceneControls}
 	 */
 	addPlayer(playerInfo) {
+		
 		let id = playerInfo['id'];
 		let player = new Player(false, id, this.container);
+		
+		// 1. set ship inf
 		player.setSocketInfo(playerInfo);
+		// 2. prepare model
 		player.prepareModel();
+		// 3. update engine
+		player.ship.engine.setSocketInfo(playerInfo['e']);
+		// 4. update fly control
+		player.flyControls.setSocketInfo(playerInfo['fly']);
+		
 		player.enable(true, false);
 		
 		let model = player.getModel();
-		// model.rotation.y = -Math.PI;
-		
-		// model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
-		// model.position.y = -2;
-		
 		this.scene.add(model);
 		this._players[id] = player;
 		return this;
@@ -162,8 +166,9 @@ class SceneControls {
 	 * @param {string|number} id
 	 * @return {SceneControls}
 	 */
-	removePlayer(id) {
+	destroyPlayer(id) {
 		if (this._players.hasOwnProperty(id)) {
+			this.scene.remove(this._players[id].getModel());
 			delete this._players[id];
 		}
 		return this;
@@ -277,7 +282,7 @@ class SceneControls {
 				for (let listener of this._updateListener) {
 					listener();
 				}
-				
+
 				for (let playerId in this._players) {
 					if (this._players.hasOwnProperty(playerId)) {
 						this._players[playerId].update(delta);
@@ -304,6 +309,16 @@ class SceneControls {
 			this.skyBoxControls.update(this.camera.position);
 			this.player.position.copy(this.camera.position);
 			this.player.rotation.copy(this.camera.rotation);
+			
+			// for (let listener of this._updateListener) {
+			// 	listener();
+			// }
+			//
+			// for (let playerId in this._players) {
+			// 	if (this._players.hasOwnProperty(playerId)) {
+			// 		this._players[playerId].update(delta);
+			// 	}
+			// }
 		}
 		
 		this.renderer.render(this.scene, this.camera);

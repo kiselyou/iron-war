@@ -78,7 +78,7 @@ class Particle {
 	}
 	
 	/**
-	 * @param {Mesh|Group} model
+	 * @param {Object3D} model
 	 * @callback shipUpdateListener
 	 */
 	
@@ -100,7 +100,9 @@ class Particle {
 	 * @returns {Particle}
 	 */
 	setModel(obj, eventType) {
-		this.model = obj;
+		let mesh = new THREE.Object3D();
+		mesh.add(obj);
+		this.model = mesh;
 		this._events.callListeners(eventType, this.model);
 		return this;
 	}

@@ -54,11 +54,12 @@ io.on('connection', (client) => {
 
 	client.on('send-player-info', (data) => {
 		// Send to specific player
-		client.broadcast.to(data['to']).emit('add-old-player', data);
+		players[client.id].copy(data);
+		client.broadcast.to(data['to']).emit('add-old-player', players[client.id]);
 	});
 	
 	client.on('send-updated-player-info', (data) => {
-		players[client.id].copyE(data);
+		players[client.id].copy(data);
 		// Send to all except me
 		client.broadcast.emit('update-player-info', data);
 	});

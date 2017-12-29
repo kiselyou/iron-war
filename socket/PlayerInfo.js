@@ -43,17 +43,6 @@ class PlayerInfo {
 		};
 		
 		/**
-		 * Look at
-		 *
-		 * @type {{x: number, y: number, z: number}}
-		 */
-		this.l = {
-			x: 0,
-			y: 0,
-			z: 0
-		};
-		
-		/**
 		 * Engine info
 		 *
 		 * @type {{sx: number, sy: number, sz: number, rz: number, rxy: number}}
@@ -65,6 +54,25 @@ class PlayerInfo {
 			rz: 0,
 			rxy: 0
 		};
+		
+		/**
+		 * Fly Rotation Vector
+		 * Fly Move Vector
+		 *
+		 * @type {{rv: {x: number, y: number, z: number}, mv: {x: number, y: number, z: number}}}
+		 */
+		this.fly = {
+			rv: {
+				x: 0,
+				y: 0,
+				z: 0
+			},
+			mv: {
+				x: 0,
+				y: 0,
+				z: 0
+			}
+		};
 	}
 	
 	/**
@@ -73,33 +81,37 @@ class PlayerInfo {
 	 * @param {Object} data
 	 */
 	copy(data) {
+		
+		// Position of current model
 		this.p.x = data['p']['x'];
 		this.p.y = data['p']['y'];
 		this.p.z = data['p']['z'];
 		
+		// Rotation of current model
 		this.r.x = data['r']['x'];
 		this.r.y = data['r']['y'];
 		this.r.z = data['r']['z'];
 		this.r.o = data['r']['o'];
 		
-		this.l.x = data['l']['x'];
-		this.l.y = data['l']['y'];
-		this.l.z = data['l']['z'];
-		
+		// Ship Key
 		this.sk = data['sk'];
-	}
-	
-	/**
-	 * Copy data Engine
-	 *
-	 * @param {Object} data
-	 */
-	copyE(data) {
-		this.e.sx = data['sx'];
-		this.e.sy = data['sy'];
-		this.e.sz = data['sz'];
-		this.e.rz = data['rz'];
-		this.e.rxy = data['rxy'];
+		
+		// Engine info
+		this.e.sx = data['e']['sx'];
+		this.e.sy = data['e']['sy'];
+		this.e.sz = data['e']['sz'];
+		this.e.rz = data['e']['rz'];
+		this.e.rxy = data['e']['rxy'];
+		
+		// Fly Rotation Vector
+		this.fly.rv.x = data['fly']['rv']['x'];
+		this.fly.rv.y = data['fly']['rv']['y'];
+		this.fly.rv.z = data['fly']['rv']['z'];
+		
+		//Fly Move Vector
+		this.fly.mv.x = data['fly']['mv']['x'];
+		this.fly.mv.y = data['fly']['mv']['y'];
+		this.fly.mv.z = data['fly']['mv']['z'];
 	}
 }
 

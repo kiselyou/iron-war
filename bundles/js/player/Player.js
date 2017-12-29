@@ -79,7 +79,7 @@ class Player extends User {
 		this.position = new THREE.Vector3(
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
-			1000 * (2.0 * Math.random() - 1.0)
+			0 //400 * (2.0 * Math.random() - 1.0)
 		);
 		
 		/**
@@ -97,13 +97,23 @@ class Player extends User {
 		 *
 		 * @type {Vector3}
 		 */
-		this.lookAt = new THREE.Vector3(0, 1, 0);
+		this.lookAt = new THREE.Vector3(0, 0, 0);
 		
 		/**
 		 *
 		 * @type {?FlyControls}
 		 */
 		this.flyControls = null;
+	}
+	
+	/**
+	 *
+	 * @param {string} value
+	 * @returns {Player}
+	 */
+	updateShipKey(value) {
+		this.shipKey = value;
+		return this;
 	}
 	
 	/**
@@ -120,10 +130,6 @@ class Player extends User {
 		this.rotation.y = data['r']['y'];
 		this.rotation.z = data['r']['z'];
 		this.rotation.order = data['r']['o'];
-		
-		this.lookAt.x = data['l']['x'];
-		this.lookAt.y = data['l']['y'];
-		this.lookAt.z = data['l']['z'];
 		
 		this.shipKey = data['sk'];
 		return this;
@@ -214,14 +220,6 @@ class Player extends User {
 	 */
 	prepareModel() {
 		this.ship = ShipIncludes.get().getSpecificShip(this.shipKey);
-		
-		this.ship.model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
-		this.ship.model.position.y = -2;
-		
-		// this.ship.model.position.z = 0;
-		
-		// this.ship.model.rotation.y = Math.PI;
-		
 		if (this.isUser) {
 			this.ship.aim.draw();
 		} else {
@@ -237,8 +235,6 @@ class Player extends User {
 	update(delta) {
 		if (!this.isUser) {
 			this.flyControls
-				// .updateRotationVector()
-				// .updateMovementVector()
 				.updatePlayerControl(delta);
 		}
 	}

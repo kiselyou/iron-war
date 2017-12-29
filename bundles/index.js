@@ -15,7 +15,7 @@ new PreLoader().load(() => {
 			
 			const controls = new SceneControls(playerId, 'main-container-canvas');
 			
-			console.log('Current Player: ', controls.player);
+			console.log('Current Player: ', controls.player, '====================================================');
 			
 			controls
 				.init()
@@ -24,19 +24,18 @@ new PreLoader().load(() => {
 					// Send info about current player to other players
 					socket.emit('send-updated-player-info', {
 						id: playerId,
+						p: controls.player.position,
+						r: {
+							x: controls.player.rotation.x,
+							y: controls.player.rotation.y,
+							z: controls.player.rotation.z,
+							o: controls.player.rotation.order
+						},
 						e: controls.player.ship.engine.getSocketInfo(),
-						fly: controls.flyControls.getSocketInfo()
+						fly: controls.flyControls.getSocketInfo(),
+						sk: controls.player.shipKey,
 					});
 				});
-			
-			socket.on('update-player-info', (data) => {
-				
-				let player = controls.getPlayer(data['id']);
-				if (player) {
-					player.ship.engine.setSocketInfo(data['e']);
-					player.flyControls.setSocketInfo(data['fly']);
-				}
-			});
 			
 			// Set default parameters of current player and send it info to other players
 			socket.emit('set-player-info', {
@@ -47,16 +46,25 @@ new PreLoader().load(() => {
 					z: controls.player.rotation.z,
 					o: controls.player.rotation.order
 				},
-				l: controls.player.lookAt,
+				e: controls.player.ship.engine.getSocketInfo(),
+				fly: controls.flyControls.getSocketInfo(),
 				sk: controls.player.shipKey,
+			});
+			
+			socket.on('update-player-info', (data) => {
+				let player = controls.getPlayer(data['id']);
+				if (player) {
+					player.position.copy(data['p']);
+					player.rotation.copy(data['r']);
+					player.ship.engine.setSocketInfo(data['e']);
+					player.flyControls.setSocketInfo(data['fly']);
+					player.updateShipKey(data['sk']);
+				}
 			});
 			
 			// Add new players to scene and send information about current player
 			socket.on('add-new-player', (playerInfo) => {
 				controls.addPlayer(playerInfo);
-				
-				console.log('add-new-player', playerInfo);
-				
 				socket.emit('send-player-info', {
 					to: playerInfo['id'], // send to specific player
 					id: playerId,
@@ -67,7 +75,8 @@ new PreLoader().load(() => {
 						z: controls.player.rotation.z,
 						o: controls.player.rotation.order
 					},
-					l: controls.player.lookAt,
+					e: controls.player.ship.engine.getSocketInfo(),
+					fly: controls.flyControls.getSocketInfo(),
 					sk: controls.player.shipKey,
 				});
 			});
@@ -75,13 +84,11 @@ new PreLoader().load(() => {
 			socket.on('add-old-player', (playerInfo) => {
 				// Add player to scene that has already exist in other browsers
 				controls.addPlayer(playerInfo);
-				
-				console.log('add-old-player', playerInfo);
 			});
-			//
-			// socket.on('remove-specific-player', (id) => {
-			// 	controls.removePlayer(id);
-			// });
+			
+			socket.on('remove-specific-player', (id) => {
+				controls.destroyPlayer(id);
+			});
 			
 			socket.on('disconnect', () => {
 				alert('Lost connection to server');

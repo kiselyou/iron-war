@@ -47133,7 +47133,7 @@ class Particle {
 	}
 	
 	/**
-	 * @param {Mesh|Group} model
+	 * @param {Object3D} model
 	 * @callback shipUpdateListener
 	 */
 	
@@ -47155,7 +47155,9 @@ class Particle {
 	 * @returns {Particle}
 	 */
 	setModel(obj, eventType) {
-		this.model = obj;
+		let mesh = new __WEBPACK_IMPORTED_MODULE_2_three__["C" /* Object3D */]();
+		mesh.add(obj);
+		this.model = mesh;
 		this._events.callListeners(eventType, this.model);
 		return this;
 	}
@@ -50840,7 +50842,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			
 			const controls = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */](playerId, 'main-container-canvas');
 			
-			console.log('Current Player: ', controls.player);
+			console.log('Current Player: ', controls.player, '====================================================');
 			
 			controls
 				.init()
@@ -50849,19 +50851,18 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 					// Send info about current player to other players
 					socket.emit('send-updated-player-info', {
 						id: playerId,
+						p: controls.player.position,
+						r: {
+							x: controls.player.rotation.x,
+							y: controls.player.rotation.y,
+							z: controls.player.rotation.z,
+							o: controls.player.rotation.order
+						},
 						e: controls.player.ship.engine.getSocketInfo(),
-						fly: controls.flyControls.getSocketInfo()
+						fly: controls.flyControls.getSocketInfo(),
+						sk: controls.player.shipKey,
 					});
 				});
-			
-			socket.on('update-player-info', (data) => {
-				
-				let player = controls.getPlayer(data['id']);
-				if (player) {
-					player.ship.engine.setSocketInfo(data['e']);
-					player.flyControls.setSocketInfo(data['fly']);
-				}
-			});
 			
 			// Set default parameters of current player and send it info to other players
 			socket.emit('set-player-info', {
@@ -50872,16 +50873,25 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 					z: controls.player.rotation.z,
 					o: controls.player.rotation.order
 				},
-				l: controls.player.lookAt,
+				e: controls.player.ship.engine.getSocketInfo(),
+				fly: controls.flyControls.getSocketInfo(),
 				sk: controls.player.shipKey,
+			});
+			
+			socket.on('update-player-info', (data) => {
+				let player = controls.getPlayer(data['id']);
+				if (player) {
+					player.position.copy(data['p']);
+					player.rotation.copy(data['r']);
+					player.ship.engine.setSocketInfo(data['e']);
+					player.flyControls.setSocketInfo(data['fly']);
+					player.updateShipKey(data['sk']);
+				}
 			});
 			
 			// Add new players to scene and send information about current player
 			socket.on('add-new-player', (playerInfo) => {
 				controls.addPlayer(playerInfo);
-				
-				console.log('add-new-player', playerInfo);
-				
 				socket.emit('send-player-info', {
 					to: playerInfo['id'], // send to specific player
 					id: playerId,
@@ -50892,7 +50902,8 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 						z: controls.player.rotation.z,
 						o: controls.player.rotation.order
 					},
-					l: controls.player.lookAt,
+					e: controls.player.ship.engine.getSocketInfo(),
+					fly: controls.flyControls.getSocketInfo(),
 					sk: controls.player.shipKey,
 				});
 			});
@@ -50900,13 +50911,11 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			socket.on('add-old-player', (playerInfo) => {
 				// Add player to scene that has already exist in other browsers
 				controls.addPlayer(playerInfo);
-				
-				console.log('add-old-player', playerInfo);
 			});
-			//
-			// socket.on('remove-specific-player', (id) => {
-			// 	controls.removePlayer(id);
-			// });
+			
+			socket.on('remove-specific-player', (id) => {
+				controls.destroyPlayer(id);
+			});
 			
 			socket.on('disconnect', () => {
 				alert('Lost connection to server');
@@ -51064,18 +51073,22 @@ class SceneControls {
 	 * @return {SceneControls}
 	 */
 	addPlayer(playerInfo) {
+		
 		let id = playerInfo['id'];
 		let player = new __WEBPACK_IMPORTED_MODULE_3__player_Player__["a" /* default */](false, id, this.container);
+		
+		// 1. set ship inf
 		player.setSocketInfo(playerInfo);
+		// 2. prepare model
 		player.prepareModel();
+		// 3. update engine
+		player.ship.engine.setSocketInfo(playerInfo['e']);
+		// 4. update fly control
+		player.flyControls.setSocketInfo(playerInfo['fly']);
+		
 		player.enable(true, false);
 		
 		let model = player.getModel();
-		// model.rotation.y = -Math.PI;
-		
-		// model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
-		// model.position.y = -2;
-		
 		this.scene.add(model);
 		this._players[id] = player;
 		return this;
@@ -51095,8 +51108,9 @@ class SceneControls {
 	 * @param {string|number} id
 	 * @return {SceneControls}
 	 */
-	removePlayer(id) {
+	destroyPlayer(id) {
 		if (this._players.hasOwnProperty(id)) {
+			this.scene.remove(this._players[id].getModel());
 			delete this._players[id];
 		}
 		return this;
@@ -51210,7 +51224,7 @@ class SceneControls {
 				for (let listener of this._updateListener) {
 					listener();
 				}
-				
+
 				for (let playerId in this._players) {
 					if (this._players.hasOwnProperty(playerId)) {
 						this._players[playerId].update(delta);
@@ -51237,6 +51251,16 @@ class SceneControls {
 			this.skyBoxControls.update(this.camera.position);
 			this.player.position.copy(this.camera.position);
 			this.player.rotation.copy(this.camera.rotation);
+			
+			// for (let listener of this._updateListener) {
+			// 	listener();
+			// }
+			//
+			// for (let playerId in this._players) {
+			// 	if (this._players.hasOwnProperty(playerId)) {
+			// 		this._players[playerId].update(delta);
+			// 	}
+			// }
 		}
 		
 		this.renderer.render(this.scene, this.camera);
@@ -51711,7 +51735,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		this.position = new __WEBPACK_IMPORTED_MODULE_6_three__["P" /* Vector3 */](
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
-			1000 * (2.0 * Math.random() - 1.0)
+			0 //400 * (2.0 * Math.random() - 1.0)
 		);
 		
 		/**
@@ -51729,13 +51753,23 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 *
 		 * @type {Vector3}
 		 */
-		this.lookAt = new __WEBPACK_IMPORTED_MODULE_6_three__["P" /* Vector3 */](0, 1, 0);
+		this.lookAt = new __WEBPACK_IMPORTED_MODULE_6_three__["P" /* Vector3 */](0, 0, 0);
 		
 		/**
 		 *
 		 * @type {?FlyControls}
 		 */
 		this.flyControls = null;
+	}
+	
+	/**
+	 *
+	 * @param {string} value
+	 * @returns {Player}
+	 */
+	updateShipKey(value) {
+		this.shipKey = value;
+		return this;
 	}
 	
 	/**
@@ -51752,10 +51786,6 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		this.rotation.y = data['r']['y'];
 		this.rotation.z = data['r']['z'];
 		this.rotation.order = data['r']['o'];
-		
-		this.lookAt.x = data['l']['x'];
-		this.lookAt.y = data['l']['y'];
-		this.lookAt.z = data['l']['z'];
 		
 		this.shipKey = data['sk'];
 		return this;
@@ -51846,14 +51876,6 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	 */
 	prepareModel() {
 		this.ship = __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__["a" /* default */].get().getSpecificShip(this.shipKey);
-		
-		this.ship.model.rotateOnAxis(new __WEBPACK_IMPORTED_MODULE_6_three__["P" /* Vector3 */](0, 1, 0), Math.PI);
-		this.ship.model.position.y = -2;
-		
-		// this.ship.model.position.z = 0;
-		
-		// this.ship.model.rotation.y = Math.PI;
-		
 		if (this.isUser) {
 			this.ship.aim.draw();
 		} else {
@@ -51869,8 +51891,6 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	update(delta) {
 		if (!this.isUser) {
 			this.flyControls
-				// .updateRotationVector()
-				// .updateMovementVector()
 				.updatePlayerControl(delta);
 		}
 	}
@@ -52025,17 +52045,9 @@ class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default *
 		 */
 		this.mtlFileName = 'explorer.mtl';
 		
-		// this.calibration.position.z = 0;
-		// this.calibration.position.y = -2;
-		// this.calibration.rotation.y = Math.PI;
-		
-		
 		this.addEventListener(__WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].EVENT_MODEL_UPDATE, (model) => {
-			// model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
-			// model.position.y = -2;
-			// model.position.z = 0;
-			// model.position.y = -2;
-			// model.rotation.y = Math.PI;
+			model.children[0].rotateOnAxis(new __WEBPACK_IMPORTED_MODULE_3_three__["P" /* Vector3 */](0, 1, 0), Math.PI);
+			model.children[0].position.y = -2;
 		});
 	}
 }
