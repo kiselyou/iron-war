@@ -54,17 +54,24 @@ new PreLoader().load(() => {
 			socket.on('update-player-info', (data) => {
 				let player = controls.getPlayer(data['id']);
 				if (player) {
-					player.position.copy(data['p']);
-					player.rotation.copy(data['r']);
+					player.setSocketInfo(data);
+					// player.position.copy(data['p']);
+					//
+					// player.rotation.x = data['r']['x'];
+					// player.rotation.y = data['r']['y'];
+					// player.rotation.z = data['r']['z'];
+					// player.rotation.order = data['r']['o'];
+					
 					player.ship.engine.setSocketInfo(data['e']);
 					player.flyControls.setSocketInfo(data['fly']);
-					player.updateShipKey(data['sk']);
+					// player.updateShipKey(data['sk']);
 				}
 			});
 			
-			// Add new players to scene and send information about current player
+			// Add new players to scene
 			socket.on('add-new-player', (playerInfo) => {
 				controls.addPlayer(playerInfo);
+				// send information about current player
 				socket.emit('send-player-info', {
 					to: playerInfo['id'], // send to specific player
 					id: playerId,

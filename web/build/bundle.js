@@ -48860,26 +48860,7 @@ class FlyControls {
 			this.player.ship.engine.stop(delta);
 		}
 		
-		let moveMultX = delta * this.player.ship.engine.speedX;
-		let moveMultY = delta * this.player.ship.engine.speedY;
-		let moveMultZ = delta * this.player.ship.engine.speedZ;
-		let rotMultXY = delta * this.player.ship.engine.rollSpeedXY;
-		let rotMultZ = delta * this.player.ship.engine.rollSpeedZ;
-
-		this.object.translateX(this.moveVector.x * moveMultX);
-		this.object.translateY(this.moveVector.y * moveMultY);
-		this.object.translateZ(this.moveVector.z * moveMultZ);
-
-		this.tmpQuaternion.set(
-			this.rotationVector.x * rotMultXY,
-			this.rotationVector.y * rotMultXY,
-			this.rotationVector.z * rotMultZ,
-			1
-		).normalize();
-		this.object.quaternion.multiply(this.tmpQuaternion);
-
-		// expose the rotation vector for convenience
-		this.object.rotation.setFromQuaternion(this.object.quaternion, this.object.rotation.order);
+		this.updatePlayerControl(delta);
 	}
 	
 	/**
@@ -50881,17 +50862,24 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			socket.on('update-player-info', (data) => {
 				let player = controls.getPlayer(data['id']);
 				if (player) {
-					player.position.copy(data['p']);
-					player.rotation.copy(data['r']);
+					player.setSocketInfo(data);
+					// player.position.copy(data['p']);
+					//
+					// player.rotation.x = data['r']['x'];
+					// player.rotation.y = data['r']['y'];
+					// player.rotation.z = data['r']['z'];
+					// player.rotation.order = data['r']['o'];
+					
 					player.ship.engine.setSocketInfo(data['e']);
 					player.flyControls.setSocketInfo(data['fly']);
-					player.updateShipKey(data['sk']);
+					// player.updateShipKey(data['sk']);
 				}
 			});
 			
-			// Add new players to scene and send information about current player
+			// Add new players to scene
 			socket.on('add-new-player', (playerInfo) => {
 				controls.addPlayer(playerInfo);
+				// send information about current player
 				socket.emit('send-player-info', {
 					to: playerInfo['id'], // send to specific player
 					id: playerId,
@@ -51049,8 +51037,6 @@ class SceneControls {
 		 * @private
 		 */
 		this._updateListener = [];
-		
-		this.testIsSend = 0;
 	}
 	
 	/**
@@ -51085,10 +51071,12 @@ class SceneControls {
 		player.ship.engine.setSocketInfo(playerInfo['e']);
 		// 4. update fly control
 		player.flyControls.setSocketInfo(playerInfo['fly']);
-		
 		player.enable(true, false);
 		
 		let model = player.getModel();
+		model.position.copy(player.position);
+		model.rotation.copy(player.rotation);
+		
 		this.scene.add(model);
 		this._players[id] = player;
 		return this;
@@ -51110,7 +51098,11 @@ class SceneControls {
 	 */
 	destroyPlayer(id) {
 		if (this._players.hasOwnProperty(id)) {
-			this.scene.remove(this._players[id].getModel());
+			let model = this._players[id].getModel();
+			this.scene.remove(model);
+			for (let child of model.children) {
+				model.remove(child);
+			}
 			delete this._players[id];
 		}
 		return this;
@@ -51173,21 +51165,31 @@ class SceneControls {
 	 * @returns {SceneControls}
 	 */
 	init() {
-		let s = 150;
+		let s = 250;
+		
 		let cube = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* BoxGeometry */](s, s, s);
 		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* MeshPhongMaterial */]({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 500; i ++) {
-			let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* Mesh */](cube, material);
-			mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
-			mesh.rotation.x = Math.random() * Math.PI;
-			mesh.rotation.y = Math.random() * Math.PI;
-			mesh.rotation.z = Math.random() * Math.PI;
-			mesh.matrixAutoUpdate = false;
-			mesh.updateMatrix();
-			this.scene.add(mesh);
-		}
+		let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["y" /* Mesh */](cube, material);
+		mesh.position.z = - 1500;
+		mesh.matrixAutoUpdate = false;
+		mesh.updateMatrix();
+		this.scene.add(mesh);
+		
+		// let s = 150;
+		// let cube = new THREE.BoxGeometry(s, s, s);
+		// let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		// for (let i = 0; i < 500; i ++) {
+		// 	let mesh = new THREE.Mesh(cube, material);
+		// 	mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
+		// 	mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
+		// 	mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
+		// 	mesh.rotation.x = Math.random() * Math.PI;
+		// 	mesh.rotation.y = Math.random() * Math.PI;
+		// 	mesh.rotation.z = Math.random() * Math.PI;
+		// 	mesh.matrixAutoUpdate = false;
+		// 	mesh.updateMatrix();
+		// 	this.scene.add(mesh);
+		// }
 		
 		// lights
 		let dirLight = new __WEBPACK_IMPORTED_MODULE_0_three__["h" /* DirectionalLight */](0xffffff, 0.05);
@@ -51282,6 +51284,31 @@ class SceneControls {
 			false
 		);
 	}
+	
+	/**
+	 *
+	 * @param {Object} obj
+	 */
+	doDispose(obj) {
+		if (obj !== null) {
+			for (let i = 0; i < obj.children.length; i++) {
+				this.doDispose(obj.children[i]);
+			}
+			if (obj.geometry) {
+				obj.geometry.dispose();
+				obj.geometry = undefined;
+			}
+			if (obj.material) {
+				if (obj.material.map) {
+					obj.material.map.dispose();
+					obj.material.map = undefined;
+				}
+				obj.material.dispose();
+				obj.material = undefined;
+			}
+		}
+		obj = undefined;
+	};
 	
 	/**
 	 *
@@ -51735,7 +51762,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		this.position = new __WEBPACK_IMPORTED_MODULE_6_three__["P" /* Vector3 */](
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
-			0 //400 * (2.0 * Math.random() - 1.0)
+			400 * (2.0 * Math.random() - 1.0)
 		);
 		
 		/**
@@ -51743,11 +51770,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 *
 		 * @type {Euler}
 		 */
-		this.rotation = new __WEBPACK_IMPORTED_MODULE_6_three__["j" /* Euler */](
-			// Math.random() * Math.PI,
-			// Math.random() * Math.PI,
-			// Math.random() * Math.PI
-		);
+		this.rotation = new __WEBPACK_IMPORTED_MODULE_6_three__["j" /* Euler */]();
 		
 		/**
 		 *
@@ -51787,7 +51810,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		this.rotation.z = data['r']['z'];
 		this.rotation.order = data['r']['o'];
 		
-		this.shipKey = data['sk'];
+		this.updateShipKey(data['sk']);
 		return this;
 	}
 	
@@ -51890,6 +51913,9 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	 */
 	update(delta) {
 		if (!this.isUser) {
+			this.ship.model.position.copy(this.position);
+			this.ship.model.rotation.copy(this.rotation);
+			
 			this.flyControls
 				.updatePlayerControl(delta);
 		}

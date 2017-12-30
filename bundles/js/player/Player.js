@@ -79,7 +79,7 @@ class Player extends User {
 		this.position = new THREE.Vector3(
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
-			0 //400 * (2.0 * Math.random() - 1.0)
+			400 * (2.0 * Math.random() - 1.0)
 		);
 		
 		/**
@@ -87,11 +87,7 @@ class Player extends User {
 		 *
 		 * @type {Euler}
 		 */
-		this.rotation = new THREE.Euler(
-			// Math.random() * Math.PI,
-			// Math.random() * Math.PI,
-			// Math.random() * Math.PI
-		);
+		this.rotation = new THREE.Euler();
 		
 		/**
 		 *
@@ -131,7 +127,7 @@ class Player extends User {
 		this.rotation.z = data['r']['z'];
 		this.rotation.order = data['r']['o'];
 		
-		this.shipKey = data['sk'];
+		this.updateShipKey(data['sk']);
 		return this;
 	}
 	
@@ -234,6 +230,9 @@ class Player extends User {
 	 */
 	update(delta) {
 		if (!this.isUser) {
+			this.ship.model.position.copy(this.position);
+			this.ship.model.rotation.copy(this.rotation);
+			
 			this.flyControls
 				.updatePlayerControl(delta);
 		}

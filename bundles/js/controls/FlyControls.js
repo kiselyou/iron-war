@@ -128,26 +128,7 @@ class FlyControls {
 			this.player.ship.engine.stop(delta);
 		}
 		
-		let moveMultX = delta * this.player.ship.engine.speedX;
-		let moveMultY = delta * this.player.ship.engine.speedY;
-		let moveMultZ = delta * this.player.ship.engine.speedZ;
-		let rotMultXY = delta * this.player.ship.engine.rollSpeedXY;
-		let rotMultZ = delta * this.player.ship.engine.rollSpeedZ;
-
-		this.object.translateX(this.moveVector.x * moveMultX);
-		this.object.translateY(this.moveVector.y * moveMultY);
-		this.object.translateZ(this.moveVector.z * moveMultZ);
-
-		this.tmpQuaternion.set(
-			this.rotationVector.x * rotMultXY,
-			this.rotationVector.y * rotMultXY,
-			this.rotationVector.z * rotMultZ,
-			1
-		).normalize();
-		this.object.quaternion.multiply(this.tmpQuaternion);
-
-		// expose the rotation vector for convenience
-		this.object.rotation.setFromQuaternion(this.object.quaternion, this.object.rotation.order);
+		this.updatePlayerControl(delta);
 	}
 	
 	/**

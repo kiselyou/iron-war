@@ -107,8 +107,6 @@ class SceneControls {
 		 * @private
 		 */
 		this._updateListener = [];
-		
-		this.testIsSend = 0;
 	}
 	
 	/**
@@ -143,10 +141,12 @@ class SceneControls {
 		player.ship.engine.setSocketInfo(playerInfo['e']);
 		// 4. update fly control
 		player.flyControls.setSocketInfo(playerInfo['fly']);
-		
 		player.enable(true, false);
 		
 		let model = player.getModel();
+		model.position.copy(player.position);
+		model.rotation.copy(player.rotation);
+		
 		this.scene.add(model);
 		this._players[id] = player;
 		return this;
@@ -168,7 +168,11 @@ class SceneControls {
 	 */
 	destroyPlayer(id) {
 		if (this._players.hasOwnProperty(id)) {
-			this.scene.remove(this._players[id].getModel());
+			let model = this._players[id].getModel();
+			this.scene.remove(model);
+			for (let child of model.children) {
+				model.remove(child);
+			}
 			delete this._players[id];
 		}
 		return this;
@@ -231,21 +235,31 @@ class SceneControls {
 	 * @returns {SceneControls}
 	 */
 	init() {
-		let s = 150;
+		let s = 250;
+		
 		let cube = new THREE.BoxGeometry(s, s, s);
 		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 500; i ++) {
-			let mesh = new THREE.Mesh(cube, material);
-			mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
-			mesh.rotation.x = Math.random() * Math.PI;
-			mesh.rotation.y = Math.random() * Math.PI;
-			mesh.rotation.z = Math.random() * Math.PI;
-			mesh.matrixAutoUpdate = false;
-			mesh.updateMatrix();
-			this.scene.add(mesh);
-		}
+		let mesh = new THREE.Mesh(cube, material);
+		mesh.position.z = - 1500;
+		mesh.matrixAutoUpdate = false;
+		mesh.updateMatrix();
+		this.scene.add(mesh);
+		
+		// let s = 150;
+		// let cube = new THREE.BoxGeometry(s, s, s);
+		// let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		// for (let i = 0; i < 500; i ++) {
+		// 	let mesh = new THREE.Mesh(cube, material);
+		// 	mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
+		// 	mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
+		// 	mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
+		// 	mesh.rotation.x = Math.random() * Math.PI;
+		// 	mesh.rotation.y = Math.random() * Math.PI;
+		// 	mesh.rotation.z = Math.random() * Math.PI;
+		// 	mesh.matrixAutoUpdate = false;
+		// 	mesh.updateMatrix();
+		// 	this.scene.add(mesh);
+		// }
 		
 		// lights
 		let dirLight = new THREE.DirectionalLight(0xffffff, 0.05);
@@ -340,6 +354,31 @@ class SceneControls {
 			false
 		);
 	}
+	
+	/**
+	 *
+	 * @param {Object} obj
+	 */
+	doDispose(obj) {
+		if (obj !== null) {
+			for (let i = 0; i < obj.children.length; i++) {
+				this.doDispose(obj.children[i]);
+			}
+			if (obj.geometry) {
+				obj.geometry.dispose();
+				obj.geometry = undefined;
+			}
+			if (obj.material) {
+				if (obj.material.map) {
+					obj.material.map.dispose();
+					obj.material.map = undefined;
+				}
+				obj.material.dispose();
+				obj.material = undefined;
+			}
+		}
+		obj = undefined;
+	};
 	
 	/**
 	 *
