@@ -79,7 +79,7 @@ class Player extends User {
 		this.position = new THREE.Vector3(
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
-			400 * (2.0 * Math.random() - 1.0)
+			0//400 * (2.0 * Math.random() - 1.0)
 		);
 		
 		/**
@@ -195,6 +195,7 @@ class Player extends User {
 	}
 	
 	/**
+	 * Gets element model
 	 *
 	 * @returns {Mesh|Group}
 	 */
@@ -203,6 +204,7 @@ class Player extends User {
 	}
 	
 	/**
+	 * Gets element aim
 	 *
 	 * @returns {Group}
 	 */

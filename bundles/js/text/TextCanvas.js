@@ -8,7 +8,7 @@ class TextCanvas {
 		 *
 		 * @type {number}
 		 */
-		this.size = 90;
+		this.size = 50;
 		
 		/**
 		 *

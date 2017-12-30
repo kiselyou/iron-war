@@ -5,6 +5,7 @@ import Player from './../player/Player';
 
 import HelperPoints from './../helpers/HelperPoints';
 import KeyboardControls from "../keyboard/KeyboardControls";
+import TargetControls from './TargetControls';
 
 const FPS = 1000 / 30;
 
@@ -103,10 +104,23 @@ class SceneControls {
 		
 		/**
 		 *
+		 * @type {Array}
+		 * @private
+		 */
+		this._objects = [];
+		
+		/**
+		 *
 		 * @type {Array.<updatePlayerListener>}
 		 * @private
 		 */
 		this._updateListener = [];
+		
+		/**
+		 *
+		 * @type {TargetControls}
+		 */
+		this.targetControls = new TargetControls();
 	}
 	
 	/**
@@ -204,6 +218,12 @@ class SceneControls {
 			}
 		});
 		
+		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_WHEEL, KeyboardControls.GROUP_TARGET, (event) => {
+			if (event.deltaY !== 0) {
+				this.targetControls.changeTarget(this._objects, event.deltaY < 0 ? -1 : 1);
+			}
+		});
+		
 		this.player
 			.addEventListener(Player.EVENT_ENABLED, () => {
 				// Enable fly actions
@@ -235,31 +255,34 @@ class SceneControls {
 	 * @returns {SceneControls}
 	 */
 	init() {
-		let s = 250;
-		
-		let cube = new THREE.BoxGeometry(s, s, s);
-		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		let mesh = new THREE.Mesh(cube, material);
-		mesh.position.z = - 1500;
-		mesh.matrixAutoUpdate = false;
-		mesh.updateMatrix();
-		this.scene.add(mesh);
-		
 		// let s = 150;
 		// let cube = new THREE.BoxGeometry(s, s, s);
-		// let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		// for (let i = 0; i < 500; i ++) {
-		// 	let mesh = new THREE.Mesh(cube, material);
-		// 	mesh.position.x = 5000 * (2.0 * Math.random() - 1.0);
-		// 	mesh.position.y = 5000 * (2.0 * Math.random() - 1.0);
-		// 	mesh.position.z = 5000 * (2.0 * Math.random() - 1.0);
-		// 	mesh.rotation.x = Math.random() * Math.PI;
-		// 	mesh.rotation.y = Math.random() * Math.PI;
-		// 	mesh.rotation.z = Math.random() * Math.PI;
-		// 	mesh.matrixAutoUpdate = false;
-		// 	mesh.updateMatrix();
-		// 	this.scene.add(mesh);
-		// }
+		// let material = new THREE.MeshPhongMaterial({color: 0xffffff});
+		// let mesh = new THREE.Mesh(cube, material);
+		// mesh.position.z = - 500;
+		// mesh.rotation.x = Math.PI / 4;
+		// mesh.rotation.y = Math.PI / 4;
+		// mesh.rotation.z = Math.PI / 4;
+		// mesh.matrixAutoUpdate = false;
+		// mesh.updateMatrix();
+		// this.scene.add(mesh);
+		
+		let s = 150;
+		let cube = new THREE.BoxGeometry(s, s, s);
+		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		for (let i = 0; i < 500; i ++) {
+			let mesh = new THREE.Mesh(cube, material);
+			mesh.position.x = 25000 * (2.0 * Math.random() - 1.0);
+			mesh.position.y = 25000 * (2.0 * Math.random() - 1.0);
+			mesh.position.z = 25000 * (2.0 * Math.random() - 1.0);
+			mesh.rotation.x = Math.random() * Math.PI;
+			mesh.rotation.y = Math.random() * Math.PI;
+			mesh.rotation.z = Math.random() * Math.PI;
+			mesh.matrixAutoUpdate = false;
+			mesh.updateMatrix();
+			this.scene.add(mesh);
+			this._objects.push(mesh);
+		}
 		
 		// lights
 		let dirLight = new THREE.DirectionalLight(0xffffff, 0.05);

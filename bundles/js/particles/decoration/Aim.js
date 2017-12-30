@@ -11,14 +11,14 @@ class Aim extends Particle {
 		 * @type {Group}
 		 */
 		this.model = new THREE.Group();
-		this.model.position.z = -900;
+		this.model.position.z = -5;
 		this.model.rotation.x = Math.PI / 2;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.scale = 0.1;
+		this.scale = new THREE.Vector3(0.0008, 0.0008, 0.0008);
 		
 		/**
 		 *
@@ -124,7 +124,7 @@ class Aim extends Particle {
 		
 		this.model.add(this.signatureRightBottom.model);
 		
-		this.model.scale.set(this.scale, this.scale, this.scale);
+		this.model.scale.copy(this.scale);
 		
 		return this;
 	}

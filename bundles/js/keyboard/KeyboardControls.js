@@ -112,6 +112,10 @@ class KeyboardControls {
 			this._callListeners(KeyboardControls.EVENT_MOUSE_UP, event);
 		}, false);
 		
+		this.container.addEventListener('wheel', (event) => {
+			this._callListeners(KeyboardControls.EVENT_MOUSE_WHEEL, event);
+		}, false);
+		
 		window.addEventListener('keydown', (event) => {
 			this._keyDown(event);
 		}, false);
@@ -150,7 +154,7 @@ class KeyboardControls {
 	}
 	
 	/**
-	 * @param {KeyboardEvent|MouseEvent} event
+	 * @param {KeyboardEvent|MouseEvent|WheelEvent} event
 	 * @param {?Keyboard} [keyboard]
 	 * @callback keyboardControlsListener
 	 */
@@ -341,6 +345,15 @@ class KeyboardControls {
 	}
 	
 	/**
+	 * The group of target
+	 *
+	 * @returns {number}
+	 */
+	static get GROUP_TARGET() {
+		return 3;
+	}
+	
+	/**
 	 *
 	 * @returns {string}
 	 * @constructor
@@ -365,6 +378,15 @@ class KeyboardControls {
 	 */
 	static get EVENT_MOUSE_MOVE() {
 		return 'EVENT_MOUSE_MOVE';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_WHEEL() {
+		return 'EVENT_MOUSE_WHEEL';
 	}
 	
 	/**
