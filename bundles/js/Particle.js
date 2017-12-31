@@ -71,6 +71,12 @@ class Particle {
 		
 		/**
 		 *
+		 * @type {Vector3}
+		 */
+		this.size = new THREE.Vector3();
+		
+		/**
+		 *
 		 * @type {Listener}
 		 * @private
 		 */
@@ -96,14 +102,16 @@ class Particle {
 	/**
 	 *
 	 * @param {(Mesh|Group)} obj
-	 * @param {string|number} eventType
+	 * @param {string|number} [eventType] - The event name if you wont use method "addEventListener"
 	 * @returns {Particle}
 	 */
 	setModel(obj, eventType) {
 		let mesh = new THREE.Object3D();
 		mesh.add(obj);
 		this.model = mesh;
-		this._events.callListeners(eventType, this.model);
+		if (eventType) {
+			this._events.callListeners(eventType, this.model);
+		}
 		return this;
 	}
 	

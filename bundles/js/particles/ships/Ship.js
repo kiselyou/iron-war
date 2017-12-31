@@ -1,5 +1,5 @@
 import Particle from './../../Particle';
-import Aim from './../decoration/Aim';
+import Aim from './../decoration/aim/Aim';
 
 class Ship extends Particle {
 	/**

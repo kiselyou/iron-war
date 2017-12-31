@@ -1,18 +1,63 @@
+import Target from './../particles/decoration/target/Target';
+import * as THREE from 'three';
 
 class TargetControls {
 	
-	constructor() {
+	/**
+	 *
+	 * @param {Scene} scene
+	 * @param {Camera} camera
+	 */
+	constructor(scene, camera) {
+		/**
+		 *
+		 * @type {Camera}
+		 * @private
+		 */
+		this._scene = scene;
 		
 		/**
 		 *
-		 * @type {?(Mesh|Group|Object3D)}
+		 * @type {Camera}
+		 * @private
+		 */
+		this._camera = camera;
+		
+		/**
+		 *
+		 * @type {?Particle}
+		 * @private
 		 */
 		this._selected = null;
+		
+		/**
+		 *
+		 * @type {?Particle}
+		 * @private
+		 */
+		this._previous = null;
+		
+		/**
+		 *
+		 * @type {Box3}
+		 * @private
+		 */
+		this._box = new THREE.Box3();
+		
+		/**
+		 *
+		 * @type {Target}
+		 * @private
+		 */
+		this._rarget = new Target();
+		this._rarget.model.position.z = -200;
+		
+		this._scene.add(this._rarget.model);
 	}
 	
 	/**
 	 *
-	 * @param {Array.<(Mesh|Group|Object3D)>} objects
+	 * @param {Array.<Particle>} objects
 	 * @param {number} direction - possible values (-1|1) (-1 previous), (1 next)
 	 * @returns {void}
 	 */
@@ -59,9 +104,38 @@ class TargetControls {
 	}
 	
 	setSelected(object) {
+		this._previous = this._selected;
 		this._selected = object;
-		console.log(this._selected, '---');
+		
+		if (this._previous) {
+			// this._previous.model.remove(this._rarget.model);
+		}
+		
+		if (this._selected) {
+			
+			this._rarget.model.lookAt(this._camera.position);
+			this._rarget.model.position.copy(this._selected.model.position);
+			
+			
+			
+			let box = this._box.setFromObject(this._selected.model);
+			let size = box.size();
+			// this._rarget.model.position.x = this._selected.model.position.x - (size.x / 2);
+			// this._rarget.model.position.y = this._selected.model.position.y - (size.y / 2);
+			// this._rarget.model.position.z = this._selected.model.position.z - (size.z / 2);
+			// console.log( box.min, box.max, box.size() );
+			
+		} else {
+		
+		}
 		return this;
+	}
+	
+	update() {
+		if (this._selected) {
+			this._rarget.model.lookAt(this._camera.position);
+			this._rarget.model.rotation.z = this._camera.rotation.z;
+		}
 	}
 }
 

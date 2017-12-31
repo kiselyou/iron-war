@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import Particle from './../../Particle';
+import Particle from './../../../Particle';
 import AimSignature from './AimSignature';
 
 class Aim extends Particle {
@@ -61,12 +61,6 @@ class Aim extends Particle {
 		 * @type {AimSignature}
 		 */
 		this.signatureRightBottom = new AimSignature(AimSignature.SIDE_BR);
-		
-		/**
-		 *
-		 * @type {number}
-		 */
-		this.signatureDistance = 300;
 	}
 	
 	/**

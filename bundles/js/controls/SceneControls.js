@@ -6,6 +6,7 @@ import Player from './../player/Player';
 import HelperPoints from './../helpers/HelperPoints';
 import KeyboardControls from "../keyboard/KeyboardControls";
 import TargetControls from './TargetControls';
+import Particle from './../Particle';
 
 const FPS = 1000 / 30;
 
@@ -104,7 +105,7 @@ class SceneControls {
 		
 		/**
 		 *
-		 * @type {Array}
+		 * @type {Array.<Particle>}
 		 * @private
 		 */
 		this._objects = [];
@@ -120,7 +121,7 @@ class SceneControls {
 		 *
 		 * @type {TargetControls}
 		 */
-		this.targetControls = new TargetControls();
+		this.targetControls = new TargetControls(this.scene, this.camera);
 	}
 	
 	/**
@@ -267,21 +268,26 @@ class SceneControls {
 		// mesh.updateMatrix();
 		// this.scene.add(mesh);
 		
-		let s = 150;
+		let s = 50;
 		let cube = new THREE.BoxGeometry(s, s, s);
 		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 500; i ++) {
+		for (let i = 0; i < 10; i ++) {
 			let mesh = new THREE.Mesh(cube, material);
-			mesh.position.x = 25000 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 25000 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = 25000 * (2.0 * Math.random() - 1.0);
+			mesh.position.x = 500 * (2.0 * Math.random() - 1.0);
+			mesh.position.y = 500 * (2.0 * Math.random() - 1.0);
+			mesh.position.z = - 2000;// * (2.0 * Math.random() - 1.0);
 			mesh.rotation.x = Math.random() * Math.PI;
 			mesh.rotation.y = Math.random() * Math.PI;
 			mesh.rotation.z = Math.random() * Math.PI;
 			mesh.matrixAutoUpdate = false;
 			mesh.updateMatrix();
+			
 			this.scene.add(mesh);
-			this._objects.push(mesh);
+			
+			let particle = new Particle('Particle', 'test-cube');
+			particle.model = mesh;
+			particle.label = 'Cube - ' + i;
+			this._objects.push(particle);
 		}
 		
 		// lights
@@ -346,7 +352,7 @@ class SceneControls {
 			this.skyBoxControls.update(this.camera.position);
 			this.player.position.copy(this.camera.position);
 			this.player.rotation.copy(this.camera.rotation);
-			
+			this.targetControls.update();
 			// for (let listener of this._updateListener) {
 			// 	listener();
 			// }

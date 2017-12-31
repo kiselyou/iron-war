@@ -133,6 +133,7 @@ class TextCanvas {
 		this._prepareBackground()._updateText(text);
 		this.model.material = new THREE.MeshBasicMaterial({
 			transparent: true,
+			side: THREE.DoubleSide,
 			map: new THREE.Texture(this.canvas)
 		});
 		

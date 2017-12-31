@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import Particle from './../../Particle';
-import TextCanvas from './../../text/TextCanvas';
+import Particle from './../../../Particle';
+import TextCanvas from './../../../text/TextCanvas';
 
 class AimSignature extends Particle {
 	/**
