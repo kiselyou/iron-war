@@ -52439,6 +52439,13 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 		 * @type {TextCanvas}
 		 */
 		this.text = new __WEBPACK_IMPORTED_MODULE_2__text_TextCanvas__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {boolean}
+		 * @private
+		 */
+		this._revertText = false;
 	}
 	
 	/**
@@ -52546,8 +52553,9 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 	 * @private
 	 */
 	_getLabel() {
+		
 		if (this.label !== null && this.msg !== null) {
-			return this.label + ': ' + this.msg;
+			return this._revertText ? (this.msg + ': ' + this.label) : (this.label + ': ' + this.msg);
 		} else if (this.label !== null && this.msg === null) {
 			return this.label;
 		} else if (this.label === null && this.msg !== null) {
@@ -52581,6 +52589,8 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](this.moveDistance, 0, - this.moveDistance))
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](- Math.PI / 2, 0, 0));
 				
+				this._revertText = true;
+				
 				this.text
 					.alignRight()
 					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](500, 100, 0))
@@ -52602,6 +52612,8 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 				this
 					.setPosition(new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](this.moveDistance, 0, this.moveDistance))
 					.setRotation(new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](Math.PI / 2, 0, 0));
+				
+				this._revertText = true;
 				
 				this.text
 					.alignRight()

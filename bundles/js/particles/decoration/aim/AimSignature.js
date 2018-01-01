@@ -51,6 +51,13 @@ class AimSignature extends Particle {
 		 * @type {TextCanvas}
 		 */
 		this.text = new TextCanvas();
+		
+		/**
+		 *
+		 * @type {boolean}
+		 * @private
+		 */
+		this._revertText = false;
 	}
 	
 	/**
@@ -158,8 +165,9 @@ class AimSignature extends Particle {
 	 * @private
 	 */
 	_getLabel() {
+		
 		if (this.label !== null && this.msg !== null) {
-			return this.label + ': ' + this.msg;
+			return this._revertText ? (this.msg + ': ' + this.label) : (this.label + ': ' + this.msg);
 		} else if (this.label !== null && this.msg === null) {
 			return this.label;
 		} else if (this.label === null && this.msg !== null) {
@@ -193,6 +201,8 @@ class AimSignature extends Particle {
 					.setPosition(new THREE.Vector3(this.moveDistance, 0, - this.moveDistance))
 					.setRotation(new THREE.Vector3(- Math.PI / 2, 0, 0));
 				
+				this._revertText = true;
+				
 				this.text
 					.alignRight()
 					.setPosition(new THREE.Vector3(500, 100, 0))
@@ -214,6 +224,8 @@ class AimSignature extends Particle {
 				this
 					.setPosition(new THREE.Vector3(this.moveDistance, 0, this.moveDistance))
 					.setRotation(new THREE.Vector3(Math.PI / 2, 0, 0));
+				
+				this._revertText = true;
 				
 				this.text
 					.alignRight()
