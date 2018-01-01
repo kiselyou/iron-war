@@ -233,12 +233,19 @@ class SceneControls {
 							signature.hide();
 						}
 					},
-					(element, target) => {
+					(element, target, box) => {
 						let signature = this.player.ship.aim.signatureRightTop;
 						if (element) {
 							let distance = Math.round(this.camera.position.distanceTo(element.model.position));
 							signature.update(distance);
-							if (distance < 300) {
+							
+							let x = box.x,
+								y = box.y,
+								z = box.z;
+							
+							let size = Math.max(Math.max(x, y), z) / 2;
+							
+							if (distance < size) {
 								target.hide();
 							} else {
 								target.show();

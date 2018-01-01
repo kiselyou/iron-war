@@ -52,11 +52,19 @@ class TargetControls {
 		 * @private
 		 */
 		this._updateListener = null;
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this._size = 0;
 	}
 	
 	/**
 	 * @param {Particle}
 	 * @param {Target}
+	 * @param {Box3} box
 	 * @callback targetListener
 	 */
 	
@@ -121,13 +129,15 @@ class TargetControls {
 		this._selected = object;
 		if (this._selected) {
 			let box = this._box.setFromObject(this._selected.model);
-			let size = box.getSize();
-			let x = size.x,
-				y = size.y,
-				z = size.z;
+			this._size = box.getSize();
+			let x = this._size.x,
+				y = this._size.y,
+				z = this._size.z;
+			
+			let size = Math.max(Math.max(x, y), z) / 2;
 			
 			this._target
-				.setSize(Math.max(Math.max(x, y), z) / 2)
+				.setSize(size)
 				.draw();
 			
 			this._target.model.lookAt(this._camera.position);
@@ -137,7 +147,7 @@ class TargetControls {
 		}
 		
 		if (onChangeListener) {
-			onChangeListener(this._selected, this._target);
+			onChangeListener(this._selected, this._target, this._size);
 		}
 		return this;
 	}
@@ -147,7 +157,7 @@ class TargetControls {
 			this._target.model.lookAt(this._camera.position);
 			this._target.model.rotation.z = this._camera.rotation.z;
 			if (this._updateListener) {
-				this._updateListener(this._selected, this._target);
+				this._updateListener(this._selected, this._target, this._size);
 			}
 		}
 	}

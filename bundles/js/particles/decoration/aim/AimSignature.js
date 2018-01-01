@@ -167,7 +167,7 @@ class AimSignature extends Particle {
 	_getLabel() {
 		
 		if (this.label !== null && this.msg !== null) {
-			return this._revertText ? (this.msg + ': ' + this.label) : (this.label + ': ' + this.msg);
+			return this._revertText ? (this.msg + ' :' + this.label) : (this.label + ': ' + this.msg);
 		} else if (this.label !== null && this.msg === null) {
 			return this.label;
 		} else if (this.label === null && this.msg !== null) {
