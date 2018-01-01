@@ -32,13 +32,6 @@ class TargetControls {
 		
 		/**
 		 *
-		 * @type {?Particle}
-		 * @private
-		 */
-		this._previous = null;
-		
-		/**
-		 *
 		 * @type {Box3}
 		 * @private
 		 */
@@ -49,92 +42,113 @@ class TargetControls {
 		 * @type {Target}
 		 * @private
 		 */
-		this._rarget = new Target();
-		this._rarget.model.position.z = -200;
+		this._target = new Target();
+		this._target.model.position.z = -200;
+		this._scene.add(this._target.model);
 		
-		this._scene.add(this._rarget.model);
+		/**
+		 *
+		 * @type {?targetListener}
+		 * @private
+		 */
+		this._updateListener = null;
 	}
+	
+	/**
+	 * @param {Particle}
+	 * @param {Target}
+	 * @callback targetListener
+	 */
 	
 	/**
 	 *
 	 * @param {Array.<Particle>} objects
 	 * @param {number} direction - possible values (-1|1) (-1 previous), (1 next)
-	 * @returns {void}
+	 * @param {targetListener} [onChangeListener]
+	 * @param {targetListener} [onUpdateListener]
+	 * @returns {TargetControls}
 	 */
-	changeTarget(objects, direction) {
+	changeTarget(objects, direction, onChangeListener, onUpdateListener) {
+		this._updateListener = onUpdateListener;
 		let len = objects.length;
-		
 		if (len === 0) {
-			return;
+			return this;
 		}
 		
 		if (!this._selected && direction === -1) {
 			// Last object
-			this.setSelected(objects[len - 1]);
+			this.setSelected(objects[len - 1], onChangeListener);
 		} else if (!this._selected && direction === 1) {
 			// First object
-			this.setSelected(objects[0]);
+			this.setSelected(objects[0], onChangeListener);
 		} else if (this._selected && direction === -1) {
 			let isObject = false;
 			for (let i = 0; i < len; i++) {
 				if (this._selected === objects[i]) {
 					let key = (i === 0) ? len - 1 : i - 1;
-					this.setSelected(objects[key]);
+					this.setSelected(objects[key], onChangeListener);
 					isObject = true;
 					break;
 				}
 			}
 			if (!isObject) {
-				this.setSelected(null);
+				this.setSelected(null, onChangeListener);
 			}
 		} else if (this._selected && direction === 1) {
 			let isObject = false;
 			for (let i = 0; i < len; i++) {
 				if (this._selected === objects[i]) {
 					let key = (i === len - 1) ? 0 : i + 1;
-					this.setSelected(objects[key]);
+					this.setSelected(objects[key], onChangeListener);
 					isObject = true;
 					break;
 				}
 			}
 			if (!isObject) {
-				this.setSelected(null);
+				this.setSelected(null, onChangeListener);
 			}
 		}
+		return this;
 	}
 	
-	setSelected(object) {
-		this._previous = this._selected;
+	/**
+	 *
+	 * @param {Particle} object
+	 * @param {targetListener} [onChangeListener]
+	 * @returns {TargetControls}
+	 */
+	setSelected(object, onChangeListener) {
 		this._selected = object;
-		
-		if (this._previous) {
-			// this._previous.model.remove(this._rarget.model);
+		if (this._selected) {
+			let box = this._box.setFromObject(this._selected.model);
+			let size = box.getSize();
+			let x = size.x,
+				y = size.y,
+				z = size.z;
+			
+			this._target
+				.setSize(Math.max(Math.max(x, y), z) / 2)
+				.draw();
+			
+			this._target.model.lookAt(this._camera.position);
+			this._target.model.position.copy(this._selected.model.position);
+		} else {
+			this._target.remove();
 		}
 		
-		if (this._selected) {
-			
-			this._rarget.model.lookAt(this._camera.position);
-			this._rarget.model.position.copy(this._selected.model.position);
-			
-			
-			
-			let box = this._box.setFromObject(this._selected.model);
-			let size = box.size();
-			// this._rarget.model.position.x = this._selected.model.position.x - (size.x / 2);
-			// this._rarget.model.position.y = this._selected.model.position.y - (size.y / 2);
-			// this._rarget.model.position.z = this._selected.model.position.z - (size.z / 2);
-			// console.log( box.min, box.max, box.size() );
-			
-		} else {
-		
+		if (onChangeListener) {
+			onChangeListener(this._selected, this._target);
 		}
 		return this;
 	}
 	
 	update() {
 		if (this._selected) {
-			this._rarget.model.lookAt(this._camera.position);
-			this._rarget.model.rotation.z = this._camera.rotation.z;
+			this._target.model.lookAt(this._camera.position);
+			this._target.model.rotation.z = this._camera.rotation.z;
+			if (this._updateListener) {
+				this._updateListener(this._selected, this._target);
+			}
 		}
 	}
 }

@@ -80,7 +80,6 @@ class SceneControls {
 		this.camera.position.copy(this.player.position);
 		this.camera.rotation.copy(this.player.rotation);
 		this.camera.lookAt(this.player.lookAt);
-		// console.log(this.camera);
 		
 		/**
 		 *
@@ -221,7 +220,32 @@ class SceneControls {
 		
 		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_WHEEL, KeyboardControls.GROUP_TARGET, (event) => {
 			if (event.deltaY !== 0) {
-				this.targetControls.changeTarget(this._objects, event.deltaY < 0 ? -1 : 1);
+				this.targetControls.changeTarget(
+					this._objects,
+					event.deltaY < 0 ? -1 : 1,
+					(element) => {
+						let signature = this.player.ship.aim.signatureRightTop;
+						if (element) {
+							let distance = Math.round(this.camera.position.distanceTo(element.model.position));
+							signature.setText(distance, element.label);
+							signature.show();
+						} else {
+							signature.hide();
+						}
+					},
+					(element, target) => {
+						let signature = this.player.ship.aim.signatureRightTop;
+						if (element) {
+							let distance = Math.round(this.camera.position.distanceTo(element.model.position));
+							signature.update(distance);
+							if (distance < 300) {
+								target.hide();
+							} else {
+								target.show();
+							}
+						}
+					}
+				);
 			}
 		});
 		

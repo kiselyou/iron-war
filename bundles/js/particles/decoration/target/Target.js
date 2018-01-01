@@ -1,5 +1,7 @@
 import * as THREE from 'three';
-import Aim from './../aim/Aim';
+import {
+	COLOR_WHITE
+} from './../../../constants';
 
 class Target {
 	constructor() {
@@ -8,11 +10,11 @@ class Target {
 		 *
 		 * @type {string}
 		 */
-		this.color = Aim.COLOR_DEFAULT;
+		this.color = COLOR_WHITE;
 		
 		/**
 		 *
-		 * @type {Vector3}
+		 * @type {Vector}
 		 */
 		this.size = new THREE.Vector2(50, 50);
 		
@@ -27,38 +29,74 @@ class Target {
 		 * @type {Group}
 		 */
 		this.model = new THREE.Group();
-		this._draw();
+		
+		/**
+		 *
+		 * @type {null}
+		 * @private
+		 */
+		this._tempModel = null;
 	}
 	
-	_draw() {
+	/**
+	 *
+	 * @param {number} x
+	 * @param {number} [y]
+	 * @returns {Target}
+	 */
+	setSize(x, y) {
+		this.size.x = x;
+		this.size.y = y ? y : x;
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {Target}
+	 */
+	remove() {
+		this.model.remove(this._tempModel);
+		this._tempModel = null;
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {Target}
+	 */
+	draw() {
+		if (this._tempModel) {
+			this.remove();
+		}
 		let distance = this.size.x + this.size.y + this.size.x;
 		
-		let model = new THREE.Object3D();
-		model.position.x = - (distance / 2);
-		model.position.y = distance / 2;
+		this._tempModel = new THREE.Object3D();
+		this._tempModel.position.x = - (distance / 2);
+		this._tempModel.position.y = distance / 2;
 		
 		let cornerTL = this._drawCorner();
 		// Top left
-		model.add(cornerTL);
+		this._tempModel.add(cornerTL);
 		// Top Right
 		let cornerTR = cornerTL.clone();
 		cornerTR.rotation.y = Math.PI;
 		cornerTR.position.x = distance;
-		model.add(cornerTR);
+		this._tempModel.add(cornerTR);
 		// Bottom Left
 		let cornerBL = cornerTL.clone();
 		cornerBL.rotation.x = Math.PI;
 		cornerBL.position.y = - distance;
-		model.add(cornerBL);
+		this._tempModel.add(cornerBL);
 		// Bottom Right
 		let cornerBR = cornerTL.clone();
 		cornerBR.rotation.x = Math.PI;
 		cornerBR.rotation.y = Math.PI;
 		cornerBR.position.x = distance;
 		cornerBR.position.y = - distance;
-		model.add(cornerBR);
+		this._tempModel.add(cornerBR);
 		
-		this.model.add(model);
+		this.model.add(this._tempModel);
+		return this;
 	}
 	
 	_drawCorner() {
@@ -71,8 +109,7 @@ class Target {
 		geometry.vertices.push(new THREE.Vector3(x + this.size.x, y + this.size.x, 0));
 		
 		let material = new THREE.MeshBasicMaterial({
-			color: this.color,
-			// linewidth: 1
+			color: this.color
 		});
 		
 		return new THREE.Line(geometry, material);
@@ -83,8 +120,7 @@ class Target {
 	 * @returns {Target}
 	 */
 	hide() {
-		this.model.material.transparent = true;
-		this.model.material.opacity = 0;
+		this.model.visible = false;
 		return this;
 	}
 	
@@ -93,8 +129,7 @@ class Target {
 	 * @returns {Target}
 	 */
 	show() {
-		this.model.material.transparent = false;
-		this.model.material.opacity = 1;
+		this.model.visible = true;
 		return this;
 	}
 }

@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import Particle from './../../../Particle';
 import AimSignature from './AimSignature';
+import {
+	COLOR_DEFAULT
+} from './../../../constants';
 
 class Aim extends Particle {
 	constructor() {
@@ -36,7 +39,7 @@ class Aim extends Particle {
 		 *
 		 * @type {number}
 		 */
-		this.color = Aim.COLOR_DEFAULT;
+		this.color = COLOR_DEFAULT;
 		
 		/**
 		 *
@@ -93,8 +96,8 @@ class Aim extends Particle {
 		
 		this.signatureRightTop
 			.setText(0, 'distance')
-			.setColor(this.color);
-			// .hide();
+			.setColor(this.color)
+			.hide();
 		
 		this.model.add(this.signatureRightTop.model);
 		
@@ -134,30 +137,6 @@ class Aim extends Particle {
 			model.material.needsUpdate = true;
 		}
 		return this;
-	}
-	
-	/**
-	 *
-	 * @returns {number}
-	 */
-	static get COLOR_DANGER() {
-		return 0xFA0000;
-	}
-	
-	/**
-	 *
-	 * @returns {number}
-	 */
-	static get COLOR_WARNING() {
-		return 0xFAA000;
-	}
-	
-	/**
-	 *
-	 * @returns {number}
-	 */
-	static get COLOR_DEFAULT() {
-		return 0x0A9B9B;
 	}
 	
 	/**
