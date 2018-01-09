@@ -218,8 +218,17 @@ class SceneControls {
 			}
 		});
 		
+		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_DOWN_CENTER, KeyboardControls.GROUP_TARGET, (event) => {
+			let openConsole = this.player.keyboards.fly.openConsole;
+			if (openConsole.value === openConsole.valueOn) {
+				this.targetControls.setSelected(null);
+				this.player.ship.aim.signatureRightTop.hide();
+			}
+		});
+		
 		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_WHEEL, KeyboardControls.GROUP_TARGET, (event) => {
-			if (event.deltaY !== 0) {
+			let openConsole = this.player.keyboards.fly.openConsole;
+			if (event.deltaY !== 0 && openConsole.value === openConsole.valueOn) {
 				this.targetControls.changeTarget(
 					this._objects,
 					event.deltaY < 0 ? -1 : 1,

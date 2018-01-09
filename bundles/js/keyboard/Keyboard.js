@@ -116,10 +116,19 @@ class Keyboard {
 		return this;
 	}
 	
+	/**
+	 * 
+	 * @returns {Keyboard}
+	 */
 	clear() {
 		this.value = this.valueOff;
+		return this;
 	}
 	
+	/**
+	 *
+	 * @returns {Keyboard}
+	 */
 	toggle() {
 		this.value = (this.value === this.valueOff) ? this.valueOn : this.valueOff;
 		return this;

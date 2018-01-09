@@ -20,12 +20,6 @@ class Target {
 		
 		/**
 		 *
-		 * @type {boolean}
-		 */
-		this.calibrate = true;
-		
-		/**
-		 *
 		 * @type {Group}
 		 */
 		this.model = new THREE.Group();

@@ -96,6 +96,7 @@ class KeyboardControls {
 	 * @return {KeyboardControls}
 	 */
 	initEvents() {
+		
 		this.container.addEventListener('contextmenu', (event) => {
 			event.preventDefault();
 		}, false);
@@ -105,11 +106,37 @@ class KeyboardControls {
 		}, false);
 		
 		this.container.addEventListener('mousedown', (event) => {
-			this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN, event);
+			switch (event.which) {
+				case 1:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN_LEFT, event);
+					break;
+				case 2:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN_CENTER, event);
+					break;
+				case 3:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN_RIGHT, event);
+					break;
+				default:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN, event);
+					break;
+			}
 		}, false);
 		
 		this.container.addEventListener('mouseup', (event) => {
-			this._callListeners(KeyboardControls.EVENT_MOUSE_UP, event);
+			switch (event.width) {
+				case 1:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_UP_LEFT, event);
+					break;
+				case 2:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_UP_CENTER, event);
+					break;
+				case 3:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_UP_RIGHT, event);
+					break;
+				default:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_UP, event);
+					break;
+			}
 		}, false);
 		
 		this.container.addEventListener('wheel', (event) => {
@@ -155,7 +182,8 @@ class KeyboardControls {
 	
 	/**
 	 * @param {KeyboardEvent|MouseEvent|WheelEvent} event
-	 * @param {?Keyboard} [keyboard]
+	 * @param {?Keyboard} keyboard
+	 * @param {number} group
 	 * @callback keyboardControlsListener
 	 */
 	
@@ -256,7 +284,7 @@ class KeyboardControls {
 			
 			if (this._disabledGroups.indexOf(Number(group)) < 0) {
 				for (let listener of arr[group]) {
-					listener(event, keyboard);
+					listener(event, keyboard, Number(group));
 				}
 			}
 		}
@@ -279,52 +307,6 @@ class KeyboardControls {
 		}
 		return null;
 	}
-	
-	// /**
-	//  *
-	//  * @param {{fly: {forward: {v: number, vOn: number, vOff: number}, back: {v: number, vOn: number, vOff: number}, stop: {v: number, vOn: number, vOff: number}, left: {v: number, vOn: number, vOff: number}, right: {v: number, vOn: number, vOff: number}, down: {v: number, vOn: number, vOff: number}, up: {v: number, vOn: number, vOff: number}, pitchDown: {v: number, vOn: number, vOff: number}, pitchUp: {v: number, vOn: number, vOff: number}, yawRight: {v: number, vOn: number, vOff: number}, yawLeft: {v: number, vOn: number, vOff: number}, rollRight: {v: number, vOn: number, vOff: number}, rollLeft: {v: number, vOn: number, vOff: number}}}} data
-	//  * @returns {KeyboardControls}
-	//  */
-	// setSocketInfo(data) {
-	// 	this.fly.forward.setSocketInfo(data['fly']['forward']);
-	// 	this.fly.back.setSocketInfo(data['fly']['back']);
-	// 	this.fly.stop.setSocketInfo(data['fly']['stop']);
-	// 	this.fly.left.setSocketInfo(data['fly']['left']);
-	// 	this.fly.right.setSocketInfo(data['fly']['right']);
-	// 	this.fly.down.setSocketInfo(data['fly']['down']);
-	// 	this.fly.up.setSocketInfo(data['fly']['up']);
-	// 	this.fly.pitchDown.setSocketInfo(data['fly']['pitchDown']);
-	// 	this.fly.pitchUp.setSocketInfo(data['fly']['pitchUp']);
-	// 	this.fly.yawRight.setSocketInfo(data['fly']['yawRight']);
-	// 	this.fly.yawLeft.setSocketInfo(data['fly']['yawLeft']);
-	// 	this.fly.rollRight.setSocketInfo(data['fly']['rollRight']);
-	// 	this.fly.rollLeft.setSocketInfo(data['fly']['rollLeft']);
-	// 	return this;
-	// }
-	//
-	// /**
-	//  *
-	//  * @returns {{fly: {forward: {v: number, vOn: number, vOff: number}, back: {v: number, vOn: number, vOff: number}, stop: {v: number, vOn: number, vOff: number}, left: {v: number, vOn: number, vOff: number}, right: {v: number, vOn: number, vOff: number}, down: {v: number, vOn: number, vOff: number}, up: {v: number, vOn: number, vOff: number}, pitchDown: {v: number, vOn: number, vOff: number}, pitchUp: {v: number, vOn: number, vOff: number}, yawRight: {v: number, vOn: number, vOff: number}, yawLeft: {v: number, vOn: number, vOff: number}, rollRight: {v: number, vOn: number, vOff: number}, rollLeft: {v: number, vOn: number, vOff: number}}}}
-	//  */
-	// getSocketInfo() {
-	// 	return {
-	// 		fly: {
-	// 			forward: this.fly.forward.getSocketInfo(),
-	// 			back: this.fly.back.getSocketInfo(),
-	// 			stop: this.fly.stop.getSocketInfo(),
-	// 			left: this.fly.left.getSocketInfo(),
-	// 			right: this.fly.right.getSocketInfo(),
-	// 			down: this.fly.down.getSocketInfo(),
-	// 			up: this.fly.up.getSocketInfo(),
-	// 			pitchDown: this.fly.pitchDown.getSocketInfo(),
-	// 			pitchUp: this.fly.pitchUp.getSocketInfo(),
-	// 			yawRight: this.fly.yawRight.getSocketInfo(),
-	// 			yawLeft: this.fly.yawLeft.getSocketInfo(),
-	// 			rollRight: this.fly.rollRight.getSocketInfo(),
-	// 			rollLeft: this.fly.rollLeft.getSocketInfo()
-	// 		}
-	// 	};
-	// }
 	
 	/**
 	 * The group buttons to fly
@@ -405,6 +387,60 @@ class KeyboardControls {
 	 */
 	static get EVENT_MOUSE_UP() {
 		return 'EVENT_MOUSE_UP';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_DOWN_LEFT() {
+		return 'EVENT_MOUSE_DOWN_LEFT';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_UP_LEFT() {
+		return 'EVENT_MOUSE_UP_LEFT';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_DOWN_RIGHT() {
+		return 'EVENT_MOUSE_DOWN_RIGHT';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_UP_RIGHT() {
+		return 'EVENT_MOUSE_UP_RIGHT';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_DOWN_CENTER() {
+		return 'EVENT_MOUSE_DOWN_CENTER';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_UP_CENTER() {
+		return 'EVENT_MOUSE_UP_CENTER';
 	}
 }
 

@@ -47777,6 +47777,7 @@ class KeyboardControls {
 	 * @return {KeyboardControls}
 	 */
 	initEvents() {
+		
 		this.container.addEventListener('contextmenu', (event) => {
 			event.preventDefault();
 		}, false);
@@ -47786,11 +47787,37 @@ class KeyboardControls {
 		}, false);
 		
 		this.container.addEventListener('mousedown', (event) => {
-			this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN, event);
+			switch (event.which) {
+				case 1:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN_LEFT, event);
+					break;
+				case 2:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN_CENTER, event);
+					break;
+				case 3:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN_RIGHT, event);
+					break;
+				default:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_DOWN, event);
+					break;
+			}
 		}, false);
 		
 		this.container.addEventListener('mouseup', (event) => {
-			this._callListeners(KeyboardControls.EVENT_MOUSE_UP, event);
+			switch (event.width) {
+				case 1:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_UP_LEFT, event);
+					break;
+				case 2:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_UP_CENTER, event);
+					break;
+				case 3:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_UP_RIGHT, event);
+					break;
+				default:
+					this._callListeners(KeyboardControls.EVENT_MOUSE_UP, event);
+					break;
+			}
 		}, false);
 		
 		this.container.addEventListener('wheel', (event) => {
@@ -47836,7 +47863,8 @@ class KeyboardControls {
 	
 	/**
 	 * @param {KeyboardEvent|MouseEvent|WheelEvent} event
-	 * @param {?Keyboard} [keyboard]
+	 * @param {?Keyboard} keyboard
+	 * @param {number} group
 	 * @callback keyboardControlsListener
 	 */
 	
@@ -47937,7 +47965,7 @@ class KeyboardControls {
 			
 			if (this._disabledGroups.indexOf(Number(group)) < 0) {
 				for (let listener of arr[group]) {
-					listener(event, keyboard);
+					listener(event, keyboard, Number(group));
 				}
 			}
 		}
@@ -47960,52 +47988,6 @@ class KeyboardControls {
 		}
 		return null;
 	}
-	
-	// /**
-	//  *
-	//  * @param {{fly: {forward: {v: number, vOn: number, vOff: number}, back: {v: number, vOn: number, vOff: number}, stop: {v: number, vOn: number, vOff: number}, left: {v: number, vOn: number, vOff: number}, right: {v: number, vOn: number, vOff: number}, down: {v: number, vOn: number, vOff: number}, up: {v: number, vOn: number, vOff: number}, pitchDown: {v: number, vOn: number, vOff: number}, pitchUp: {v: number, vOn: number, vOff: number}, yawRight: {v: number, vOn: number, vOff: number}, yawLeft: {v: number, vOn: number, vOff: number}, rollRight: {v: number, vOn: number, vOff: number}, rollLeft: {v: number, vOn: number, vOff: number}}}} data
-	//  * @returns {KeyboardControls}
-	//  */
-	// setSocketInfo(data) {
-	// 	this.fly.forward.setSocketInfo(data['fly']['forward']);
-	// 	this.fly.back.setSocketInfo(data['fly']['back']);
-	// 	this.fly.stop.setSocketInfo(data['fly']['stop']);
-	// 	this.fly.left.setSocketInfo(data['fly']['left']);
-	// 	this.fly.right.setSocketInfo(data['fly']['right']);
-	// 	this.fly.down.setSocketInfo(data['fly']['down']);
-	// 	this.fly.up.setSocketInfo(data['fly']['up']);
-	// 	this.fly.pitchDown.setSocketInfo(data['fly']['pitchDown']);
-	// 	this.fly.pitchUp.setSocketInfo(data['fly']['pitchUp']);
-	// 	this.fly.yawRight.setSocketInfo(data['fly']['yawRight']);
-	// 	this.fly.yawLeft.setSocketInfo(data['fly']['yawLeft']);
-	// 	this.fly.rollRight.setSocketInfo(data['fly']['rollRight']);
-	// 	this.fly.rollLeft.setSocketInfo(data['fly']['rollLeft']);
-	// 	return this;
-	// }
-	//
-	// /**
-	//  *
-	//  * @returns {{fly: {forward: {v: number, vOn: number, vOff: number}, back: {v: number, vOn: number, vOff: number}, stop: {v: number, vOn: number, vOff: number}, left: {v: number, vOn: number, vOff: number}, right: {v: number, vOn: number, vOff: number}, down: {v: number, vOn: number, vOff: number}, up: {v: number, vOn: number, vOff: number}, pitchDown: {v: number, vOn: number, vOff: number}, pitchUp: {v: number, vOn: number, vOff: number}, yawRight: {v: number, vOn: number, vOff: number}, yawLeft: {v: number, vOn: number, vOff: number}, rollRight: {v: number, vOn: number, vOff: number}, rollLeft: {v: number, vOn: number, vOff: number}}}}
-	//  */
-	// getSocketInfo() {
-	// 	return {
-	// 		fly: {
-	// 			forward: this.fly.forward.getSocketInfo(),
-	// 			back: this.fly.back.getSocketInfo(),
-	// 			stop: this.fly.stop.getSocketInfo(),
-	// 			left: this.fly.left.getSocketInfo(),
-	// 			right: this.fly.right.getSocketInfo(),
-	// 			down: this.fly.down.getSocketInfo(),
-	// 			up: this.fly.up.getSocketInfo(),
-	// 			pitchDown: this.fly.pitchDown.getSocketInfo(),
-	// 			pitchUp: this.fly.pitchUp.getSocketInfo(),
-	// 			yawRight: this.fly.yawRight.getSocketInfo(),
-	// 			yawLeft: this.fly.yawLeft.getSocketInfo(),
-	// 			rollRight: this.fly.rollRight.getSocketInfo(),
-	// 			rollLeft: this.fly.rollLeft.getSocketInfo()
-	// 		}
-	// 	};
-	// }
 	
 	/**
 	 * The group buttons to fly
@@ -48086,6 +48068,60 @@ class KeyboardControls {
 	 */
 	static get EVENT_MOUSE_UP() {
 		return 'EVENT_MOUSE_UP';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_DOWN_LEFT() {
+		return 'EVENT_MOUSE_DOWN_LEFT';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_UP_LEFT() {
+		return 'EVENT_MOUSE_UP_LEFT';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_DOWN_RIGHT() {
+		return 'EVENT_MOUSE_DOWN_RIGHT';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_UP_RIGHT() {
+		return 'EVENT_MOUSE_UP_RIGHT';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_DOWN_CENTER() {
+		return 'EVENT_MOUSE_DOWN_CENTER';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MOUSE_UP_CENTER() {
+		return 'EVENT_MOUSE_UP_CENTER';
 	}
 }
 
@@ -51199,8 +51235,17 @@ class SceneControls {
 			}
 		});
 		
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_CENTER, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
+			let openConsole = this.player.keyboards.fly.openConsole;
+			if (openConsole.value === openConsole.valueOn) {
+				this.targetControls.setSelected(null);
+				this.player.ship.aim.signatureRightTop.hide();
+			}
+		});
+		
 		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_WHEEL, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
-			if (event.deltaY !== 0) {
+			let openConsole = this.player.keyboards.fly.openConsole;
+			if (event.deltaY !== 0 && openConsole.value === openConsole.valueOn) {
 				this.targetControls.changeTarget(
 					this._objects,
 					event.deltaY < 0 ? -1 : 1,
@@ -51595,10 +51640,19 @@ class Keyboard {
 		return this;
 	}
 	
+	/**
+	 * 
+	 * @returns {Keyboard}
+	 */
 	clear() {
 		this.value = this.valueOff;
+		return this;
 	}
 	
+	/**
+	 *
+	 * @returns {Keyboard}
+	 */
 	toggle() {
 		this.value = (this.value === this.valueOff) ? this.valueOn : this.valueOff;
 		return this;
@@ -53276,6 +53330,38 @@ class TargetControls {
 		 * @private
 		 */
 		this._size = 0;
+		
+		
+		this._arrowDirect = new __WEBPACK_IMPORTED_MODULE_1_three__["D" /* Object3D */]();
+		this._drawArrow(new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](0, 0, 0));
+		this._drawArrow(new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](0, 100, 0));
+		this._drawArrow(new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](0, 200, 0));
+		this._drawArrow(new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](0, 300, 0));
+		this._drawArrow(new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](0, 400, 0));
+		
+		this._camera.add(this._arrowDirect);
+		this._arrowDirect.position.z = - 5;
+		
+		this._arrowDirect.rotation.z = - Math.PI / 2;
+		this._arrowDirect.scale.copy(new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](0.0008, 0.0008, 0.0008));
+		
+	}
+	
+	_drawArrow(p) {
+		let material = new __WEBPACK_IMPORTED_MODULE_1_three__["u" /* LineBasicMaterial */]({
+			color: 0xffffff
+		});
+		
+		let geometry = new __WEBPACK_IMPORTED_MODULE_1_three__["q" /* Geometry */]();
+		geometry.vertices.push(
+			new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](-50, 0, 0),
+			new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](0, 50, 0),
+			new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](50, 0, 0)
+		);
+		
+		let line = new __WEBPACK_IMPORTED_MODULE_1_three__["t" /* Line */](geometry, material);
+		line.position.copy(p);
+		this._arrowDirect.add(line);
 	}
 	
 	/**
@@ -53338,7 +53424,7 @@ class TargetControls {
 	
 	/**
 	 *
-	 * @param {Particle} object
+	 * @param {?Particle} object
 	 * @param {targetListener} [onChangeListener]
 	 * @returns {TargetControls}
 	 */
@@ -53359,6 +53445,7 @@ class TargetControls {
 			
 			this._target.model.lookAt(this._camera.position);
 			this._target.model.position.copy(this._selected.model.position);
+			
 		} else {
 			this._target.remove();
 		}
@@ -53369,10 +53456,89 @@ class TargetControls {
 		return this;
 	}
 	
+	/**
+	 * Get position motion to
+	 *
+	 * @param {Vector3} point
+	 * @param {number} angle
+	 * @param {number} far
+	 * @returns {{ x: number, y: number, z: number }}
+	 */
+	static calcNextPosition(point, angle, far) {
+		return {
+			x: point.x + (far * Math.cos(angle)),
+			y: point.y + (far * Math.sin(angle)),
+			z: 0
+		};
+	}
+	
 	update() {
 		if (this._selected) {
 			this._target.model.lookAt(this._camera.position);
 			this._target.model.rotation.z = this._camera.rotation.z;
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			let v = new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](
+				this._camera.rotation.x,
+				this._camera.rotation.y,
+				this._camera.rotation.z
+			);
+			let v2 = new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](
+				this._selected.model.position.x,
+				this._selected.model.position.y,
+				this._selected.model.position.z
+			);
+			
+			let d = v.distanceTo(v2);
+			v.setLength(- d);
+			
+			// console.log(v, d);
+		
+			let rad = Math.PI / 2,
+				far = -5;
+			let a = v,
+				// 	new THREE.Vector3(
+				// 	/*this._camera.position.x + */(far * Math.cos(this._camera.rotation.x)),
+				// 	/*this._camera.position.y + */(far * Math.sin(this._camera.rotation.y)),
+				// 	this._camera.position.z
+				// ),
+				b = new __WEBPACK_IMPORTED_MODULE_1_three__["Q" /* Vector3 */](
+					// this._camera.rotation.x,
+					// this._camera.rotation.y,
+					// this._camera.rotation.z
+					this._selected.model.position.x,
+					this._selected.model.position.y,
+					this._selected.model.position.z
+				),
+				// angle = Math.atan2(a.y, a.x);
+			
+				angle = Math.atan2(b.y - a.y, b.x - a.x);// - rad;
+			
+			this._arrowDirect.rotation.z = angle;
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			if (this._updateListener) {
 				this._updateListener(this._selected, this._target, this._size);
 			}
@@ -53406,12 +53572,6 @@ class Target {
 		 * @type {Vector}
 		 */
 		this.size = new __WEBPACK_IMPORTED_MODULE_0_three__["P" /* Vector2 */](50, 50);
-		
-		/**
-		 *
-		 * @type {boolean}
-		 */
-		this.calibrate = true;
 		
 		/**
 		 *
