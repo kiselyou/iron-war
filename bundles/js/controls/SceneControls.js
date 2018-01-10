@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import SceneControlsPlugin from './SceneControlsPlugin';
 import FlyControls from './FlyControls';
 import SkyeBoxControls from './SkyeBoxControls';
 import Player from './../player/Player';
@@ -10,37 +11,14 @@ import Particle from './../Particle';
 
 const FPS = 1000 / 30;
 
-class SceneControls {
+class SceneControls extends SceneControlsPlugin {
 	/**
 	 *
 	 * @param {string|number} playerId - Socket ID
 	 * @param {string} [containerID]
 	 */
 	constructor(playerId, containerID) {
-		const FAR = 100000;
-		
-		/**
-		 *
-		 * @type {WebGLRenderer}
-		 */
-		this.renderer = new THREE.WebGLRenderer({
-			antialias: true,
-			alpha: true
-		});
-		
-		/**
-		 *
-		 * @type {Scene}
-		 */
-		this.scene = new THREE.Scene();
-		this.scene.background = new THREE.Color().setHSL(0.7, 0.4, 0.03);
-		this.scene.fog = new THREE.Fog(this.scene.background, 35000, FAR);
-		
-		/**
-		 *
-		 * @type {PerspectiveCamera}
-		 */
-		this.camera = new THREE.PerspectiveCamera(40, SceneControls.width / SceneControls.height, 1, FAR);
+		super();
 		
 		/**
 		 *
@@ -120,7 +98,7 @@ class SceneControls {
 		 *
 		 * @type {TargetControls}
 		 */
-		this.targetControls = new TargetControls(this.scene, this.camera);
+		this.targetControls = new TargetControls(this);
 	}
 	
 	/**
@@ -339,7 +317,7 @@ class SceneControls {
 		
 		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.setClearColor(0xf0f0f0);
-		this.renderer.setSize(SceneControls.width, SceneControls.height);
+		this.renderer.setSize(SceneControlsPlugin.width, SceneControlsPlugin.height);
 		this.container.appendChild(this.renderer.domElement);
 		this.renderer.gammaInput = false;
 		this.renderer.gammaOutput = false;
@@ -416,9 +394,9 @@ class SceneControls {
 		window.addEventListener(
 			'resize',
 			() => {
-				this.camera.aspect = SceneControls.aspect;
+				this.camera.aspect = SceneControlsPlugin.aspect;
 				this.camera.updateProjectionMatrix();
-				this.renderer.setSize(SceneControls.width, SceneControls.height);
+				this.renderer.setSize(SceneControlsPlugin.width, SceneControlsPlugin.height);
 			},
 			false
 		);
@@ -447,30 +425,6 @@ class SceneControls {
 			}
 		}
 		obj = undefined;
-	};
-	
-	/**
-	 *
-	 * @returns {number}
-	 */
-	static get aspect() {
-		return SceneControls.width / SceneControls.height;
-	}
-	
-	/**
-	 *
-	 * @returns {number}
-	 */
-	static get width() {
-		return window.innerWidth;
-	}
-	
-	/**
-	 *
-	 * @returns {number}
-	 */
-	static get height() {
-		return window.innerHeight;
 	};
 }
 

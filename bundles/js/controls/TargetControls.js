@@ -1,27 +1,34 @@
 import Target from './../particles/decoration/target/Target';
+import TargetDirection from './../particles/decoration/target/TargetDirection';
 import * as THREE from 'three';
 
 class TargetControls {
 	
 	/**
 	 *
-	 * @param {Scene} scene
-	 * @param {Camera} camera
+	 * @param {SceneControls} sceneControls
 	 */
-	constructor(scene, camera) {
+	constructor(sceneControls) {
 		/**
 		 *
-		 * @type {Camera}
+		 * @type {SceneControls}
 		 * @private
 		 */
-		this._scene = scene;
+		this._sceneControls = sceneControls;
 		
 		/**
 		 *
 		 * @type {Camera}
 		 * @private
 		 */
-		this._camera = camera;
+		this._scene = this._sceneControls.scene;
+		
+		/**
+		 *
+		 * @type {Camera}
+		 * @private
+		 */
+		this._camera = this._sceneControls.camera;
 		
 		/**
 		 *
@@ -42,9 +49,16 @@ class TargetControls {
 		 * @type {Target}
 		 * @private
 		 */
-		this._target = new Target();
+		this._target = new Target(this._sceneControls);
 		this._target.model.position.z = -200;
 		this._scene.add(this._target.model);
+		
+		/**
+		 *
+		 * @type {TargetDirection}
+		 * @private
+		 */
+		this._targetDirection = new TargetDirection(this._sceneControls);
 		
 		/**
 		 *
@@ -61,37 +75,39 @@ class TargetControls {
 		this._size = 0;
 		
 		
-		this._arrowDirect = new THREE.Object3D();
-		this._drawArrow(new THREE.Vector3(0, 0, 0));
-		this._drawArrow(new THREE.Vector3(0, 100, 0));
-		this._drawArrow(new THREE.Vector3(0, 200, 0));
-		this._drawArrow(new THREE.Vector3(0, 300, 0));
-		this._drawArrow(new THREE.Vector3(0, 400, 0));
 		
-		this._camera.add(this._arrowDirect);
-		this._arrowDirect.position.z = - 5;
 		
-		this._arrowDirect.rotation.z = - Math.PI / 2;
-		this._arrowDirect.scale.copy(new THREE.Vector3(0.0008, 0.0008, 0.0008));
+		// this._arrowDirect = new THREE.Object3D();
+		// this._drawArrow(new THREE.Vector3(0, 0, 0));
+		// this._drawArrow(new THREE.Vector3(0, 100, 0));
+		// this._drawArrow(new THREE.Vector3(0, 200, 0));
+		// this._drawArrow(new THREE.Vector3(0, 300, 0));
+		// this._drawArrow(new THREE.Vector3(0, 400, 0));
+		//
+		// this._camera.add(this._arrowDirect);
+		// this._arrowDirect.position.z = - 5;
+		//
+		// this._arrowDirect.rotation.z = - Math.PI / 2;
+		// this._arrowDirect.scale.copy(new THREE.Vector3(0.0008, 0.0008, 0.0008));
 		
 	}
 	
-	_drawArrow(p) {
-		let material = new THREE.LineBasicMaterial({
-			color: 0xffffff
-		});
-		
-		let geometry = new THREE.Geometry();
-		geometry.vertices.push(
-			new THREE.Vector3(-50, 0, 0),
-			new THREE.Vector3(0, 50, 0),
-			new THREE.Vector3(50, 0, 0)
-		);
-		
-		let line = new THREE.Line(geometry, material);
-		line.position.copy(p);
-		this._arrowDirect.add(line);
-	}
+	// _drawArrow(p) {
+	// 	let material = new THREE.LineBasicMaterial({
+	// 		color: 0xffffff
+	// 	});
+	//
+	// 	let geometry = new THREE.Geometry();
+	// 	geometry.vertices.push(
+	// 		new THREE.Vector3(-50, 0, 0),
+	// 		new THREE.Vector3(0, 50, 0),
+	// 		new THREE.Vector3(50, 0, 0)
+	// 	);
+	//
+	// 	let line = new THREE.Line(geometry, material);
+	// 	line.position.copy(p);
+	// 	this._arrowDirect.add(line);
+	// }
 	
 	/**
 	 * @param {Particle}
@@ -174,9 +190,11 @@ class TargetControls {
 			
 			this._target.model.lookAt(this._camera.position);
 			this._target.model.position.copy(this._selected.model.position);
+			this._targetDirection.draw();
 			
 		} else {
 			this._target.remove();
+			this._targetDirection.remove();
 		}
 		
 		if (onChangeListener) {
@@ -185,88 +203,13 @@ class TargetControls {
 		return this;
 	}
 	
-	/**
-	 * Get position motion to
-	 *
-	 * @param {Vector3} point
-	 * @param {number} angle
-	 * @param {number} far
-	 * @returns {{ x: number, y: number, z: number }}
-	 */
-	static calcNextPosition(point, angle, far) {
-		return {
-			x: point.x + (far * Math.cos(angle)),
-			y: point.y + (far * Math.sin(angle)),
-			z: 0
-		};
-	}
-	
 	update() {
 		if (this._selected) {
 			this._target.model.lookAt(this._camera.position);
 			this._target.model.rotation.z = this._camera.rotation.z;
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			let v = new THREE.Vector3(
-				this._camera.rotation.x,
-				this._camera.rotation.y,
-				this._camera.rotation.z
-			);
-			let v2 = new THREE.Vector3(
-				this._selected.model.position.x,
-				this._selected.model.position.y,
-				this._selected.model.position.z
-			);
-			
-			let d = v.distanceTo(v2);
-			v.setLength(- d);
-			
-			// console.log(v, d);
-		
-			let rad = Math.PI / 2,
-				far = -5;
-			let a = v,
-				// 	new THREE.Vector3(
-				// 	/*this._camera.position.x + */(far * Math.cos(this._camera.rotation.x)),
-				// 	/*this._camera.position.y + */(far * Math.sin(this._camera.rotation.y)),
-				// 	this._camera.position.z
-				// ),
-				b = new THREE.Vector3(
-					// this._camera.rotation.x,
-					// this._camera.rotation.y,
-					// this._camera.rotation.z
-					this._selected.model.position.x,
-					this._selected.model.position.y,
-					this._selected.model.position.z
-				),
-				// angle = Math.atan2(a.y, a.x);
-			
-				angle = Math.atan2(b.y - a.y, b.x - a.x);// - rad;
-			
-			this._arrowDirect.rotation.z = angle;
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+			this._targetDirection
+				.update(this._selected.model);
 			
 			if (this._updateListener) {
 				this._updateListener(this._selected, this._target, this._size);
