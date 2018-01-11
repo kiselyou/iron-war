@@ -17,11 +17,13 @@ class TargetDirection {
 		 *
 		 * @type {Object3D}
 		 */
-		this.model = new THREE.Object3D();
+		this.model = new THREE.Group();
 		this.model.position.z = -5;
 		this.model.rotation.z = -Math.PI / 2;
 		this.model.scale.copy(new THREE.Vector3(0.0008, 0.0008, 0.0008));
 		this._sceneControls.camera.add(this.model);
+		// this._sceneControls.scene.add(this.model);
+		
 		
 		/**
 		 *
@@ -38,6 +40,22 @@ class TargetDirection {
 		this._vector = new THREE.Vector3(0, 0, -1);
 		
 		this.t = 0;
+		
+		/**
+		 * Point O (Original position)
+		 *
+		 * @type {Vector3}
+		 * @private
+		 */
+		this._po2 = new THREE.Vector3(0, 0, 0);
+		
+		/**
+		 * Previous position of model
+		 *
+		 * @type {Vector3}
+		 * @private
+		 */
+		this._po1 = new THREE.Vector3(0, 0, 1);
 	}
 	
 	/**
@@ -118,42 +136,21 @@ class TargetDirection {
 			let s = this._sceneControls.getScreenSize();
 			
 			let a = Math.atan2(v.y - c.y, v.x - c.x);
+			// let a = Math.atan2(v.y - direction.y, v.x - direction.x);
 			let angle = - a - rad;
-			if (angle < 0) {
-				angle += 2 * Math.PI;
-			}
 			
-			
-			
-			
-			// if (v.x < 0 || v.y < 0 || v.x > s.x || v.y > s.y) {
-			// 	if (angle < 0) {
-			// 		angle = + angle;
-			// 	} else {
-			// 		angle = - angle;
-			// 	}
-			// }
-			
-			if (v.x < 0) {
-			
-			}
+			let direction = new THREE.Vector3(0, 0, -1).applyQuaternion(this._sceneControls.camera.quaternion);
 			
 			
 			this.t++;
 			if (this.t === 60) {
 				
-				// this._vector.applyQuaternion(this._sceneControls.camera.quaternion);
-				// let angle2 = this._vector.angleTo(object.position);
 				
-				// console.log(angle, angle2 * 180 / Math.PI);
-				
-				console.log(
-					v
-				);
-				
+				console.log(direction, v, direction.distanceTo(object.position));
 				this.t = 0;
 			}
 			
+			// this.model.rotation.z = a;
 			this.model.rotation.z = angle;
 		}
 	}

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 class SceneControlsPlugin {
 	constructor() {
+		
 		/**
 		 *
 		 * @type {WebGLRenderer}
