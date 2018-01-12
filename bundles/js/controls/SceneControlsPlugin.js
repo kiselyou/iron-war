@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 
+const DEG2RAD = Math.PI / 180;
+const RAD2DEG = 180 / Math.PI;
+
 class SceneControlsPlugin {
 	constructor() {
 		
@@ -46,6 +49,12 @@ class SceneControlsPlugin {
 		 * @private
 		 */
 		this._vectorToScreenPosition = new THREE.Vector3();
+		
+		/**
+		 *
+		 * @type {Vector3}
+		 */
+		this.pointLocal = new THREE.Vector3(0, 0, -1);
 	}
 	
 	/**
@@ -120,6 +129,58 @@ class SceneControlsPlugin {
 			this.renderer.context.canvas.height
 		);
 		return this._sizeScreen;
+	}
+	
+	/**
+	 *
+	 * @returns {Vector3}
+	 */
+	getCameraDirection() {
+		return this.getDirection(this.camera);
+	}
+	
+	/**
+	 *
+	 * @returns {Vector3}
+	 */
+	getDirection(obj) {
+		return this.pointLocal
+			.clone()
+			.applyMatrix4(obj.matrixWorld)
+			.sub(obj.position)
+			.normalize();
+	}
+	
+	getAngleFrom(obj, to) {
+		let rad = Math.PI / 2,
+			v = this.toScreenPosition(to),
+			c = this.getCenterScreenPosition(),
+			a = Math.atan2(v.y - c.y, v.x - c.x);
+		
+		let angle = - a - rad;
+		if (this.getCameraDirection().angleTo(to.position) * 180 / Math.PI > 90) {
+			angle = - a + rad;
+		}
+		
+		obj.rotation.z = angle;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 * @constructor
+	 */
+	static get DEG2RAD() {
+		return DEG2RAD;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 * @constructor
+	 */
+	static get RAD2DEG() {
+		return RAD2DEG;
 	}
 }
 

@@ -51456,6 +51456,9 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 
 
+const DEG2RAD = Math.PI / 180;
+const RAD2DEG = 180 / Math.PI;
+
 class SceneControlsPlugin {
 	constructor() {
 		
@@ -51502,6 +51505,12 @@ class SceneControlsPlugin {
 		 * @private
 		 */
 		this._vectorToScreenPosition = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */]();
+		
+		/**
+		 *
+		 * @type {Vector3}
+		 */
+		this.pointLocal = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](0, 0, -1);
 	}
 	
 	/**
@@ -51576,6 +51585,58 @@ class SceneControlsPlugin {
 			this.renderer.context.canvas.height
 		);
 		return this._sizeScreen;
+	}
+	
+	/**
+	 *
+	 * @returns {Vector3}
+	 */
+	getCameraDirection() {
+		return this.getDirection(this.camera);
+	}
+	
+	/**
+	 *
+	 * @returns {Vector3}
+	 */
+	getDirection(obj) {
+		return this.pointLocal
+			.clone()
+			.applyMatrix4(obj.matrixWorld)
+			.sub(obj.position)
+			.normalize();
+	}
+	
+	getAngleFrom(obj, to) {
+		let rad = Math.PI / 2,
+			v = this.toScreenPosition(to),
+			c = this.getCenterScreenPosition(),
+			a = Math.atan2(v.y - c.y, v.x - c.x);
+		
+		let angle = - a - rad;
+		if (this.getCameraDirection().angleTo(to.position) * 180 / Math.PI > 90) {
+			angle = - a + rad;
+		}
+		
+		obj.rotation.z = angle;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 * @constructor
+	 */
+	static get DEG2RAD() {
+		return DEG2RAD;
+	}
+	
+	/**
+	 *
+	 * @returns {number}
+	 * @constructor
+	 */
+	static get RAD2DEG() {
+		return RAD2DEG;
 	}
 }
 
@@ -53762,25 +53823,23 @@ class TargetDirection {
 		 * @type {Vector3}
 		 * @private
 		 */
-		this._vector = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](0, 0, -1);
+		this._vector = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */]();
 		
 		this.t = 0;
 		
 		/**
-		 * Point O (Original position)
 		 *
 		 * @type {Vector3}
 		 * @private
 		 */
-		this._po2 = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](0, 0, 0);
+		this._v1 = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */]();
 		
 		/**
-		 * Previous position of model
 		 *
-		 * @type {Vector3}
+		 * @type {Quaternion}
 		 * @private
 		 */
-		this._po1 = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](0, 0, 1);
+		this._worldQuaternion = new __WEBPACK_IMPORTED_MODULE_0_three__["H" /* Quaternion */]();
 	}
 	
 	/**
@@ -53854,29 +53913,7 @@ class TargetDirection {
 	 */
 	update(object) {
 		if (this._isExists) {
-			let rad = Math.PI / 2;
-			let v = this._sceneControls.toScreenPosition(object);
-			let c = this._sceneControls.getCenterScreenPosition();
-			
-			let s = this._sceneControls.getScreenSize();
-			
-			let a = Math.atan2(v.y - c.y, v.x - c.x);
-			// let a = Math.atan2(v.y - direction.y, v.x - direction.x);
-			let angle = - a - rad;
-			
-			let direction = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector3 */](0, 0, -1).applyQuaternion(this._sceneControls.camera.quaternion);
-			
-			
-			this.t++;
-			if (this.t === 60) {
-				
-				
-				console.log(direction, v, direction.distanceTo(object.position));
-				this.t = 0;
-			}
-			
-			// this.model.rotation.z = a;
-			this.model.rotation.z = angle;
+			this._sceneControls.getAngleFrom(this.model, object);
 		}
 	}
 }
