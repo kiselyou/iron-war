@@ -51607,24 +51607,23 @@ class SceneControlsPlugin {
 			.normalize();
 	}
 	
-	getAngleFrom(obj, to) {
+	getAngleFromZ(obj, to) {
 		let rad = Math.PI / 2,
 			v = this.toScreenPosition(to),
 			c = this.getCenterScreenPosition(),
 			a = Math.atan2(v.y - c.y, v.x - c.x);
 		
 		let angle = - a - rad;
-		if (this.getCameraDirection().angleTo(to.position) * 180 / Math.PI > 90) {
+		if (this.getCameraDirection().angleTo(to.position) * RAD2DEG > 90) {
 			angle = - a + rad;
 		}
 		
-		obj.rotation.z = angle;
+		return angle;
 	}
 	
 	/**
 	 *
 	 * @returns {number}
-	 * @constructor
 	 */
 	static get DEG2RAD() {
 		return DEG2RAD;
@@ -51633,7 +51632,6 @@ class SceneControlsPlugin {
 	/**
 	 *
 	 * @returns {number}
-	 * @constructor
 	 */
 	static get RAD2DEG() {
 		return RAD2DEG;
@@ -53913,7 +53911,18 @@ class TargetDirection {
 	 */
 	update(object) {
 		if (this._isExists) {
-			this._sceneControls.getAngleFrom(this.model, object);
+			let rad = Math.PI / 2;
+			let v = this._sceneControls.toScreenPosition(object);
+			let c = this._sceneControls.getCenterScreenPosition();
+			let dir = this._sceneControls.getCameraDirection();
+			let a = Math.atan2(v.y - c.y, v.x - c.x);
+			
+			let angle = - a - rad;
+			if (dir.angleTo(object.position) * 180 / Math.PI > 90) {
+				angle = - a + rad;
+			}
+			
+			this.model.rotation.z = angle;
 		}
 	}
 }
