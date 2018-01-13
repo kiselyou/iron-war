@@ -81,7 +81,7 @@ class EngineIM20 extends Engine {
 	     *
 	     * @type {number}
 	     */
-	    this.deceleration = 30;
+	    this.deceleration = 80;
     }
 }
 

@@ -1,7 +1,9 @@
 import Particle from './../../Particle';
 import Aim from './../decoration/aim/Aim';
+import EngineIM20 from './../engine/I/EngineIM20';
 import ArsenalSlots from './../arsenal/ArsenalSlots';
 import ArsenalSlot from './../arsenal/ArsenalSlot';
+import ParticleClassI from './../../classes/ParticleClassI';
 
 class Ship extends Particle {
 	/**
@@ -14,9 +16,15 @@ class Ship extends Particle {
 		
 		/**
 		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new ParticleClassI();
+		
+		/**
+		 *
 		 * @type {Engine}
 		 */
-		this.engine = null;
+		this.engine = new EngineIM20();
 		
 		/**
 		 * This is base path to model e.g "models/explorer/"

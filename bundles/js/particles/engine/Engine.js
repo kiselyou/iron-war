@@ -1,4 +1,5 @@
 import Particle from './../../Particle';
+import ParticleClassI from "../../classes/ParticleClassI";
 
 class Engine extends Particle {
 	/**
@@ -8,6 +9,13 @@ class Engine extends Particle {
 	 */
     constructor(type, key) {
         super(type, key);
+		
+        
+		/**
+		 *
+		 * @type {ParticleClassI}
+		 */
+		this.particleClass = new ParticleClassI();
 		
 		/**
          *

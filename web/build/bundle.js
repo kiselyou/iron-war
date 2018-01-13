@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -46073,203 +46073,11 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * This is the web browser implementation of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = __webpack_require__(68);
-exports.log = log;
-exports.formatArgs = formatArgs;
-exports.save = save;
-exports.load = load;
-exports.useColors = useColors;
-exports.storage = 'undefined' != typeof chrome
-               && 'undefined' != typeof chrome.storage
-                  ? chrome.storage.local
-                  : localstorage();
-
-/**
- * Colors.
- */
-
-exports.colors = [
-  'lightseagreen',
-  'forestgreen',
-  'goldenrod',
-  'dodgerblue',
-  'darkorchid',
-  'crimson'
-];
-
-/**
- * Currently only WebKit-based Web Inspectors, Firefox >= v31,
- * and the Firebug extension (any Firefox version) are known
- * to support "%c" CSS customizations.
- *
- * TODO: add a `localStorage` variable to explicitly enable/disable colors
- */
-
-function useColors() {
-  // NB: In an Electron preload script, document will be defined but not fully
-  // initialized. Since we know we're in Chrome, we'll just detect this case
-  // explicitly
-  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
-    return true;
-  }
-
-  // is webkit? http://stackoverflow.com/a/16459606/376773
-  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
-    // double check webkit in userAgent just in case we are in a worker
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
-}
-
-/**
- * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
- */
-
-exports.formatters.j = function(v) {
-  try {
-    return JSON.stringify(v);
-  } catch (err) {
-    return '[UnexpectedJSONParseError]: ' + err.message;
-  }
-};
-
-
-/**
- * Colorize log arguments if enabled.
- *
- * @api public
- */
-
-function formatArgs(args) {
-  var useColors = this.useColors;
-
-  args[0] = (useColors ? '%c' : '')
-    + this.namespace
-    + (useColors ? ' %c' : ' ')
-    + args[0]
-    + (useColors ? '%c ' : ' ')
-    + '+' + exports.humanize(this.diff);
-
-  if (!useColors) return;
-
-  var c = 'color: ' + this.color;
-  args.splice(1, 0, c, 'color: inherit')
-
-  // the final "%c" is somewhat tricky, because there could be other
-  // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
-  var index = 0;
-  var lastC = 0;
-  args[0].replace(/%[a-zA-Z%]/g, function(match) {
-    if ('%%' === match) return;
-    index++;
-    if ('%c' === match) {
-      // we only are interested in the *last* %c
-      // (the user may have provided their own)
-      lastC = index;
-    }
-  });
-
-  args.splice(lastC, 0, c);
-}
-
-/**
- * Invokes `console.log()` when available.
- * No-op when `console.log` is not a "function".
- *
- * @api public
- */
-
-function log() {
-  // this hackery is required for IE8/9, where
-  // the `console.log` function doesn't have 'apply'
-  return 'object' === typeof console
-    && console.log
-    && Function.prototype.apply.call(console.log, console, arguments);
-}
-
-/**
- * Save `namespaces`.
- *
- * @param {String} namespaces
- * @api private
- */
-
-function save(namespaces) {
-  try {
-    if (null == namespaces) {
-      exports.storage.removeItem('debug');
-    } else {
-      exports.storage.debug = namespaces;
-    }
-  } catch(e) {}
-}
-
-/**
- * Load `namespaces`.
- *
- * @return {String} returns the previously persisted debug modes
- * @api private
- */
-
-function load() {
-  var r;
-  try {
-    r = exports.storage.debug;
-  } catch(e) {}
-
-  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-  if (!r && typeof process !== 'undefined' && 'env' in process) {
-    r = process.env.DEBUG;
-  }
-
-  return r;
-}
-
-/**
- * Enable namespaces listed in `localStorage.debug` initially.
- */
-
-exports.enable(load());
-
-/**
- * Localstorage attempts to return the localstorage.
- *
- * This is necessary because safari throws
- * when a user disables cookies/localstorage
- * and you attempt to access it.
- *
- * @return {LocalStorage}
- * @api private
- */
-
-function localstorage() {
-  try {
-    return window.localStorage;
-  } catch (e) {}
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(67)))
-
-/***/ }),
-/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__systems_Listener__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__systems_Listener__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
 
 
@@ -46461,7 +46269,221 @@ class Particle {
 /* harmony default export */ __webpack_exports__["a"] = (Particle);
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = __webpack_require__(71);
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome
+               && 'undefined' != typeof chrome.storage
+                  ? chrome.storage.local
+                  : localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // NB: In an Electron preload script, document will be defined but not fully
+  // initialized. Since we know we're in Chrome, we'll just detect this case
+  // explicitly
+  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+    return true;
+  }
+
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+    // double check webkit in userAgent just in case we are in a worker
+    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return;
+
+  var c = 'color: ' + this.color;
+  args.splice(1, 0, c, 'color: inherit')
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-zA-Z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    r = exports.storage.debug;
+  } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if (!r && typeof process !== 'undefined' && 'env' in process) {
+    r = process.env.DEBUG;
+  }
+
+  return r;
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(70)))
+
+/***/ }),
 /* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(11);
+
+
+class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
+    constructor() {
+        super('ParticleClassI', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */].I_CLASS_KEY);
+	
+	    /**
+         *
+	     * @type {string}
+	     */
+	    this.name = 'I';
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ParticleClassI);
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -46630,22 +46652,22 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var keys = __webpack_require__(77);
-var hasBinary = __webpack_require__(28);
-var sliceBuffer = __webpack_require__(78);
-var after = __webpack_require__(79);
-var utf8 = __webpack_require__(80);
+var keys = __webpack_require__(80);
+var hasBinary = __webpack_require__(31);
+var sliceBuffer = __webpack_require__(81);
+var after = __webpack_require__(82);
+var utf8 = __webpack_require__(83);
 
 var base64encoder;
 if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(82);
+  base64encoder = __webpack_require__(85);
 }
 
 /**
@@ -46703,7 +46725,7 @@ var err = { type: 'error', data: 'parser error' };
  * Create a blob api even for blob builder when vendor prefixes exist
  */
 
-var Blob = __webpack_require__(83);
+var Blob = __webpack_require__(86);
 
 /**
  * Encodes a packet.
@@ -47243,11 +47265,13 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
+
 
 
 class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
@@ -47258,6 +47282,13 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 	 */
     constructor(type, key) {
         super(type, key);
+		
+        
+		/**
+		 *
+		 * @type {ParticleClassI}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
 		
 		/**
          *
@@ -47521,14 +47552,18 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 /* harmony default export */ __webpack_exports__["a"] = (Engine);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__arsenal_ArsenalSlots__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlot__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_ParticleClassI__ = __webpack_require__(4);
+
+
 
 
 
@@ -47545,9 +47580,15 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 		
 		/**
 		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_5__classes_ParticleClassI__["a" /* default */]();
+		
+		/**
+		 *
 		 * @type {Engine}
 		 */
-		this.engine = null;
+		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__["a" /* default */]();
 		
 		/**
 		 * This is base path to model e.g "models/explorer/"
@@ -47574,7 +47615,7 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 		 *
 		 * @type {ArsenalSlots}
 		 */
-		this.arsenalSlots = new __WEBPACK_IMPORTED_MODULE_2__arsenal_ArsenalSlots__["a" /* default */]();
+		this.arsenalSlots = new __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__["a" /* default */]();
 		
 		/**
 		 *
@@ -47599,7 +47640,7 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 	 */
 	updateArsenal() {
 		for (let property in this.arsenalSlots) {
-			if (this.arsenalSlots.hasOwnProperty(property) && this.arsenalSlots[property] instanceof __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlot__["a" /* default */]) {
+			if (this.arsenalSlots.hasOwnProperty(property) && this.arsenalSlots[property] instanceof __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__["a" /* default */]) {
 				let slot = this.arsenalSlots[property];
 				let model = slot.arsenal.model;
 				if (model) {
@@ -47652,7 +47693,7 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Ship);
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 /**
@@ -47695,7 +47736,7 @@ exports.decode = function(qs){
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 
@@ -47707,11 +47748,59 @@ module.exports = function(a, b){
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Keyboard__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
+
+
+class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
+    /**
+     *
+     * @param {string} type
+     * @param {string|number} key
+     */
+    constructor(type, key) {
+        super(type, key);
+    }
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static I_CLASS_KEY() {
+        return 1;
+    };
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static II_CLASS_KEY() {
+        return 2;
+    }
+
+    /**
+     *
+     * @returns {number}
+     * @constructor
+     */
+    static III_CLASS_KEY() {
+        return 3;
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ParticleClass);
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Keyboard__ = __webpack_require__(45);
 
 
 class KeyboardControls {
@@ -48161,7 +48250,94 @@ class KeyboardControls {
 /* harmony default export */ __webpack_exports__["a"] = (KeyboardControls);
 
 /***/ }),
-/* 11 */
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ *
+ * @type {Object}
+ */
+let include = {};
+
+class Includes {
+	/**
+	 *
+	 * @param {string} type
+	 */
+	constructor(type) {
+		/**
+		 *
+		 * @type {Array.<Particle>}
+		 */
+		this.includes = [];
+		
+		if (include.hasOwnProperty(type)) {
+			throw new Error('Includes ' + type + ' has already exists. Try call static method Includes.get("' + type + '")');
+		}
+		
+		include[type] = this;
+		
+		/**
+		 *
+		 * @type {string}
+		 */
+		this.type = type;
+	}
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @returns {*}
+	 */
+	static get(type) {
+		if (!include.hasOwnProperty(type)) {
+			console.warn('Include class does not know about class "' + type + '". Try to call new ' + type + '()');
+		}
+		return include[type];
+	}
+	
+	/**
+	 * Get list of elements {Particle.key: Particle.name}
+	 *
+	 * @returns {{(string|number): string}}
+	 */
+	getKeyAndName() {
+		let data = {};
+		for (let element of this.includes) {
+			data[element.key] = element.name;
+		}
+		return data;
+	}
+	
+	/**
+	 * Get list classes
+	 *
+	 * @returns {Array.<(Object|Particle)>}
+	 */
+	getAll() {
+		return this.includes;
+	};
+
+	/**
+	 * Get specific object
+	 *
+	 * @param {number|string} key
+	 * @returns {?(Object|Particle)}
+	 */
+	getSpecificObject(key) {
+		let element = this.includes.find((el) => {
+			return el.key === key;
+		});
+		
+		return element ? element.clone() : null;
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Includes);
+
+/***/ }),
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48180,77 +48356,7 @@ const COLOR_WHITE = 0xFFFFFF;
 
 
 /***/ }),
-/* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(13);
-
-
-class ParticleClassI extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
-    constructor() {
-        super('ParticleClassI', __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */].I_CLASS_KEY);
-	
-	    /**
-         *
-	     * @type {string}
-	     */
-	    this.name = 'I';
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ParticleClassI);
-
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(3);
-
-
-class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
-    /**
-     *
-     * @param {string} type
-     * @param {string|number} key
-     */
-    constructor(type, key) {
-        super(type, key);
-    }
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static I_CLASS_KEY() {
-        return 1;
-    };
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static II_CLASS_KEY() {
-        return 2;
-    }
-
-    /**
-     *
-     * @returns {number}
-     * @constructor
-     */
-    static III_CLASS_KEY() {
-        return 3;
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ParticleClass);
-
-/***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -48258,11 +48364,11 @@ class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* defau
  * Module dependencies.
  */
 
-var debug = __webpack_require__(2)('socket.io-parser');
-var Emitter = __webpack_require__(4);
-var hasBin = __webpack_require__(28);
-var binary = __webpack_require__(71);
-var isBuf = __webpack_require__(29);
+var debug = __webpack_require__(3)('socket.io-parser');
+var Emitter = __webpack_require__(5);
+var hasBin = __webpack_require__(31);
+var binary = __webpack_require__(74);
+var isBuf = __webpack_require__(32);
 
 /**
  * Protocol version.
@@ -48656,12 +48762,12 @@ function error() {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(75);
+var hasCORS = __webpack_require__(78);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -48700,15 +48806,15 @@ module.exports = function (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var parser = __webpack_require__(5);
-var Emitter = __webpack_require__(4);
+var parser = __webpack_require__(6);
+var Emitter = __webpack_require__(5);
 
 /**
  * Module exports.
@@ -48863,13 +48969,13 @@ Transport.prototype.onClose = function () {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_engine_Engine__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_engine_Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(12);
 
 
 
@@ -49122,7 +49228,7 @@ class FlyControls {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49174,14 +49280,14 @@ class Listener {
 /* harmony default export */ __webpack_exports__["a"] = (Listener);
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(58);
 
 
 
@@ -49212,93 +49318,6 @@ class ShipIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* defaul
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ShipIncludes);
-
-/***/ }),
-/* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- *
- * @type {Object}
- */
-let include = {};
-
-class Includes {
-	/**
-	 *
-	 * @param {string} type
-	 */
-	constructor(type) {
-		/**
-		 *
-		 * @type {Array.<Particle>}
-		 */
-		this.includes = [];
-		
-		if (include.hasOwnProperty(type)) {
-			throw new Error('Includes ' + type + ' has already exists. Try call static method Includes.get("' + type + '")');
-		}
-		
-		include[type] = this;
-		
-		/**
-		 *
-		 * @type {string}
-		 */
-		this.type = type;
-	}
-	
-	/**
-	 *
-	 * @param {string} type
-	 * @returns {*}
-	 */
-	static get(type) {
-		if (!include.hasOwnProperty(type)) {
-			console.warn('Include class does not know about class "' + type + '". Try to call new ' + type + '()');
-		}
-		return include[type];
-	}
-	
-	/**
-	 * Get list of elements {Particle.key: Particle.name}
-	 *
-	 * @returns {{(string|number): string}}
-	 */
-	getKeyAndName() {
-		let data = {};
-		for (let element of this.includes) {
-			data[element.key] = element.name;
-		}
-		return data;
-	}
-	
-	/**
-	 * Get list classes
-	 *
-	 * @returns {Array.<(Object|Particle)>}
-	 */
-	getAll() {
-		return this.includes;
-	};
-
-	/**
-	 * Get specific object
-	 *
-	 * @param {number|string} key
-	 * @returns {?(Object|Particle)}
-	 */
-	getSpecificObject(key) {
-		let element = this.includes.find((el) => {
-			return el.key === key;
-		});
-		
-		return element ? element.clone() : null;
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Includes);
 
 /***/ }),
 /* 21 */
@@ -49368,11 +49387,110 @@ class FontLoader {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
+
+
+
+class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
+    constructor() {
+        super('EngineIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].I_M20_KEY);
+	
+	    /**
+         *
+	     * @type {ParticleClassI}
+	     */
+	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedX = 15;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxX = 5;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedY = 15;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxY = 5;
+	    
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedZ = 0;
+	    
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMinZ = - 10;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.speedMaxZ = 150;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.rollSpeedXY = Math.PI / 15;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.rollSpeedZ = Math.PI / 5;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.accelerationForward = 25;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.accelerationBack = 15;
+	
+	    /**
+	     *
+	     * @type {number}
+	     */
+	    this.deceleration = 80;
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (EngineIM20);
+
+/***/ }),
+/* 23 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
 
 
-class ArsenalSlot {
+
+class ArsenalSlot extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 	constructor() {
+		super('ArsenalSlots', ArsenalSlot.ARTICLE_SORT);
 		
 		/**
 		 *
@@ -49400,17 +49518,25 @@ class ArsenalSlot {
 		 */
 		this.rotation = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* Euler */]();
 	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static ARTICLE_SORT() {
+		return 'ARTICLE_SORT';
+	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ArsenalSlot);
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ArsenalIA20__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ArsenalIA20__ = __webpack_require__(54);
 
 
 
@@ -49439,14 +49565,21 @@ class ArsenalIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* def
 /* harmony default export */ __webpack_exports__["a"] = (ArsenalIncludes);
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__charge_Charge__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__charge_ChargeIncludes__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_ParticleClassI__ = __webpack_require__(4);
+
+
+
 
 
 class Arsenal extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
+	
 	/**
 	 *
 	 * @param {string} type
@@ -49454,6 +49587,31 @@ class Arsenal extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */]
 	 */
 	constructor(type, key) {
 		super(type, key);
+		
+		/**
+		 * If value is true then charges are endless
+		 *
+		 * @type {boolean}
+		 */
+		this.endless = true;
+		
+		/**
+		 *
+		 * @type {Charge}
+		 */
+		this.charge = __WEBPACK_IMPORTED_MODULE_2__charge_ChargeIncludes__["a" /* default */].get().getSpecificObject(__WEBPACK_IMPORTED_MODULE_1__charge_Charge__["a" /* default */].I_C20_KEY);
+		
+		/**
+		 *
+		 * @type {Array.<Charge>}
+		 */
+		this.charges = [];
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_3__classes_ParticleClassI__["a" /* default */]();
 	}
 	
 	/**
@@ -49484,11 +49642,99 @@ class Arsenal extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */]
 /* harmony default export */ __webpack_exports__["a"] = (Arsenal);
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
+
+
+
+class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
+	
+	/**
+	 *
+	 * @param {string} type
+	 * @param {(string|number)} key
+	 */
+	constructor(type, key) {
+		super(type, key);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static I_C20_KEY() {
+		return 'I_C20_KEY';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static II_C20_KEY() {
+		return 'II_C20_KEY';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static III_C20_KEY() {
+		return 'III_C20_KEY';
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Charge);
+
+/***/ }),
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ChargeIA20__ = __webpack_require__(55);
+
+
+
+class ChargeIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* default */] {
+	constructor() {
+		super('ChargeIncludes');
+		
+		/**
+		 *
+		 * @type {Array.<Charge>}
+		 */
+		this.includes = [
+			new __WEBPACK_IMPORTED_MODULE_1__I_ChargeIA20__["a" /* default */]()
+		];
+	}
+	
+	/**
+	 *
+	 * @returns {ChargeIncludes}
+	 */
+	static get() {
+		return super.get('ChargeIncludes');
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ChargeIncludes);
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(11);
 
 
 class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
@@ -49506,11 +49752,11 @@ class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassII);
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(11);
 
 
 class ParticleClassIII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /* default */] {
@@ -49524,7 +49770,7 @@ class ParticleClassIII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" 
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassIII);
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports) {
 
 /**
@@ -49569,7 +49815,7 @@ module.exports = function parseuri(str) {
 
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* global Blob File */
@@ -49578,7 +49824,7 @@ module.exports = function parseuri(str) {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(70);
+var isArray = __webpack_require__(73);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -49638,7 +49884,7 @@ function hasBinary (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -49658,7 +49904,7 @@ function isBuf(obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -49666,15 +49912,15 @@ function isBuf(obj) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(73);
-var Socket = __webpack_require__(35);
-var Emitter = __webpack_require__(4);
-var parser = __webpack_require__(14);
-var on = __webpack_require__(36);
-var bind = __webpack_require__(37);
-var debug = __webpack_require__(2)('socket.io-client:manager');
-var indexOf = __webpack_require__(34);
-var Backoff = __webpack_require__(88);
+var eio = __webpack_require__(76);
+var Socket = __webpack_require__(38);
+var Emitter = __webpack_require__(5);
+var parser = __webpack_require__(15);
+var on = __webpack_require__(39);
+var bind = __webpack_require__(40);
+var debug = __webpack_require__(3)('socket.io-client:manager');
+var indexOf = __webpack_require__(37);
+var Backoff = __webpack_require__(91);
 
 /**
  * IE6+ hasOwnProperty
@@ -50237,17 +50483,17 @@ Manager.prototype.onreconnect = function () {
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies
  */
 
-var XMLHttpRequest = __webpack_require__(15);
-var XHR = __webpack_require__(76);
-var JSONP = __webpack_require__(84);
-var websocket = __webpack_require__(85);
+var XMLHttpRequest = __webpack_require__(16);
+var XHR = __webpack_require__(79);
+var JSONP = __webpack_require__(87);
+var websocket = __webpack_require__(88);
 
 /**
  * Export transports.
@@ -50297,19 +50543,19 @@ function polling (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(16);
-var parseqs = __webpack_require__(8);
-var parser = __webpack_require__(5);
-var inherit = __webpack_require__(9);
-var yeast = __webpack_require__(33);
-var debug = __webpack_require__(2)('engine.io-client:polling');
+var Transport = __webpack_require__(17);
+var parseqs = __webpack_require__(9);
+var parser = __webpack_require__(6);
+var inherit = __webpack_require__(10);
+var yeast = __webpack_require__(36);
+var debug = __webpack_require__(3)('engine.io-client:polling');
 
 /**
  * Module exports.
@@ -50322,7 +50568,7 @@ module.exports = Polling;
  */
 
 var hasXHR2 = (function () {
-  var XMLHttpRequest = __webpack_require__(15);
+  var XMLHttpRequest = __webpack_require__(16);
   var xhr = new XMLHttpRequest({ xdomain: false });
   return null != xhr.responseType;
 })();
@@ -50548,7 +50794,7 @@ Polling.prototype.uri = function () {
 
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50623,7 +50869,7 @@ module.exports = yeast;
 
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports) {
 
 
@@ -50638,7 +50884,7 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -50646,13 +50892,13 @@ module.exports = function(arr, obj){
  * Module dependencies.
  */
 
-var parser = __webpack_require__(14);
-var Emitter = __webpack_require__(4);
-var toArray = __webpack_require__(87);
-var on = __webpack_require__(36);
-var bind = __webpack_require__(37);
-var debug = __webpack_require__(2)('socket.io-client:socket');
-var parseqs = __webpack_require__(8);
+var parser = __webpack_require__(15);
+var Emitter = __webpack_require__(5);
+var toArray = __webpack_require__(90);
+var on = __webpack_require__(39);
+var bind = __webpack_require__(40);
+var debug = __webpack_require__(3)('socket.io-client:socket');
+var parseqs = __webpack_require__(9);
 
 /**
  * Module exports.
@@ -51062,7 +51308,7 @@ Socket.prototype.compress = function (compress) {
 
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports) {
 
 
@@ -51092,7 +51338,7 @@ function on (obj, ev, fn) {
 
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports) {
 
 /**
@@ -51121,15 +51367,15 @@ module.exports = function(obj, fn){
 
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__socket_config__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__socket_config__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_socket_io_client__);
 
 
@@ -51243,19 +51489,19 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 });
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FlyControls__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SkyeBoxControls__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TargetControls__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Particle__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FlyControls__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SkyeBoxControls__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TargetControls__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Particle__ = __webpack_require__(2);
 
 
 
@@ -51689,7 +51935,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 /* harmony default export */ __webpack_exports__["a"] = (SceneControls);
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51881,7 +52127,7 @@ class SceneControlsPlugin {
 /* harmony default export */ __webpack_exports__["a"] = (SceneControlsPlugin);
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51905,7 +52151,7 @@ class ParticleError extends Error {
 /* harmony default export */ __webpack_exports__["a"] = (ParticleError);
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52089,7 +52335,7 @@ class Keyboard {
 /* harmony default export */ __webpack_exports__["a"] = (Keyboard);
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52222,16 +52468,16 @@ class SkyeBoxControls {
 /* harmony default export */ __webpack_exports__["a"] = (SkyeBoxControls);
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controls_FlyControls__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__systems_Listener__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controls_FlyControls__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__systems_Listener__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_three__ = __webpack_require__(0);
 
 
@@ -52479,7 +52725,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Player);
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52494,15 +52740,15 @@ class User {
 /* harmony default export */ __webpack_exports__["a"] = (User);
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalIncludes__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_Arsenal__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalIncludes__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_Arsenal__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_three__ = __webpack_require__(0);
 
 
@@ -52566,14 +52812,14 @@ class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default *
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerI);
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AimSignature__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__constants__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AimSignature__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__constants__ = __webpack_require__(14);
 
 
 
@@ -52758,13 +53004,13 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Aim);
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_TextCanvas__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_TextCanvas__ = __webpack_require__(52);
 
 
 
@@ -53051,7 +53297,7 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53274,15 +53520,18 @@ class TextCanvas {
 /* harmony default export */ __webpack_exports__["a"] = (TextCanvas);
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArsenalSlot__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArsenalSlot__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
 
 
-class ArsenalSlots {
+
+class ArsenalSlots extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 	constructor() {
+		super('ArsenalSlots', ArsenalSlots.ARTICLE_SORTS);
 		
 		/**
 		 *
@@ -53296,113 +53545,25 @@ class ArsenalSlots {
 		 */
 		this.slot_b = new __WEBPACK_IMPORTED_MODULE_0__ArsenalSlot__["a" /* default */]();
 	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static ARTICLE_SORTS() {
+		return 'ARTICLE_SORTS';
+	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ArsenalSlots);
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(12);
-
-
-
-class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
-    constructor() {
-        super('EngineIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].I_M20_KEY);
-	
-	    /**
-         *
-	     * @type {ParticleClassI}
-	     */
-	    this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.speedX = 15;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.speedMaxX = 5;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.speedY = 15;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.speedMaxY = 5;
-	    
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.speedZ = 0;
-	    
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.speedMinZ = - 10;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.speedMaxZ = 150;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.rollSpeedXY = Math.PI / 15;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.rollSpeedZ = Math.PI / 5;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.accelerationForward = 25;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.accelerationBack = 15;
-	
-	    /**
-	     *
-	     * @type {number}
-	     */
-	    this.deceleration = 30;
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (EngineIM20);
-
-/***/ }),
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Arsenal__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Arsenal__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
 
 
@@ -53418,7 +53579,7 @@ class ArsenalIA20 extends __WEBPACK_IMPORTED_MODULE_0__Arsenal__["a" /* default 
 		 */
 		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_2_three__["h" /* CylinderGeometry */](0.2, 0.2, 2, 32);
+		let geometry = new __WEBPACK_IMPORTED_MODULE_2_three__["h" /* CylinderGeometry */](0.2, 0.2, 1, 32);
 		let material = new __WEBPACK_IMPORTED_MODULE_2_three__["C" /* MeshPhongMaterial */]({color: 0xffffff});
 		this.model = new __WEBPACK_IMPORTED_MODULE_2_three__["A" /* Mesh */](geometry, material);
 	}
@@ -53427,13 +53588,37 @@ class ArsenalIA20 extends __WEBPACK_IMPORTED_MODULE_0__Arsenal__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = (ArsenalIA20);
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Charge__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
+
+
+
+class ChargeIA20 extends __WEBPACK_IMPORTED_MODULE_0__Charge__["a" /* default */] {
+	constructor() {
+		super('ChargeIA20', __WEBPACK_IMPORTED_MODULE_0__Charge__["a" /* default */].I_C20_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ChargeIA20);
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(57);
 
 
 
@@ -53459,12 +53644,12 @@ class ShipExplorerII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerII);
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(28);
 
 
 
@@ -53483,13 +53668,13 @@ class EngineIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default *
 /* harmony default export */ __webpack_exports__["a"] = (EngineIIM20);
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(59);
 
 
 
@@ -53515,12 +53700,12 @@ class ShipExplorerIII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerIII);
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(29);
 
 
 
@@ -53539,7 +53724,7 @@ class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default 
 /* harmony default export */ __webpack_exports__["a"] = (EngineIIIM20);
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53638,12 +53823,12 @@ class HelperPoints {
 /* harmony default export */ __webpack_exports__["a"] = (HelperPoints);
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particles_decoration_target_Target__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_decoration_target_TargetDirection__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particles_decoration_target_Target__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_decoration_target_TargetDirection__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
 
 
@@ -53868,12 +54053,12 @@ class TargetControls {
 /* harmony default export */ __webpack_exports__["a"] = (TargetControls);
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(14);
 
 
 
@@ -54005,12 +54190,12 @@ class Target {
 /* harmony default export */ __webpack_exports__["a"] = (Target);
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(14);
 
 
 
@@ -54169,16 +54354,18 @@ class TargetDirection {
 /* harmony default export */ __webpack_exports__["a"] = (TargetDirection);
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__OBJLoader__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MTLLoader__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__OBJLoader__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MTLLoader__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FontLoader__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_arsenal_ArsenalIncludes__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_charge_ChargeIncludes__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalIncludes__ = __webpack_require__(24);
+
 
 
 
@@ -54192,12 +54379,19 @@ class PreLoader {
 		/**
 		 * 1
 		 *
-		 * @type {ArsenalIncludes}
+		 * @type {ChargeIncludes}
 		 */
-		this.arsenalIncludes = new __WEBPACK_IMPORTED_MODULE_5__particles_arsenal_ArsenalIncludes__["a" /* default */]();
+		this.chargeIncludes = new __WEBPACK_IMPORTED_MODULE_5__particles_charge_ChargeIncludes__["a" /* default */]();
 		
 		/**
 		 * 2
+		 *
+		 * @type {ArsenalIncludes}
+		 */
+		this.arsenalIncludes = new __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalIncludes__["a" /* default */]();
+		
+		/**
+		 * 3
 		 *
 		 * @type {ShipIncludes}
 		 */
@@ -54270,7 +54464,7 @@ class PreLoader {
 /* harmony default export */ __webpack_exports__["a"] = (PreLoader);
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54996,7 +55190,7 @@ let OBJLoader = ( function () {
 /* harmony default export */ __webpack_exports__["a"] = (OBJLoader);
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55558,7 +55752,7 @@ MTLLoader.MaterialCreator.prototype = {
 
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55577,7 +55771,7 @@ const socketConfig = {
 
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -55585,10 +55779,10 @@ const socketConfig = {
  * Module dependencies.
  */
 
-var url = __webpack_require__(66);
-var parser = __webpack_require__(14);
-var Manager = __webpack_require__(30);
-var debug = __webpack_require__(2)('socket.io-client');
+var url = __webpack_require__(69);
+var parser = __webpack_require__(15);
+var Manager = __webpack_require__(33);
+var debug = __webpack_require__(3)('socket.io-client');
 
 /**
  * Module exports.
@@ -55672,12 +55866,12 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(30);
-exports.Socket = __webpack_require__(35);
+exports.Manager = __webpack_require__(33);
+exports.Socket = __webpack_require__(38);
 
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -55685,8 +55879,8 @@ exports.Socket = __webpack_require__(35);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(27);
-var debug = __webpack_require__(2)('socket.io-client:url');
+var parseuri = __webpack_require__(30);
+var debug = __webpack_require__(3)('socket.io-client:url');
 
 /**
  * Module exports.
@@ -55759,7 +55953,7 @@ function url (uri, loc) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -55949,7 +56143,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -55965,7 +56159,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(69);
+exports.humanize = __webpack_require__(72);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -56157,7 +56351,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports) {
 
 /**
@@ -56315,7 +56509,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 70 */
+/* 73 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -56326,7 +56520,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 71 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -56335,8 +56529,8 @@ module.exports = Array.isArray || function (arr) {
  * Module requirements
  */
 
-var isArray = __webpack_require__(72);
-var isBuf = __webpack_require__(29);
+var isArray = __webpack_require__(75);
+var isBuf = __webpack_require__(32);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
@@ -56474,7 +56668,7 @@ exports.removeBlobs = function(data, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 72 */
+/* 75 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -56485,11 +56679,11 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 73 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(74);
+module.exports = __webpack_require__(77);
 
 /**
  * Exports parser
@@ -56497,24 +56691,24 @@ module.exports = __webpack_require__(74);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(5);
+module.exports.parser = __webpack_require__(6);
 
 
 /***/ }),
-/* 74 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var transports = __webpack_require__(31);
-var Emitter = __webpack_require__(4);
-var debug = __webpack_require__(2)('engine.io-client:socket');
-var index = __webpack_require__(34);
-var parser = __webpack_require__(5);
-var parseuri = __webpack_require__(27);
-var parseqs = __webpack_require__(8);
+var transports = __webpack_require__(34);
+var Emitter = __webpack_require__(5);
+var debug = __webpack_require__(3)('engine.io-client:socket');
+var index = __webpack_require__(37);
+var parser = __webpack_require__(6);
+var parseuri = __webpack_require__(30);
+var parseqs = __webpack_require__(9);
 
 /**
  * Module exports.
@@ -56647,9 +56841,9 @@ Socket.protocol = parser.protocol; // this is an int
  */
 
 Socket.Socket = Socket;
-Socket.Transport = __webpack_require__(16);
-Socket.transports = __webpack_require__(31);
-Socket.parser = __webpack_require__(5);
+Socket.Transport = __webpack_require__(17);
+Socket.transports = __webpack_require__(34);
+Socket.parser = __webpack_require__(6);
 
 /**
  * Creates transport of the given type.
@@ -57251,7 +57445,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 75 */
+/* 78 */
 /***/ (function(module, exports) {
 
 
@@ -57274,18 +57468,18 @@ try {
 
 
 /***/ }),
-/* 76 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module requirements.
  */
 
-var XMLHttpRequest = __webpack_require__(15);
-var Polling = __webpack_require__(32);
-var Emitter = __webpack_require__(4);
-var inherit = __webpack_require__(9);
-var debug = __webpack_require__(2)('engine.io-client:polling-xhr');
+var XMLHttpRequest = __webpack_require__(16);
+var Polling = __webpack_require__(35);
+var Emitter = __webpack_require__(5);
+var inherit = __webpack_require__(10);
+var debug = __webpack_require__(3)('engine.io-client:polling-xhr');
 
 /**
  * Module exports.
@@ -57694,7 +57888,7 @@ function unloadHandler () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 77 */
+/* 80 */
 /***/ (function(module, exports) {
 
 
@@ -57719,7 +57913,7 @@ module.exports = Object.keys || function keys (obj){
 
 
 /***/ }),
-/* 78 */
+/* 81 */
 /***/ (function(module, exports) {
 
 /**
@@ -57754,7 +57948,7 @@ module.exports = function(arraybuffer, start, end) {
 
 
 /***/ }),
-/* 79 */
+/* 82 */
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -57788,7 +57982,7 @@ function noop() {}
 
 
 /***/ }),
-/* 80 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/utf8js v2.1.2 by @mathias */
@@ -58046,10 +58240,10 @@ function noop() {}
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(81)(module), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(84)(module), __webpack_require__(1)))
 
 /***/ }),
-/* 81 */
+/* 84 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -58077,7 +58271,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 82 */
+/* 85 */
 /***/ (function(module, exports) {
 
 /*
@@ -58150,7 +58344,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -58253,7 +58447,7 @@ module.exports = (function() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -58261,8 +58455,8 @@ module.exports = (function() {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(32);
-var inherit = __webpack_require__(9);
+var Polling = __webpack_require__(35);
+var inherit = __webpack_require__(10);
 
 /**
  * Module exports.
@@ -58491,24 +58685,24 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(16);
-var parser = __webpack_require__(5);
-var parseqs = __webpack_require__(8);
-var inherit = __webpack_require__(9);
-var yeast = __webpack_require__(33);
-var debug = __webpack_require__(2)('engine.io-client:websocket');
+var Transport = __webpack_require__(17);
+var parser = __webpack_require__(6);
+var parseqs = __webpack_require__(9);
+var inherit = __webpack_require__(10);
+var yeast = __webpack_require__(36);
+var debug = __webpack_require__(3)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(86);
+    NodeWebSocket = __webpack_require__(89);
   } catch (e) { }
 }
 
@@ -58784,13 +58978,13 @@ WS.prototype.check = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 86 */
+/* 89 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 87 */
+/* 90 */
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -58809,7 +59003,7 @@ function toArray(list, index) {
 
 
 /***/ }),
-/* 88 */
+/* 91 */
 /***/ (function(module, exports) {
 
 

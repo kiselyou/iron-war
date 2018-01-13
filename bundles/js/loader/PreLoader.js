@@ -3,6 +3,7 @@ import OBJLoader from './OBJLoader';
 import MTLLoader from './MTLLoader';
 import FontLoader from './FontLoader';
 import ShipIncludes from './../particles/ships/ShipIncludes';
+import ChargeIncludes from './../particles/charge/ChargeIncludes';
 import ArsenalIncludes from './../particles/arsenal/ArsenalIncludes';
 
 class PreLoader {
@@ -11,12 +12,19 @@ class PreLoader {
 		/**
 		 * 1
 		 *
+		 * @type {ChargeIncludes}
+		 */
+		this.chargeIncludes = new ChargeIncludes();
+		
+		/**
+		 * 2
+		 *
 		 * @type {ArsenalIncludes}
 		 */
 		this.arsenalIncludes = new ArsenalIncludes();
 		
 		/**
-		 * 2
+		 * 3
 		 *
 		 * @type {ShipIncludes}
 		 */

@@ -1,6 +1,10 @@
 import Particle from './../../Particle';
+import Charge from './../charge/Charge';
+import ChargeIncludes from './../charge/ChargeIncludes';
+import ParticleClassI from './../../classes/ParticleClassI';
 
 class Arsenal extends Particle {
+	
 	/**
 	 *
 	 * @param {string} type
@@ -8,6 +12,31 @@ class Arsenal extends Particle {
 	 */
 	constructor(type, key) {
 		super(type, key);
+		
+		/**
+		 * If value is true then charges are endless
+		 *
+		 * @type {boolean}
+		 */
+		this.endless = true;
+		
+		/**
+		 *
+		 * @type {Charge}
+		 */
+		this.charge = ChargeIncludes.get().getSpecificObject(Charge.I_C20_KEY);
+		
+		/**
+		 *
+		 * @type {Array.<Charge>}
+		 */
+		this.charges = [];
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new ParticleClassI();
 	}
 	
 	/**

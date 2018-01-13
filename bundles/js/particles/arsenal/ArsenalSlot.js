@@ -1,7 +1,9 @@
 import * as THREE from 'three';
+import Particle from './../../Particle';
 
-class ArsenalSlot {
+class ArsenalSlot extends Particle {
 	constructor() {
+		super('ArsenalSlots', ArsenalSlot.ARTICLE_SORT);
 		
 		/**
 		 *
@@ -28,6 +30,14 @@ class ArsenalSlot {
 		 * @type {Euler}
 		 */
 		this.rotation = new THREE.Euler();
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static ARTICLE_SORT() {
+		return 'ARTICLE_SORT';
 	}
 }
 
