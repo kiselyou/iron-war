@@ -1,4 +1,19 @@
 import * as THREE from 'three';
+import {
+	COLOR_WHITE
+} from './../../../constants';
+
+/**
+ *
+ * @type {number}
+ */
+const HALF_PI = Math.PI / 2;
+
+/**
+ *
+ * @type {number}
+ */
+const TARGET_CONTROLS_RAD = Math.PI / 10;
 
 class TargetDirection {
 	/**
@@ -19,11 +34,8 @@ class TargetDirection {
 		 */
 		this.model = new THREE.Group();
 		this.model.position.z = -5;
-		this.model.rotation.z = -Math.PI / 2;
 		this.model.scale.copy(new THREE.Vector3(0.0008, 0.0008, 0.0008));
 		this._sceneControls.camera.add(this.model);
-		// this._sceneControls.scene.add(this.model);
-		
 		
 		/**
 		 *
@@ -34,26 +46,22 @@ class TargetDirection {
 		
 		/**
 		 *
-		 * @type {Vector3}
+		 * @type {number}
 		 * @private
 		 */
-		this._vector = new THREE.Vector3();
-		
-		this.t = 0;
-		
-		/**
-		 *
-		 * @type {Vector3}
-		 * @private
-		 */
-		this._v1 = new THREE.Vector3();
-		
-		/**
-		 *
-		 * @type {Quaternion}
-		 * @private
-		 */
-		this._worldQuaternion = new THREE.Quaternion();
+		this._color = COLOR_WHITE;
+	}
+	
+	/**
+	 *
+	 * @param {number} value
+	 * @returns {TargetDirection}
+	 */
+	setColor(value) {
+		for (let element of this.model.children) {
+			element.material.color.setHex(value);
+		}
+		return this;
 	}
 	
 	/**
@@ -69,7 +77,6 @@ class TargetDirection {
 			this._drawArrow(new THREE.Vector3(0, 320, 0));
 		}
 		this._isExists = true;
-		this.show();
 		return this;
 	}
 	
@@ -80,10 +87,7 @@ class TargetDirection {
 	 * @private
 	 */
 	_drawArrow(p) {
-		let material = new THREE.LineBasicMaterial({
-			color: 0xffffff
-		});
-		
+		let material = new THREE.LineBasicMaterial({color: this._color});
 		let geometry = new THREE.Geometry();
 		geometry.vertices.push(
 			new THREE.Vector3(-30, 0, 0),
@@ -96,9 +100,14 @@ class TargetDirection {
 		this.model.add(line);
 	}
 	
+	/**
+	 *
+	 * @returns {TargetDirection}
+	 */
 	remove() {
 		this.hide();
 		this._isExists = false;
+		return this;
 	}
 	
 	/**
@@ -127,18 +136,21 @@ class TargetDirection {
 	 */
 	update(object) {
 		if (this._isExists) {
-			let rad = Math.PI / 2;
-			let v = this._sceneControls.toScreenPosition(object);
-			let c = this._sceneControls.getCenterScreenPosition();
 			let dir = this._sceneControls.getCameraDirection();
-			let a = Math.atan2(v.y - c.y, v.x - c.x);
-			
-			let angle = - a - rad;
-			if (dir.angleTo(object.position) * 180 / Math.PI > 90) {
-				angle = - a + rad;
+			let cameraAngle = dir.angleTo(object.position);
+			if (cameraAngle < TARGET_CONTROLS_RAD) {
+				this.hide();
+			} else {
+				this.show();
+				let v = this._sceneControls.toScreenPosition(object);
+				let c = this._sceneControls.getCenterScreenPosition();
+				let a = Math.atan2(v.y - c.y, v.x - c.x);
+				this.model.rotation.z = - a - HALF_PI;
+				
+				if (cameraAngle > HALF_PI) {
+					this.model.rotation.z = - a + HALF_PI;
+				}
 			}
-			
-			this.model.rotation.z = angle;
 		}
 	}
 }
