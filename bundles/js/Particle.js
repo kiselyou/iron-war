@@ -179,7 +179,7 @@ class Particle {
 				}
 			}
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		}
 		return this;
 	}

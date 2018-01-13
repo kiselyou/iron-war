@@ -1,5 +1,7 @@
 import Particle from './../../Particle';
 import Aim from './../decoration/aim/Aim';
+import ArsenalSlots from './../arsenal/ArsenalSlots';
+import ArsenalSlot from './../arsenal/ArsenalSlot';
 
 class Ship extends Particle {
 	/**
@@ -39,6 +41,12 @@ class Ship extends Particle {
 		
 		/**
 		 *
+		 * @type {ArsenalSlots}
+		 */
+		this.arsenalSlots = new ArsenalSlots();
+		
+		/**
+		 *
 		 * @type {Aim}
 		 */
 		this.aim = new Aim();
@@ -50,6 +58,29 @@ class Ship extends Particle {
 	 */
 	setModel(obj) {
 		super.setModel(obj, Ship.EVENT_MODEL_UPDATE);
+		return this;
+	}
+	
+	/**
+	 * Add models of arsenal to ship model
+	 *
+	 * @returns {Ship}
+	 */
+	updateArsenal() {
+		for (let property in this.arsenalSlots) {
+			if (this.arsenalSlots.hasOwnProperty(property) && this.arsenalSlots[property] instanceof ArsenalSlot) {
+				let slot = this.arsenalSlots[property];
+				let model = slot.arsenal.model;
+				if (model) {
+					model.position.copy(slot.position);
+					model.rotation.copy(slot.rotation);
+					model.matrixAutoUpdate = false;
+					model.updateMatrix();
+					this.model.remove(model);
+					this.model.add(model);
+				}
+			}
+		}
 		return this;
 	}
 	

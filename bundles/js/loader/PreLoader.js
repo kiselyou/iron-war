@@ -3,11 +3,20 @@ import OBJLoader from './OBJLoader';
 import MTLLoader from './MTLLoader';
 import FontLoader from './FontLoader';
 import ShipIncludes from './../particles/ships/ShipIncludes';
+import ArsenalIncludes from './../particles/arsenal/ArsenalIncludes';
 
 class PreLoader {
 	constructor() {
 		
 		/**
+		 * 1
+		 *
+		 * @type {ArsenalIncludes}
+		 */
+		this.arsenalIncludes = new ArsenalIncludes();
+		
+		/**
+		 * 2
 		 *
 		 * @type {ShipIncludes}
 		 */

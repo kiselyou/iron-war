@@ -35,6 +35,9 @@ class Includes {
 	 * @returns {*}
 	 */
 	static get(type) {
+		if (!include.hasOwnProperty(type)) {
+			console.warn('Include class does not know about class "' + type + '". Try to call new ' + type + '()');
+		}
 		return include[type];
 	}
 	
@@ -64,9 +67,9 @@ class Includes {
 	 * Get specific object
 	 *
 	 * @param {number|string} key
-	 * @returns {?Object}
+	 * @returns {?(Object|Particle)}
 	 */
-	getSpecificShip(key) {
+	getSpecificObject(key) {
 		let element = this.includes.find((el) => {
 			return el.key === key;
 		});

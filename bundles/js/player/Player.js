@@ -217,7 +217,7 @@ class Player extends User {
 	 * @return {Player}
 	 */
 	prepareModel() {
-		this.ship = ShipIncludes.get().getSpecificShip(this.shipKey);
+		this.ship = ShipIncludes.get().getSpecificObject(this.shipKey);
 		if (this.isUser) {
 			this.ship.aim.draw();
 		} else {
