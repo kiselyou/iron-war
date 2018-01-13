@@ -46162,6 +46162,12 @@ class Particle {
 		 * @private
 		 */
 		this._events = new __WEBPACK_IMPORTED_MODULE_1__systems_Listener__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {boolean}
+		 */
+		this.enabled = true;
 	}
 	
 	/**
@@ -53580,7 +53586,7 @@ class ArsenalIA20 extends __WEBPACK_IMPORTED_MODULE_0__Arsenal__["a" /* default 
 		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
 		
 		let geometry = new __WEBPACK_IMPORTED_MODULE_2_three__["h" /* CylinderGeometry */](0.2, 0.2, 1, 32);
-		let material = new __WEBPACK_IMPORTED_MODULE_2_three__["C" /* MeshPhongMaterial */]({color: 0xffffff});
+		let material = new __WEBPACK_IMPORTED_MODULE_2_three__["C" /* MeshPhongMaterial */]({color: 0x666666});
 		this.model = new __WEBPACK_IMPORTED_MODULE_2_three__["A" /* Mesh */](geometry, material);
 	}
 }
@@ -53905,41 +53911,7 @@ class TargetControls {
 		 * @private
 		 */
 		this._size = 0;
-		
-		
-		
-		
-		// this._arrowDirect = new THREE.Object3D();
-		// this._drawArrow(new THREE.Vector3(0, 0, 0));
-		// this._drawArrow(new THREE.Vector3(0, 100, 0));
-		// this._drawArrow(new THREE.Vector3(0, 200, 0));
-		// this._drawArrow(new THREE.Vector3(0, 300, 0));
-		// this._drawArrow(new THREE.Vector3(0, 400, 0));
-		//
-		// this._camera.add(this._arrowDirect);
-		// this._arrowDirect.position.z = - 5;
-		//
-		// this._arrowDirect.rotation.z = - Math.PI / 2;
-		// this._arrowDirect.scale.copy(new THREE.Vector3(0.0008, 0.0008, 0.0008));
-		
 	}
-	
-	// _drawArrow(p) {
-	// 	let material = new THREE.LineBasicMaterial({
-	// 		color: 0xffffff
-	// 	});
-	//
-	// 	let geometry = new THREE.Geometry();
-	// 	geometry.vertices.push(
-	// 		new THREE.Vector3(-50, 0, 0),
-	// 		new THREE.Vector3(0, 50, 0),
-	// 		new THREE.Vector3(50, 0, 0)
-	// 	);
-	//
-	// 	let line = new THREE.Line(geometry, material);
-	// 	line.position.copy(p);
-	// 	this._arrowDirect.add(line);
-	// }
 	
 	/**
 	 * @param {Particle}
@@ -54075,7 +54047,7 @@ class Target {
 		 *
 		 * @type {Vector}
 		 */
-		this.size = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector2 */](50, 50);
+		this.size = new __WEBPACK_IMPORTED_MODULE_0_three__["Q" /* Vector2 */](5, 95);
 		
 		/**
 		 *
@@ -54098,8 +54070,8 @@ class Target {
 	 * @returns {Target}
 	 */
 	setSize(x, y) {
-		this.size.x = x;
-		this.size.y = y ? y : x;
+		// this.size.x = x;
+		// this.size.y = y ? y : x;
 		return this;
 	}
 	

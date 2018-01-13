@@ -81,6 +81,12 @@ class Particle {
 		 * @private
 		 */
 		this._events = new Listener();
+		
+		/**
+		 *
+		 * @type {boolean}
+		 */
+		this.enabled = true;
 	}
 	
 	/**

@@ -16,7 +16,7 @@ class Target {
 		 *
 		 * @type {Vector}
 		 */
-		this.size = new THREE.Vector2(50, 50);
+		this.size = new THREE.Vector2(5, 95);
 		
 		/**
 		 *
@@ -39,8 +39,8 @@ class Target {
 	 * @returns {Target}
 	 */
 	setSize(x, y) {
-		this.size.x = x;
-		this.size.y = y ? y : x;
+		// this.size.x = x;
+		// this.size.y = y ? y : x;
 		return this;
 	}
 	

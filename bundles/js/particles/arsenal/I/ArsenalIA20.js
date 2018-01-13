@@ -13,7 +13,7 @@ class ArsenalIA20 extends Arsenal {
 		this.particleClass = new ParticleClassI();
 		
 		let geometry = new THREE.CylinderGeometry(0.2, 0.2, 1, 32);
-		let material = new THREE.MeshPhongMaterial({color: 0xffffff});
+		let material = new THREE.MeshPhongMaterial({color: 0x666666});
 		this.model = new THREE.Mesh(geometry, material);
 	}
 }

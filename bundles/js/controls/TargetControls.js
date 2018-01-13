@@ -73,41 +73,7 @@ class TargetControls {
 		 * @private
 		 */
 		this._size = 0;
-		
-		
-		
-		
-		// this._arrowDirect = new THREE.Object3D();
-		// this._drawArrow(new THREE.Vector3(0, 0, 0));
-		// this._drawArrow(new THREE.Vector3(0, 100, 0));
-		// this._drawArrow(new THREE.Vector3(0, 200, 0));
-		// this._drawArrow(new THREE.Vector3(0, 300, 0));
-		// this._drawArrow(new THREE.Vector3(0, 400, 0));
-		//
-		// this._camera.add(this._arrowDirect);
-		// this._arrowDirect.position.z = - 5;
-		//
-		// this._arrowDirect.rotation.z = - Math.PI / 2;
-		// this._arrowDirect.scale.copy(new THREE.Vector3(0.0008, 0.0008, 0.0008));
-		
 	}
-	
-	// _drawArrow(p) {
-	// 	let material = new THREE.LineBasicMaterial({
-	// 		color: 0xffffff
-	// 	});
-	//
-	// 	let geometry = new THREE.Geometry();
-	// 	geometry.vertices.push(
-	// 		new THREE.Vector3(-50, 0, 0),
-	// 		new THREE.Vector3(0, 50, 0),
-	// 		new THREE.Vector3(50, 0, 0)
-	// 	);
-	//
-	// 	let line = new THREE.Line(geometry, material);
-	// 	line.position.copy(p);
-	// 	this._arrowDirect.add(line);
-	// }
 	
 	/**
 	 * @param {Particle}
