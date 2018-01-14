@@ -97,7 +97,7 @@ class Ship extends Particle {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static EVENT_MODEL_UPDATE() {
+	static get EVENT_MODEL_UPDATE() {
 		return 'EVENT_MODEL_UPDATE'
 	}
 	

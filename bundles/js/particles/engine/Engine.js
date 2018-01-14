@@ -207,7 +207,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static I_M20_KEY() {
+	static get I_M20_KEY() {
         return 'I_M20_KEY';
     }
 	
@@ -215,7 +215,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static II_M20_KEY() {
+	static get II_M20_KEY() {
 		return 'II_M20_KEY';
 	}
 	
@@ -223,7 +223,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static III_M20_KEY() {
+	static get III_M20_KEY() {
 		return 'III_M20_KEY';
 	}
 	
@@ -231,7 +231,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static I_M50_KEY() {
+	static get I_M50_KEY() {
         return 'I_M50_KEY';
     }
 	
@@ -239,7 +239,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static II_M50_KEY() {
+	static get II_M50_KEY() {
 		return 'II_M50_KEY';
 	}
 	
@@ -247,7 +247,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static III_M50_KEY() {
+	static get III_M50_KEY() {
 		return 'III_M50_KEY';
 	}
 	
@@ -255,7 +255,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static I_M100_KEY() {
+	static get I_M100_KEY() {
 		return 'I_M100_KEY';
 	}
 	
@@ -263,7 +263,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static II_M100_KEY() {
+	static get II_M100_KEY() {
 		return 'II_M100_KEY';
 	}
 	
@@ -271,7 +271,7 @@ class Engine extends Particle {
      *
 	 * @returns {string}
 	 */
-	static III_M100_KEY() {
+	static get III_M100_KEY() {
 		return 'III_M100_KEY';
 	}
 }

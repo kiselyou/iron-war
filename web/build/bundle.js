@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -46076,8 +46076,8 @@ module.exports = g;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__systems_Listener__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__systems_Listener__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
 
 
@@ -46219,6 +46219,10 @@ class Particle {
 				if (this[property] instanceof Particle) {
 					clone[property] = clone[property].clone();
 				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2_three__["E" /* Object3D */]) {
+					clone[property] = clone[property].clone();
+				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2_three__["R" /* Vector3 */]) {
+					clone[property] = clone[property].clone();
+				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2_three__["Q" /* Vector2 */]) {
 					clone[property] = clone[property].clone();
 				}
 			}
@@ -46666,7 +46670,7 @@ Emitter.prototype.hasListeners = function(event){
  */
 
 var keys = __webpack_require__(81);
-var hasBinary = __webpack_require__(31);
+var hasBinary = __webpack_require__(32);
 var sliceBuffer = __webpack_require__(82);
 var after = __webpack_require__(83);
 var utf8 = __webpack_require__(84);
@@ -47486,7 +47490,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static I_M20_KEY() {
+	static get I_M20_KEY() {
         return 'I_M20_KEY';
     }
 	
@@ -47494,7 +47498,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static II_M20_KEY() {
+	static get II_M20_KEY() {
 		return 'II_M20_KEY';
 	}
 	
@@ -47502,7 +47506,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static III_M20_KEY() {
+	static get III_M20_KEY() {
 		return 'III_M20_KEY';
 	}
 	
@@ -47510,7 +47514,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static I_M50_KEY() {
+	static get I_M50_KEY() {
         return 'I_M50_KEY';
     }
 	
@@ -47518,7 +47522,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static II_M50_KEY() {
+	static get II_M50_KEY() {
 		return 'II_M50_KEY';
 	}
 	
@@ -47526,7 +47530,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static III_M50_KEY() {
+	static get III_M50_KEY() {
 		return 'III_M50_KEY';
 	}
 	
@@ -47534,7 +47538,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static I_M100_KEY() {
+	static get I_M100_KEY() {
 		return 'I_M100_KEY';
 	}
 	
@@ -47542,7 +47546,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static II_M100_KEY() {
+	static get II_M100_KEY() {
 		return 'II_M100_KEY';
 	}
 	
@@ -47550,7 +47554,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      *
 	 * @returns {string}
 	 */
-	static III_M100_KEY() {
+	static get III_M100_KEY() {
 		return 'III_M100_KEY';
 	}
 }
@@ -47563,10 +47567,10 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_ParticleClassI__ = __webpack_require__(4);
 
 
@@ -47667,7 +47671,7 @@ class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
 	 * @returns {string}
 	 * @constructor
 	 */
-	static EVENT_MODEL_UPDATE() {
+	static get EVENT_MODEL_UPDATE() {
 		return 'EVENT_MODEL_UPDATE'
 	}
 	
@@ -47806,7 +47810,7 @@ class ParticleClass extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* defau
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Keyboard__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Keyboard__ = __webpack_require__(46);
 
 
 class KeyboardControls {
@@ -48363,6 +48367,59 @@ const COLOR_WHITE = 0xFFFFFF;
 
 /***/ }),
 /* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
+
+
+
+class ArsenalSlot extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
+	
+	constructor(name) {
+		super('ArsenalSlot', ArsenalSlot.ARSENAL_SLOT);
+		
+		/**
+		 *
+		 * @type {boolean}
+		 */
+		this.enabled = false;
+		
+		/**
+		 *
+		 * @type {?Arsenal|Particle}
+		 */
+		this.arsenal = null;
+		
+		/**
+		 * Current position
+		 *
+		 * @type {Vector3}
+		 */
+		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["R" /* Vector3 */]();
+		
+		/**
+		 * Current rotation
+		 *
+		 * @type {Euler}
+		 */
+		this.rotation = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* Euler */]();
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get ARSENAL_SLOT() {
+		return 'ARSENAL_SLOT';
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ArsenalSlot);
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -48372,9 +48429,9 @@ const COLOR_WHITE = 0xFFFFFF;
 
 var debug = __webpack_require__(3)('socket.io-parser');
 var Emitter = __webpack_require__(5);
-var hasBin = __webpack_require__(31);
+var hasBin = __webpack_require__(32);
 var binary = __webpack_require__(75);
-var isBuf = __webpack_require__(32);
+var isBuf = __webpack_require__(33);
 
 /**
  * Protocol version.
@@ -48768,7 +48825,7 @@ function error() {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
@@ -48812,7 +48869,7 @@ module.exports = function (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -48975,7 +49032,7 @@ Transport.prototype.onClose = function () {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49234,7 +49291,7 @@ class FlyControls {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49286,14 +49343,14 @@ class Listener {
 /* harmony default export */ __webpack_exports__["a"] = (Listener);
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ShipExplorerI__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__II_ShipExplorerII__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__III_ShipExplorerIII__ = __webpack_require__(60);
 
 
 
@@ -49326,7 +49383,7 @@ class ShipIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* defaul
 /* harmony default export */ __webpack_exports__["a"] = (ShipIncludes);
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49389,7 +49446,7 @@ class FontLoader {
 /* harmony default export */ __webpack_exports__["a"] = (FontLoader);
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49485,64 +49542,12 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 /* harmony default export */ __webpack_exports__["a"] = (EngineIM20);
 
 /***/ }),
-/* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
-
-
-
-class ArsenalSlot extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
-	constructor() {
-		super('ArsenalSlots', ArsenalSlot.ARTICLE_SORT);
-		
-		/**
-		 *
-		 * @type {boolean}
-		 */
-		this.enabled = false;
-		
-		/**
-		 *
-		 * @type {?Arsenal|Particle}
-		 */
-		this.arsenal = null;
-		
-		/**
-		 * Current position
-		 *
-		 * @type {Vector3}
-		 */
-		this.position = new __WEBPACK_IMPORTED_MODULE_0_three__["R" /* Vector3 */]();
-		
-		/**
-		 * Current rotation
-		 *
-		 * @type {Euler}
-		 */
-		this.rotation = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* Euler */]();
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 */
-	static ARTICLE_SORT() {
-		return 'ARTICLE_SORT';
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ArsenalSlot);
-
-/***/ }),
 /* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ArsenalIA20__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ArsenalIA20__ = __webpack_require__(55);
 
 
 
@@ -49622,9 +49627,26 @@ class Arsenal extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */]
 	
 	/**
 	 *
+	 * @returns {(Charge|Particle)}
+	 */
+	getCharge() {
+		return this.charge.clone();
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MODEL_UPDATE() {
+		return 'EVENT_MODEL_UPDATE'
+	}
+	
+	/**
+	 *
 	 * @returns {string}
 	 */
-	static I_A20_KEY() {
+	static get I_A20_KEY() {
 		return 'I_A20_KEY';
 	}
 	
@@ -49632,7 +49654,7 @@ class Arsenal extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */]
 	 *
 	 * @returns {string}
 	 */
-	static II_A20_KEY() {
+	static get II_A20_KEY() {
 		return 'II_A20_KEY';
 	}
 	
@@ -49640,7 +49662,7 @@ class Arsenal extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */]
 	 *
 	 * @returns {string}
 	 */
-	static III_A20_KEY() {
+	static get III_A20_KEY() {
 		return 'III_A20_KEY';
 	}
 }
@@ -49654,6 +49676,8 @@ class Arsenal extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */]
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
+
 
 
 
@@ -49672,13 +49696,64 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 		 * @type {ParticleClass}
 		 */
 		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Vector3}
+		 */
+		this.target = new __WEBPACK_IMPORTED_MODULE_2_three__["R" /* Vector3 */]();
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.speed = 400;
+		
+		/**
+		 *
+		 * @type {number}
+		 */
+		this.maxDistance = 1000;
+		
+		/**
+		 *
+		 * @type {Vector3}
+		 */
+		this.direction = new __WEBPACK_IMPORTED_MODULE_2_three__["R" /* Vector3 */]();
+	}
+	
+	/**
+	 *
+	 * @param {Vector3} target
+	 */
+	prepare(target) {
+		this.target.copy(target);
+		this.direction = this.target.sub(this.model.position).normalize();
+		return this;
+	}
+	
+	/**
+	 * @callback listenerToRemove
+	 */
+	
+	/**
+	 *
+	 * @param {number} delta
+	 * @param {listenerToRemove} listener
+	 * @returns {void}
+	 */
+	update(delta, listener) {
+		this.model.position.addScaledVector(this.direction, this.speed * delta);
+		if (this.model.position.distanceTo(this.target) > this.maxDistance) {
+			listener();
+		}
 	}
 	
 	/**
 	 *
 	 * @returns {string}
 	 */
-	static I_C20_KEY() {
+	static get I_C20_KEY() {
 		return 'I_C20_KEY';
 	}
 	
@@ -49686,7 +49761,7 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 	 *
 	 * @returns {string}
 	 */
-	static II_C20_KEY() {
+	static get II_C20_KEY() {
 		return 'II_C20_KEY';
 	}
 	
@@ -49694,7 +49769,7 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 	 *
 	 * @returns {string}
 	 */
-	static III_C20_KEY() {
+	static get III_C20_KEY() {
 		return 'III_C20_KEY';
 	}
 }
@@ -49707,7 +49782,7 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Includes__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ChargeIA20__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__I_ChargeIA20__ = __webpack_require__(56);
 
 
 
@@ -49740,6 +49815,112 @@ class ChargeIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* defa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HelperPoint__ = __webpack_require__(57);
+
+
+
+let helper = null;
+
+class HelperPoints {
+	/**
+	 *
+	 * @param {(Scene|Mesh|Group)} obj
+	 */
+	constructor(obj) {
+		/**
+		 *
+		 * @type {Array.<{name: (string|number), points: Array.<HelperPoint>}>}
+		 * @private
+		 */
+		this._groups = [];
+		
+		/**
+		 *
+		 * @type {HelperPoints}
+		 */
+		helper = this;
+	}
+	
+	/**
+	 *
+	 * @returns {HelperPoints}
+	 */
+	static get() {
+		return helper ? helper : new HelperPoints();
+	}
+	
+	/**
+	 *
+	 * @param {Object3D} object - the object there need set point
+	 * @param {(string|number)} [group] - name of group points
+	 * @returns {HelperPoint}
+	 */
+	setPointTo(object, group = 1) {
+		let point = this.getPoint();
+		object.add(point.model);
+		this._addToGroup(group, point);
+		return point;
+	}
+	
+	/**
+	 *
+	 * @returns {HelperPoint}
+	 */
+	getPoint() {
+		let point = new __WEBPACK_IMPORTED_MODULE_1__HelperPoint__["a" /* default */]();
+		point.init();
+		return point;
+	}
+	
+	/**
+	 *
+	 * @param {Object3D} obj - the object from there need delete point
+	 * @param {(string|number)} groupName - name of group points
+	 * @returns {HelperPoints}
+	 */
+	remove(obj, groupName) {
+		for (let i = 0; i < this._groups.length; i++) {
+			let group = this._groups[i];
+			if (group['name'] === groupName) {
+				for (let point of group['points']) {
+					obj.remove(point.model);
+				}
+				this._groups.splice(i, 1);
+				break;
+			}
+		}
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {(string|number)} groupName
+	 * @param {HelperPoint} point
+	 * @private
+	 */
+	_addToGroup(groupName, point) {
+		let group = this._groups.find((item) => {
+			return item['name'] === groupName;
+		});
+		if (group) {
+			group['points'].push(point);
+		} else {
+			this._groups.push({
+				name: groupName,
+				points: [point]
+			});
+		}
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (HelperPoints);
+
+/***/ }),
+/* 29 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleClass__ = __webpack_require__(11);
 
 
@@ -49758,7 +49939,7 @@ class ParticleClassII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" /
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassII);
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49776,7 +49957,7 @@ class ParticleClassIII extends __WEBPACK_IMPORTED_MODULE_0__ParticleClass__["a" 
 /* harmony default export */ __webpack_exports__["a"] = (ParticleClassIII);
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 /**
@@ -49821,7 +50002,7 @@ module.exports = function parseuri(str) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* global Blob File */
@@ -49890,7 +50071,7 @@ function hasBinary (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -49910,7 +50091,7 @@ function isBuf(obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -49919,13 +50100,13 @@ function isBuf(obj) {
  */
 
 var eio = __webpack_require__(77);
-var Socket = __webpack_require__(38);
+var Socket = __webpack_require__(39);
 var Emitter = __webpack_require__(5);
-var parser = __webpack_require__(15);
-var on = __webpack_require__(39);
-var bind = __webpack_require__(40);
+var parser = __webpack_require__(16);
+var on = __webpack_require__(40);
+var bind = __webpack_require__(41);
 var debug = __webpack_require__(3)('socket.io-client:manager');
-var indexOf = __webpack_require__(37);
+var indexOf = __webpack_require__(38);
 var Backoff = __webpack_require__(92);
 
 /**
@@ -50489,14 +50670,14 @@ Manager.prototype.onreconnect = function () {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies
  */
 
-var XMLHttpRequest = __webpack_require__(16);
+var XMLHttpRequest = __webpack_require__(17);
 var XHR = __webpack_require__(80);
 var JSONP = __webpack_require__(88);
 var websocket = __webpack_require__(89);
@@ -50549,18 +50730,18 @@ function polling (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(17);
+var Transport = __webpack_require__(18);
 var parseqs = __webpack_require__(9);
 var parser = __webpack_require__(6);
 var inherit = __webpack_require__(10);
-var yeast = __webpack_require__(36);
+var yeast = __webpack_require__(37);
 var debug = __webpack_require__(3)('engine.io-client:polling');
 
 /**
@@ -50574,7 +50755,7 @@ module.exports = Polling;
  */
 
 var hasXHR2 = (function () {
-  var XMLHttpRequest = __webpack_require__(16);
+  var XMLHttpRequest = __webpack_require__(17);
   var xhr = new XMLHttpRequest({ xdomain: false });
   return null != xhr.responseType;
 })();
@@ -50800,7 +50981,7 @@ Polling.prototype.uri = function () {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50875,7 +51056,7 @@ module.exports = yeast;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 
@@ -50890,7 +51071,7 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -50898,11 +51079,11 @@ module.exports = function(arr, obj){
  * Module dependencies.
  */
 
-var parser = __webpack_require__(15);
+var parser = __webpack_require__(16);
 var Emitter = __webpack_require__(5);
 var toArray = __webpack_require__(91);
-var on = __webpack_require__(39);
-var bind = __webpack_require__(40);
+var on = __webpack_require__(40);
+var bind = __webpack_require__(41);
 var debug = __webpack_require__(3)('socket.io-client:socket');
 var parseqs = __webpack_require__(9);
 
@@ -51314,7 +51495,7 @@ Socket.prototype.compress = function (compress) {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 
@@ -51344,7 +51525,7 @@ function on (obj, ev, fn) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 /**
@@ -51373,12 +51554,12 @@ module.exports = function(obj, fn){
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__socket_config__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client__ = __webpack_require__(69);
@@ -51487,16 +51668,16 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 });
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FlyControls__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SkyeBoxControls__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FlyControls__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SkyeBoxControls__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TargetControls__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Particle__ = __webpack_require__(2);
@@ -51556,7 +51737,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		 *
 		 * @type {Player}
 		 */
-		this.player = new __WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */](true, playerId, this.container);
+		this.player = new __WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */](this, true, playerId);
 		this.camera.position.copy(this.player.position);
 		this.camera.rotation.copy(this.player.rotation);
 		this.camera.lookAt(this.player.lookAt);
@@ -51636,7 +51817,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 	addPlayer(playerInfo) {
 		
 		let id = playerInfo['id'];
-		let player = new __WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */](false, id, this.container);
+		let player = new __WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */](this, false, id);
 		
 		// 1. set ship inf
 		player.setSocketInfo(playerInfo);
@@ -51718,12 +51899,9 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		});
 		
 		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_LEFT, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY, (event) => {
-			
-			
-			let v = this.getNextPosition(this.camera, 500);
-			this.point.setPosition(v);
-			
-			
+			let target = this.getNextPosition(this.camera, 500);
+			this.point.setPosition(target);
+			this.player.shot(target);
 		});
 		
 		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_WHEEL, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
@@ -51892,6 +52070,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			this.skyBoxControls.update(this.camera.position);
 			this.player.position.copy(this.camera.position);
 			this.player.rotation.copy(this.camera.rotation);
+			this.player.update(delta);
 			this.targetControls.update();
 			// for (let listener of this._updateListener) {
 			// 	listener();
@@ -51953,7 +52132,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 /* harmony default export */ __webpack_exports__["a"] = (SceneControls);
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52127,7 +52306,7 @@ class SceneControlsPlugin {
 /* harmony default export */ __webpack_exports__["a"] = (SceneControlsPlugin);
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52151,7 +52330,7 @@ class ParticleError extends Error {
 /* harmony default export */ __webpack_exports__["a"] = (ParticleError);
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52335,7 +52514,7 @@ class Keyboard {
 /* harmony default export */ __webpack_exports__["a"] = (Keyboard);
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52468,17 +52647,19 @@ class SkyeBoxControls {
 /* harmony default export */ __webpack_exports__["a"] = (SkyeBoxControls);
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controls_FlyControls__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__systems_Listener__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controls_FlyControls__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__systems_Listener__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalSlot__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_three__ = __webpack_require__(0);
+
 
 
 
@@ -52490,12 +52671,25 @@ class SkyeBoxControls {
 class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	/**
 	 *
+	 * @param {SceneControls} sceneControls
 	 * @param {boolean} isUser
 	 * @param {string|number} id
-	 * @param {HTMLElement} container
 	 */
-	constructor(isUser, id, container) {
+	constructor(sceneControls, isUser, id) {
 		super();
+		
+		/**
+		 *
+		 * @type {SceneControls}
+		 * @private
+		 */
+		this._sceneControls = sceneControls;
+		
+		/**
+		 *
+		 * @type {Element}
+		 */
+		this.container = this._sceneControls.container;
 		
 		/**
 		 *
@@ -52514,12 +52708,6 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 * @type {string}
 		 */
 		this.shipKey = __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__["a" /* default */].I_EXPLORER_KEY;
-		
-		/**
-		 *
-		 * @type {HTMLElement|HTMLDocument}
-		 */
-		this.container = container;
 		
 		/**
 		 * Disable player
@@ -52557,7 +52745,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 *
 		 * @type {Vector3}
 		 */
-		this.position = new __WEBPACK_IMPORTED_MODULE_6_three__["R" /* Vector3 */](
+		this.position = new __WEBPACK_IMPORTED_MODULE_7_three__["R" /* Vector3 */](
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
 			0//400 * (2.0 * Math.random() - 1.0)
@@ -52568,19 +52756,25 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 *
 		 * @type {Euler}
 		 */
-		this.rotation = new __WEBPACK_IMPORTED_MODULE_6_three__["l" /* Euler */]();
+		this.rotation = new __WEBPACK_IMPORTED_MODULE_7_three__["l" /* Euler */]();
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.lookAt = new __WEBPACK_IMPORTED_MODULE_6_three__["R" /* Vector3 */](0, 0, 0);
+		this.lookAt = new __WEBPACK_IMPORTED_MODULE_7_three__["R" /* Vector3 */](0, 0, 0);
 		
 		/**
 		 *
 		 * @type {?FlyControls}
 		 */
 		this.flyControls = null;
+		
+		/**
+		 *
+		 * @type {Array.<Charge>}
+		 */
+		this.charges = [];
 	}
 	
 	/**
@@ -52709,15 +52903,60 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	
 	/**
 	 *
+	 * @param {Vector3} target
+	 */
+	shot(target) {
+		let slots = this.ship.arsenalSlots;
+		
+		this._sceneControls.scene.updateMatrixWorld();
+		
+		for (let slotName in slots) {
+			if (slots.hasOwnProperty(slotName) && slots[slotName] instanceof __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalSlot__["a" /* default */]) {
+				/**
+				 * @type {ArsenalSlot}
+				 */
+				let slot = slots[slotName];
+				let charge = slot.arsenal.getCharge().prepare(target);
+				
+				let vector = new __WEBPACK_IMPORTED_MODULE_7_three__["R" /* Vector3 */]();
+				for (let el of this.ship.model.children) {
+					if (el.position.x === slot.position.x && el.position.y === slot.position.y && el.position.z === slot.position.z) {
+						vector.setFromMatrixPosition(el.matrixWorld);
+						// Sets default Charge position
+						charge.model.position.copy(vector);
+					}
+				}
+				
+				this._sceneControls.scene.add(charge.model);
+				this.charges.push(charge);
+			}
+		}
+	}
+	
+	/**
+	 *
 	 * @param {number} delta
 	 */
 	update(delta) {
 		if (!this.isUser) {
 			this.ship.model.position.copy(this.position);
 			this.ship.model.rotation.copy(this.rotation);
-			
-			this.flyControls
-				.updatePlayerControl(delta);
+			this.flyControls.updatePlayerControl(delta);
+		}
+		
+		if (this.charges.length > 0) {
+			for (let i = 0; i < this.charges.length; i++) {
+				/**
+				 *
+				 * @type {Charge}
+				 */
+				let charge = this.charges[i];
+				charge.update(delta, () => {
+					this._sceneControls.scene.remove(charge.model);
+					this.charges.splice(i, 1);
+					charge = null;
+				});
+			}
 		}
 	}
 }
@@ -52725,7 +52964,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Player);
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52740,12 +52979,12 @@ class User {
 /* harmony default export */ __webpack_exports__["a"] = (User);
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalIncludes__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_Arsenal__ = __webpack_require__(25);
@@ -52794,10 +53033,12 @@ class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default *
 		let arsenal = __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalIncludes__["a" /* default */].get();
 		
 		this.arsenalSlots.slot_a.arsenal = arsenal.getSpecificObject(__WEBPACK_IMPORTED_MODULE_4__arsenal_Arsenal__["a" /* default */].I_A20_KEY);
+		this.arsenalSlots.slot_a.enabled = true;
 		this.arsenalSlots.slot_a.rotation.set(Math.PI / 2, 0, 0);
 		this.arsenalSlots.slot_a.position.set(-2.3, -1.7, -4.5);
 		
 		this.arsenalSlots.slot_b.arsenal = arsenal.getSpecificObject(__WEBPACK_IMPORTED_MODULE_4__arsenal_Arsenal__["a" /* default */].I_A20_KEY);
+		this.arsenalSlots.slot_b.enabled = true;
 		this.arsenalSlots.slot_b.rotation.set(Math.PI / 2, 0, 0);
 		this.arsenalSlots.slot_b.position.set(2.3, -1.7, -4.5);
 		
@@ -52812,13 +53053,13 @@ class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default *
 /* harmony default export */ __webpack_exports__["a"] = (ShipExplorerI);
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AimSignature__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AimSignature__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__constants__ = __webpack_require__(14);
 
 
@@ -53004,13 +53245,13 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 /* harmony default export */ __webpack_exports__["a"] = (Aim);
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_TextCanvas__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__text_TextCanvas__ = __webpack_require__(53);
 
 
 
@@ -53297,11 +53538,11 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loader_FontLoader__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loader_FontLoader__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_three__ = __webpack_require__(0);
 
 
@@ -53520,18 +53761,15 @@ class TextCanvas {
 /* harmony default export */ __webpack_exports__["a"] = (TextCanvas);
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArsenalSlot__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArsenalSlot__ = __webpack_require__(15);
 
 
-
-class ArsenalSlots extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
+class ArsenalSlots {
 	constructor() {
-		super('ArsenalSlots', ArsenalSlots.ARTICLE_SORTS);
 		
 		/**
 		 *
@@ -53545,20 +53783,12 @@ class ArsenalSlots extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 		 */
 		this.slot_b = new __WEBPACK_IMPORTED_MODULE_0__ArsenalSlot__["a" /* default */]();
 	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 */
-	static ARTICLE_SORTS() {
-		return 'ARTICLE_SORTS';
-	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ArsenalSlots);
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53570,6 +53800,7 @@ class ArsenalSlots extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 
 
 class ArsenalIA20 extends __WEBPACK_IMPORTED_MODULE_0__Arsenal__["a" /* default */] {
+	
 	constructor() {
 		super('ArsenalIA20', __WEBPACK_IMPORTED_MODULE_0__Arsenal__["a" /* default */].I_A20_KEY);
 		
@@ -53581,19 +53812,21 @@ class ArsenalIA20 extends __WEBPACK_IMPORTED_MODULE_0__Arsenal__["a" /* default 
 		
 		let geometry = new __WEBPACK_IMPORTED_MODULE_2_three__["h" /* CylinderGeometry */](0.2, 0.2, 1, 32);
 		let material = new __WEBPACK_IMPORTED_MODULE_2_three__["C" /* MeshPhongMaterial */]({color: 0x666666});
-		this.model = new __WEBPACK_IMPORTED_MODULE_2_three__["A" /* Mesh */](geometry, material);
+		this.setModel(new __WEBPACK_IMPORTED_MODULE_2_three__["A" /* Mesh */](geometry, material));
 	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ArsenalIA20);
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Charge__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_HelperPoints__ = __webpack_require__(28);
+
 
 
 
@@ -53606,223 +53839,19 @@ class ChargeIA20 extends __WEBPACK_IMPORTED_MODULE_0__Charge__["a" /* default */
 		 * @type {ParticleClass}
 		 */
 		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Mesh}
+		 */
+		this.model = __WEBPACK_IMPORTED_MODULE_2__helpers_HelperPoints__["a" /* default */].get().getPoint().model;
 	}
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ChargeIA20);
 
 /***/ }),
-/* 56 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(57);
-
-
-
-
-class ShipExplorerII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */] {
-	constructor() {
-		super('ShipExplorerII', __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].II_EXPLORER_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClass}
-		 */
-		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["a" /* default */]();
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__["a" /* default */]();
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ShipExplorerII);
-
-/***/ }),
 /* 57 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(28);
-
-
-
-class EngineIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
-	constructor() {
-		super('EngineIIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].II_M20_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClassII}
-		 */
-		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["a" /* default */]();
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (EngineIIM20);
-
-/***/ }),
-/* 58 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(59);
-
-
-
-
-class ShipExplorerIII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */] {
-	constructor() {
-		super('ShipExplorerIII', __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].III_EXPLORER_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClass}
-		 */
-		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["a" /* default */]();
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__["a" /* default */]();
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (ShipExplorerIII);
-
-/***/ }),
-/* 59 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(29);
-
-
-
-class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
-	constructor() {
-		super('EngineIIIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].III_M20_KEY);
-		
-		/**
-		 *
-		 * @type {ParticleClassIII}
-		 */
-		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["a" /* default */]();
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (EngineIIIM20);
-
-/***/ }),
-/* 60 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HelperPoint__ = __webpack_require__(61);
-
-
-
-let helper = null;
-
-class HelperPoints {
-	/**
-	 *
-	 * @param {(Scene|Mesh|Group)} obj
-	 */
-	constructor(obj) {
-		/**
-		 *
-		 * @type {Array.<{name: (string|number), points: Array.<HelperPoint>}>}
-		 * @private
-		 */
-		this._groups = [];
-		
-		/**
-		 *
-		 * @type {HelperPoints}
-		 */
-		helper = this;
-	}
-	
-	/**
-	 *
-	 * @returns {HelperPoints}
-	 */
-	static get() {
-		return helper ? helper : new HelperPoints();
-	}
-	
-	/**
-	 *
-	 * @param {Object3D} object - the object there need set point
-	 * @param {(string|number)} [group] - name of group points
-	 * @returns {HelperPoint}
-	 */
-	setPointTo(object, group = 1) {
-		let point = new __WEBPACK_IMPORTED_MODULE_1__HelperPoint__["a" /* default */]();
-		point
-			.init();
-		object.add(point.model);
-		this._addToGroup(group, point);
-		return point;
-	}
-	
-	/**
-	 *
-	 * @param {Object3D} obj - the object from there need delete point
-	 * @param {(string|number)} groupName - name of group points
-	 * @returns {HelperPoints}
-	 */
-	remove(obj, groupName) {
-		for (let i = 0; i < this._groups.length; i++) {
-			let group = this._groups[i];
-			if (group['name'] === groupName) {
-				for (let point of group['points']) {
-					obj.remove(point.model);
-				}
-				this._groups.splice(i, 1);
-				break;
-			}
-		}
-		return this;
-	}
-	
-	/**
-	 *
-	 * @param {(string|number)} groupName
-	 * @param {HelperPoint} point
-	 * @private
-	 */
-	_addToGroup(groupName, point) {
-		let group = this._groups.find((item) => {
-			return item['name'] === groupName;
-		});
-		if (group) {
-			group['points'].push(point);
-		} else {
-			this._groups.push({
-				name: groupName,
-				points: [point]
-			});
-		}
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (HelperPoints);
-
-/***/ }),
-/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53842,6 +53871,7 @@ class HelperPoint {
 		 * @type {number}
 		 * @private
 		 */
+		// this._color = 0x666666;
 		this._color = 0xFF0000;
 		
 		/**
@@ -53889,6 +53919,118 @@ class HelperPoint {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (HelperPoint);
+
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(59);
+
+
+
+
+class ShipExplorerII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */] {
+	constructor() {
+		super('ShipExplorerII', __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].II_EXPLORER_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ShipExplorerII);
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(29);
+
+
+
+class EngineIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
+	constructor() {
+		super('EngineIIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].II_M20_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (EngineIIM20);
+
+/***/ }),
+/* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(61);
+
+
+
+
+class ShipExplorerIII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */] {
+	constructor() {
+		super('ShipExplorerIII', __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].III_EXPLORER_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (ShipExplorerIII);
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(30);
+
+
+
+class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */] {
+	constructor() {
+		super('EngineIIIM20', __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */].III_M20_KEY);
+		
+		/**
+		 *
+		 * @type {ParticleClassIII}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__["a" /* default */]();
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (EngineIIIM20);
 
 /***/ }),
 /* 62 */
@@ -54398,8 +54540,8 @@ class TargetDirection {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__OBJLoader__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MTLLoader__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FontLoader__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FontLoader__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_charge_ChargeIncludes__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalIncludes__ = __webpack_require__(24);
 
@@ -55817,8 +55959,8 @@ const socketConfig = {
  */
 
 var url = __webpack_require__(70);
-var parser = __webpack_require__(15);
-var Manager = __webpack_require__(33);
+var parser = __webpack_require__(16);
+var Manager = __webpack_require__(34);
 var debug = __webpack_require__(3)('socket.io-client');
 
 /**
@@ -55903,8 +56045,8 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(33);
-exports.Socket = __webpack_require__(38);
+exports.Manager = __webpack_require__(34);
+exports.Socket = __webpack_require__(39);
 
 
 /***/ }),
@@ -55916,7 +56058,7 @@ exports.Socket = __webpack_require__(38);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(30);
+var parseuri = __webpack_require__(31);
 var debug = __webpack_require__(3)('socket.io-client:url');
 
 /**
@@ -56567,7 +56709,7 @@ module.exports = Array.isArray || function (arr) {
  */
 
 var isArray = __webpack_require__(76);
-var isBuf = __webpack_require__(32);
+var isBuf = __webpack_require__(33);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
@@ -56739,12 +56881,12 @@ module.exports.parser = __webpack_require__(6);
  * Module dependencies.
  */
 
-var transports = __webpack_require__(34);
+var transports = __webpack_require__(35);
 var Emitter = __webpack_require__(5);
 var debug = __webpack_require__(3)('engine.io-client:socket');
-var index = __webpack_require__(37);
+var index = __webpack_require__(38);
 var parser = __webpack_require__(6);
-var parseuri = __webpack_require__(30);
+var parseuri = __webpack_require__(31);
 var parseqs = __webpack_require__(9);
 
 /**
@@ -56878,8 +57020,8 @@ Socket.protocol = parser.protocol; // this is an int
  */
 
 Socket.Socket = Socket;
-Socket.Transport = __webpack_require__(17);
-Socket.transports = __webpack_require__(34);
+Socket.Transport = __webpack_require__(18);
+Socket.transports = __webpack_require__(35);
 Socket.parser = __webpack_require__(6);
 
 /**
@@ -57512,8 +57654,8 @@ try {
  * Module requirements.
  */
 
-var XMLHttpRequest = __webpack_require__(16);
-var Polling = __webpack_require__(35);
+var XMLHttpRequest = __webpack_require__(17);
+var Polling = __webpack_require__(36);
 var Emitter = __webpack_require__(5);
 var inherit = __webpack_require__(10);
 var debug = __webpack_require__(3)('engine.io-client:polling-xhr');
@@ -58492,7 +58634,7 @@ module.exports = (function() {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(35);
+var Polling = __webpack_require__(36);
 var inherit = __webpack_require__(10);
 
 /**
@@ -58729,11 +58871,11 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(17);
+var Transport = __webpack_require__(18);
 var parser = __webpack_require__(6);
 var parseqs = __webpack_require__(9);
 var inherit = __webpack_require__(10);
-var yeast = __webpack_require__(36);
+var yeast = __webpack_require__(37);
 var debug = __webpack_require__(3)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;

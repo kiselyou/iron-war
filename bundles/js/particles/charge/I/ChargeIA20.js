@@ -1,5 +1,6 @@
 import Charge from './../Charge';
 import ParticleClassI from './../../../classes/ParticleClassI';
+import HelperPoints from './../../../helpers/HelperPoints';
 
 class ChargeIA20 extends Charge {
 	constructor() {
@@ -10,6 +11,12 @@ class ChargeIA20 extends Charge {
 		 * @type {ParticleClass}
 		 */
 		this.particleClass = new ParticleClassI();
+		
+		/**
+		 *
+		 * @type {Mesh}
+		 */
+		this.model = HelperPoints.get().getPoint().model;
 	}
 }
 

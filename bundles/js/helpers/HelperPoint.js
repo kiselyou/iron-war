@@ -13,6 +13,7 @@ class HelperPoint {
 		 * @type {number}
 		 * @private
 		 */
+		// this._color = 0x666666;
 		this._color = 0xFF0000;
 		
 		/**

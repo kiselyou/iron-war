@@ -38,11 +38,19 @@ class HelperPoints {
 	 * @returns {HelperPoint}
 	 */
 	setPointTo(object, group = 1) {
-		let point = new HelperPoint();
-		point
-			.init();
+		let point = this.getPoint();
 		object.add(point.model);
 		this._addToGroup(group, point);
+		return point;
+	}
+	
+	/**
+	 *
+	 * @returns {HelperPoint}
+	 */
+	getPoint() {
+		let point = new HelperPoint();
+		point.init();
 		return point;
 	}
 	

@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import Particle from './../../Particle';
 
 class ArsenalSlot extends Particle {
-	constructor() {
-		super('ArsenalSlots', ArsenalSlot.ARTICLE_SORT);
+	
+	constructor(name) {
+		super('ArsenalSlot', ArsenalSlot.ARSENAL_SLOT);
 		
 		/**
 		 *
@@ -36,8 +37,8 @@ class ArsenalSlot extends Particle {
 	 *
 	 * @returns {string}
 	 */
-	static ARTICLE_SORT() {
-		return 'ARTICLE_SORT';
+	static get ARSENAL_SLOT() {
+		return 'ARSENAL_SLOT';
 	}
 }
 

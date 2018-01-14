@@ -4,17 +4,31 @@ import KeyboardControls from './../keyboard/KeyboardControls';
 import FlyControls from './../controls/FlyControls';
 import Listener from './../systems/Listener';
 import Ship from './../particles/ships/Ship';
+import ArsenalSlot from './../particles/arsenal/ArsenalSlot';
 import * as THREE from 'three';
 
 class Player extends User {
 	/**
 	 *
+	 * @param {SceneControls} sceneControls
 	 * @param {boolean} isUser
 	 * @param {string|number} id
-	 * @param {HTMLElement} container
 	 */
-	constructor(isUser, id, container) {
+	constructor(sceneControls, isUser, id) {
 		super();
+		
+		/**
+		 *
+		 * @type {SceneControls}
+		 * @private
+		 */
+		this._sceneControls = sceneControls;
+		
+		/**
+		 *
+		 * @type {Element}
+		 */
+		this.container = this._sceneControls.container;
 		
 		/**
 		 *
@@ -33,12 +47,6 @@ class Player extends User {
 		 * @type {string}
 		 */
 		this.shipKey = Ship.I_EXPLORER_KEY;
-		
-		/**
-		 *
-		 * @type {HTMLElement|HTMLDocument}
-		 */
-		this.container = container;
 		
 		/**
 		 * Disable player
@@ -100,6 +108,12 @@ class Player extends User {
 		 * @type {?FlyControls}
 		 */
 		this.flyControls = null;
+		
+		/**
+		 *
+		 * @type {Array.<Charge>}
+		 */
+		this.charges = [];
 	}
 	
 	/**
@@ -228,15 +242,60 @@ class Player extends User {
 	
 	/**
 	 *
+	 * @param {Vector3} target
+	 */
+	shot(target) {
+		let slots = this.ship.arsenalSlots;
+		
+		this._sceneControls.scene.updateMatrixWorld();
+		
+		for (let slotName in slots) {
+			if (slots.hasOwnProperty(slotName) && slots[slotName] instanceof ArsenalSlot) {
+				/**
+				 * @type {ArsenalSlot}
+				 */
+				let slot = slots[slotName];
+				let charge = slot.arsenal.getCharge().prepare(target);
+				
+				let vector = new THREE.Vector3();
+				for (let el of this.ship.model.children) {
+					if (el.position.x === slot.position.x && el.position.y === slot.position.y && el.position.z === slot.position.z) {
+						vector.setFromMatrixPosition(el.matrixWorld);
+						// Sets default Charge position
+						charge.model.position.copy(vector);
+					}
+				}
+				
+				this._sceneControls.scene.add(charge.model);
+				this.charges.push(charge);
+			}
+		}
+	}
+	
+	/**
+	 *
 	 * @param {number} delta
 	 */
 	update(delta) {
 		if (!this.isUser) {
 			this.ship.model.position.copy(this.position);
 			this.ship.model.rotation.copy(this.rotation);
-			
-			this.flyControls
-				.updatePlayerControl(delta);
+			this.flyControls.updatePlayerControl(delta);
+		}
+		
+		if (this.charges.length > 0) {
+			for (let i = 0; i < this.charges.length; i++) {
+				/**
+				 *
+				 * @type {Charge}
+				 */
+				let charge = this.charges[i];
+				charge.update(delta, () => {
+					this._sceneControls.scene.remove(charge.model);
+					this.charges.splice(i, 1);
+					charge = null;
+				});
+			}
 		}
 	}
 }

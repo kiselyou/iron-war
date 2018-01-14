@@ -41,9 +41,26 @@ class Arsenal extends Particle {
 	
 	/**
 	 *
+	 * @returns {(Charge|Particle)}
+	 */
+	getCharge() {
+		return this.charge.clone();
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MODEL_UPDATE() {
+		return 'EVENT_MODEL_UPDATE'
+	}
+	
+	/**
+	 *
 	 * @returns {string}
 	 */
-	static I_A20_KEY() {
+	static get I_A20_KEY() {
 		return 'I_A20_KEY';
 	}
 	
@@ -51,7 +68,7 @@ class Arsenal extends Particle {
 	 *
 	 * @returns {string}
 	 */
-	static II_A20_KEY() {
+	static get II_A20_KEY() {
 		return 'II_A20_KEY';
 	}
 	
@@ -59,7 +76,7 @@ class Arsenal extends Particle {
 	 *
 	 * @returns {string}
 	 */
-	static III_A20_KEY() {
+	static get III_A20_KEY() {
 		return 'III_A20_KEY';
 	}
 }

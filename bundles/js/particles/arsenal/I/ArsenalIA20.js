@@ -3,6 +3,7 @@ import ParticleClassI from './../../../classes/ParticleClassI';
 import * as THREE from 'three';
 
 class ArsenalIA20 extends Arsenal {
+	
 	constructor() {
 		super('ArsenalIA20', Arsenal.I_A20_KEY);
 		
@@ -14,7 +15,7 @@ class ArsenalIA20 extends Arsenal {
 		
 		let geometry = new THREE.CylinderGeometry(0.2, 0.2, 1, 32);
 		let material = new THREE.MeshPhongMaterial({color: 0x666666});
-		this.model = new THREE.Mesh(geometry, material);
+		this.setModel(new THREE.Mesh(geometry, material));
 	}
 }
 

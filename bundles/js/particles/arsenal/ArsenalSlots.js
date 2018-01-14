@@ -1,9 +1,7 @@
 import ArsenalSlot from './ArsenalSlot';
-import Particle from './../../Particle';
 
-class ArsenalSlots extends Particle {
+class ArsenalSlots {
 	constructor() {
-		super('ArsenalSlots', ArsenalSlots.ARTICLE_SORTS);
 		
 		/**
 		 *
@@ -16,14 +14,6 @@ class ArsenalSlots extends Particle {
 		 * @type {ArsenalSlot}
 		 */
 		this.slot_b = new ArsenalSlot();
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 */
-	static ARTICLE_SORTS() {
-		return 'ARTICLE_SORTS';
 	}
 }
 

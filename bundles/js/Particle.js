@@ -139,6 +139,10 @@ class Particle {
 					clone[property] = clone[property].clone();
 				} else if (this[property] instanceof THREE.Object3D) {
 					clone[property] = clone[property].clone();
+				} else if (this[property] instanceof THREE.Vector3) {
+					clone[property] = clone[property].clone();
+				} else if (this[property] instanceof THREE.Vector2) {
+					clone[property] = clone[property].clone();
 				}
 			}
 		}

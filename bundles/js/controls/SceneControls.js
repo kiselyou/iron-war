@@ -54,7 +54,7 @@ class SceneControls extends SceneControlsPlugin {
 		 *
 		 * @type {Player}
 		 */
-		this.player = new Player(true, playerId, this.container);
+		this.player = new Player(this, true, playerId);
 		this.camera.position.copy(this.player.position);
 		this.camera.rotation.copy(this.player.rotation);
 		this.camera.lookAt(this.player.lookAt);
@@ -134,7 +134,7 @@ class SceneControls extends SceneControlsPlugin {
 	addPlayer(playerInfo) {
 		
 		let id = playerInfo['id'];
-		let player = new Player(false, id, this.container);
+		let player = new Player(this, false, id);
 		
 		// 1. set ship inf
 		player.setSocketInfo(playerInfo);
@@ -216,12 +216,9 @@ class SceneControls extends SceneControlsPlugin {
 		});
 		
 		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_DOWN_LEFT, KeyboardControls.GROUP_FLY, (event) => {
-			
-			
-			let v = this.getNextPosition(this.camera, 500);
-			this.point.setPosition(v);
-			
-			
+			let target = this.getNextPosition(this.camera, 500);
+			this.point.setPosition(target);
+			this.player.shot(target);
 		});
 		
 		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_WHEEL, KeyboardControls.GROUP_TARGET, (event) => {
@@ -390,6 +387,7 @@ class SceneControls extends SceneControlsPlugin {
 			this.skyBoxControls.update(this.camera.position);
 			this.player.position.copy(this.camera.position);
 			this.player.rotation.copy(this.camera.rotation);
+			this.player.update(delta);
 			this.targetControls.update();
 			// for (let listener of this._updateListener) {
 			// 	listener();

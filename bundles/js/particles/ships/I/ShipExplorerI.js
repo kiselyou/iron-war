@@ -42,10 +42,12 @@ class ShipExplorerI extends Ship {
 		let arsenal = ArsenalIncludes.get();
 		
 		this.arsenalSlots.slot_a.arsenal = arsenal.getSpecificObject(Arsenal.I_A20_KEY);
+		this.arsenalSlots.slot_a.enabled = true;
 		this.arsenalSlots.slot_a.rotation.set(Math.PI / 2, 0, 0);
 		this.arsenalSlots.slot_a.position.set(-2.3, -1.7, -4.5);
 		
 		this.arsenalSlots.slot_b.arsenal = arsenal.getSpecificObject(Arsenal.I_A20_KEY);
+		this.arsenalSlots.slot_b.enabled = true;
 		this.arsenalSlots.slot_b.rotation.set(Math.PI / 2, 0, 0);
 		this.arsenalSlots.slot_b.position.set(2.3, -1.7, -4.5);
 		
