@@ -2,6 +2,8 @@ import Target from './../particles/decoration/target/Target';
 import TargetDirection from './../particles/decoration/target/TargetDirection';
 import * as THREE from 'three';
 
+const TARGET_ANGLE_SIZE = 5;
+
 class TargetControls {
 	
 	/**
@@ -148,10 +150,10 @@ class TargetControls {
 				y = this._size.y,
 				z = this._size.z;
 			
-			let size = Math.max(Math.max(x, y), z) / 2;
+			let size = Math.max(Math.max(x, y), z);
 			
 			this._target
-				.setSize(size)
+				.setSize(TARGET_ANGLE_SIZE, size - TARGET_ANGLE_SIZE)
 				.draw();
 			
 			this._target.model.lookAt(this._camera.position);

@@ -13,7 +13,7 @@ const HALF_PI = Math.PI / 2;
  *
  * @type {number}
  */
-const TARGET_CONTROLS_RAD = Math.PI / 10;
+const TARGET_CONTROLS_RAD = Math.PI / 20;
 
 class TargetDirection {
 	/**
@@ -138,6 +138,7 @@ class TargetDirection {
 		if (this._isExists) {
 			let dir = this._sceneControls.getCameraDirection();
 			let cameraAngle = dir.angleTo(object.position);
+			
 			if (cameraAngle < TARGET_CONTROLS_RAD) {
 				this.hide();
 			} else {
@@ -146,7 +147,7 @@ class TargetDirection {
 				let c = this._sceneControls.getCenterScreenPosition();
 				let a = Math.atan2(v.y - c.y, v.x - c.x);
 				this.model.rotation.z = - a - HALF_PI;
-				
+
 				if (cameraAngle > HALF_PI) {
 					this.model.rotation.z = - a + HALF_PI;
 				}

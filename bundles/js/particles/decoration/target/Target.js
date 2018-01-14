@@ -39,8 +39,8 @@ class Target {
 	 * @returns {Target}
 	 */
 	setSize(x, y) {
-		// this.size.x = x;
-		// this.size.y = y ? y : x;
+		this.size.x = x;
+		this.size.y = y ? y : x;
 		return this;
 	}
 	

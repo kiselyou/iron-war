@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import HelperPoint from './HelperPoint';
 
 let helper = null;
 
@@ -10,56 +11,53 @@ class HelperPoints {
 	constructor(obj) {
 		/**
 		 *
-		 * @type {Array.<{name: (string|number), points: Array.<Mesh>}>}
+		 * @type {Array.<{name: (string|number), points: Array.<HelperPoint>}>}
 		 * @private
 		 */
 		this._groups = [];
 		
 		/**
 		 *
-		 * @type {(Scene|Mesh|Group)}
-		 * @private
+		 * @type {HelperPoints}
 		 */
-		this._obj = obj;
+		helper = this;
 	}
 	
 	/**
 	 *
-	 * @returns {*|HelperPoints}
-	 */
-	static get() {
-		return helper;
-	}
-	
-	/**
-	 *
-	 * @param {(Vector3|{x: number, y: number, z: number})} position
-	 * @param {(string|number)} [group] - name of group points
-	 * @param {number} [color]
-	 * @param {number} [size]
 	 * @returns {HelperPoints}
 	 */
-	add(position, group = 1, color = 0xff0000, size = 1) {
-		let geometry = new THREE.SphereGeometry(size, 15, 15);
-		let material = new THREE.MeshBasicMaterial({color: color});
-		let mesh = new THREE.Mesh(geometry, material);
-		this._addToGroup(group, mesh);
-		mesh.position.copy(position);
-		this._obj.add(mesh);
-		return this;
+	static get() {
+		return helper ? helper : new HelperPoints();
 	}
 	
 	/**
 	 *
+	 * @param {Object3D} object - the object there need set point
+	 * @param {(string|number)} [group] - name of group points
+	 * @returns {HelperPoint}
+	 */
+	setPointTo(object, group = 1) {
+		let point = new HelperPoint();
+		point
+			.init();
+		object.add(point.model);
+		this._addToGroup(group, point);
+		return point;
+	}
+	
+	/**
+	 *
+	 * @param {Object3D} obj - the object from there need delete point
 	 * @param {(string|number)} groupName - name of group points
 	 * @returns {HelperPoints}
 	 */
-	remove(groupName) {
+	remove(obj, groupName) {
 		for (let i = 0; i < this._groups.length; i++) {
 			let group = this._groups[i];
 			if (group['name'] === groupName) {
-				for (let mesh of group['points']) {
-					this._obj.remove(mesh);
+				for (let point of group['points']) {
+					obj.remove(point.model);
 				}
 				this._groups.splice(i, 1);
 				break;
@@ -71,19 +69,19 @@ class HelperPoints {
 	/**
 	 *
 	 * @param {(string|number)} groupName
-	 * @param {Mesh} mesh
+	 * @param {HelperPoint} point
 	 * @private
 	 */
-	_addToGroup(groupName, mesh) {
+	_addToGroup(groupName, point) {
 		let group = this._groups.find((item) => {
 			return item['name'] === groupName;
 		});
 		if (group) {
-			group['points'].push(mesh);
+			group['points'].push(point);
 		} else {
 			this._groups.push({
 				name: groupName,
-				points: [mesh]
+				points: [point]
 			});
 		}
 	}

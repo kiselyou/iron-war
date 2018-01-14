@@ -15,7 +15,7 @@ new PreLoader().load(() => {
 			
 			const controls = new SceneControls(playerId, 'main-container-canvas');
 			
-			console.log('Current Player: ', controls.player, '====================================================');
+			console.log('SOCKET: Current Player is', controls.player, '====================================================');
 			
 			controls
 				.init()
@@ -55,16 +55,8 @@ new PreLoader().load(() => {
 				let player = controls.getPlayer(data['id']);
 				if (player) {
 					player.setSocketInfo(data);
-					// player.position.copy(data['p']);
-					//
-					// player.rotation.x = data['r']['x'];
-					// player.rotation.y = data['r']['y'];
-					// player.rotation.z = data['r']['z'];
-					// player.rotation.order = data['r']['o'];
-					
 					player.ship.engine.setSocketInfo(data['e']);
 					player.flyControls.setSocketInfo(data['fly']);
-					// player.updateShipKey(data['sk']);
 				}
 			});
 			

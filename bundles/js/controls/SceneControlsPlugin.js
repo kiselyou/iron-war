@@ -55,6 +55,8 @@ class SceneControlsPlugin {
 		 * @type {Vector3}
 		 */
 		this.pointLocal = new THREE.Vector3(0, 0, -1);
+		
+		this.direction = new THREE.Vector3(0, 0, -1);
 	}
 	
 	/**
@@ -144,41 +146,21 @@ class SceneControlsPlugin {
 	 * @returns {Vector3}
 	 */
 	getDirection(obj) {
-		return this.pointLocal
-			.clone()
-			.applyMatrix4(obj.matrixWorld)
-			.sub(obj.position)
-			.normalize();
-	}
-	
-	getAngleFromZ(obj, to) {
-		let rad = Math.PI / 2,
-			v = this.toScreenPosition(to),
-			c = this.getCenterScreenPosition(),
-			a = Math.atan2(v.y - c.y, v.x - c.x);
-		
-		let angle = - a - rad;
-		if (this.getCameraDirection().angleTo(to.position) * RAD2DEG > 90) {
-			angle = - a + rad;
-		}
-		
-		return angle;
+		this.direction.applyQuaternion(obj.quaternion);
+		obj.getWorldDirection(this.direction);
+		return this.direction.clone();
 	}
 	
 	/**
+	 * Get next position on current angle of object
 	 *
-	 * @returns {number}
+	 * @param {Object3D} obj
+	 * @param {number} speed
+	 * @returns {*}
 	 */
-	static get DEG2RAD() {
-		return DEG2RAD;
-	}
-	
-	/**
-	 *
-	 * @returns {number}
-	 */
-	static get RAD2DEG() {
-		return RAD2DEG;
+	getNextPosition(obj, speed) {
+		let v = this.getDirection(obj).multiplyScalar(speed);
+		return obj.position.clone().add(v);
 	}
 }
 

@@ -99,6 +99,17 @@ class SceneControls extends SceneControlsPlugin {
 		 * @type {TargetControls}
 		 */
 		this.targetControls = new TargetControls(this);
+		
+		this.point = HelperPoints.get()
+			.setPointTo(this.scene)
+			.setPosition(
+				new THREE.Vector3(
+					this.camera.position.x,
+					this.camera.position.y,
+					this.camera.position.z - 50
+				)
+			);
+		
 	}
 	
 	/**
@@ -202,6 +213,15 @@ class SceneControls extends SceneControlsPlugin {
 				this.targetControls.setSelected(null);
 				this.player.ship.aim.signatureRightTop.hide();
 			}
+		});
+		
+		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_DOWN_LEFT, KeyboardControls.GROUP_FLY, (event) => {
+			
+			
+			let v = this.getNextPosition(this.camera, 500);
+			this.point.setPosition(v);
+			
+			
 		});
 		
 		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_WHEEL, KeyboardControls.GROUP_TARGET, (event) => {

@@ -46284,7 +46284,7 @@ class Particle {
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(71);
+exports = module.exports = __webpack_require__(72);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -46464,7 +46464,7 @@ function localstorage() {
   } catch (e) {}
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(70)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(71)))
 
 /***/ }),
 /* 4 */
@@ -46665,15 +46665,15 @@ Emitter.prototype.hasListeners = function(event){
  * Module dependencies.
  */
 
-var keys = __webpack_require__(80);
+var keys = __webpack_require__(81);
 var hasBinary = __webpack_require__(31);
-var sliceBuffer = __webpack_require__(81);
-var after = __webpack_require__(82);
-var utf8 = __webpack_require__(83);
+var sliceBuffer = __webpack_require__(82);
+var after = __webpack_require__(83);
+var utf8 = __webpack_require__(84);
 
 var base64encoder;
 if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(85);
+  base64encoder = __webpack_require__(86);
 }
 
 /**
@@ -46731,7 +46731,7 @@ var err = { type: 'error', data: 'parser error' };
  * Create a blob api even for blob builder when vendor prefixes exist
  */
 
-var Blob = __webpack_require__(86);
+var Blob = __webpack_require__(87);
 
 /**
  * Encodes a packet.
@@ -48373,7 +48373,7 @@ const COLOR_WHITE = 0xFFFFFF;
 var debug = __webpack_require__(3)('socket.io-parser');
 var Emitter = __webpack_require__(5);
 var hasBin = __webpack_require__(31);
-var binary = __webpack_require__(74);
+var binary = __webpack_require__(75);
 var isBuf = __webpack_require__(32);
 
 /**
@@ -48773,7 +48773,7 @@ function error() {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(78);
+var hasCORS = __webpack_require__(79);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -49830,7 +49830,7 @@ module.exports = function parseuri(str) {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(73);
+var isArray = __webpack_require__(74);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -49918,7 +49918,7 @@ function isBuf(obj) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(76);
+var eio = __webpack_require__(77);
 var Socket = __webpack_require__(38);
 var Emitter = __webpack_require__(5);
 var parser = __webpack_require__(15);
@@ -49926,7 +49926,7 @@ var on = __webpack_require__(39);
 var bind = __webpack_require__(40);
 var debug = __webpack_require__(3)('socket.io-client:manager');
 var indexOf = __webpack_require__(37);
-var Backoff = __webpack_require__(91);
+var Backoff = __webpack_require__(92);
 
 /**
  * IE6+ hasOwnProperty
@@ -50497,9 +50497,9 @@ Manager.prototype.onreconnect = function () {
  */
 
 var XMLHttpRequest = __webpack_require__(16);
-var XHR = __webpack_require__(79);
-var JSONP = __webpack_require__(87);
-var websocket = __webpack_require__(88);
+var XHR = __webpack_require__(80);
+var JSONP = __webpack_require__(88);
+var websocket = __webpack_require__(89);
 
 /**
  * Export transports.
@@ -50900,7 +50900,7 @@ module.exports = function(arr, obj){
 
 var parser = __webpack_require__(15);
 var Emitter = __webpack_require__(5);
-var toArray = __webpack_require__(90);
+var toArray = __webpack_require__(91);
 var on = __webpack_require__(39);
 var bind = __webpack_require__(40);
 var debug = __webpack_require__(3)('socket.io-client:socket');
@@ -51379,9 +51379,9 @@ module.exports = function(obj, fn){
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__socket_config__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__socket_config__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_socket_io_client__);
 
 
@@ -51400,7 +51400,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			
 			const controls = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */](playerId, 'main-container-canvas');
 			
-			console.log('Current Player: ', controls.player, '====================================================');
+			console.log('SOCKET: Current Player is', controls.player, '====================================================');
 			
 			controls
 				.init()
@@ -51440,16 +51440,8 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 				let player = controls.getPlayer(data['id']);
 				if (player) {
 					player.setSocketInfo(data);
-					// player.position.copy(data['p']);
-					//
-					// player.rotation.x = data['r']['x'];
-					// player.rotation.y = data['r']['y'];
-					// player.rotation.z = data['r']['z'];
-					// player.rotation.order = data['r']['o'];
-					
 					player.ship.engine.setSocketInfo(data['e']);
 					player.flyControls.setSocketInfo(data['fly']);
-					// player.updateShipKey(data['sk']);
 				}
 			});
 			
@@ -51506,7 +51498,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TargetControls__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TargetControls__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Particle__ = __webpack_require__(2);
 
 
@@ -51609,6 +51601,17 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		 * @type {TargetControls}
 		 */
 		this.targetControls = new __WEBPACK_IMPORTED_MODULE_7__TargetControls__["a" /* default */](this);
+		
+		this.point = __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__["a" /* default */].get()
+			.setPointTo(this.scene)
+			.setPosition(
+				new __WEBPACK_IMPORTED_MODULE_0_three__["R" /* Vector3 */](
+					this.camera.position.x,
+					this.camera.position.y,
+					this.camera.position.z - 50
+				)
+			);
+		
 	}
 	
 	/**
@@ -51712,6 +51715,15 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 				this.targetControls.setSelected(null);
 				this.player.ship.aim.signatureRightTop.hide();
 			}
+		});
+		
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_LEFT, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY, (event) => {
+			
+			
+			let v = this.getNextPosition(this.camera, 500);
+			this.point.setPosition(v);
+			
+			
 		});
 		
 		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_WHEEL, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
@@ -52003,6 +52015,8 @@ class SceneControlsPlugin {
 		 * @type {Vector3}
 		 */
 		this.pointLocal = new __WEBPACK_IMPORTED_MODULE_0_three__["R" /* Vector3 */](0, 0, -1);
+		
+		this.direction = new __WEBPACK_IMPORTED_MODULE_0_three__["R" /* Vector3 */](0, 0, -1);
 	}
 	
 	/**
@@ -52092,41 +52106,21 @@ class SceneControlsPlugin {
 	 * @returns {Vector3}
 	 */
 	getDirection(obj) {
-		return this.pointLocal
-			.clone()
-			.applyMatrix4(obj.matrixWorld)
-			.sub(obj.position)
-			.normalize();
-	}
-	
-	getAngleFromZ(obj, to) {
-		let rad = Math.PI / 2,
-			v = this.toScreenPosition(to),
-			c = this.getCenterScreenPosition(),
-			a = Math.atan2(v.y - c.y, v.x - c.x);
-		
-		let angle = - a - rad;
-		if (this.getCameraDirection().angleTo(to.position) * RAD2DEG > 90) {
-			angle = - a + rad;
-		}
-		
-		return angle;
+		this.direction.applyQuaternion(obj.quaternion);
+		obj.getWorldDirection(this.direction);
+		return this.direction.clone();
 	}
 	
 	/**
+	 * Get next position on current angle of object
 	 *
-	 * @returns {number}
+	 * @param {Object3D} obj
+	 * @param {number} speed
+	 * @returns {*}
 	 */
-	static get DEG2RAD() {
-		return DEG2RAD;
-	}
-	
-	/**
-	 *
-	 * @returns {number}
-	 */
-	static get RAD2DEG() {
-		return RAD2DEG;
+	getNextPosition(obj, speed) {
+		let v = this.getDirection(obj).multiplyScalar(speed);
+		return obj.position.clone().add(v);
 	}
 }
 
@@ -53735,6 +53729,8 @@ class EngineIIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default 
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HelperPoint__ = __webpack_require__(61);
+
 
 
 let helper = null;
@@ -53747,56 +53743,53 @@ class HelperPoints {
 	constructor(obj) {
 		/**
 		 *
-		 * @type {Array.<{name: (string|number), points: Array.<Mesh>}>}
+		 * @type {Array.<{name: (string|number), points: Array.<HelperPoint>}>}
 		 * @private
 		 */
 		this._groups = [];
 		
 		/**
 		 *
-		 * @type {(Scene|Mesh|Group)}
-		 * @private
+		 * @type {HelperPoints}
 		 */
-		this._obj = obj;
+		helper = this;
 	}
 	
 	/**
 	 *
-	 * @returns {*|HelperPoints}
-	 */
-	static get() {
-		return helper;
-	}
-	
-	/**
-	 *
-	 * @param {(Vector3|{x: number, y: number, z: number})} position
-	 * @param {(string|number)} [group] - name of group points
-	 * @param {number} [color]
-	 * @param {number} [size]
 	 * @returns {HelperPoints}
 	 */
-	add(position, group = 1, color = 0xff0000, size = 1) {
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* SphereGeometry */](size, 15, 15);
-		let material = new __WEBPACK_IMPORTED_MODULE_0_three__["B" /* MeshBasicMaterial */]({color: color});
-		let mesh = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* Mesh */](geometry, material);
-		this._addToGroup(group, mesh);
-		mesh.position.copy(position);
-		this._obj.add(mesh);
-		return this;
+	static get() {
+		return helper ? helper : new HelperPoints();
 	}
 	
 	/**
 	 *
+	 * @param {Object3D} object - the object there need set point
+	 * @param {(string|number)} [group] - name of group points
+	 * @returns {HelperPoint}
+	 */
+	setPointTo(object, group = 1) {
+		let point = new __WEBPACK_IMPORTED_MODULE_1__HelperPoint__["a" /* default */]();
+		point
+			.init();
+		object.add(point.model);
+		this._addToGroup(group, point);
+		return point;
+	}
+	
+	/**
+	 *
+	 * @param {Object3D} obj - the object from there need delete point
 	 * @param {(string|number)} groupName - name of group points
 	 * @returns {HelperPoints}
 	 */
-	remove(groupName) {
+	remove(obj, groupName) {
 		for (let i = 0; i < this._groups.length; i++) {
 			let group = this._groups[i];
 			if (group['name'] === groupName) {
-				for (let mesh of group['points']) {
-					this._obj.remove(mesh);
+				for (let point of group['points']) {
+					obj.remove(point.model);
 				}
 				this._groups.splice(i, 1);
 				break;
@@ -53808,19 +53801,19 @@ class HelperPoints {
 	/**
 	 *
 	 * @param {(string|number)} groupName
-	 * @param {Mesh} mesh
+	 * @param {HelperPoint} point
 	 * @private
 	 */
-	_addToGroup(groupName, mesh) {
+	_addToGroup(groupName, point) {
 		let group = this._groups.find((item) => {
 			return item['name'] === groupName;
 		});
 		if (group) {
-			group['points'].push(mesh);
+			group['points'].push(point);
 		} else {
 			this._groups.push({
 				name: groupName,
-				points: [mesh]
+				points: [point]
 			});
 		}
 	}
@@ -53833,12 +53826,83 @@ class HelperPoints {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particles_decoration_target_Target__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_decoration_target_TargetDirection__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+
+
+class HelperPoint {
+	constructor() {
+		/**
+		 *
+		 * @type {Mesh}
+		 */
+		this.model = new __WEBPACK_IMPORTED_MODULE_0_three__["A" /* Mesh */]();
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this._color = 0xFF0000;
+		
+		/**
+		 *
+		 * @type {number}
+		 * @private
+		 */
+		this._size = 1;
+	}
+	
+	/**
+	 *
+	 * @param {Vector3} v
+	 * @returns {HelperPoint}
+	 */
+	setPosition(v) {
+		this.model.position.copy(v);
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {number} value
+	 * @returns {HelperPoint}
+	 */
+	setColor(value) {
+		this._color = value;
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {number} value
+	 * @returns {HelperPoint}
+	 */
+	setSize(value) {
+		this._size = value;
+		return this;
+	}
+	
+	init() {
+		this.model.geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["N" /* SphereGeometry */](this._size, 15, 15);
+		this.model.material = new __WEBPACK_IMPORTED_MODULE_0_three__["B" /* MeshBasicMaterial */]({color: this._color});
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (HelperPoint);
+
+/***/ }),
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__particles_decoration_target_Target__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_decoration_target_TargetDirection__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
 
 
 
+
+const TARGET_ANGLE_SIZE = 5;
 
 class TargetControls {
 	
@@ -53986,10 +54050,10 @@ class TargetControls {
 				y = this._size.y,
 				z = this._size.z;
 			
-			let size = Math.max(Math.max(x, y), z) / 2;
+			let size = Math.max(Math.max(x, y), z);
 			
 			this._target
-				.setSize(size)
+				.setSize(TARGET_ANGLE_SIZE, size - TARGET_ANGLE_SIZE)
 				.draw();
 			
 			this._target.model.lookAt(this._camera.position);
@@ -54025,7 +54089,7 @@ class TargetControls {
 /* harmony default export */ __webpack_exports__["a"] = (TargetControls);
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54070,8 +54134,8 @@ class Target {
 	 * @returns {Target}
 	 */
 	setSize(x, y) {
-		// this.size.x = x;
-		// this.size.y = y ? y : x;
+		this.size.x = x;
+		this.size.y = y ? y : x;
 		return this;
 	}
 	
@@ -54162,7 +54226,7 @@ class Target {
 /* harmony default export */ __webpack_exports__["a"] = (Target);
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54181,7 +54245,7 @@ const HALF_PI = Math.PI / 2;
  *
  * @type {number}
  */
-const TARGET_CONTROLS_RAD = Math.PI / 10;
+const TARGET_CONTROLS_RAD = Math.PI / 20;
 
 class TargetDirection {
 	/**
@@ -54306,6 +54370,7 @@ class TargetDirection {
 		if (this._isExists) {
 			let dir = this._sceneControls.getCameraDirection();
 			let cameraAngle = dir.angleTo(object.position);
+			
 			if (cameraAngle < TARGET_CONTROLS_RAD) {
 				this.hide();
 			} else {
@@ -54314,7 +54379,7 @@ class TargetDirection {
 				let c = this._sceneControls.getCenterScreenPosition();
 				let a = Math.atan2(v.y - c.y, v.x - c.x);
 				this.model.rotation.z = - a - HALF_PI;
-				
+
 				if (cameraAngle > HALF_PI) {
 					this.model.rotation.z = - a + HALF_PI;
 				}
@@ -54326,13 +54391,13 @@ class TargetDirection {
 /* harmony default export */ __webpack_exports__["a"] = (TargetDirection);
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__OBJLoader__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MTLLoader__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__OBJLoader__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MTLLoader__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FontLoader__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_charge_ChargeIncludes__ = __webpack_require__(27);
@@ -54436,7 +54501,7 @@ class PreLoader {
 /* harmony default export */ __webpack_exports__["a"] = (PreLoader);
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55162,7 +55227,7 @@ let OBJLoader = ( function () {
 /* harmony default export */ __webpack_exports__["a"] = (OBJLoader);
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55724,7 +55789,7 @@ MTLLoader.MaterialCreator.prototype = {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55743,7 +55808,7 @@ const socketConfig = {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -55751,7 +55816,7 @@ const socketConfig = {
  * Module dependencies.
  */
 
-var url = __webpack_require__(69);
+var url = __webpack_require__(70);
 var parser = __webpack_require__(15);
 var Manager = __webpack_require__(33);
 var debug = __webpack_require__(3)('socket.io-client');
@@ -55843,7 +55908,7 @@ exports.Socket = __webpack_require__(38);
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -55925,7 +55990,7 @@ function url (uri, loc) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -56115,7 +56180,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -56131,7 +56196,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(72);
+exports.humanize = __webpack_require__(73);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -56323,7 +56388,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports) {
 
 /**
@@ -56481,7 +56546,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -56492,7 +56557,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -56501,7 +56566,7 @@ module.exports = Array.isArray || function (arr) {
  * Module requirements
  */
 
-var isArray = __webpack_require__(75);
+var isArray = __webpack_require__(76);
 var isBuf = __webpack_require__(32);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -56640,7 +56705,7 @@ exports.removeBlobs = function(data, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -56651,11 +56716,11 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(77);
+module.exports = __webpack_require__(78);
 
 /**
  * Exports parser
@@ -56667,7 +56732,7 @@ module.exports.parser = __webpack_require__(6);
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -57417,7 +57482,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports) {
 
 
@@ -57440,7 +57505,7 @@ try {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -57860,7 +57925,7 @@ function unloadHandler () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports) {
 
 
@@ -57885,7 +57950,7 @@ module.exports = Object.keys || function keys (obj){
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports) {
 
 /**
@@ -57920,7 +57985,7 @@ module.exports = function(arraybuffer, start, end) {
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -57954,7 +58019,7 @@ function noop() {}
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/utf8js v2.1.2 by @mathias */
@@ -58212,10 +58277,10 @@ function noop() {}
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(84)(module), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(85)(module), __webpack_require__(1)))
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -58243,7 +58308,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports) {
 
 /*
@@ -58316,7 +58381,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -58419,7 +58484,7 @@ module.exports = (function() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -58657,7 +58722,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -58674,7 +58739,7 @@ var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(89);
+    NodeWebSocket = __webpack_require__(90);
   } catch (e) { }
 }
 
@@ -58950,13 +59015,13 @@ WS.prototype.check = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -58975,7 +59040,7 @@ function toArray(list, index) {
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports) {
 
 
