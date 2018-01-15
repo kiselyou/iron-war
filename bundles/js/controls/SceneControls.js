@@ -4,10 +4,11 @@ import FlyControls from './FlyControls';
 import SkyeBoxControls from './SkyeBoxControls';
 import Player from './../player/Player';
 
-import HelperPoints from './../helpers/HelperPoints';
 import KeyboardControls from "../keyboard/KeyboardControls";
 import TargetControls from './TargetControls';
 import Particle from './../Particle';
+
+import HelperPoints from './../helpers/HelperPoints';
 
 const FPS = 1000 / 30;
 
@@ -100,15 +101,15 @@ class SceneControls extends SceneControlsPlugin {
 		 */
 		this.targetControls = new TargetControls(this);
 		
-		this.point = HelperPoints.get()
-			.setPointTo(this.scene)
-			.setPosition(
-				new THREE.Vector3(
-					this.camera.position.x,
-					this.camera.position.y,
-					this.camera.position.z - 50
-				)
-			);
+		// this.point = HelperPoints.get()
+		// 	.setPointTo(this.scene)
+		// 	.setPosition(
+		// 		new THREE.Vector3(
+		// 			this.camera.position.x,
+		// 			this.camera.position.y,
+		// 			this.camera.position.z - 50
+		// 		)
+		// 	);
 		
 	}
 	
@@ -197,6 +198,8 @@ class SceneControls extends SceneControlsPlugin {
 					// Enable fly actions
 					this.player.cursor(true);
 					this.player.keyboards.enableGroup(KeyboardControls.GROUP_FLY);
+					// Hide console of ship
+					// ...
 				} else {
 					// Disable fly actions
 					this.player.cursor(false);
@@ -217,7 +220,7 @@ class SceneControls extends SceneControlsPlugin {
 		
 		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_DOWN_LEFT, KeyboardControls.GROUP_FLY, (event) => {
 			let target = this.getNextPosition(this.camera, 500);
-			this.point.setPosition(target);
+			// this.point.setPosition(target);
 			this.player.shot(target);
 		});
 		

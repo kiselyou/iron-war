@@ -46077,7 +46077,7 @@ module.exports = g;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ParticleError__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__systems_Listener__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__systems_Listener__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
 
 
@@ -47568,7 +47568,7 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_ParticleClassI__ = __webpack_require__(4);
@@ -48420,6 +48420,113 @@ class ArsenalSlot extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default
 
 /***/ }),
 /* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HelperPoint__ = __webpack_require__(57);
+
+
+
+let helper = null;
+
+class HelperPoints {
+	/**
+	 *
+	 * @param {(Scene|Mesh|Group)} obj
+	 */
+	constructor(obj) {
+		/**
+		 *
+		 * @type {Array.<{name: (string|number), points: Array.<HelperPoint>}>}
+		 * @private
+		 */
+		this._groups = [];
+		
+		/**
+		 *
+		 * @type {HelperPoints}
+		 */
+		helper = this;
+	}
+	
+	/**
+	 *
+	 * @returns {HelperPoints}
+	 */
+	static get() {
+		return helper ? helper : new HelperPoints();
+	}
+	
+	/**
+	 *
+	 * @param {Object3D} object - the object there need set point
+	 * @param {(string|number)} [group] - name of group points
+	 * @returns {HelperPoint}
+	 */
+	setPointTo(object, group = 1, color = 0xFFFF00) {
+		let point = this.getPoint();
+		point.setColor(color);
+		object.add(point.model);
+		this._addToGroup(group, point);
+		return point;
+	}
+	
+	/**
+	 *
+	 * @returns {HelperPoint}
+	 */
+	getPoint() {
+		let point = new __WEBPACK_IMPORTED_MODULE_1__HelperPoint__["a" /* default */]();
+		point.init();
+		return point;
+	}
+	
+	/**
+	 *
+	 * @param {Object3D} obj - the object from there need delete point
+	 * @param {(string|number)} groupName - name of group points
+	 * @returns {HelperPoints}
+	 */
+	remove(obj, groupName) {
+		for (let i = 0; i < this._groups.length; i++) {
+			let group = this._groups[i];
+			if (group['name'] === groupName) {
+				for (let point of group['points']) {
+					obj.remove(point.model);
+				}
+				this._groups.splice(i, 1);
+				break;
+			}
+		}
+		return this;
+	}
+	
+	/**
+	 *
+	 * @param {(string|number)} groupName
+	 * @param {HelperPoint} point
+	 * @private
+	 */
+	_addToGroup(groupName, point) {
+		let group = this._groups.find((item) => {
+			return item['name'] === groupName;
+		});
+		if (group) {
+			group['points'].push(point);
+		} else {
+			this._groups.push({
+				name: groupName,
+				points: [point]
+			});
+		}
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (HelperPoints);
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -48825,7 +48932,7 @@ function error() {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
@@ -48869,7 +48976,7 @@ module.exports = function (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -49032,7 +49139,7 @@ Transport.prototype.onClose = function () {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49291,7 +49398,7 @@ class FlyControls {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49343,7 +49450,7 @@ class Listener {
 /* harmony default export */ __webpack_exports__["a"] = (Listener);
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49383,7 +49490,7 @@ class ShipIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* defaul
 /* harmony default export */ __webpack_exports__["a"] = (ShipIncludes);
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49446,7 +49553,7 @@ class FontLoader {
 /* harmony default export */ __webpack_exports__["a"] = (FontLoader);
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49542,7 +49649,7 @@ class EngineIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default */
 /* harmony default export */ __webpack_exports__["a"] = (EngineIM20);
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49576,13 +49683,13 @@ class ArsenalIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* def
 /* harmony default export */ __webpack_exports__["a"] = (ArsenalIncludes);
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__charge_Charge__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__charge_ChargeIncludes__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__charge_Charge__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__charge_ChargeIncludes__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__classes_ParticleClassI__ = __webpack_require__(4);
 
 
@@ -49670,7 +49777,7 @@ class Arsenal extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */]
 /* harmony default export */ __webpack_exports__["a"] = (Arsenal);
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49777,7 +49884,7 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 /* harmony default export */ __webpack_exports__["a"] = (Charge);
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49809,112 +49916,6 @@ class ChargeIncludes extends __WEBPACK_IMPORTED_MODULE_0__Includes__["a" /* defa
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ChargeIncludes);
-
-/***/ }),
-/* 28 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HelperPoint__ = __webpack_require__(57);
-
-
-
-let helper = null;
-
-class HelperPoints {
-	/**
-	 *
-	 * @param {(Scene|Mesh|Group)} obj
-	 */
-	constructor(obj) {
-		/**
-		 *
-		 * @type {Array.<{name: (string|number), points: Array.<HelperPoint>}>}
-		 * @private
-		 */
-		this._groups = [];
-		
-		/**
-		 *
-		 * @type {HelperPoints}
-		 */
-		helper = this;
-	}
-	
-	/**
-	 *
-	 * @returns {HelperPoints}
-	 */
-	static get() {
-		return helper ? helper : new HelperPoints();
-	}
-	
-	/**
-	 *
-	 * @param {Object3D} object - the object there need set point
-	 * @param {(string|number)} [group] - name of group points
-	 * @returns {HelperPoint}
-	 */
-	setPointTo(object, group = 1) {
-		let point = this.getPoint();
-		object.add(point.model);
-		this._addToGroup(group, point);
-		return point;
-	}
-	
-	/**
-	 *
-	 * @returns {HelperPoint}
-	 */
-	getPoint() {
-		let point = new __WEBPACK_IMPORTED_MODULE_1__HelperPoint__["a" /* default */]();
-		point.init();
-		return point;
-	}
-	
-	/**
-	 *
-	 * @param {Object3D} obj - the object from there need delete point
-	 * @param {(string|number)} groupName - name of group points
-	 * @returns {HelperPoints}
-	 */
-	remove(obj, groupName) {
-		for (let i = 0; i < this._groups.length; i++) {
-			let group = this._groups[i];
-			if (group['name'] === groupName) {
-				for (let point of group['points']) {
-					obj.remove(point.model);
-				}
-				this._groups.splice(i, 1);
-				break;
-			}
-		}
-		return this;
-	}
-	
-	/**
-	 *
-	 * @param {(string|number)} groupName
-	 * @param {HelperPoint} point
-	 * @private
-	 */
-	_addToGroup(groupName, point) {
-		let group = this._groups.find((item) => {
-			return item['name'] === groupName;
-		});
-		if (group) {
-			group['points'].push(point);
-		} else {
-			this._groups.push({
-				name: groupName,
-				points: [point]
-			});
-		}
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (HelperPoints);
 
 /***/ }),
 /* 29 */
@@ -50102,7 +50103,7 @@ function isBuf(obj) {
 var eio = __webpack_require__(77);
 var Socket = __webpack_require__(39);
 var Emitter = __webpack_require__(5);
-var parser = __webpack_require__(16);
+var parser = __webpack_require__(17);
 var on = __webpack_require__(40);
 var bind = __webpack_require__(41);
 var debug = __webpack_require__(3)('socket.io-client:manager');
@@ -50677,7 +50678,7 @@ Manager.prototype.onreconnect = function () {
  * Module dependencies
  */
 
-var XMLHttpRequest = __webpack_require__(17);
+var XMLHttpRequest = __webpack_require__(18);
 var XHR = __webpack_require__(80);
 var JSONP = __webpack_require__(88);
 var websocket = __webpack_require__(89);
@@ -50737,7 +50738,7 @@ function polling (opts) {
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(18);
+var Transport = __webpack_require__(19);
 var parseqs = __webpack_require__(9);
 var parser = __webpack_require__(6);
 var inherit = __webpack_require__(10);
@@ -50755,7 +50756,7 @@ module.exports = Polling;
  */
 
 var hasXHR2 = (function () {
-  var XMLHttpRequest = __webpack_require__(17);
+  var XMLHttpRequest = __webpack_require__(18);
   var xhr = new XMLHttpRequest({ xdomain: false });
   return null != xhr.responseType;
 })();
@@ -51079,7 +51080,7 @@ module.exports = function(arr, obj){
  * Module dependencies.
  */
 
-var parser = __webpack_require__(16);
+var parser = __webpack_require__(17);
 var Emitter = __webpack_require__(5);
 var toArray = __webpack_require__(91);
 var on = __webpack_require__(40);
@@ -51674,13 +51675,14 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FlyControls__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FlyControls__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SkyeBoxControls__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__player_Player__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TargetControls__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TargetControls__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__helpers_HelperPoints__ = __webpack_require__(16);
+
 
 
 
@@ -51754,7 +51756,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		 * @type {HelperPoints}
 		 * @private
 		 */
-		this._helperPoints = new __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__["a" /* default */](this.scene);
+		this._helperPoints = new __WEBPACK_IMPORTED_MODULE_8__helpers_HelperPoints__["a" /* default */](this.scene);
 		
 		/**
 		 *
@@ -51781,17 +51783,17 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		 *
 		 * @type {TargetControls}
 		 */
-		this.targetControls = new __WEBPACK_IMPORTED_MODULE_7__TargetControls__["a" /* default */](this);
+		this.targetControls = new __WEBPACK_IMPORTED_MODULE_6__TargetControls__["a" /* default */](this);
 		
-		this.point = __WEBPACK_IMPORTED_MODULE_5__helpers_HelperPoints__["a" /* default */].get()
-			.setPointTo(this.scene)
-			.setPosition(
-				new __WEBPACK_IMPORTED_MODULE_0_three__["R" /* Vector3 */](
-					this.camera.position.x,
-					this.camera.position.y,
-					this.camera.position.z - 50
-				)
-			);
+		// this.point = HelperPoints.get()
+		// 	.setPointTo(this.scene)
+		// 	.setPosition(
+		// 		new THREE.Vector3(
+		// 			this.camera.position.x,
+		// 			this.camera.position.y,
+		// 			this.camera.position.z - 50
+		// 		)
+		// 	);
 		
 	}
 	
@@ -51874,23 +51876,25 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		this.camera.add(this.player.getModel());
 		this.scene.add(this.camera);
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_PK, (event, keyboard) => {
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_PK, (event, keyboard) => {
 			if (keyboard.key === 'openConsole') {
 				if (keyboard.value === keyboard.valueOn) {
 					// Enable fly actions
 					this.player.cursor(true);
-					this.player.keyboards.enableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+					this.player.keyboards.enableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+					// Hide console of ship
+					// ...
 				} else {
 					// Disable fly actions
 					this.player.cursor(false);
-					this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+					this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
 					// Open console of ship
 					// ...
 				}
 			}
 		});
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_CENTER, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_CENTER, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
 			let openConsole = this.player.keyboards.fly.openConsole;
 			if (openConsole.value === openConsole.valueOn) {
 				this.targetControls.setSelected(null);
@@ -51898,13 +51902,13 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			}
 		});
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_LEFT, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY, (event) => {
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_LEFT, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY, (event) => {
 			let target = this.getNextPosition(this.camera, 500);
-			this.point.setPosition(target);
+			// this.point.setPosition(target);
 			this.player.shot(target);
 		});
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_WHEEL, __WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
+		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_WHEEL, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
 			let openConsole = this.player.keyboards.fly.openConsole;
 			if (event.deltaY !== 0 && openConsole.value === openConsole.valueOn) {
 				this.targetControls.changeTarget(
@@ -51947,19 +51951,19 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			.addEventListener(__WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */].EVENT_ENABLED, () => {
 				// Enable fly actions
 				this.player.cursor(true);
-				this.player.keyboards.enableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+				this.player.keyboards.enableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
 			})
 			.addEventListener(__WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */].EVENT_DISABLED, () => {
 				// Disable fly actions
 				this.player.cursor(false);
-				this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+				this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
 			})
 			.enable(true, true);
 		
 		
 		// Disable fly actions before start
 		this.player.cursor(false);
-		this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_6__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+		this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
 		// Open console of ship before start fly
 		// ...
 		
@@ -52002,7 +52006,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			
 			this.scene.add(mesh);
 			
-			let particle = new __WEBPACK_IMPORTED_MODULE_8__Particle__["a" /* default */]('Particle', 'test-cube');
+			let particle = new __WEBPACK_IMPORTED_MODULE_7__Particle__["a" /* default */]('Particle', 'test-cube');
 			particle.model = mesh;
 			particle.label = 'Cube - ' + i;
 			this._objects.push(particle);
@@ -52652,13 +52656,16 @@ class SkyeBoxControls {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__User__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_ships_ShipIncludes__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controls_FlyControls__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__systems_Listener__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controls_FlyControls__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__systems_Listener__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalSlot__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_three__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__helpers_HelperPoints__ = __webpack_require__(16);
+
+
 
 
 
@@ -52775,6 +52782,9 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 * @type {Array.<Charge>}
 		 */
 		this.charges = [];
+		
+		
+		this.point = __WEBPACK_IMPORTED_MODULE_8__helpers_HelperPoints__["a" /* default */].get().setPointTo(this._sceneControls.scene);
 	}
 	
 	/**
@@ -52951,6 +52961,10 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				 * @type {Charge}
 				 */
 				let charge = this.charges[i];
+				
+				this.point.setPosition(charge.target);
+				
+				
 				charge.update(delta, () => {
 					this._sceneControls.scene.remove(charge.model);
 					this.charges.splice(i, 1);
@@ -52984,10 +52998,10 @@ class User {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalIncludes__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_Arsenal__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalIncludes__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_Arsenal__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_three__ = __webpack_require__(0);
 
 
@@ -53542,7 +53556,7 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loader_FontLoader__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loader_FontLoader__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_three__ = __webpack_require__(0);
 
 
@@ -53792,7 +53806,7 @@ class ArsenalSlots {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Arsenal__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Arsenal__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_three__ = __webpack_require__(0);
 
@@ -53823,9 +53837,9 @@ class ArsenalIA20 extends __WEBPACK_IMPORTED_MODULE_0__Arsenal__["a" /* default 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Charge__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Charge__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_HelperPoints__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_HelperPoints__ = __webpack_require__(16);
 
 
 
@@ -53842,7 +53856,7 @@ class ChargeIA20 extends __WEBPACK_IMPORTED_MODULE_0__Charge__["a" /* default */
 		
 		/**
 		 *
-		 * @type {Mesh}
+		 * @type {Object3D}
 		 */
 		this.model = __WEBPACK_IMPORTED_MODULE_2__helpers_HelperPoints__["a" /* default */].get().getPoint().model;
 	}
@@ -54540,10 +54554,10 @@ class TargetDirection {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__OBJLoader__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MTLLoader__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FontLoader__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_charge_ChargeIncludes__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalIncludes__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FontLoader__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__particles_ships_ShipIncludes__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_charge_ChargeIncludes__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalIncludes__ = __webpack_require__(25);
 
 
 
@@ -55959,7 +55973,7 @@ const socketConfig = {
  */
 
 var url = __webpack_require__(70);
-var parser = __webpack_require__(16);
+var parser = __webpack_require__(17);
 var Manager = __webpack_require__(34);
 var debug = __webpack_require__(3)('socket.io-client');
 
@@ -57020,7 +57034,7 @@ Socket.protocol = parser.protocol; // this is an int
  */
 
 Socket.Socket = Socket;
-Socket.Transport = __webpack_require__(18);
+Socket.Transport = __webpack_require__(19);
 Socket.transports = __webpack_require__(35);
 Socket.parser = __webpack_require__(6);
 
@@ -57654,7 +57668,7 @@ try {
  * Module requirements.
  */
 
-var XMLHttpRequest = __webpack_require__(17);
+var XMLHttpRequest = __webpack_require__(18);
 var Polling = __webpack_require__(36);
 var Emitter = __webpack_require__(5);
 var inherit = __webpack_require__(10);
@@ -58871,7 +58885,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(18);
+var Transport = __webpack_require__(19);
 var parser = __webpack_require__(6);
 var parseqs = __webpack_require__(9);
 var inherit = __webpack_require__(10);

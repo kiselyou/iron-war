@@ -14,7 +14,7 @@ class ChargeIA20 extends Charge {
 		
 		/**
 		 *
-		 * @type {Mesh}
+		 * @type {Object3D}
 		 */
 		this.model = HelperPoints.get().getPoint().model;
 	}

@@ -37,8 +37,9 @@ class HelperPoints {
 	 * @param {(string|number)} [group] - name of group points
 	 * @returns {HelperPoint}
 	 */
-	setPointTo(object, group = 1) {
+	setPointTo(object, group = 1, color = 0xFFFF00) {
 		let point = this.getPoint();
+		point.setColor(color);
 		object.add(point.model);
 		this._addToGroup(group, point);
 		return point;

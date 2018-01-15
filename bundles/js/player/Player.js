@@ -7,6 +7,8 @@ import Ship from './../particles/ships/Ship';
 import ArsenalSlot from './../particles/arsenal/ArsenalSlot';
 import * as THREE from 'three';
 
+import HelperPoints from './../helpers/HelperPoints';
+
 class Player extends User {
 	/**
 	 *
@@ -114,6 +116,9 @@ class Player extends User {
 		 * @type {Array.<Charge>}
 		 */
 		this.charges = [];
+		
+		
+		this.point = HelperPoints.get().setPointTo(this._sceneControls.scene);
 	}
 	
 	/**
@@ -290,6 +295,10 @@ class Player extends User {
 				 * @type {Charge}
 				 */
 				let charge = this.charges[i];
+				
+				this.point.setPosition(charge.target);
+				
+				
 				charge.update(delta, () => {
 					this._sceneControls.scene.remove(charge.model);
 					this.charges.splice(i, 1);
