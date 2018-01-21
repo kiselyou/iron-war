@@ -46,7 +46,8 @@ class MainController extends Controller
                 ],
                 'attributes' => [
                     'id' => ['id' => SORT_ASC],
-                    'name' => ['name' => SORT_ASC]
+                    'name' => ['name' => SORT_ASC],
+                    'keyId' => ['keyName' => SORT_ASC]
                 ],
             ],
         ]);

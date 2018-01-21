@@ -1,7 +1,10 @@
 <?php
+use \yii\helpers\Html;
 use \yii\grid\GridView;
 use \yii\grid\CheckboxColumn;
+use \yii\helpers\ArrayHelper;
 use \app\modules\admin\entities\Player;
+use \app\modules\admin\entities\Key;
 
 /* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $searchPlayer \app\modules\admin\models\PlayerSearch */
@@ -31,10 +34,10 @@ use \app\modules\admin\entities\Player;
                 'value' => function (Player $player) {
                     return $player->keyName;
                 },
-                'filter' => \yii\helpers\Html::activeDropDownList(
+                'filter' => Html::activeDropDownList(
                     $searchPlayer,
                     'keyId',
-                    \yii\helpers\ArrayHelper::map(\app\modules\admin\entities\Key::find()
+                    ArrayHelper::map(Key::find()
                         ->asArray()
                         ->all(),
                         'id',
@@ -42,9 +45,10 @@ use \app\modules\admin\entities\Player;
                     ),
                     [
                         'class'=>'form-control',
-                        'prompt' => 'не выбрано'
+                        'prompt' => 'не выбрано',
                     ]
                 ),
+                'label' => 'Ключ',
             ],
             [
                 'class' => CheckboxColumn::className(),
