@@ -43,35 +43,35 @@ io.on('connection', (client) => {
 	
 	players[client.id] = new PlayerInfo(client.id);
 	
-	// Give specific id to player
+	// Give specific id to form
 	client.emit('entry', client.id);
 	
-	client.on('set-player-info', (data) => {
+	client.on('set-form-info', (data) => {
 		players[client.id].copy(data);
 		// Send to all except me
-		client.broadcast.emit('add-new-player', players[client.id]);
+		client.broadcast.emit('add-new-form', players[client.id]);
 	});
 
-	client.on('send-player-info', (data) => {
-		// Send to specific player
+	client.on('send-form-info', (data) => {
+		// Send to specific form
 		players[client.id].copy(data);
-		client.broadcast.to(data['to']).emit('add-old-player', players[client.id]);
+		client.broadcast.to(data['to']).emit('add-old-form', players[client.id]);
 	});
 	
-	client.on('send-updated-player-info', (data) => {
+	client.on('send-updated-form-info', (data) => {
 		players[client.id].copy(data);
 		// Send to all except me
-		client.broadcast.emit('update-player-info', data);
+		client.broadcast.emit('update-form-info', data);
 	});
 
-	client.on('remove-player', (playerId) => {
+	client.on('remove-form', (playerId) => {
 		// Send to all except me
-		client.broadcast.emit('remove-specific-player', playerId);
+		client.broadcast.emit('remove-specific-form', playerId);
 	});
 	
 	client.on('disconnect', () => {
 		// Send to all except me
-		client.broadcast.emit('remove-specific-player', client.id);
+		client.broadcast.emit('remove-specific-form', client.id);
 		delete players[client.id];
 	});
 });

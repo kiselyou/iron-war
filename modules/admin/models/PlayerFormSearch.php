@@ -4,7 +4,7 @@ namespace app\modules\admin\models;
 
 use yii\base\Model;
 
-class PlayerSearch extends Model
+class PlayerFormSearch extends Model
 {
     /**
      * @var string

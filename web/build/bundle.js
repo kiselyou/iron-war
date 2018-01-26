@@ -49369,7 +49369,7 @@ class FlyControls {
 		this.moveVector.y = data['mv']['y'];
 		this.moveVector.z = data['mv']['z'];
 		
-		// console.log('Other player: ', this.rotationVector, this.moveVector);
+		// console.log('Other form: ', this.rotationVector, this.moveVector);
 		
 		return this;
 	}
@@ -51588,8 +51588,8 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 				.init()
 				.start()
 				.addPlayerListener(() => {
-					// Send info about current player to other players
-					socket.emit('send-updated-player-info', {
+					// Send info about current form to other players
+					socket.emit('send-updated-form-info', {
 						id: playerId,
 						p: controls.player.position,
 						r: {
@@ -51604,8 +51604,8 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 					});
 				});
 			
-			// Set default parameters of current player and send it info to other players
-			socket.emit('set-player-info', {
+			// Set default parameters of current form and send it info to other players
+			socket.emit('set-form-info', {
 				p: controls.player.position,
 				r: {
 					x: controls.player.rotation.x,
@@ -51618,7 +51618,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 				sk: controls.player.shipKey,
 			});
 			
-			socket.on('update-player-info', (data) => {
+			socket.on('update-form-info', (data) => {
 				let player = controls.getPlayer(data['id']);
 				if (player) {
 					player.setSocketInfo(data);
@@ -51628,11 +51628,11 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			});
 			
 			// Add new players to scene
-			socket.on('add-new-player', (playerInfo) => {
+			socket.on('add-new-form', (playerInfo) => {
 				controls.addPlayer(playerInfo);
-				// send information about current player
-				socket.emit('send-player-info', {
-					to: playerInfo['id'], // send to specific player
+				// send information about current form
+				socket.emit('send-form-info', {
+					to: playerInfo['id'], // send to specific form
 					id: playerId,
 					p: controls.player.position,
 					r: {
@@ -51647,12 +51647,12 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 				});
 			});
 			
-			socket.on('add-old-player', (playerInfo) => {
-				// Add player to scene that has already exist in other browsers
+			socket.on('add-old-form', (playerInfo) => {
+				// Add form to scene that has already exist in other browsers
 				controls.addPlayer(playerInfo);
 			});
 			
-			socket.on('remove-specific-player', (id) => {
+			socket.on('remove-specific-form', (id) => {
 				controls.destroyPlayer(id);
 			});
 			
@@ -51662,7 +51662,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			});
 			
 			// window.addEventListener('beforeunload', () => {
-			// 	socket.emit('remove-player', playerId);
+			// 	socket.emit('remove-form', playerId);
 			// });
 		});
 	});
@@ -52717,7 +52717,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		this.shipKey = __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__["a" /* default */].I_EXPLORER_KEY;
 		
 		/**
-		 * Disable player
+		 * Disable form
 		 *
 		 * @type {boolean}
 		 * @private

@@ -4,7 +4,8 @@ namespace app\modules\admin\controllers;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use app\modules\admin\entities\Player;
-use app\modules\admin\models\PlayerSearch;
+use app\modules\admin\models\PlayerForm;
+use app\modules\admin\models\PlayerFormSearch;
 
 class MainController extends Controller
 {
@@ -21,21 +22,15 @@ class MainController extends Controller
             ->alias('p')
             ->leftJoin('key AS k', 'k.id = p.keyId');
 
-        $searchPlayer = new PlayerSearch();
-        $queryParams = \Yii::$app->request->queryParams;
+        $playerFormSearch = new PlayerFormSearch();
+        $playerFormSearch->load(\Yii::$app->request->get());
 
-        if ($queryParams) {
-            $searchPlayer->name = $queryParams['PlayerSearch']['name'];
-            $searchPlayer->keyId = $queryParams['PlayerSearch']['keyId'];
+        if (!empty($playerFormSearch->name)) {
+            $query->andWhere(['like', 'p.name', $playerFormSearch->name]);
+        }
 
-            if (!empty($searchPlayer->name)) {
-                $query->andWhere(['like', 'p.name', $searchPlayer->name]);
-            }
-
-            if (!empty($searchPlayer->keyId)) {
-                $query->andWhere(['p.keyId' => $searchPlayer->keyId]);
-            }
-
+        if (!empty($playerFormSearch->keyId)) {
+            $query->andWhere(['p.keyId' => $playerFormSearch->keyId]);
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -54,7 +49,32 @@ class MainController extends Controller
 
 		return $this->render('index', [
 			'dataProvider' => $dataProvider,
-            'searchPlayer' => $searchPlayer
+            'playerFormSearch' => $playerFormSearch
 		]);
 	}
+
+	public function actionCreate()
+    {
+        $form = new PlayerForm();
+        $form->load(\Yii::$app->request->post());
+
+        if ($form->getFormKey() == PlayerForm::FORM_KEY_VALIDATE) {
+            $form->setFormStatus($form->validate());
+            return $this->asJson($form->getFormStatus());
+        }
+
+        if ($form->getFormKey() == PlayerForm::FORM_KEY_SAVE) {
+            $isValid = $form->validate();
+            if ($isValid) {
+                $player = new Player();
+                $player->name = $form->name;
+                $player->save();
+            }
+            return $this->asJson($isValid);
+        }
+
+        return $this->render('create', [
+            'playerForm' => $form
+        ]);
+    }
 }

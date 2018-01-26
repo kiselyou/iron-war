@@ -10,38 +10,44 @@ const cssnano = require('gulp-cssnano');
 const BUILD_DIR = 'web/build';
 let isProd = false;
 
+let buildJs = (input, output) => {
+    let build = gulp.src(input)
+        .pipe(webpack({
+            output: {
+                filename: output,
+            },
+            module: {
+                rules: [
+                    {
+                        exclude: /.js/,
+                        use: {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: ['env']
+                            }
+                        }
+                    }
+                ]
+            }
+        }));
+
+    if (isProd) {
+        return build
+            .pipe(sourcemaps.init({ loadMaps: true }))
+            .pipe(minify())
+            .pipe(sourcemaps.write('maps'))
+            .pipe(gulp.dest(BUILD_DIR));
+    }
+
+    return build.pipe(gulp.dest(BUILD_DIR));
+};
+
 gulp.task('build:js', () => {
-	// let build = gulp.src('bundles/js/**/*.js')
-	let build = gulp.src('bundles/index.js')
-		.pipe(webpack({
-			output: {
-				filename: 'bundle.js',
-			},
-			module: {
-				rules: [
-					{
-						// exclude: /(node_modules|bower_components|Particle)/,
-						exclude: /.js/,
-						use: {
-							loader: 'babel-loader',
-							options: {
-								presets: ['env']
-							}
-						}
-					}
-				]
-			}
-		}));
-	
-	if (isProd) {
-		return build
-			.pipe(sourcemaps.init({ loadMaps: true }))
-			.pipe(minify())
-			.pipe(sourcemaps.write('maps'))
-			.pipe(gulp.dest(BUILD_DIR));
-	}
-	
-	return build.pipe(gulp.dest(BUILD_DIR));
+    buildJs('bundles/index.js', 'bundle.js');
+});
+
+gulp.task('build:admin:js', () => {
+    buildJs('bundles/admin/index.js', 'bundle-admin.js');
 });
 
 gulp.task('build:prod', () => {
@@ -69,7 +75,8 @@ gulp.task('build:less', function() {
 gulp.task('watch', function() {
 	gulp.watch(
 		[
-			'bundles/**/*.js'
+			'bundles/index.js',
+			'bundles/js/**/*.js'
 		],
 		[
 			'build:js'
@@ -84,4 +91,13 @@ gulp.task('watch', function() {
 			'build:less'
 		]
 	);
+
+    gulp.watch(
+        [
+            'bundles/admin/**/*.js'
+        ],
+        [
+            'build:admin:js'
+        ]
+    );
 });
