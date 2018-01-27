@@ -85,7 +85,7 @@ class MainController extends Controller
                 $player->keyId = $form->keyId;
                 $player->save();
             }
-            $form->setFormStatus($isValid);
+            $form->setFormStatus($isValid, uniqid('___'));
             return $this->asJson($form->getFormStatus());
         }
 

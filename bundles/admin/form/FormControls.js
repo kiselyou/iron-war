@@ -65,7 +65,8 @@ class FormControls {
          */
         this._formMessage = {
             elementBlock: null,
-            elementText: null
+            elementText: null,
+            autoHide: true
         };
     }
 
@@ -77,7 +78,7 @@ class FormControls {
         if (this._messageControls) {
             this._messageControls.hide();
         }
-        if (this._formMessage.elementBlock) {
+        if (this._formMessage.elementBlock && this._formMessage.autoHide) {
             this._formMessage.elementBlock.fadeOut();
         }
         return this;
@@ -137,11 +138,13 @@ class FormControls {
      *
      * @param {(string|Element|jQuery)} inBlock - This is block name to show.
      * @param {(string|Element|jQuery)} [elementText] - This element in the block where need to set text of message from the server
+     * @param {boolean} [autoHide]
      * @returns {FormControls}
      */
-    useFormMessage(inBlock, elementText = null) {
+    useFormMessage(inBlock, elementText = null, autoHide = true) {
         this._formMessage.elementBlock = $(this._form).find(inBlock);
         this._formMessage.elementText = elementText ? this._formMessage.elementBlock.find(elementText) : null;
+        this._formMessage.autoHide = autoHide;
         return this;
     }
 
