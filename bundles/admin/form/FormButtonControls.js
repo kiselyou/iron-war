@@ -1,12 +1,12 @@
 
-class ButtonControls {
+class FormButtonControls {
     /**
      *
      * @param {FormControls} formControls
      * @param {string} buttonId
-     * @param {btnListener} listener
+     * @param {btnListener} [listener]
      */
-    constructor(formControls, buttonId, listener) {
+    constructor(formControls, buttonId, listener = null) {
 
         /**
          *
@@ -30,6 +30,7 @@ class ButtonControls {
         this._button = $(this._formControls.getFormElement()).find('#' + this._buttonId);
 
         /**
+         * This is value to initialize on the server side
          *
          * @type {?string}
          * @private
@@ -38,16 +39,33 @@ class ButtonControls {
 
         /**
          *
-         * @type {btnListener}
+         * @type {?btnListener}
          * @private
          */
         this._listener = listener;
+
+        /**
+         *
+         * @type {boolean}
+         * @private
+         */
+        this._clearForm = false;
+    }
+
+    /**
+     *
+     * @param {boolean} [value]
+     * @returns {FormButtonControls}
+     */
+    autoClearForm(value = true) {
+        this._clearForm = value;
+        return this;
     }
 
     /**
      *
      * @param {boolean} value
-     * @returns {ButtonControls}
+     * @returns {FormButtonControls}
      */
     disable(value = true) {
         this._button.attr('disabled', value);
@@ -56,8 +74,8 @@ class ButtonControls {
 
     /**
      *
-     * @param {string} value - Possible values (FormControls.ACTION_SAVE, FormControls.ACTION_UPDATE)
-     * @returns {ButtonControls}
+     * @param {string} value - This is value to initialize on the server side
+     * @returns {FormButtonControls}
      */
     setFormActionKey(value) {
         this._formActionKey = value;
@@ -73,7 +91,7 @@ class ButtonControls {
     /**
      *
      * @param {btnListener} listener
-     * @returns {ButtonControls}
+     * @returns {FormButtonControls}
      */
     setListener(listener) {
         this._listener = listener;
@@ -82,17 +100,21 @@ class ButtonControls {
 
     /**
      *
-     * @returns {ButtonControls}
+     * @returns {FormButtonControls}
      */
     listen() {
         this._button.click(() => {
+            this.disable(true);
             this._formControls.sendForm(
                 this._formActionKey,
                 (data) => {
-                    this._listener(null, data);
+                    this._formControls.btnListenerOnSuccess(data, this._listener);
+                    if (this._clearForm) {
+                        this._formControls.resetForm();
+                    }
                 },
                 (error) => {
-                    this._listener(error);
+                    this._formControls.btnListenerOnError(error, this._listener);
                 }
             );
         });
@@ -100,4 +122,4 @@ class ButtonControls {
     }
 }
 
-export default ButtonControls;
+export default FormButtonControls;

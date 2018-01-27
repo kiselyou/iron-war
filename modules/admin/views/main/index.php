@@ -2,13 +2,11 @@
 use \yii\bootstrap\Html;
 use \yii\grid\GridView;
 use \yii\grid\CheckboxColumn;
-use \yii\helpers\ArrayHelper;
 use \app\modules\admin\entities\Player;
-use \app\modules\admin\entities\Key;
 
 /* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $playerFormSearch \app\modules\admin\models\PlayerFormSearch */
-
+/* @var $keysDropDownList array */
 ?>
 
 <h3>Список игроков</h3>
@@ -58,12 +56,7 @@ use \app\modules\admin\entities\Key;
                         'filter' => Html::activeDropDownList(
                             $playerFormSearch,
                             'keyId',
-                            ArrayHelper::map(Key::find()
-                                ->asArray()
-                                ->all(),
-                                'id',
-                                'name'
-                            ),
+                            $keysDropDownList,
                             [
                                 'class'=>'form-control',
                                 'prompt' => 'не выбрано',

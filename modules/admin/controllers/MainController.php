@@ -2,16 +2,29 @@
 namespace app\modules\admin\controllers;
 
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use app\modules\admin\entities\Player;
 use app\modules\admin\models\PlayerForm;
 use app\modules\admin\models\PlayerFormSearch;
+use app\modules\admin\repository\KeyRepository;
 
 class MainController extends Controller
 {
-	public function actionIndex()
-	{
+    /**
+     * @var KeyRepository
+     */
+    private $keys;
 
+
+    public function init()
+    {
+        parent::init();
+        $this->keys = new KeyRepository();
+    }
+
+    public function actionIndex()
+	{
 	    $query = Player::find()
             ->select('
                     p.id,
@@ -49,7 +62,8 @@ class MainController extends Controller
 
 		return $this->render('index', [
 			'dataProvider' => $dataProvider,
-            'playerFormSearch' => $playerFormSearch
+            'playerFormSearch' => $playerFormSearch,
+            'keysDropDownList' => $this->keys->getKeysDropDownList()
 		]);
 	}
 
@@ -68,13 +82,16 @@ class MainController extends Controller
             if ($isValid) {
                 $player = new Player();
                 $player->name = $form->name;
+                $player->keyId = $form->keyId;
                 $player->save();
             }
-            return $this->asJson($isValid);
+            $form->setFormStatus($isValid);
+            return $this->asJson($form->getFormStatus());
         }
 
         return $this->render('create', [
-            'playerForm' => $form
+            'playerForm' => $form,
+            'keysDropDownList' => $this->keys->getKeysDropDownList()
         ]);
     }
 }

@@ -7,6 +7,10 @@ class PlayerForm extends FormControls
      * @var string
      */
     public $name;
+    /**
+     * @var integer
+     */
+    public $keyId;
 
 
     /**
@@ -17,6 +21,8 @@ class PlayerForm extends FormControls
             ['name', 'required'],
             ['name', 'string', 'min' => 4, 'max' => 20],
             ['name', 'trim'],
+            ['keyId', 'integer'],
+            ['keyId', 'required'],
         ];
     }
 
@@ -26,7 +32,13 @@ class PlayerForm extends FormControls
     public function attributeLabels()
     {
         return [
-            'name' => 'Имя игрока'
+            'name' => 'Имя игрока',
+            'keyId' => 'Ключ'
         ];
+    }
+
+    public function getKey()
+    {
+        
     }
 }

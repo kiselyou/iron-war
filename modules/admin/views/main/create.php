@@ -4,6 +4,7 @@ use \yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $playerForm \app\modules\admin\models\PlayerForm */
+/* @var $keysDropDownList array */
 
 ?>
 
@@ -37,12 +38,31 @@ use yii\bootstrap\ActiveForm;
         ?>
 
         <?= $form->field($playerForm, 'name'); ?>
-        <?= Html::button('Сохранить', ['class' => 'btn btn-default btn-sm', 'id' => 'form-create-player-save']); ?>
+
+        <?= $form->field($playerForm, 'keyId')->dropDownList($keysDropDownList, ['prompt'=>'Не выбрано']); ?>
+
+        <div class="row block-test-message" hidden>
+            <div class="col-sm-12">
+                <span class="text-test-message"></span>
+                <button class="btn btn-link">Делаем что-то</button>
+            </div>
+        </div>
+
+        <?=
+        Html::button(
+            'Сохранить',
+            [
+                'class' => 'btn btn-default btn-sm',
+                'id' => 'form-create-player-save',
+                'disabled' => true
+            ]
+        );
+        ?>
+
+        <div class="form-save-ok" hidden>Успешно сохранено</div>
+        <div class="form-save-error" hidden>Ошибка сохранения</div>
 
         <?php ActiveForm::end(); ?>
-
-        <div class="form-save-ok" hidden>Сохранено</div>
-        <div class="form-save-error" hidden>Ошибка</div>
 
     </div>
 </div>

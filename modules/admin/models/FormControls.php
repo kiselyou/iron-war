@@ -4,6 +4,13 @@ namespace app\modules\admin\models;
 
 use yii\base\Model;
 
+/**
+ * Class FormControls
+ *
+ * _ - need to create unique property
+ *
+ * @package app\modules\admin\models
+ */
 class FormControls extends Model
 {
     /**
@@ -13,25 +20,27 @@ class FormControls extends Model
     /**
      * @var string
      */
-    const FORM_KEY_UPDATE = 'update';
-    /**
-     * @var string
-     */
     const FORM_KEY_VALIDATE = 'validate';
 
     /**
-     *  _ - need to create unique property
+     * This is status to send response
      *
      * @var boolean
      */
-    public $_status = false;
+    private $_formStatus = false;
+    /**
+     * Additional info to send response
+     *
+     * @var string
+     */
+    private $_formMessage;
     /**
      * This is
      * _ - need to create unique property
      *
      * @var null|string
      */
-    public $_formActionKey;
+    private $_formActionKey;
 
 
     /**
@@ -44,11 +53,13 @@ class FormControls extends Model
 
     /**
      * @param boolean $value
+     * @param string $message
      * @return $this
      */
-    public function setFormStatus($value)
+    public function setFormStatus($value, $message = null)
     {
-        $this->_status = (bool)$value;
+        $this->_formStatus = (bool)$value;
+        $this->_formMessage = $message;
         return $this;
     }
 
@@ -57,7 +68,10 @@ class FormControls extends Model
      */
     public function getFormStatus()
     {
-        return ['status' => $this->_status];
+        return [
+            '_formStatus' => $this->_formStatus,
+            '_formMessage' => $this->_formMessage
+        ];
     }
 
     /**
@@ -67,7 +81,7 @@ class FormControls extends Model
      */
     public function load($data, $formName = null)
     {
-        $this->_formActionKey = isset($data['_formActionKey']) ? $data['_formActionKey'] : null;
+        $this->_formActionKey = $data['_formActionKey'] ?? null;
         return parent::load($data, $formName);
     }
 }
