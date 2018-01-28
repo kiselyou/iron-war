@@ -14,8 +14,8 @@ new PreLoader().load(() => {
 		socket.on('entry', (playerId) => {
 			
 			const controls = new SceneControls(playerId, 'main-container-canvas');
-			
-			console.log('SOCKET: Current Player is', controls.player, '====================================================');
+
+			console.log('SOCKET: Current Player is', controls.player, '=======================22=============================');
 			
 			controls
 				.init()

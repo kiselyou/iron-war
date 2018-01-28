@@ -1,4 +1,11 @@
-import * as THREE from 'three'
+import {
+    Clock,
+    Vector3,
+    BoxGeometry,
+    MeshPhongMaterial,
+    Mesh,
+    DirectionalLight
+} from 'three'
 import SceneControlsPlugin from './SceneControlsPlugin';
 import FlyControls from './FlyControls';
 import SkyeBoxControls from './SkyeBoxControls';
@@ -36,14 +43,14 @@ class SceneControls extends SceneControlsPlugin {
 		 * @type {Clock}
 		 * @private
 		 */
-		this._clockRender = new THREE.Clock();
+		this._clockRender = new Clock();
 		
 		/**
 		 *
 		 * @type {Clock}
 		 * @private
 		 */
-		this._clockAnimate = new THREE.Clock();
+		this._clockAnimate = new Clock();
 		
 		/**
 		 *
@@ -67,12 +74,12 @@ class SceneControls extends SceneControlsPlugin {
 		this.flyControls = new FlyControls(this.camera, this.player);
 		this.flyControls.initEvents();
 		
-		/**
-		 *
-		 * @type {HelperPoints}
-		 * @private
-		 */
-		this._helperPoints = new HelperPoints(this.scene);
+		// /**
+		//  *
+		//  * @type {HelperPoints}
+		//  * @private
+		//  */
+		// this._helperPoints = new HelperPoints(this.scene);
 		
 		/**
 		 *
@@ -104,13 +111,13 @@ class SceneControls extends SceneControlsPlugin {
 		// this.point = HelperPoints.get()
 		// 	.setPointTo(this.scene)
 		// 	.setPosition(
-		// 		new THREE.Vector3(
+		// 		new Vector3(
 		// 			this.camera.position.x,
 		// 			this.camera.position.y,
 		// 			this.camera.position.z - 50
 		// 		)
 		// 	);
-		
+        // this.point = HelperPoints.get().setPointTo(this.scene);
 	}
 	
 	/**
@@ -187,6 +194,7 @@ class SceneControls extends SceneControlsPlugin {
 	 * @returns {SceneControls}
 	 */
 	start() {
+
 		this.player.prepareModel();
 		this.camera.add(this.player.getAim());
 		this.camera.add(this.player.getModel());
@@ -219,8 +227,7 @@ class SceneControls extends SceneControlsPlugin {
 		});
 		
 		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_DOWN_LEFT, KeyboardControls.GROUP_FLY, (event) => {
-			let target = this.getNextPosition(this.camera, 500);
-			// this.point.setPosition(target);
+			let target = this.getNextPosition(this.camera, 250000);
 			this.player.shot(target);
 		});
 		
@@ -295,9 +302,9 @@ class SceneControls extends SceneControlsPlugin {
 	 */
 	init() {
 		// let s = 150;
-		// let cube = new THREE.BoxGeometry(s, s, s);
-		// let material = new THREE.MeshPhongMaterial({color: 0xffffff});
-		// let mesh = new THREE.Mesh(cube, material);
+		// let cube = new BoxGeometry(s, s, s);
+		// let material = new MeshPhongMaterial({color: 0xffffff});
+		// let mesh = new Mesh(cube, material);
 		// mesh.position.z = - 500;
 		// mesh.rotation.x = Math.PI / 4;
 		// mesh.rotation.y = Math.PI / 4;
@@ -307,10 +314,10 @@ class SceneControls extends SceneControlsPlugin {
 		// this.scene.add(mesh);
 		
 		let s = 50;
-		let cube = new THREE.BoxGeometry(s, s, s);
-		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		let cube = new BoxGeometry(s, s, s);
+		let material = new MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
 		for (let i = 0; i < 10; i ++) {
-			let mesh = new THREE.Mesh(cube, material);
+			let mesh = new Mesh(cube, material);
 			mesh.position.x = 500 * (2.0 * Math.random() - 1.0);
 			mesh.position.y = 500 * (2.0 * Math.random() - 1.0);
 			mesh.position.z = - 2000;// * (2.0 * Math.random() - 1.0);
@@ -329,7 +336,7 @@ class SceneControls extends SceneControlsPlugin {
 		}
 		
 		// lights
-		let dirLight = new THREE.DirectionalLight(0xffffff, 0.05);
+		let dirLight = new DirectionalLight(0xffffff, 0.05);
 		dirLight.position.set(0, -1, 0).normalize();
 		this.scene.add(dirLight);
 		dirLight.color.setHSL(0.1, 0.7, 0.5);

@@ -49369,7 +49369,7 @@ class FlyControls {
 		this.moveVector.y = data['mv']['y'];
 		this.moveVector.z = data['mv']['z'];
 		
-		// console.log('Other form: ', this.rotationVector, this.moveVector);
+		// console.log('Other player: ', this.rotationVector, this.moveVector);
 		
 		return this;
 	}
@@ -49814,20 +49814,38 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 		 *
 		 * @type {number}
 		 */
-		this.speed = 400;
+		this.speed = 1000;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.maxDistance = 1000;
+		this.maxDistanceToDestroy = 2000;
 		
 		/**
 		 *
 		 * @type {Vector3}
+         * @private
 		 */
 		this.direction = new __WEBPACK_IMPORTED_MODULE_2_three__["R" /* Vector3 */]();
+
+        /**
+         *
+         * @type {Vector3}
+         */
+		this.startPosition = new __WEBPACK_IMPORTED_MODULE_2_three__["R" /* Vector3 */]();
 	}
+
+    /**
+     *
+     * @param {Vector} v
+     * @returns {Charge}
+     */
+	setPosition(v) {
+        this.model.position.copy(v);
+        this.startPosition.copy(v);
+        return this;
+    }
 	
 	/**
 	 *
@@ -49835,7 +49853,6 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 	 */
 	prepare(target) {
 		this.target.copy(target);
-		this.direction = this.target.sub(this.model.position).normalize();
 		return this;
 	}
 	
@@ -49846,14 +49863,17 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 	/**
 	 *
 	 * @param {number} delta
-	 * @param {listenerToRemove} listener
+	 * @param {listenerToRemove} destroyListener
 	 * @returns {void}
 	 */
-	update(delta, listener) {
+	update(delta, destroyListener) {
+        this.direction.copy(this.target);
+        this.direction = this.direction.sub(this.model.position).normalize();
 		this.model.position.addScaledVector(this.direction, this.speed * delta);
-		if (this.model.position.distanceTo(this.target) > this.maxDistance) {
-			listener();
-		}
+
+		if (this.startPosition.distanceTo(this.model.position) >= this.maxDistanceToDestroy) {
+            destroyListener();
+        }
 	}
 	
 	/**
@@ -51581,8 +51601,8 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 		socket.on('entry', (playerId) => {
 			
 			const controls = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */](playerId, 'main-container-canvas');
-			
-			console.log('SOCKET: Current Player is', controls.player, '====================================================');
+
+			console.log('SOCKET: Current Player is', controls.player, '=======================22=============================');
 			
 			controls
 				.init()
@@ -51751,12 +51771,12 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		this.flyControls = new __WEBPACK_IMPORTED_MODULE_2__FlyControls__["a" /* default */](this.camera, this.player);
 		this.flyControls.initEvents();
 		
-		/**
-		 *
-		 * @type {HelperPoints}
-		 * @private
-		 */
-		this._helperPoints = new __WEBPACK_IMPORTED_MODULE_8__helpers_HelperPoints__["a" /* default */](this.scene);
+		// /**
+		//  *
+		//  * @type {HelperPoints}
+		//  * @private
+		//  */
+		// this._helperPoints = new HelperPoints(this.scene);
 		
 		/**
 		 *
@@ -51788,13 +51808,13 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		// this.point = HelperPoints.get()
 		// 	.setPointTo(this.scene)
 		// 	.setPosition(
-		// 		new THREE.Vector3(
+		// 		new Vector3(
 		// 			this.camera.position.x,
 		// 			this.camera.position.y,
 		// 			this.camera.position.z - 50
 		// 		)
 		// 	);
-		
+        // this.point = HelperPoints.get().setPointTo(this.scene);
 	}
 	
 	/**
@@ -51871,6 +51891,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 	 * @returns {SceneControls}
 	 */
 	start() {
+
 		this.player.prepareModel();
 		this.camera.add(this.player.getAim());
 		this.camera.add(this.player.getModel());
@@ -51903,8 +51924,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		});
 		
 		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_LEFT, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY, (event) => {
-			let target = this.getNextPosition(this.camera, 500);
-			// this.point.setPosition(target);
+			let target = this.getNextPosition(this.camera, 250000);
 			this.player.shot(target);
 		});
 		
@@ -51979,9 +51999,9 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 	 */
 	init() {
 		// let s = 150;
-		// let cube = new THREE.BoxGeometry(s, s, s);
-		// let material = new THREE.MeshPhongMaterial({color: 0xffffff});
-		// let mesh = new THREE.Mesh(cube, material);
+		// let cube = new BoxGeometry(s, s, s);
+		// let material = new MeshPhongMaterial({color: 0xffffff});
+		// let mesh = new Mesh(cube, material);
 		// mesh.position.z = - 500;
 		// mesh.rotation.x = Math.PI / 4;
 		// mesh.rotation.y = Math.PI / 4;
@@ -52675,6 +52695,7 @@ class SkyeBoxControls {
 
 
 
+
 class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	/**
 	 *
@@ -52717,7 +52738,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		this.shipKey = __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__["a" /* default */].I_EXPLORER_KEY;
 		
 		/**
-		 * Disable form
+		 * Disable player
 		 *
 		 * @type {boolean}
 		 * @private
@@ -52784,7 +52805,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		this.charges = [];
 		
 		
-		this.point = __WEBPACK_IMPORTED_MODULE_8__helpers_HelperPoints__["a" /* default */].get().setPointTo(this._sceneControls.scene);
+		// this.point = HelperPoints.get().setPointTo(this._sceneControls.scene);
 	}
 	
 	/**
@@ -52926,6 +52947,9 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				 * @type {ArsenalSlot}
 				 */
 				let slot = slots[slotName];
+                /**
+				 * @type {Charge}
+                 */
 				let charge = slot.arsenal.getCharge().prepare(target);
 				
 				let vector = new __WEBPACK_IMPORTED_MODULE_7_three__["R" /* Vector3 */]();
@@ -52933,7 +52957,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 					if (el.position.x === slot.position.x && el.position.y === slot.position.y && el.position.z === slot.position.z) {
 						vector.setFromMatrixPosition(el.matrixWorld);
 						// Sets default Charge position
-						charge.model.position.copy(vector);
+						charge.setPosition(vector);
 					}
 				}
 				
@@ -52962,9 +52986,8 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				 */
 				let charge = this.charges[i];
 				
-				this.point.setPosition(charge.target);
-				
-				
+				// this.point.setPosition(charge.target);
+
 				charge.update(delta, () => {
 					this._sceneControls.scene.remove(charge.model);
 					this.charges.splice(i, 1);

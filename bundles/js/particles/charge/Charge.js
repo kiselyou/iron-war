@@ -28,20 +28,38 @@ class Charge extends Particle {
 		 *
 		 * @type {number}
 		 */
-		this.speed = 400;
+		this.speed = 1000;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.maxDistance = 1000;
+		this.maxDistanceToDestroy = 2000;
 		
 		/**
 		 *
 		 * @type {Vector3}
+         * @private
 		 */
 		this.direction = new Vector3();
+
+        /**
+         *
+         * @type {Vector3}
+         */
+		this.startPosition = new Vector3();
 	}
+
+    /**
+     *
+     * @param {Vector} v
+     * @returns {Charge}
+     */
+	setPosition(v) {
+        this.model.position.copy(v);
+        this.startPosition.copy(v);
+        return this;
+    }
 	
 	/**
 	 *
@@ -49,7 +67,6 @@ class Charge extends Particle {
 	 */
 	prepare(target) {
 		this.target.copy(target);
-		this.direction = this.target.sub(this.model.position).normalize();
 		return this;
 	}
 	
@@ -60,14 +77,17 @@ class Charge extends Particle {
 	/**
 	 *
 	 * @param {number} delta
-	 * @param {listenerToRemove} listener
+	 * @param {listenerToRemove} destroyListener
 	 * @returns {void}
 	 */
-	update(delta, listener) {
+	update(delta, destroyListener) {
+        this.direction.copy(this.target);
+        this.direction = this.direction.sub(this.model.position).normalize();
 		this.model.position.addScaledVector(this.direction, this.speed * delta);
-		if (this.model.position.distanceTo(this.target) > this.maxDistance) {
-			listener();
-		}
+
+		if (this.startPosition.distanceTo(this.model.position) >= this.maxDistanceToDestroy) {
+            destroyListener();
+        }
 	}
 	
 	/**

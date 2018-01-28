@@ -5,9 +5,13 @@ import FlyControls from './../controls/FlyControls';
 import Listener from './../systems/Listener';
 import Ship from './../particles/ships/Ship';
 import ArsenalSlot from './../particles/arsenal/ArsenalSlot';
-import * as THREE from 'three';
+import {
+    Vector3,
+    Euler
+} from 'three';
 
 import HelperPoints from './../helpers/HelperPoints';
+
 
 class Player extends User {
 	/**
@@ -86,7 +90,7 @@ class Player extends User {
 		 *
 		 * @type {Vector3}
 		 */
-		this.position = new THREE.Vector3(
+		this.position = new Vector3(
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
 			0//400 * (2.0 * Math.random() - 1.0)
@@ -97,13 +101,13 @@ class Player extends User {
 		 *
 		 * @type {Euler}
 		 */
-		this.rotation = new THREE.Euler();
+		this.rotation = new Euler();
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.lookAt = new THREE.Vector3(0, 0, 0);
+		this.lookAt = new Vector3(0, 0, 0);
 		
 		/**
 		 *
@@ -118,7 +122,7 @@ class Player extends User {
 		this.charges = [];
 		
 		
-		this.point = HelperPoints.get().setPointTo(this._sceneControls.scene);
+		// this.point = HelperPoints.get().setPointTo(this._sceneControls.scene);
 	}
 	
 	/**
@@ -260,14 +264,17 @@ class Player extends User {
 				 * @type {ArsenalSlot}
 				 */
 				let slot = slots[slotName];
+                /**
+				 * @type {Charge}
+                 */
 				let charge = slot.arsenal.getCharge().prepare(target);
 				
-				let vector = new THREE.Vector3();
+				let vector = new Vector3();
 				for (let el of this.ship.model.children) {
 					if (el.position.x === slot.position.x && el.position.y === slot.position.y && el.position.z === slot.position.z) {
 						vector.setFromMatrixPosition(el.matrixWorld);
 						// Sets default Charge position
-						charge.model.position.copy(vector);
+						charge.setPosition(vector);
 					}
 				}
 				
@@ -296,9 +303,8 @@ class Player extends User {
 				 */
 				let charge = this.charges[i];
 				
-				this.point.setPosition(charge.target);
-				
-				
+				// this.point.setPosition(charge.target);
+
 				charge.update(delta, () => {
 					this._sceneControls.scene.remove(charge.model);
 					this.charges.splice(i, 1);
