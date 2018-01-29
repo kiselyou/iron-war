@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import {THREE} from './../../../../api';
 import Particle from './../../../Particle';
 import AimSignature from './AimSignature';
 import {

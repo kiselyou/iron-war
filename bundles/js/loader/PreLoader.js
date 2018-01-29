@@ -1,4 +1,5 @@
-import * as THREE from 'three';
+import {THREE} from './../../api';
+
 import OBJLoader from './OBJLoader';
 import MTLLoader from './MTLLoader';
 import FontLoader from './FontLoader';

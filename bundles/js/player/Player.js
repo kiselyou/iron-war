@@ -5,10 +5,8 @@ import FlyControls from './../controls/FlyControls';
 import Listener from './../systems/Listener';
 import Ship from './../particles/ships/Ship';
 import ArsenalSlot from './../particles/arsenal/ArsenalSlot';
-import {
-    Vector3,
-    Euler
-} from 'three';
+
+import {THREE} from './../../api';
 
 import HelperPoints from './../helpers/HelperPoints';
 
@@ -90,7 +88,7 @@ class Player extends User {
 		 *
 		 * @type {Vector3}
 		 */
-		this.position = new Vector3(
+		this.position = new THREE.Vector3(
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
 			0//400 * (2.0 * Math.random() - 1.0)
@@ -101,13 +99,13 @@ class Player extends User {
 		 *
 		 * @type {Euler}
 		 */
-		this.rotation = new Euler();
+		this.rotation = new THREE.Euler();
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.lookAt = new Vector3(0, 0, 0);
+		this.lookAt = new THREE.Vector3(0, 0, 0);
 		
 		/**
 		 *
@@ -269,7 +267,7 @@ class Player extends User {
                  */
 				let charge = slot.arsenal.getCharge().prepare(target);
 				
-				let vector = new Vector3();
+				let vector = new THREE.Vector3();
 				for (let el of this.ship.model.children) {
 					if (el.position.x === slot.position.x && el.position.y === slot.position.y && el.position.z === slot.position.z) {
 						vector.setFromMatrixPosition(el.matrixWorld);

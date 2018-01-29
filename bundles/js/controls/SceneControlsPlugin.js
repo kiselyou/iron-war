@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import {THREE} from './../../api';
 
 const DEG2RAD = Math.PI / 180;
 const RAD2DEG = 180 / Math.PI;

@@ -1,5 +1,5 @@
 import FontLoader from './../loader/FontLoader';
-import * as THREE from 'three';
+import {THREE} from './../../api';
 
 class TextCanvas {
 	constructor() {

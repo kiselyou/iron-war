@@ -1,6 +1,6 @@
 import ParticleError from './ParticleError';
 import Listener from './systems/Listener';
-import * as THREE from 'three';
+import {THREE} from './../api';
 
 class Particle {
 	/**

@@ -1,6 +1,6 @@
 import Particle from './../../Particle';
 import ParticleClassI from './../../classes/ParticleClassI';
-import {Vector3} from 'three';
+import {THREE} from './../../../api';
 
 class Charge extends Particle {
 	
@@ -22,7 +22,7 @@ class Charge extends Particle {
 		 *
 		 * @type {Vector3}
 		 */
-		this.target = new Vector3();
+		this.target = new THREE.Vector3();
 		
 		/**
 		 *
@@ -41,13 +41,13 @@ class Charge extends Particle {
 		 * @type {Vector3}
          * @private
 		 */
-		this.direction = new Vector3();
+		this.direction = new THREE.Vector3();
 
         /**
          *
          * @type {Vector3}
          */
-		this.startPosition = new Vector3();
+		this.startPosition = new THREE.Vector3();
 	}
 
     /**

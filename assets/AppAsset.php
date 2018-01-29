@@ -23,7 +23,9 @@ class AppAsset extends AssetBundle
         'build/bundle.css',
     ];
     public $js = [
-	    'build/bundle.js',
+        'build/three.js/three.min.js',
+        'build/ShaderParticleEngine/build/ShaderParticles.min.js',
+        'build/bundle.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

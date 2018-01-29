@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import {THREE} from './../../../api';
 import Particle from './../../Particle';
 
 class ArsenalSlot extends Particle {

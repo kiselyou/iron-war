@@ -1,11 +1,4 @@
-import {
-    Clock,
-    Vector3,
-    BoxGeometry,
-    MeshPhongMaterial,
-    Mesh,
-    DirectionalLight
-} from 'three'
+import {THREE} from './../../api';
 import SceneControlsPlugin from './SceneControlsPlugin';
 import FlyControls from './FlyControls';
 import SkyeBoxControls from './SkyeBoxControls';
@@ -43,14 +36,14 @@ class SceneControls extends SceneControlsPlugin {
 		 * @type {Clock}
 		 * @private
 		 */
-		this._clockRender = new Clock();
+		this._clockRender = new THREE.Clock();
 		
 		/**
 		 *
 		 * @type {Clock}
 		 * @private
 		 */
-		this._clockAnimate = new Clock();
+		this._clockAnimate = new THREE.Clock();
 		
 		/**
 		 *
@@ -111,13 +104,15 @@ class SceneControls extends SceneControlsPlugin {
 		// this.point = HelperPoints.get()
 		// 	.setPointTo(this.scene)
 		// 	.setPosition(
-		// 		new Vector3(
+		// 		new THREE.Vector3(
 		// 			this.camera.position.x,
 		// 			this.camera.position.y,
 		// 			this.camera.position.z - 50
 		// 		)
 		// 	);
         // this.point = HelperPoints.get().setPointTo(this.scene);
+
+
 	}
 	
 	/**
@@ -302,9 +297,9 @@ class SceneControls extends SceneControlsPlugin {
 	 */
 	init() {
 		// let s = 150;
-		// let cube = new BoxGeometry(s, s, s);
-		// let material = new MeshPhongMaterial({color: 0xffffff});
-		// let mesh = new Mesh(cube, material);
+		// let cube = new THREE.BoxGeometry(s, s, s);
+		// let material = new THREE.MeshPhongMaterial({color: 0xffffff});
+		// let mesh = new THREE.Mesh(cube, material);
 		// mesh.position.z = - 500;
 		// mesh.rotation.x = Math.PI / 4;
 		// mesh.rotation.y = Math.PI / 4;
@@ -314,10 +309,10 @@ class SceneControls extends SceneControlsPlugin {
 		// this.scene.add(mesh);
 		
 		let s = 50;
-		let cube = new BoxGeometry(s, s, s);
-		let material = new MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		let cube = new THREE.BoxGeometry(s, s, s);
+		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
 		for (let i = 0; i < 10; i ++) {
-			let mesh = new Mesh(cube, material);
+			let mesh = new THREE.Mesh(cube, material);
 			mesh.position.x = 500 * (2.0 * Math.random() - 1.0);
 			mesh.position.y = 500 * (2.0 * Math.random() - 1.0);
 			mesh.position.z = - 2000;// * (2.0 * Math.random() - 1.0);
@@ -336,7 +331,7 @@ class SceneControls extends SceneControlsPlugin {
 		}
 		
 		// lights
-		let dirLight = new DirectionalLight(0xffffff, 0.05);
+		let dirLight = new THREE.DirectionalLight(0xffffff, 0.05);
 		dirLight.position.set(0, -1, 0).normalize();
 		this.scene.add(dirLight);
 		dirLight.color.setHSL(0.1, 0.7, 0.5);

@@ -1,0 +1,22 @@
+{
+  "name": "iron-war",
+  "description": "Iron War",
+  "main": "index.js",
+  "authors": [
+    "Valery Kiseliou <v.a.kiselyov@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/kiselyou/iron-war",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower-asset",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "three.js": "*",
+    "ShaderParticleEngine": "*"
+  }
+}

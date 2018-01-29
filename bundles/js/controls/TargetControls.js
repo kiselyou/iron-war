@@ -1,6 +1,6 @@
 import Target from './../particles/decoration/target/Target';
 import TargetDirection from './../particles/decoration/target/TargetDirection';
-import * as THREE from 'three';
+import {THREE} from './../../api';
 
 const TARGET_ANGLE_SIZE = 5;
 

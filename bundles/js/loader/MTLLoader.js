@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import {THREE} from './../../api';
 
 /**
  * Loads a Wavefront .mtl file specifying materials
