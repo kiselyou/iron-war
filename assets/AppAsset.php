@@ -27,8 +27,5 @@ class AppAsset extends AssetBundle
         'build/ShaderParticleEngine/build/ShaderParticles.min.js',
         'build/bundle.js',
     ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset'
-    ];
+    public $depends = [];
 }

@@ -50,10 +50,11 @@ gulp.task('build:admin:js', () => {
     buildJs('bundles/admin/index.js', 'bundle-admin.js');
 });
 
-gulp.task('build:prod', () => {
+gulp.task('build', () => {
 	isProd = true;
 	gulp.run('build:js');
 	gulp.run('build:less');
+	gulp.run('build:admin:js');
 });
 
 gulp.task('build:less', function() {
@@ -73,31 +74,7 @@ gulp.task('build:less', function() {
 });
 
 gulp.task('watch', function() {
-	gulp.watch(
-		[
-			'bundles/index.js',
-			'bundles/js/**/*.js'
-		],
-		[
-			'build:js'
-		]
-	);
-	
-	gulp.watch(
-		[
-			'bundles/less/**/*.less'
-		],
-		[
-			'build:less'
-		]
-	);
-
-    gulp.watch(
-        [
-            'bundles/admin/**/*.js'
-        ],
-        [
-            'build:admin:js'
-        ]
-    );
+	gulp.watch(['bundles/index.js', 'bundles/js/**/*.js'], ['build:js']);
+	gulp.watch(['bundles/less/**/*.less'], ['build:less']);
+    gulp.watch(['bundles/admin/**/*.js'], ['build:admin:js']);
 });
