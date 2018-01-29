@@ -1,9 +1,7 @@
-/**
- * @type THREE
- */
+/** @module three */
+/** @class */
 export const THREE = window.THREE;
 
-/**
- * @type SPE
- */
+/** @type SPE */
+/** @class */
 export const SPE = window.SPE;

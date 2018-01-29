@@ -4,6 +4,7 @@ import PreLoader from './js/loader/PreLoader';
 import {socketConfig} from './../socket/config';
 import io from 'socket.io-client';
 
+
 new PreLoader().load(() => {
 	/**
 	 * @type {Socket}
@@ -15,7 +16,7 @@ new PreLoader().load(() => {
 			
 			const controls = new SceneControls(playerId, 'main-container-canvas');
 
-			console.log('SOCKET: Current Player is', controls.player, '=======================22=============================');
+			// console.log('SOCKET: Current Player is', controls.player, '=======================22=============================');
 			
 			controls
 				.init()

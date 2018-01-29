@@ -5629,6 +5629,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
 new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load(() => {
 	/**
 	 * @type {Socket}
@@ -5640,7 +5641,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			
 			const controls = new __WEBPACK_IMPORTED_MODULE_0__js_controls_SceneControls__["a" /* default */](playerId, 'main-container-canvas');
 
-			console.log('SOCKET: Current Player is', controls.player, '=======================22=============================');
+			// console.log('SOCKET: Current Player is', controls.player, '=======================22=============================');
 			
 			controls
 				.init()
@@ -5937,75 +5938,91 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		this.camera.add(this.player.getModel());
 		this.scene.add(this.camera);
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_PK, (event, keyboard) => {
-			if (keyboard.key === 'openConsole') {
-				if (keyboard.value === keyboard.valueOn) {
-					// Enable fly actions
-					this.player.cursor(true);
-					this.player.keyboards.enableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
-					// Hide console of ship
-					// ...
-				} else {
-					// Disable fly actions
-					this.player.cursor(false);
-					this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
-					// Open console of ship
-					// ...
+		this.player.keyboards.addEventListener(
+			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_KEY_UP,
+			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_PK,
+			(event, keyboard) => {
+				if (keyboard.key === 'openConsole') {
+					if (keyboard.value === keyboard.valueOn) {
+						// Enable fly actions
+						this.player.cursor(true);
+						this.player.keyboards.enableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+						// Hide console of ship
+						// ...
+					} else {
+						// Disable fly actions
+						this.player.cursor(false);
+						this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
+						// Open console of ship
+						// ...
+					}
 				}
 			}
-		});
+		);
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_CENTER, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
-			let openConsole = this.player.keyboards.fly.openConsole;
-			if (openConsole.value === openConsole.valueOn) {
-				this.targetControls.setSelected(null);
-				this.player.ship.aim.signatureRightTop.hide();
+		this.player.keyboards.addEventListener(
+			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_CENTER,
+			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET,
+			() => {
+				let openConsole = this.player.keyboards.fly.openConsole;
+				if (openConsole.value === openConsole.valueOn) {
+					this.targetControls.setSelected(null);
+					this.player.ship.aim.signatureRightTop.hide();
+				}
 			}
-		});
+		);
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_LEFT, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY, (event) => {
-			let target = this.getNextPosition(this.camera, 250000);
-			this.player.shot(target);
-		});
+		this.player.keyboards.addEventListener(
+			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_DOWN_LEFT,
+			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY,
+			() => {
+				let target = this.getNextPosition(this.camera, 250000);
+				this.player.shot(target);
+			}
+		);
 		
-		this.player.keyboards.addEventListener(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_WHEEL, __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET, (event) => {
-			let openConsole = this.player.keyboards.fly.openConsole;
-			if (event.deltaY !== 0 && openConsole.value === openConsole.valueOn) {
-				this.targetControls.changeTarget(
-					this._objects,
-					event.deltaY < 0 ? -1 : 1,
-					(element) => {
-						let signature = this.player.ship.aim.signatureRightTop;
-						if (element) {
-							let distance = Math.round(this.camera.position.distanceTo(element.model.position));
-							signature.setText(distance, element.label);
-							signature.show();
-						} else {
-							signature.hide();
-						}
-					},
-					(element, target, box) => {
-						let signature = this.player.ship.aim.signatureRightTop;
-						if (element) {
-							let distance = Math.round(this.camera.position.distanceTo(element.model.position));
-							signature.update(distance);
-							
-							let x = box.x,
-								y = box.y,
-								z = box.z;
-							
-							let size = Math.max(Math.max(x, y), z) / 2;
-							
-							if (distance < size) {
-								target.hide();
+		this.player.keyboards.addEventListener(
+			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].EVENT_MOUSE_WHEEL,
+			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_TARGET,
+			(event) => {
+				let openConsole = this.player.keyboards.fly.openConsole;
+				if (event.deltaY !== 0 && openConsole.value === openConsole.valueOn) {
+					this.targetControls.changeTarget(
+						this._objects,
+						event.deltaY < 0 ? -1 : 1,
+						(element) => {
+							let signature = this.player.ship.aim.signatureRightTop;
+							if (element) {
+								let distance = Math.round(this.camera.position.distanceTo(element.model.position));
+								signature.setText(distance, element.label);
+								signature.show();
 							} else {
-								target.show();
+								signature.hide();
+							}
+						},
+						(element, target, box) => {
+							let signature = this.player.ship.aim.signatureRightTop;
+							if (element) {
+								let distance = Math.round(this.camera.position.distanceTo(element.model.position));
+								signature.update(distance);
+
+								let x = box.x,
+									y = box.y,
+									z = box.z;
+
+								let size = Math.max(Math.max(x, y), z) / 2;
+
+								if (distance < size) {
+									target.hide();
+								} else {
+									target.show();
+								}
 							}
 						}
-					}
-				);
+					);
+				}
 			}
-		});
+		);
 		
 		this.player
 			.addEventListener(__WEBPACK_IMPORTED_MODULE_4__player_Player__["a" /* default */].EVENT_ENABLED, () => {
@@ -13353,4 +13370,3 @@ Backoff.prototype.setJitter = function(jitter){
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=maps/bundle.js.map

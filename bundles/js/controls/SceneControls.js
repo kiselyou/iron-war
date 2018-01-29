@@ -195,75 +195,91 @@ class SceneControls extends SceneControlsPlugin {
 		this.camera.add(this.player.getModel());
 		this.scene.add(this.camera);
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_KEY_UP, KeyboardControls.GROUP_PK, (event, keyboard) => {
-			if (keyboard.key === 'openConsole') {
-				if (keyboard.value === keyboard.valueOn) {
-					// Enable fly actions
-					this.player.cursor(true);
-					this.player.keyboards.enableGroup(KeyboardControls.GROUP_FLY);
-					// Hide console of ship
-					// ...
-				} else {
-					// Disable fly actions
-					this.player.cursor(false);
-					this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
-					// Open console of ship
-					// ...
+		this.player.keyboards.addEventListener(
+			KeyboardControls.EVENT_KEY_UP,
+			KeyboardControls.GROUP_PK,
+			(event, keyboard) => {
+				if (keyboard.key === 'openConsole') {
+					if (keyboard.value === keyboard.valueOn) {
+						// Enable fly actions
+						this.player.cursor(true);
+						this.player.keyboards.enableGroup(KeyboardControls.GROUP_FLY);
+						// Hide console of ship
+						// ...
+					} else {
+						// Disable fly actions
+						this.player.cursor(false);
+						this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
+						// Open console of ship
+						// ...
+					}
 				}
 			}
-		});
+		);
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_DOWN_CENTER, KeyboardControls.GROUP_TARGET, (event) => {
-			let openConsole = this.player.keyboards.fly.openConsole;
-			if (openConsole.value === openConsole.valueOn) {
-				this.targetControls.setSelected(null);
-				this.player.ship.aim.signatureRightTop.hide();
+		this.player.keyboards.addEventListener(
+			KeyboardControls.EVENT_MOUSE_DOWN_CENTER,
+			KeyboardControls.GROUP_TARGET,
+			() => {
+				let openConsole = this.player.keyboards.fly.openConsole;
+				if (openConsole.value === openConsole.valueOn) {
+					this.targetControls.setSelected(null);
+					this.player.ship.aim.signatureRightTop.hide();
+				}
 			}
-		});
+		);
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_DOWN_LEFT, KeyboardControls.GROUP_FLY, (event) => {
-			let target = this.getNextPosition(this.camera, 250000);
-			this.player.shot(target);
-		});
+		this.player.keyboards.addEventListener(
+			KeyboardControls.EVENT_MOUSE_DOWN_LEFT,
+			KeyboardControls.GROUP_FLY,
+			() => {
+				let target = this.getNextPosition(this.camera, 250000);
+				this.player.shot(target);
+			}
+		);
 		
-		this.player.keyboards.addEventListener(KeyboardControls.EVENT_MOUSE_WHEEL, KeyboardControls.GROUP_TARGET, (event) => {
-			let openConsole = this.player.keyboards.fly.openConsole;
-			if (event.deltaY !== 0 && openConsole.value === openConsole.valueOn) {
-				this.targetControls.changeTarget(
-					this._objects,
-					event.deltaY < 0 ? -1 : 1,
-					(element) => {
-						let signature = this.player.ship.aim.signatureRightTop;
-						if (element) {
-							let distance = Math.round(this.camera.position.distanceTo(element.model.position));
-							signature.setText(distance, element.label);
-							signature.show();
-						} else {
-							signature.hide();
-						}
-					},
-					(element, target, box) => {
-						let signature = this.player.ship.aim.signatureRightTop;
-						if (element) {
-							let distance = Math.round(this.camera.position.distanceTo(element.model.position));
-							signature.update(distance);
-							
-							let x = box.x,
-								y = box.y,
-								z = box.z;
-							
-							let size = Math.max(Math.max(x, y), z) / 2;
-							
-							if (distance < size) {
-								target.hide();
+		this.player.keyboards.addEventListener(
+			KeyboardControls.EVENT_MOUSE_WHEEL,
+			KeyboardControls.GROUP_TARGET,
+			(event) => {
+				let openConsole = this.player.keyboards.fly.openConsole;
+				if (event.deltaY !== 0 && openConsole.value === openConsole.valueOn) {
+					this.targetControls.changeTarget(
+						this._objects,
+						event.deltaY < 0 ? -1 : 1,
+						(element) => {
+							let signature = this.player.ship.aim.signatureRightTop;
+							if (element) {
+								let distance = Math.round(this.camera.position.distanceTo(element.model.position));
+								signature.setText(distance, element.label);
+								signature.show();
 							} else {
-								target.show();
+								signature.hide();
+							}
+						},
+						(element, target, box) => {
+							let signature = this.player.ship.aim.signatureRightTop;
+							if (element) {
+								let distance = Math.round(this.camera.position.distanceTo(element.model.position));
+								signature.update(distance);
+
+								let x = box.x,
+									y = box.y,
+									z = box.z;
+
+								let size = Math.max(Math.max(x, y), z) / 2;
+
+								if (distance < size) {
+									target.hide();
+								} else {
+									target.show();
+								}
 							}
 						}
-					}
-				);
+					);
+				}
 			}
-		});
+		);
 		
 		this.player
 			.addEventListener(Player.EVENT_ENABLED, () => {
