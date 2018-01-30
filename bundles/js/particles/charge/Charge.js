@@ -1,6 +1,6 @@
 import Particle from './../../Particle';
 import ParticleClassI from './../../classes/ParticleClassI';
-import {THREE} from './../../../api';
+import {THREE} from '../../../api';
 
 class Charge extends Particle {
 	

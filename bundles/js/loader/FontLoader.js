@@ -1,4 +1,4 @@
-import {THREE} from './../../api';
+import {THREE} from '../../api';
 const FONT = 'fonts/Audiowide/Audiowide_Regular.json';
 
 /**

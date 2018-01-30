@@ -1,4 +1,4 @@
-import {THREE} from './../../../api';
+import {THREE} from '../../../api';
 import Particle from './../../Particle';
 
 class ArsenalSlot extends Particle {

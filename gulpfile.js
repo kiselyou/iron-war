@@ -74,7 +74,7 @@ gulp.task('build:less', function() {
 });
 
 gulp.task('watch', function() {
-	gulp.watch(['bundles/index.js', 'bundles/js/**/*.js'], ['build:js']);
+	gulp.watch(['bundles/index.js', 'bundles/api.js', 'bundles/js/**/*.js'], ['build:js']);
 	gulp.watch(['bundles/less/**/*.less'], ['build:less']);
     gulp.watch(['bundles/admin/**/*.js'], ['build:admin:js']);
 });

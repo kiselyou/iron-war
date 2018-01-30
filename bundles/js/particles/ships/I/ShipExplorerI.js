@@ -3,7 +3,7 @@ import EngineIM20 from './../../engine/I/EngineIM20';
 import ParticleClassI from './../../../classes/ParticleClassI';
 import ArsenalIncludes from './../../arsenal/ArsenalIncludes';
 import Arsenal from './../../arsenal/Arsenal';
-import {THREE} from './../../../../api';
+import {THREE} from '../../../../api';
 
 class ShipExplorerI extends Ship {
 	constructor() {

@@ -1,4 +1,4 @@
-import {THREE} from './../../api';
+import {THREE} from '../../api';
 import HelperPoint from './HelperPoint';
 
 let helper = null;

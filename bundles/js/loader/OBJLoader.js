@@ -1,4 +1,4 @@
-import {THREE} from './../../api';
+import {THREE} from '../../api';
 
 /**
  * @author mrdoob / http://mrdoob.com/

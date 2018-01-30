@@ -1,4 +1,4 @@
-import {THREE} from './../../api';
+import {THREE} from '../../api';
 
 import OBJLoader from './OBJLoader';
 import MTLLoader from './MTLLoader';

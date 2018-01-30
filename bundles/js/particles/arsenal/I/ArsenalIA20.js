@@ -1,6 +1,6 @@
 import Arsenal from './../Arsenal';
 import ParticleClassI from './../../../classes/ParticleClassI';
-import {THREE} from './../../../../api';
+import {THREE} from '../../../../api';
 
 class ArsenalIA20 extends Arsenal {
 	

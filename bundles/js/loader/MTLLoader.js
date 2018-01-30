@@ -1,4 +1,4 @@
-import {THREE} from './../../api';
+import {THREE} from '../../api';
 
 /**
  * Loads a Wavefront .mtl file specifying materials

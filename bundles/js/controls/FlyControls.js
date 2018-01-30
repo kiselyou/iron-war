@@ -1,4 +1,4 @@
-import {THREE} from './../../api';
+import {THREE} from '../../api';
 import Engine from './../particles/engine/Engine';
 import KeyboardControls from './../keyboard/KeyboardControls';
 

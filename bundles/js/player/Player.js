@@ -6,7 +6,7 @@ import Listener from './../systems/Listener';
 import Ship from './../particles/ships/Ship';
 import ArsenalSlot from './../particles/arsenal/ArsenalSlot';
 
-import {THREE} from './../../api';
+import {THREE} from '../../api';
 
 import HelperPoints from './../helpers/HelperPoints';
 

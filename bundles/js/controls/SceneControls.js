@@ -1,4 +1,4 @@
-import {THREE} from './../../api';
+import {THREE} from '../../api';
 import SceneControlsPlugin from './SceneControlsPlugin';
 import FlyControls from './FlyControls';
 import SkyeBoxControls from './SkyeBoxControls';
@@ -7,6 +7,8 @@ import Player from './../player/Player';
 import KeyboardControls from "../keyboard/KeyboardControls";
 import TargetControls from './TargetControls';
 import Particle from './../Particle';
+
+import ShaderFire from './../particles/arsenal/I/ShaderFire';
 
 import HelperPoints from './../helpers/HelperPoints';
 
@@ -111,6 +113,10 @@ class SceneControls extends SceneControlsPlugin {
 		// 		)
 		// 	);
         // this.point = HelperPoints.get().setPointTo(this.scene);
+
+
+        // this.shader = new ShaderFire();
+        // this.shader.addTo(this.scene);
 
 
 	}
