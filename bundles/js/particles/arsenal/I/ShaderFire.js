@@ -1,4 +1,5 @@
-import {THREE, SPE} from './../../../../api';
+import {THREE} from './../../../../api';
+import SPE from 'shader-particle-engine';
 
 class ShaderFire {
     constructor() {
@@ -94,12 +95,12 @@ class ShaderFire {
                 ]
             },
             opacity: {
-                value: [0.4, 0]
+                value: [0.5, 0]
             }
         });
 
         this.fireball = new SPE.Emitter({
-            particleCount: 20,
+            particleCount: 40,
             type: SPE.distributions.SPHERE,
             position: {
                 radius: 1
@@ -133,7 +134,7 @@ class ShaderFire {
                 distribution: SPE.distributions.SPHERE
             },
             maxAge: {
-                value: 2
+                value: 4
             },
             // duration: 1,
             activeMultiplier: 2000,
@@ -142,13 +143,13 @@ class ShaderFire {
                 distribution: SPE.distributions.SPHERE
             },
             size: {
-                value: 40
+                value: 400
             },
             color: {
                 value: new THREE.Color(0.2, 0.2, 0.2)
             },
             opacity: {
-                value: [0, 0, 0.2, 0]
+                value: [0, 0.6, 0]
             }
         });
 
@@ -175,15 +176,16 @@ class ShaderFire {
     }
 
     addTo(obj) {
-
-        console.log(123);
-
         this.group
             .addEmitter(this.fireball)
             .addEmitter(this.flash);
-        this.shockwaveGroup
-            .addEmitter(this.debris)
-            .addEmitter(this.mist);
+
+        // this.shockwaveGroup
+        //     .addEmitter(this.debris)
+        //     .addEmitter(this.mist);
+
+        this.group.mesh.position.z = -2000;
+        this.shockwaveGroup.mesh.position.z = -100;
 
         obj.add(this.shockwaveGroup.mesh);
         obj.add(this.group.mesh);
@@ -191,7 +193,7 @@ class ShaderFire {
 
     update() {
         this.group.tick();
-        this.shockwaveGroup.tick();
+        // this.shockwaveGroup.tick();
     }
 }
 

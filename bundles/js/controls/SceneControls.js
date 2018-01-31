@@ -115,8 +115,9 @@ class SceneControls extends SceneControlsPlugin {
         // this.point = HelperPoints.get().setPointTo(this.scene);
 
 
-        // this.shader = new ShaderFire();
-        // this.shader.addTo(this.scene);
+        this.shader = new ShaderFire();
+        this.shader.addTo(this.scene);
+
 
 
 	}
@@ -425,6 +426,8 @@ class SceneControls extends SceneControlsPlugin {
 			// 		this._players[playerId].update(delta);
 			// 	}
 			// }
+
+            this.shader.update();
 		}
 		
 		this.renderer.render(this.scene, this.camera);

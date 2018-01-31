@@ -17,6 +17,6 @@
   ],
   "dependencies": {
     "three.js": "^0.89.0",
-    "ShaderParticleEngine": "*"
+    "ShaderParticleEngine": "0.8.5"
   }
 }
