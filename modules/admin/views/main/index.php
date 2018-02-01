@@ -70,6 +70,16 @@ use \app\modules\admin\entities\Player;
                             'width' => '1%',
                         ],
                     ],
+                    [
+                        'class' => \yii\grid\ActionColumn::className(),
+                        'headerOptions' => [
+                            'width' => '100px'
+                        ],
+                        'buttonOptions' => [
+                            'class' => 'btn btn-default btn-xs'
+                        ],
+                        'template' => '{view} {update} {delete}',
+                    ],
                 ],
             ])
         ?>
