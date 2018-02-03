@@ -65,20 +65,20 @@ use \app\modules\admin\entities\Player;
                         'label' => 'Ключ',
                     ],
                     [
-                        'class' => CheckboxColumn::className(),
-                        'headerOptions' => [
-                            'width' => '1%',
-                        ],
-                    ],
-                    [
                         'class' => \yii\grid\ActionColumn::className(),
                         'headerOptions' => [
-                            'width' => '100px'
+                            'width' => '1%'
                         ],
                         'buttonOptions' => [
                             'class' => 'btn btn-default btn-xs'
                         ],
-                        'template' => '{view} {update} {delete}',
+                        'template' => '{delete}',
+                    ],
+                    [
+                        'class' => CheckboxColumn::className(),
+                        'headerOptions' => [
+                            'width' => '1%',
+                        ],
                     ],
                 ],
             ])

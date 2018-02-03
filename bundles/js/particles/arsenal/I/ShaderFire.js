@@ -4,6 +4,8 @@ import SPE from 'shader-particle-engine';
 class ShaderFire {
     constructor() {
 
+        this.ageTime = 0.5;
+
         new THREE.TextureLoader();
 
         this.group = new SPE.Group({
@@ -15,7 +17,8 @@ class ShaderFire {
             depthTest: true,
             depthWrite: false,
             blending: THREE.AdditiveBlending,
-            scale: 600
+            scale: 600,
+            maxParticleCount: 200,
         });
 
         this.shockwaveGroup = new SPE.Group({
@@ -25,6 +28,7 @@ class ShaderFire {
             depthTest: false,
             depthWrite: true,
             blending: THREE.NormalBlending,
+            maxParticleCount: 200,
         });
 
         this.shockwave = new SPE.Emitter({
@@ -100,21 +104,21 @@ class ShaderFire {
         });
 
         this.fireball = new SPE.Emitter({
-            particleCount: 40,
+            particleCount: 10,
+            duration: 0.5,
             type: SPE.distributions.SPHERE,
             position: {
                 radius: 1
             },
             maxAge: {
-                value: 2
+                value: 0.5
             },
-            // duration: 1,
-            activeMultiplier: 20,
+            activeMultiplier: 10,
             velocity: {
-                value: new THREE.Vector3(10)
+                value: new THREE.Vector3(30)
             },
             size: {
-                value: [20, 100]
+                value: [20, 500]
             },
             color: {
                 value: [
@@ -123,7 +127,7 @@ class ShaderFire {
                 ]
             },
             opacity: {
-                value: [0.5, 0.35, 0.1, 0]
+                value: [0.5, 0.35, 0.2, 0.1, 0]
             }
         });
 
@@ -154,28 +158,35 @@ class ShaderFire {
         });
 
         this.flash = new SPE.Emitter({
-            particleCount: 50,
+            particleCount: 20,
+            duration: 0.5,
             position: {
                 spread: new THREE.Vector3(5, 5, 5)
             },
             velocity: {
-                spread: new THREE.Vector3(30),
+                spread: new THREE.Vector3(20),
                 distribution: SPE.distributions.SPHERE
             },
             size: {
                 value: [2, 20, 20, 20]
             },
             maxAge: {
-                value: 2
+                value: 0.5
             },
-            activeMultiplier: 2000,
+            activeMultiplier: 10,
             opacity: {
                 value: [0.5, 0.25, 0, 0]
             }
         });
     }
 
-    addTo(obj) {
+    /**
+     *
+     * @param {Scene|Object3D} obj
+     * @param {Vector3} position
+     * @returns {ShaderFire}
+     */
+    setTo(obj, position) {
         this.group
             .addEmitter(this.fireball)
             .addEmitter(this.flash);
@@ -184,11 +195,28 @@ class ShaderFire {
         //     .addEmitter(this.debris)
         //     .addEmitter(this.mist);
 
-        this.group.mesh.position.z = -2000;
-        this.shockwaveGroup.mesh.position.z = -100;
+        // this.group.mesh.position.z = -2000;
+        // this.shockwaveGroup.mesh.position.z = -100;
 
-        obj.add(this.shockwaveGroup.mesh);
+        if (position) {
+            this.group.mesh.position.copy(position);
+            // this.shockwaveGroup.mesh.position.copy(position);
+        }
+
+
+        // obj.add(this.shockwaveGroup.mesh);
         obj.add(this.group.mesh);
+        return this;
+    }
+
+    /**
+     *
+     * @param {Scene|Object3D} object
+     * @returns {ShaderFire}
+     */
+    removeFrom(object) {
+        object.remove(this.group.mesh);
+        return this;
     }
 
     update() {

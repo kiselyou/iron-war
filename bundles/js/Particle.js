@@ -1,6 +1,7 @@
 import ParticleError from './ParticleError';
 import Listener from './systems/Listener';
-import {THREE} from '../api';
+import {THREE, UUID} from '../api';
+import ShaderFire from './particles/arsenal/I/ShaderFire';
 
 class Particle {
 	/**
@@ -13,7 +14,7 @@ class Particle {
 		 *
 		 * @type {string}
 		 */
-		this.id = '';
+		this.id = UUID();
 		
 		/**
 		 *
@@ -133,6 +134,7 @@ class Particle {
 		 */
 		let clone = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
 		clone.isClone = true;
+		clone.id = UUID();
 		for (let property in this) {
 			if (this.hasOwnProperty(property)) {
 				if (this[property] instanceof Particle) {
@@ -143,6 +145,8 @@ class Particle {
 					clone[property] = clone[property].clone();
 				} else if (this[property] instanceof THREE.Vector2) {
 					clone[property] = clone[property].clone();
+                } else if (this[property] instanceof ShaderFire) {
+                    this[property] = new ShaderFire();
 				}
 			}
 		}

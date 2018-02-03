@@ -8,8 +8,6 @@ import KeyboardControls from "../keyboard/KeyboardControls";
 import TargetControls from './TargetControls';
 import Particle from './../Particle';
 
-import ShaderFire from './../particles/arsenal/I/ShaderFire';
-
 import HelperPoints from './../helpers/HelperPoints';
 
 const FPS = 1000 / 30;
@@ -22,7 +20,6 @@ class SceneControls extends SceneControlsPlugin {
 	 */
 	constructor(playerId, containerID) {
 		super();
-		
 		/**
 		 *
 		 * @type {?Element}
@@ -115,12 +112,47 @@ class SceneControls extends SceneControlsPlugin {
         // this.point = HelperPoints.get().setPointTo(this.scene);
 
 
-        this.shader = new ShaderFire();
-        this.shader.addTo(this.scene);
 
 
+
+        this.test = [];
 
 	}
+
+    /**
+	 *
+     * @returns {Array.<Particle>}
+     */
+	getObjects() {
+		return this._objects;
+	}
+
+    /**
+	 *
+     * @param {Particle} value
+     * @returns {SceneControls}
+     */
+    addObject(value) {
+        this._objects.push(value);
+        return this;
+    }
+
+    /**
+     *
+     * @param {Particle} value
+     * @returns {SceneControls}
+     */
+    removeObject(value) {
+        for (let i = 0; i < this._objects.length; i++) {
+            let particle = this._objects[i];
+            if (particle.id === value.id) {
+                this._objects.splice(i, 1);
+                this.scene.remove(particle.model);
+                break;
+            }
+        }
+        return this;
+    }
 	
 	/**
 	 * @callback updatePlayerListener
@@ -252,7 +284,7 @@ class SceneControls extends SceneControlsPlugin {
 				let openConsole = this.player.keyboards.fly.openConsole;
 				if (event.deltaY !== 0 && openConsole.value === openConsole.valueOn) {
 					this.targetControls.changeTarget(
-						this._objects,
+						this.getObjects(),
 						event.deltaY < 0 ? -1 : 1,
 						(element) => {
 							let signature = this.player.ship.aim.signatureRightTop;
@@ -344,13 +376,15 @@ class SceneControls extends SceneControlsPlugin {
 			mesh.rotation.z = Math.random() * Math.PI;
 			mesh.matrixAutoUpdate = false;
 			mesh.updateMatrix();
-			
+
+
+
 			this.scene.add(mesh);
 			
 			let particle = new Particle('Particle', 'test-cube');
 			particle.model = mesh;
 			particle.label = 'Cube - ' + i;
-			this._objects.push(particle);
+			this.addObject(particle);
 		}
 		
 		// lights
@@ -427,7 +461,7 @@ class SceneControls extends SceneControlsPlugin {
 			// 	}
 			// }
 
-            this.shader.update();
+
 		}
 		
 		this.renderer.render(this.scene, this.camera);

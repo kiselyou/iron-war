@@ -5,11 +5,11 @@ import FlyControls from './../controls/FlyControls';
 import Listener from './../systems/Listener';
 import Ship from './../particles/ships/Ship';
 import ArsenalSlot from './../particles/arsenal/ArsenalSlot';
+import Charge from './../particles/charge/Charge';
 
 import {THREE} from '../../api';
 
 import HelperPoints from './../helpers/HelperPoints';
-
 
 class Player extends User {
 	/**
@@ -122,6 +122,41 @@ class Player extends User {
 		
 		// this.point = HelperPoints.get().setPointTo(this._sceneControls.scene);
 	}
+
+    /**
+	 *
+     * @param {Charge} value
+     * @returns {Player}
+     */
+	addCharge(value) {
+        this.charges.push(value);
+        return this;
+	}
+
+    /**
+     *
+     * @param {Charge} value
+     * @returns {Player}
+     */
+    removeCharge(value) {
+		for (let i = 0; i < this.charges.length; i++) {
+			let charge = this.charges[i];
+			if (charge.id === value.id) {
+                charge.removeModelFromScene(this._sceneControls.scene);
+                this.charges.splice(i, 1);
+				break;
+			}
+		}
+		return this;
+    }
+
+    /**
+	 *
+     * @returns {Array.<Charge>}
+     */
+    getCharges() {
+		return this.charges;
+    }
 	
 	/**
 	 *
@@ -253,7 +288,7 @@ class Player extends User {
 	 */
 	shot(target) {
 		let slots = this.ship.arsenalSlots;
-		
+
 		this._sceneControls.scene.updateMatrixWorld();
 		
 		for (let slotName in slots) {
@@ -275,8 +310,25 @@ class Player extends User {
 						charge.setPosition(vector);
 					}
 				}
-				
-				this._sceneControls.scene.add(charge.model);
+
+				charge
+					.addModelToScene(this._sceneControls.scene)
+					.setListenerCollision((charge, particle) => {
+                        charge
+                            .setExplosionToScene(this._sceneControls.scene)
+                            .removeModelFromScene(this._sceneControls.scene);
+
+                        // TODO: This is a temporary action
+                        this._sceneControls.removeObject(particle);
+					})
+                    .setListenerRemoveCharge((charge, type) => {
+                        this.removeCharge(charge);
+                        if (type === Charge.REMOVE_TYPE_COLLISION) {
+                            charge.removeExplosionFromScene(this._sceneControls.scene);
+						}
+                    });
+
+
 				this.charges.push(charge);
 			}
 		}
@@ -292,22 +344,13 @@ class Player extends User {
 			this.ship.model.rotation.copy(this.rotation);
 			this.flyControls.updatePlayerControl(delta);
 		}
-		
-		if (this.charges.length > 0) {
-			for (let i = 0; i < this.charges.length; i++) {
-				/**
-				 *
-				 * @type {Charge}
-				 */
-				let charge = this.charges[i];
-				
-				// this.point.setPosition(charge.target);
 
-				charge.update(delta, () => {
-					this._sceneControls.scene.remove(charge.model);
-					this.charges.splice(i, 1);
-					charge = null;
-				});
+		let charges = this.getCharges();
+		let needRemove = [];
+		
+		if (charges.length > 0) {
+			for (let i = 0; i < charges.length; i++) {
+                charges[i].update(delta, this._sceneControls.getObjects());
 			}
 		}
 	}
