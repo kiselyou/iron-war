@@ -21,7 +21,8 @@ class SceneControlsPlugin {
 		 */
 		this.scene = new THREE.Scene();
 		this.scene.background = new THREE.Color().setHSL(0.7, 0.4, 0.03);
-		this.scene.fog = new THREE.Fog(this.scene.background, 35000, SceneControlsPlugin.FAR);
+		// this.scene.fog = new THREE.Fog(this.scene.background, 35000, SceneControlsPlugin.FAR);
+        this.scene.fog = new THREE.Fog(this.scene.background, 2000, SceneControlsPlugin.FAR);
 		
 		/**
 		 *
@@ -65,7 +66,7 @@ class SceneControlsPlugin {
 	 * @constructor
 	 */
 	static get FAR() {
-		return 100000;
+		return 10000;
 	}
 	
 	/**

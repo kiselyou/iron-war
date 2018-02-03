@@ -10,6 +10,8 @@ import Particle from './../Particle';
 
 import HelperPoints from './../helpers/HelperPoints';
 
+import asteroids from './../../config/asteroids';
+
 const FPS = 1000 / 30;
 
 class SceneControls extends SceneControlsPlugin {
@@ -421,41 +423,38 @@ class SceneControls extends SceneControlsPlugin {
 	 * @returns {SceneControls}
 	 */
 	init() {
-		// let s = 150;
-		// let cube = new THREE.BoxGeometry(s, s, s);
-		// let material = new THREE.MeshPhongMaterial({color: 0xffffff});
-		// let mesh = new THREE.Mesh(cube, material);
-		// mesh.position.z = - 500;
-		// mesh.rotation.x = Math.PI / 4;
-		// mesh.rotation.y = Math.PI / 4;
-		// mesh.rotation.z = Math.PI / 4;
-		// mesh.matrixAutoUpdate = false;
-		// mesh.updateMatrix();
-		// this.scene.add(mesh);
-		
+
+		// let temp = [];
+
 		let s = 50;
 		let cube = new THREE.BoxGeometry(s, s, s);
 		let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < 10; i ++) {
+		for (let i = 0; i < asteroids.length; i ++) {
+			let conf = asteroids[i];
+
 			let mesh = new THREE.Mesh(cube, material);
-			mesh.position.x = 500 * (2.0 * Math.random() - 1.0);
-			mesh.position.y = 500 * (2.0 * Math.random() - 1.0);
-			mesh.position.z = - 2000;// * (2.0 * Math.random() - 1.0);
-			mesh.rotation.x = Math.random() * Math.PI;
-			mesh.rotation.y = Math.random() * Math.PI;
-			mesh.rotation.z = Math.random() * Math.PI;
+            mesh.position.copy(conf['p']);
+            mesh.rotation.copy(conf['r']);
 			mesh.matrixAutoUpdate = false;
 			mesh.updateMatrix();
-
-
 
 			this.scene.add(mesh);
 			
 			let particle = new Particle('Particle', 'test-cube');
+            particle.id = conf['id'];
 			particle.model = mesh;
 			particle.label = 'Cube - ' + i;
 			this.addObject(particle);
+
+            // temp.push({
+            //     p: mesh.position,
+            //     r: mesh.rotation,
+            //     id: particle.id
+            // });
 		}
+
+		// console.log(JSON.stringify(temp));
+
 		
 		// lights
 		let dirLight = new THREE.DirectionalLight(0xffffff, 0.05);
