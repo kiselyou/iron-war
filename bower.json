@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
+    "stats.js": "*",
     "three.js": "^0.89.0",
     "ShaderParticleEngine": "0.8.5"
   }

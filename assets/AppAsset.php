@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'build/three.js/three.min.js',
+        'build/stats.js/build/stats.min.js',
         'build/ShaderParticleEngine/build/ShaderParticles.min.js',
         'build/bundle.js',
     ];

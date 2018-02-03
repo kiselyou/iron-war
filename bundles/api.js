@@ -2,6 +2,8 @@
 /** @class */
 export const THREE = window.THREE;
 
+export const Stats = window.Stats;
+
 export const UUID = ( function () {
 
     let lut = [];

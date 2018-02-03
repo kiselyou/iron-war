@@ -157,6 +157,18 @@ class Player extends User {
     getCharges() {
 		return this.charges;
     }
+
+    /**
+	 *
+     * @param {string} value
+     * @returns {?Charge}
+     */
+    getChargeById(value) {
+        let res = this.charges.find((charge) => {
+            return charge.id === value;
+		});
+        return res ? res : null;
+	}
 	
 	/**
 	 *
@@ -285,10 +297,11 @@ class Player extends User {
 	/**
 	 *
 	 * @param {Vector3} target
+	 * @param {Object} [ids]
 	 */
-	shot(target) {
+	shot(target, ids = {}, collisionListener) {
+        let chargeIds = {};
 		let slots = this.ship.arsenalSlots;
-
 		this._sceneControls.scene.updateMatrixWorld();
 		
 		for (let slotName in slots) {
@@ -301,6 +314,10 @@ class Player extends User {
 				 * @type {Charge}
                  */
 				let charge = slot.arsenal.getCharge().prepare(target);
+				if (ids && ids.hasOwnProperty(slotName)) {
+                    charge.id = ids[slotName];
+				}
+                chargeIds[slotName] = charge.id;
 				
 				let vector = new THREE.Vector3();
 				for (let el of this.ship.model.children) {
@@ -314,12 +331,25 @@ class Player extends User {
 				charge
 					.addModelToScene(this._sceneControls.scene)
 					.setListenerCollision((charge, particle) => {
+
+                        if (collisionListener) {
+                            collisionListener(charge.model.position, charge.id);
+                        }
+
                         charge
                             .setExplosionToScene(this._sceneControls.scene)
                             .removeModelFromScene(this._sceneControls.scene);
 
                         // TODO: This is a temporary action
                         this._sceneControls.removeObject(particle);
+
+                        if (particle instanceof Ship) {
+                            // TODO: This is a player -  do something
+						}
+
+						if (this._sceneControls.isTarget(particle)) {
+                            this._sceneControls.hideTarget();
+						}
 					})
                     .setListenerRemoveCharge((charge, type) => {
                         this.removeCharge(charge);
@@ -332,6 +362,8 @@ class Player extends User {
 				this.charges.push(charge);
 			}
 		}
+
+		return chargeIds;
 	}
 	
 	/**

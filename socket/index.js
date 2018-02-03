@@ -57,6 +57,16 @@ io.on('connection', (client) => {
 		players[client.id].copy(data);
 		client.broadcast.to(data['to']).emit('add-old-form', players[client.id]);
 	});
+
+    client.on('send-shot-target', (data) => {
+        // Send to all except me
+        client.broadcast.emit('update-shot-target', data);
+    });
+
+    client.on('send-collision', (data) => {
+        // Send to all except me
+        client.broadcast.emit('update-collision', data);
+    });
 	
 	client.on('send-updated-form-info', (data) => {
 		players[client.id].copy(data);

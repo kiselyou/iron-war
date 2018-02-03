@@ -30,13 +30,13 @@ class Charge extends Particle {
 		 *
 		 * @type {number}
 		 */
-		this.speed = 500;
+		this.speed = 1000;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.maxDistanceToDestroy = 2000;
+		this.maxDistanceToDestroy = 3000;
 		
 		/**
 		 *
@@ -188,12 +188,13 @@ class Charge extends Particle {
     /**
      *
      * @param {Scene} scene
+	 * @param {Vector3} [position]
      * @returns {Charge}
      */
-    setExplosionToScene(scene) {
+    setExplosionToScene(scene, position = null) {
 		if (this._enabled) {
             this._enabled = false;
-            this.shader.setTo(scene, this.model.position);
+            this.shader.setTo(scene, (position ? position : this.model.position));
         }
         return this;
     }

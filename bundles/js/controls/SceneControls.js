@@ -1,4 +1,4 @@
-import {THREE} from '../../api';
+import {THREE, Stats} from '../../api';
 import SceneControlsPlugin from './SceneControlsPlugin';
 import FlyControls from './FlyControls';
 import SkyeBoxControls from './SkyeBoxControls';
@@ -66,13 +66,6 @@ class SceneControls extends SceneControlsPlugin {
 		this.flyControls = new FlyControls(this.camera, this.player);
 		this.flyControls.initEvents();
 		
-		// /**
-		//  *
-		//  * @type {HelperPoints}
-		//  * @private
-		//  */
-		// this._helperPoints = new HelperPoints(this.scene);
-		
 		/**
 		 *
 		 * @type {Object.<Player>}
@@ -93,6 +86,20 @@ class SceneControls extends SceneControlsPlugin {
 		 * @private
 		 */
 		this._updateListener = [];
+
+		/**
+		 *
+		 * @type {Array.<shotPlayerListener>}
+		 * @private
+		 */
+		this._shotListener = [];
+
+		/**
+		 *
+		 * @type {Array.<collisionPlayerListener>}
+		 * @private
+		 */
+		this._collisionListener = [];
 		
 		/**
 		 *
@@ -115,7 +122,11 @@ class SceneControls extends SceneControlsPlugin {
 
 
 
-        this.test = [];
+        this._stats = new Stats();
+        this._stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+        this._stats.showPanel(1);
+        this._stats.showPanel(2);
+        document.body.appendChild(this._stats.dom);
 
 	}
 
@@ -167,6 +178,37 @@ class SceneControls extends SceneControlsPlugin {
 		this._updateListener.push(listener);
 		return this;
 	}
+
+    /**
+	 * @param {Vector3} target
+	 * @param {Array} chargeIds
+     * @callback shotPlayerListener
+     */
+
+    /**
+     *
+     * @param {shotPlayerListener} listener
+     * @return {SceneControls}
+     */
+    shotListener(listener) {
+        this._shotListener.push(listener);
+        return this;
+	}
+
+    /**
+     * @param {Vector3} position
+     * @callback collisionPlayerListener
+     */
+
+    /**
+     *
+     * @param {collisionPlayerListener} listener
+     * @return {SceneControls}
+     */
+    collisionListener(listener) {
+        this._collisionListener.push(listener);
+        return this;
+	}
 	
 	/**
 	 *
@@ -194,6 +236,7 @@ class SceneControls extends SceneControlsPlugin {
 		
 		this.scene.add(model);
 		this._players[id] = player;
+        this._objects.push(player.ship);
 		return this;
 	}
 	
@@ -221,6 +264,26 @@ class SceneControls extends SceneControlsPlugin {
 			delete this._players[id];
 		}
 		return this;
+	}
+
+    /**
+	 *
+     * @returns {SceneControls}
+     */
+	hideTarget() {
+        this.targetControls.setSelected(null);
+        this.player.ship.aim.signatureRightTop.hide();
+        return this;
+	}
+
+    /**
+	 *
+     * @param {Particle} particle
+     * @returns {boolean}
+     */
+	isTarget(particle) {
+        let targetSelected = this.targetControls.getSelectedParticle();
+        return targetSelected && targetSelected.id === particle.id;
 	}
 	
 	/**
@@ -262,8 +325,9 @@ class SceneControls extends SceneControlsPlugin {
 			() => {
 				let openConsole = this.player.keyboards.fly.openConsole;
 				if (openConsole.value === openConsole.valueOn) {
-					this.targetControls.setSelected(null);
-					this.player.ship.aim.signatureRightTop.hide();
+					this.hideTarget();
+					// this.targetControls.setSelected(null);
+					// this.player.ship.aim.signatureRightTop.hide();
 				}
 			}
 		);
@@ -273,7 +337,14 @@ class SceneControls extends SceneControlsPlugin {
 			KeyboardControls.GROUP_FLY,
 			() => {
 				let target = this.getNextPosition(this.camera, 250000);
-				this.player.shot(target);
+				let chargeIds = this.player.shot(target, {}, (position, id) => {
+					for (let collisionListener of this._collisionListener) {
+                        collisionListener(position, id);
+					}
+				});
+                for (let shotPlayerListener of this._shotListener) {
+                    shotPlayerListener(target, chargeIds);
+                }
 			}
 		);
 		
@@ -332,8 +403,7 @@ class SceneControls extends SceneControlsPlugin {
 				this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
 			})
 			.enable(true, true);
-		
-		
+
 		// Disable fly actions before start
 		this.player.cursor(false);
 		this.player.keyboards.disableGroup(KeyboardControls.GROUP_FLY);
@@ -418,15 +488,9 @@ class SceneControls extends SceneControlsPlugin {
 				this.player.ship.aim.signatureLeftTop.update(
 					Math.round(this.player.ship.engine.speedZ)
 				);
-				
+
 				for (let listener of this._updateListener) {
 					listener();
-				}
-
-				for (let playerId in this._players) {
-					if (this._players.hasOwnProperty(playerId)) {
-						this._players[playerId].update(delta);
-					}
 				}
 			}
 		}, FPS);
@@ -439,6 +503,9 @@ class SceneControls extends SceneControlsPlugin {
 	 * @private
 	 */
 	_render() {
+
+        this._stats.begin();
+
 		window.requestAnimationFrame(() => {
 			this._render();
 		});
@@ -451,20 +518,17 @@ class SceneControls extends SceneControlsPlugin {
 			this.player.rotation.copy(this.camera.rotation);
 			this.player.update(delta);
 			this.targetControls.update();
-			// for (let listener of this._updateListener) {
-			// 	listener();
-			// }
-			//
-			// for (let playerId in this._players) {
-			// 	if (this._players.hasOwnProperty(playerId)) {
-			// 		this._players[playerId].update(delta);
-			// 	}
-			// }
 
-
+            for (let playerId in this._players) {
+                if (this._players.hasOwnProperty(playerId)) {
+                    this._players[playerId].update(delta);
+                }
+            }
 		}
 		
 		this.renderer.render(this.scene, this.camera);
+
+        this._stats.end();
 	}
 	
 	/**

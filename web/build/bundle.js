@@ -71,7 +71,11 @@
 /** @module three */
 /** @class */
 const THREE = window.THREE;
-/* harmony export (immutable) */ __webpack_exports__["a"] = THREE;
+/* harmony export (immutable) */ __webpack_exports__["b"] = THREE;
+
+
+const Stats = window.Stats;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Stats;
 
 
 const UUID = ( function () {
@@ -96,7 +100,7 @@ const UUID = ( function () {
             lut[ d3 & 0xff ] + lut[ d3 >> 8 & 0xff ] + lut[ d3 >> 16 & 0xff ] + lut[ d3 >> 24 & 0xff ];
     };
 } )();
-/* harmony export (immutable) */ __webpack_exports__["b"] = UUID;
+/* harmony export (immutable) */ __webpack_exports__["c"] = UUID;
 
 
 /***/ }),
@@ -151,7 +155,7 @@ class Particle {
 		 *
 		 * @type {string}
 		 */
-		this.id = Object(__WEBPACK_IMPORTED_MODULE_2__api__["b" /* UUID */])();
+		this.id = Object(__WEBPACK_IMPORTED_MODULE_2__api__["c" /* UUID */])();
 		
 		/**
 		 *
@@ -211,7 +215,7 @@ class Particle {
 		 *
 		 * @type {Vector3}
 		 */
-		this.size = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Vector3();
+		this.size = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Vector3();
 		
 		/**
 		 *
@@ -250,7 +254,7 @@ class Particle {
 	 * @returns {Particle}
 	 */
 	setModel(obj, eventType) {
-		let mesh = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Object3D();
+		let mesh = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Object3D();
 		mesh.add(obj);
 		this.model = mesh;
 		if (eventType) {
@@ -271,16 +275,16 @@ class Particle {
 		 */
 		let clone = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
 		clone.isClone = true;
-		clone.id = Object(__WEBPACK_IMPORTED_MODULE_2__api__["b" /* UUID */])();
+		clone.id = Object(__WEBPACK_IMPORTED_MODULE_2__api__["c" /* UUID */])();
 		for (let property in this) {
 			if (this.hasOwnProperty(property)) {
 				if (this[property] instanceof Particle) {
 					clone[property] = clone[property].clone();
-				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Object3D) {
+				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Object3D) {
 					clone[property] = clone[property].clone();
-				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Vector3) {
+				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Vector3) {
 					clone[property] = clone[property].clone();
-				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Vector2) {
+				} else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Vector2) {
 					clone[property] = clone[property].clone();
                 } else if (this[property] instanceof __WEBPACK_IMPORTED_MODULE_3__particles_arsenal_I_ShaderFire__["a" /* default */]) {
                     this[property] = new __WEBPACK_IMPORTED_MODULE_3__particles_arsenal_I_ShaderFire__["a" /* default */]();
@@ -2457,14 +2461,14 @@ class ArsenalSlot extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default
 		 *
 		 * @type {Vector3}
 		 */
-		this.position = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3();
+		this.position = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3();
 		
 		/**
 		 * Current rotation
 		 *
 		 * @type {Euler}
 		 */
-		this.rotation = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Euler();
+		this.rotation = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Euler();
 	}
 	
 	/**
@@ -2513,38 +2517,38 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 		 *
 		 * @type {Vector3}
 		 */
-		this.target = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Vector3();
+		this.target = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Vector3();
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.speed = 500;
+		this.speed = 1000;
 		
 		/**
 		 *
 		 * @type {number}
 		 */
-		this.maxDistanceToDestroy = 2000;
+		this.maxDistanceToDestroy = 3000;
 		
 		/**
 		 *
 		 * @type {Vector3}
          * @private
 		 */
-		this.direction = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Vector3();
+		this.direction = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Vector3();
 
         /**
          *
          * @type {Vector3}
          */
-		this.startPosition = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Vector3();
+		this.startPosition = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Vector3();
 
         /**
 		 *
          * @type {Vector3}
          */
-		this.previousPosition = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Vector3();
+		this.previousPosition = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Vector3();
 
         /**
 		 *
@@ -2564,14 +2568,14 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
          * @type {Box3}
          * @private
          */
-        this._box1 = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Box3();
+        this._box1 = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Box3();
 
         /**
          *
          * @type {Box3}
          * @private
          */
-        this._box2 = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Box3();
+        this._box2 = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Box3();
 
         /**
 		 *
@@ -2677,12 +2681,13 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
     /**
      *
      * @param {Scene} scene
+	 * @param {Vector3} [position]
      * @returns {Charge}
      */
-    setExplosionToScene(scene) {
+    setExplosionToScene(scene, position = null) {
 		if (this._enabled) {
             this._enabled = false;
-            this.shader.setTo(scene, this.model.position);
+            this.shader.setTo(scene, (position ? position : this.model.position));
         }
         return this;
     }
@@ -2740,11 +2745,11 @@ class Charge extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
      */
     checkCollision(particles) {
         if (this._enabled) {
-            let box1 = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Box3();
+            let box1 = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Box3();
             box1.setFromObject(this.model);
 
             for (let particle of particles) {
-                let box2 = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Box3();
+                let box2 = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Box3();
                 box2.setFromObject(particle.model);
 
                 let intersects = box1.intersectsBox(box2);
@@ -3576,19 +3581,19 @@ class FlyControls {
 		 *
 		 * @type {Quaternion}
 		 */
-		this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Quaternion();
+		this.tmpQuaternion = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Quaternion();
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.moveVector = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 0, 0);
+		this.moveVector = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 0, 0);
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.rotationVector = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 0, 0);
+		this.rotationVector = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 0, 0);
 		
 		this.updateMovementVector();
 		this.updateRotationVector();
@@ -3854,28 +3859,28 @@ class ShaderFire {
 
         this.ageTime = 0.5;
 
-        new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].TextureLoader();
+        new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].TextureLoader();
 
         this.group = new __WEBPACK_IMPORTED_MODULE_1_shader_particle_engine___default.a.Group({
             texture: {
-                value: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].TextureLoader().load('./textures/sprites/sprite-explosion2.png'),
-                frames: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector2(5, 5),
+                value: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].TextureLoader().load('./textures/sprites/sprite-explosion2.png'),
+                frames: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector2(5, 5),
                 loop: 1
             },
             depthTest: true,
             depthWrite: false,
-            blending: __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].AdditiveBlending,
+            blending: __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].AdditiveBlending,
             scale: 600,
             maxParticleCount: 200,
         });
 
         this.shockwaveGroup = new __WEBPACK_IMPORTED_MODULE_1_shader_particle_engine___default.a.Group({
             texture: {
-                value: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].TextureLoader().load('./textures/sprites/smokeparticle.png'),
+                value: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].TextureLoader().load('./textures/sprites/smokeparticle.png'),
             },
             depthTest: false,
             depthWrite: true,
-            blending: __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].NormalBlending,
+            blending: __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].NormalBlending,
             maxParticleCount: 200,
         });
 
@@ -3884,7 +3889,7 @@ class ShaderFire {
             type: __WEBPACK_IMPORTED_MODULE_1_shader_particle_engine___default.a.distributions.DISC,
             position: {
                 radius: 5,
-                spread: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(5)
+                spread: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(5)
             },
             maxAge: {
                 value: 2,
@@ -3893,10 +3898,10 @@ class ShaderFire {
             // duration: 1,
             activeMultiplier: 2000,
             velocity: {
-                value: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(40)
+                value: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(40)
             },
             rotation: {
-                axis: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(1, 0, 0),
+                axis: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(1, 0, 0),
                 angle: Math.PI * 0.5,
                 static: true
             },
@@ -3905,8 +3910,8 @@ class ShaderFire {
             },
             color: {
                 value: [
-                    new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(0.4, 0.2, 0.1),
-                    new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(0.2, 0.2, 0.2)
+                    new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(0.4, 0.2, 0.1),
+                    new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(0.2, 0.2, 0.2)
                 ]
             },
             opacity: {
@@ -3926,10 +3931,10 @@ class ShaderFire {
             // duration: 2,
             activeMultiplier: 40,
             velocity: {
-                value: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(100)
+                value: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(100)
             },
             acceleration: {
-                value: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, -20, 0),
+                value: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, -20, 0),
                 distribution: __WEBPACK_IMPORTED_MODULE_1_shader_particle_engine___default.a.distributions.BOX
             },
             size: {
@@ -3940,10 +3945,10 @@ class ShaderFire {
             },
             color: {
                 value: [
-                    new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(1, 1, 1),
-                    new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(1, 1, 0),
-                    new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(1, 0, 0),
-                    new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(0.4, 0.2, 0.1)
+                    new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(1, 1, 1),
+                    new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(1, 1, 0),
+                    new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(1, 0, 0),
+                    new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(0.4, 0.2, 0.1)
                 ]
             },
             opacity: {
@@ -3963,15 +3968,15 @@ class ShaderFire {
             },
             activeMultiplier: 10,
             velocity: {
-                value: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(30)
+                value: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(30)
             },
             size: {
                 value: [20, 500]
             },
             color: {
                 value: [
-                    new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(0.5, 0.1, 0.05),
-                    new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(0.2, 0.2, 0.2)
+                    new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(0.5, 0.1, 0.05),
+                    new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(0.2, 0.2, 0.2)
                 ]
             },
             opacity: {
@@ -3982,7 +3987,7 @@ class ShaderFire {
         this.mist = new __WEBPACK_IMPORTED_MODULE_1_shader_particle_engine___default.a.Emitter({
             particleCount: 50,
             position: {
-                spread: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(10, 10, 10),
+                spread: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(10, 10, 10),
                 distribution: __WEBPACK_IMPORTED_MODULE_1_shader_particle_engine___default.a.distributions.SPHERE
             },
             maxAge: {
@@ -3991,14 +3996,14 @@ class ShaderFire {
             // duration: 1,
             activeMultiplier: 2000,
             velocity: {
-                value: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(8, 3, 10),
+                value: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(8, 3, 10),
                 distribution: __WEBPACK_IMPORTED_MODULE_1_shader_particle_engine___default.a.distributions.SPHERE
             },
             size: {
                 value: 400
             },
             color: {
-                value: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(0.2, 0.2, 0.2)
+                value: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(0.2, 0.2, 0.2)
             },
             opacity: {
                 value: [0, 0.6, 0]
@@ -4009,10 +4014,10 @@ class ShaderFire {
             particleCount: 20,
             duration: 0.5,
             position: {
-                spread: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(5, 5, 5)
+                spread: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(5, 5, 5)
             },
             velocity: {
-                spread: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(20),
+                spread: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(20),
                 distribution: __WEBPACK_IMPORTED_MODULE_1_shader_particle_engine___default.a.distributions.SPHERE
             },
             size: {
@@ -4168,7 +4173,7 @@ class FontLoader {
 			listener(this._font);
 			return;
 		}
-		let loader = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].FontLoader();
+		let loader = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].FontLoader();
 		loader.load(FONT, (font) => {
 			this._font = font;
 			listener(this._font);
@@ -6122,7 +6127,23 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 						fly: controls.flyControls.getSocketInfo(),
 						sk: controls.player.shipKey,
 					});
-				});
+				})
+				.shotListener((target, chargeIds) => {
+                    // Send shot info to other players
+                    socket.emit('send-shot-target', {
+                        id: playerId,
+                        t: target,
+                        c: chargeIds
+                    });
+				})
+                .collisionListener((position, id) => {
+                    // Send info about collision to other players
+                    socket.emit('send-collision', {
+                        id: playerId,
+                        cp: position,
+						cid: id
+                    });
+                });
 			
 			// Set default parameters of current form and send it info to other players
 			socket.emit('set-form-info', {
@@ -6137,7 +6158,24 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 				fly: controls.flyControls.getSocketInfo(),
 				sk: controls.player.shipKey,
 			});
-			
+
+			// Set target shot from specific model
+            socket.on('update-shot-target', (data) => {
+                let player = controls.getPlayer(data['id']);
+                player.shot(data['t'], data['c']);
+            });
+
+            // Set collision from specific model
+            socket.on('update-collision', (data) => {
+                let player = controls.getPlayer(data['id']);
+                let charge = player.getChargeById(data['cid']);
+                if (charge) {
+                    charge.setExplosionToScene(controls.scene, data['cp']);
+                } else {
+                	console.warn('Can not find charge. Probably charge has already removed from the scene');
+				}
+            });
+
 			socket.on('update-form-info', (data) => {
 				let player = controls.getPlayer(data['id']);
 				if (player) {
@@ -6182,7 +6220,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 			});
 			
 			// window.addEventListener('beforeunload', () => {
-			// 	socket.emit('remove-form', playerId);
+			// 	// socket.emit('remove-form', playerId);
 			// });
 		});
 	});
@@ -6239,14 +6277,14 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		 * @type {Clock}
 		 * @private
 		 */
-		this._clockRender = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Clock();
+		this._clockRender = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Clock();
 		
 		/**
 		 *
 		 * @type {Clock}
 		 * @private
 		 */
-		this._clockAnimate = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Clock();
+		this._clockAnimate = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Clock();
 		
 		/**
 		 *
@@ -6270,13 +6308,6 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		this.flyControls = new __WEBPACK_IMPORTED_MODULE_2__FlyControls__["a" /* default */](this.camera, this.player);
 		this.flyControls.initEvents();
 		
-		// /**
-		//  *
-		//  * @type {HelperPoints}
-		//  * @private
-		//  */
-		// this._helperPoints = new HelperPoints(this.scene);
-		
 		/**
 		 *
 		 * @type {Object.<Player>}
@@ -6297,6 +6328,20 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		 * @private
 		 */
 		this._updateListener = [];
+
+		/**
+		 *
+		 * @type {Array.<shotPlayerListener>}
+		 * @private
+		 */
+		this._shotListener = [];
+
+		/**
+		 *
+		 * @type {Array.<collisionPlayerListener>}
+		 * @private
+		 */
+		this._collisionListener = [];
 		
 		/**
 		 *
@@ -6319,7 +6364,11 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 
 
 
-        this.test = [];
+        this._stats = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* Stats */]();
+        this._stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+        this._stats.showPanel(1);
+        this._stats.showPanel(2);
+        document.body.appendChild(this._stats.dom);
 
 	}
 
@@ -6371,6 +6420,37 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		this._updateListener.push(listener);
 		return this;
 	}
+
+    /**
+	 * @param {Vector3} target
+	 * @param {Array} chargeIds
+     * @callback shotPlayerListener
+     */
+
+    /**
+     *
+     * @param {shotPlayerListener} listener
+     * @return {SceneControls}
+     */
+    shotListener(listener) {
+        this._shotListener.push(listener);
+        return this;
+	}
+
+    /**
+     * @param {Vector3} position
+     * @callback collisionPlayerListener
+     */
+
+    /**
+     *
+     * @param {collisionPlayerListener} listener
+     * @return {SceneControls}
+     */
+    collisionListener(listener) {
+        this._collisionListener.push(listener);
+        return this;
+	}
 	
 	/**
 	 *
@@ -6398,6 +6478,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		
 		this.scene.add(model);
 		this._players[id] = player;
+        this._objects.push(player.ship);
 		return this;
 	}
 	
@@ -6425,6 +6506,26 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			delete this._players[id];
 		}
 		return this;
+	}
+
+    /**
+	 *
+     * @returns {SceneControls}
+     */
+	hideTarget() {
+        this.targetControls.setSelected(null);
+        this.player.ship.aim.signatureRightTop.hide();
+        return this;
+	}
+
+    /**
+	 *
+     * @param {Particle} particle
+     * @returns {boolean}
+     */
+	isTarget(particle) {
+        let targetSelected = this.targetControls.getSelectedParticle();
+        return targetSelected && targetSelected.id === particle.id;
 	}
 	
 	/**
@@ -6466,8 +6567,9 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			() => {
 				let openConsole = this.player.keyboards.fly.openConsole;
 				if (openConsole.value === openConsole.valueOn) {
-					this.targetControls.setSelected(null);
-					this.player.ship.aim.signatureRightTop.hide();
+					this.hideTarget();
+					// this.targetControls.setSelected(null);
+					// this.player.ship.aim.signatureRightTop.hide();
 				}
 			}
 		);
@@ -6477,7 +6579,14 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY,
 			() => {
 				let target = this.getNextPosition(this.camera, 250000);
-				this.player.shot(target);
+				let chargeIds = this.player.shot(target, {}, (position, id) => {
+					for (let collisionListener of this._collisionListener) {
+                        collisionListener(position, id);
+					}
+				});
+                for (let shotPlayerListener of this._shotListener) {
+                    shotPlayerListener(target, chargeIds);
+                }
 			}
 		);
 		
@@ -6536,8 +6645,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 				this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
 			})
 			.enable(true, true);
-		
-		
+
 		// Disable fly actions before start
 		this.player.cursor(false);
 		this.player.keyboards.disableGroup(__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY);
@@ -6568,10 +6676,10 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		// this.scene.add(mesh);
 		
 		let s = 50;
-		let cube = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].BoxGeometry(s, s, s);
-		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
+		let cube = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].BoxGeometry(s, s, s);
+		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
 		for (let i = 0; i < 10; i ++) {
-			let mesh = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Mesh(cube, material);
+			let mesh = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Mesh(cube, material);
 			mesh.position.x = 500 * (2.0 * Math.random() - 1.0);
 			mesh.position.y = 500 * (2.0 * Math.random() - 1.0);
 			mesh.position.z = - 2000;// * (2.0 * Math.random() - 1.0);
@@ -6592,7 +6700,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		}
 		
 		// lights
-		let dirLight = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].DirectionalLight(0xffffff, 0.05);
+		let dirLight = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].DirectionalLight(0xffffff, 0.05);
 		dirLight.position.set(0, -1, 0).normalize();
 		this.scene.add(dirLight);
 		dirLight.color.setHSL(0.1, 0.7, 0.5);
@@ -6622,15 +6730,9 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 				this.player.ship.aim.signatureLeftTop.update(
 					Math.round(this.player.ship.engine.speedZ)
 				);
-				
+
 				for (let listener of this._updateListener) {
 					listener();
-				}
-
-				for (let playerId in this._players) {
-					if (this._players.hasOwnProperty(playerId)) {
-						this._players[playerId].update(delta);
-					}
 				}
 			}
 		}, FPS);
@@ -6643,6 +6745,9 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 	 * @private
 	 */
 	_render() {
+
+        this._stats.begin();
+
 		window.requestAnimationFrame(() => {
 			this._render();
 		});
@@ -6655,20 +6760,17 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			this.player.rotation.copy(this.camera.rotation);
 			this.player.update(delta);
 			this.targetControls.update();
-			// for (let listener of this._updateListener) {
-			// 	listener();
-			// }
-			//
-			// for (let playerId in this._players) {
-			// 	if (this._players.hasOwnProperty(playerId)) {
-			// 		this._players[playerId].update(delta);
-			// 	}
-			// }
 
-
+            for (let playerId in this._players) {
+                if (this._players.hasOwnProperty(playerId)) {
+                    this._players[playerId].update(delta);
+                }
+            }
 		}
 		
 		this.renderer.render(this.scene, this.camera);
+
+        this._stats.end();
 	}
 	
 	/**
@@ -6734,7 +6836,7 @@ class SceneControlsPlugin {
 		 *
 		 * @type {WebGLRenderer}
 		 */
-		this.renderer = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].WebGLRenderer({
+		this.renderer = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].WebGLRenderer({
 			antialias: true,
 			alpha: true
 		});
@@ -6743,44 +6845,44 @@ class SceneControlsPlugin {
 		 *
 		 * @type {Scene}
 		 */
-		this.scene = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Scene();
-		this.scene.background = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color().setHSL(0.7, 0.4, 0.03);
-		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Fog(this.scene.background, 35000, SceneControlsPlugin.FAR);
+		this.scene = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Scene();
+		this.scene.background = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color().setHSL(0.7, 0.4, 0.03);
+		this.scene.fog = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Fog(this.scene.background, 35000, SceneControlsPlugin.FAR);
 		
 		/**
 		 *
 		 * @type {PerspectiveCamera}
 		 */
-		this.camera = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].PerspectiveCamera(40, SceneControlsPlugin.width / SceneControlsPlugin.height, 1, SceneControlsPlugin.FAR);
+		this.camera = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].PerspectiveCamera(40, SceneControlsPlugin.width / SceneControlsPlugin.height, 1, SceneControlsPlugin.FAR);
 		
 		/**
 		 *
 		 * @type {Vector2}
 		 * @private
 		 */
-		this._sizeScreen = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector2();
+		this._sizeScreen = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector2();
 		
 		/**
 		 *
 		 * @type {Vector2}
 		 * @private
 		 */
-		this._toScreenPosition = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector2();
+		this._toScreenPosition = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector2();
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 * @private
 		 */
-		this._vectorToScreenPosition = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3();
+		this._vectorToScreenPosition = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3();
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.pointLocal = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 0, -1);
+		this.pointLocal = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 0, -1);
 		
-		this.direction = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 0, -1);
+		this.direction = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 0, -1);
 	}
 	
 	/**
@@ -7194,20 +7296,20 @@ class SkyeBoxControls {
 		 */
 		this.scene = scene;
 		
-		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].TextureLoader();
+		let textureLoader = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].TextureLoader();
 		this.textureFlare0 = textureLoader.load('textures/lensflare/lensflare0.png');
 		this.textureFlare3 = textureLoader.load('textures/lensflare/lensflare3.png');
 		this.textureSky = textureLoader.load('textures/skybox/003_space.jpg');
 		
-		this.position = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, -1500, -10000);
+		this.position = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, -1500, -10000);
 		
-		this.sky = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Mesh();
+		this.sky = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Mesh();
 		
 		this.sky.renderOrder = -100000;
 		
 		this.initSky(this.textureSky);
 		
-		this.initLight(0.1, 0.4, 0.8, 1700, new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 1300, -100));
+		this.initLight(0.1, 0.4, 0.8, 1700, new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 1300, -100));
 		
 		this.scene.add(this.sky);
 	}
@@ -7222,18 +7324,18 @@ class SkyeBoxControls {
 	 * @returns {LensFlare}
 	 */
 	initLight(h, s, l, size, v) {
-		let light = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].PointLight(0xffffff, 1.4);
+		let light = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].PointLight(0xffffff, 1.4);
 		light.color.setHSL(h, s, l);
 		light.position.copy(v);
 		this.sky.add(light);
-		let flareColor = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(0xffffff);
+		let flareColor = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(0xffffff);
 		flareColor.setHSL(h, s, l + 0.5);
 		
-		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].LensFlare(this.textureFlare0, size, 0.0, __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].AdditiveBlending, flareColor);
-		lensFlare.add(this.textureFlare3, 60, 0.6, __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].AdditiveBlending);
-		lensFlare.add(this.textureFlare3, 70, 0.7, __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].AdditiveBlending);
-		lensFlare.add(this.textureFlare3, 120, 0.9, __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].AdditiveBlending);
-		lensFlare.add(this.textureFlare3, 70, 1.0, __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].AdditiveBlending);
+		let lensFlare = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].LensFlare(this.textureFlare0, size, 0.0, __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].AdditiveBlending, flareColor);
+		lensFlare.add(this.textureFlare3, 60, 0.6, __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].AdditiveBlending);
+		lensFlare.add(this.textureFlare3, 70, 0.7, __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].AdditiveBlending);
+		lensFlare.add(this.textureFlare3, 120, 0.9, __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].AdditiveBlending);
+		lensFlare.add(this.textureFlare3, 70, 1.0, __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].AdditiveBlending);
 		
 		lensFlare.customUpdateCallback = (object) => {
 			let f, fl = object.lensFlares.length;
@@ -7247,7 +7349,7 @@ class SkyeBoxControls {
 				flare.rotation = 0;
 			}
 			object.lensFlares[2].y += 0.025;
-			object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Math.degToRad(45);
+			object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Math.degToRad(45);
 		};
 		
 		lensFlare.position.copy(light.position);
@@ -7262,15 +7364,15 @@ class SkyeBoxControls {
 	 * @returns {void}
 	 */
 	initSky(texture) {
-		this.sky.material = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].MeshStandardMaterial({
+		this.sky.material = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].MeshStandardMaterial({
 			map: texture,
-			side: __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].BackSide,
+			side: __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].BackSide,
 			depthWrite: false,
 			roughness: 1,
 			metalness: 0
 		});
 		
-		this.sky.geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].SphereGeometry(this._size, this.wSegments, this.hSegments);
+		this.sky.geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].SphereGeometry(this._size, this.wSegments, this.hSegments);
 	}
 	
 	/**
@@ -7390,7 +7492,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 *
 		 * @type {Vector3}
 		 */
-		this.position = new __WEBPACK_IMPORTED_MODULE_8__api__["a" /* THREE */].Vector3(
+		this.position = new __WEBPACK_IMPORTED_MODULE_8__api__["b" /* THREE */].Vector3(
 			0,// * (2.0 * Math.random() - 1.0),
 			0,// * (2.0 * Math.random() - 1.0),
 			0//400 * (2.0 * Math.random() - 1.0)
@@ -7401,13 +7503,13 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 		 *
 		 * @type {Euler}
 		 */
-		this.rotation = new __WEBPACK_IMPORTED_MODULE_8__api__["a" /* THREE */].Euler();
+		this.rotation = new __WEBPACK_IMPORTED_MODULE_8__api__["b" /* THREE */].Euler();
 		
 		/**
 		 *
 		 * @type {Vector3}
 		 */
-		this.lookAt = new __WEBPACK_IMPORTED_MODULE_8__api__["a" /* THREE */].Vector3(0, 0, 0);
+		this.lookAt = new __WEBPACK_IMPORTED_MODULE_8__api__["b" /* THREE */].Vector3(0, 0, 0);
 		
 		/**
 		 *
@@ -7459,6 +7561,18 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
     getCharges() {
 		return this.charges;
     }
+
+    /**
+	 *
+     * @param {string} value
+     * @returns {?Charge}
+     */
+    getChargeById(value) {
+        let res = this.charges.find((charge) => {
+            return charge.id === value;
+		});
+        return res ? res : null;
+	}
 	
 	/**
 	 *
@@ -7587,10 +7701,11 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	/**
 	 *
 	 * @param {Vector3} target
+	 * @param {Object} [ids]
 	 */
-	shot(target) {
+	shot(target, ids = {}, collisionListener) {
+        let chargeIds = {};
 		let slots = this.ship.arsenalSlots;
-
 		this._sceneControls.scene.updateMatrixWorld();
 		
 		for (let slotName in slots) {
@@ -7603,8 +7718,12 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				 * @type {Charge}
                  */
 				let charge = slot.arsenal.getCharge().prepare(target);
+				if (ids && ids.hasOwnProperty(slotName)) {
+                    charge.id = ids[slotName];
+				}
+                chargeIds[slotName] = charge.id;
 				
-				let vector = new __WEBPACK_IMPORTED_MODULE_8__api__["a" /* THREE */].Vector3();
+				let vector = new __WEBPACK_IMPORTED_MODULE_8__api__["b" /* THREE */].Vector3();
 				for (let el of this.ship.model.children) {
 					if (el.position.x === slot.position.x && el.position.y === slot.position.y && el.position.z === slot.position.z) {
 						vector.setFromMatrixPosition(el.matrixWorld);
@@ -7616,12 +7735,25 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				charge
 					.addModelToScene(this._sceneControls.scene)
 					.setListenerCollision((charge, particle) => {
+
+                        if (collisionListener) {
+                            collisionListener(charge.model.position, charge.id);
+                        }
+
                         charge
                             .setExplosionToScene(this._sceneControls.scene)
                             .removeModelFromScene(this._sceneControls.scene);
 
                         // TODO: This is a temporary action
                         this._sceneControls.removeObject(particle);
+
+                        if (particle instanceof __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__["a" /* default */]) {
+                            // TODO: This is a player -  do something
+						}
+
+						if (this._sceneControls.isTarget(particle)) {
+                            this._sceneControls.hideTarget();
+						}
 					})
                     .setListenerRemoveCharge((charge, type) => {
                         this.removeCharge(charge);
@@ -7634,6 +7766,8 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				this.charges.push(charge);
 			}
 		}
+
+		return chargeIds;
 	}
 	
 	/**
@@ -7740,7 +7874,7 @@ class ShipExplorerI extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default *
 		this.arsenalSlots.slot_b.position.set(2.3, -1.7, -4.5);
 		
 		this.addEventListener(__WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default */].EVENT_MODEL_UPDATE, (model) => {
-			model.children[0].rotateOnAxis(new __WEBPACK_IMPORTED_MODULE_5__api__["a" /* THREE */].Vector3(0, 1, 0), Math.PI);
+			model.children[0].rotateOnAxis(new __WEBPACK_IMPORTED_MODULE_5__api__["b" /* THREE */].Vector3(0, 1, 0), Math.PI);
 			model.children[0].position.y = -2;
 			this.updateArsenal();
 		});
@@ -7771,7 +7905,7 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		 *
 		 * @type {Group}
 		 */
-		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Group();
+		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Group();
 		this.model.position.z = -5;
 		this.model.rotation.x = Math.PI / 2;
 		
@@ -7779,7 +7913,7 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		 *
 		 * @type {number}
 		 */
-		this.scale = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0.0008, 0.0008, 0.0008);
+		this.scale = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0.0008, 0.0008, 0.0008);
 		
 		/**
 		 *
@@ -7830,8 +7964,8 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 	 * @returns {Aim}
 	 */
 	draw() {
-		let center = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 0, 0),
-			axis = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(1, 0, 0);
+		let center = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 0, 0),
+			axis = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(1, 0, 0);
 		
 		let i = 0,
 			x = 0,
@@ -7891,7 +8025,7 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 	 */
 	setColor(color) {
 		for (let model of this.model.children) {
-			model.material.color = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(color);
+			model.material.color = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(color);
 			model.material.needsUpdate = true;
 		}
 		return this;
@@ -7910,7 +8044,7 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		let x = 0,
 			y = 0;
 		
-		let triangleShape = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Shape();
+		let triangleShape = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Shape();
 		triangleShape.moveTo(x, y);
 		triangleShape.lineTo(x + w, y + l);
 		triangleShape.lineTo(x + tw, y + l);
@@ -7920,13 +8054,13 @@ class Aim extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* default */] {
 		triangleShape.lineTo(x - w, y + l);
 		triangleShape.moveTo(x, y);
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].ShapeGeometry(triangleShape);
-		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].MeshBasicMaterial({
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].ShapeGeometry(triangleShape);
+		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].MeshBasicMaterial({
 			color: this.color,
 			overdraw: 0.5,
-			side: __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].DoubleSide
+			side: __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].DoubleSide
 		});
-		return new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Mesh(geometry, material);
+		return new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Mesh(geometry, material);
 	}
 	
 	/**
@@ -7971,7 +8105,7 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 		 *
 		 * @type {Line}
 		 */
-		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Line();
+		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Line();
 		
 		/**
 		 *
@@ -8063,7 +8197,7 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 	 * @returns {AimSignature}
 	 */
 	setColor(color) {
-		this.model.material.color = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color(color);
+		this.model.material.color = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color(color);
 		this.model.material.needsUpdate = true;
 		return this;
 	}
@@ -8101,10 +8235,10 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 			bx = 1024,
 			by = 60;
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Geometry();
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(x, y, 0));
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(x + ax, x + ay, 0));
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(x + bx, x + by, 0));
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Geometry();
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(x, y, 0));
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(x + ax, x + ay, 0));
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(x + bx, x + by, 0));
 		
 		this.model.geometry = geometry;
 		return this;
@@ -8137,51 +8271,51 @@ class AimSignature extends __WEBPACK_IMPORTED_MODULE_1__Particle__["a" /* defaul
 		switch (side) {
 			case AimSignature.SIDE_TL:
 				this
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(- this.moveDistance, 0, - this.moveDistance))
-					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(Math.PI / 2, 0, Math.PI));
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(- this.moveDistance, 0, - this.moveDistance))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(Math.PI / 2, 0, Math.PI));
 				
 				this.text
 					.alignLeft()
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(500, 100, 0))
-					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, Math.PI, 0))
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(500, 100, 0))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, Math.PI, 0))
 					.write(this._getLabel());
 				
 				break;
 			case AimSignature.SIDE_TR:
 				this
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(this.moveDistance, 0, - this.moveDistance))
-					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(- Math.PI / 2, 0, 0));
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(this.moveDistance, 0, - this.moveDistance))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(- Math.PI / 2, 0, 0));
 				
 				this._revertText = true;
 				
 				this.text
 					.alignRight()
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(500, 100, 0))
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(500, 100, 0))
 					.write(this._getLabel());
 				
 				break;
 			case AimSignature.SIDE_BL:
 				this
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(- this.moveDistance, 0, this.moveDistance))
-					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(- Math.PI / 2, 0, Math.PI));
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(- this.moveDistance, 0, this.moveDistance))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(- Math.PI / 2, 0, Math.PI));
 				
 				this.text
 					.alignLeft()
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(500, 10, 0))
-					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(Math.PI, Math.PI, 0))
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(500, 10, 0))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(Math.PI, Math.PI, 0))
 					.write(this._getLabel());
 				break;
 			case AimSignature.SIDE_BR:
 				this
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(this.moveDistance, 0, this.moveDistance))
-					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(Math.PI / 2, 0, 0));
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(this.moveDistance, 0, this.moveDistance))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(Math.PI / 2, 0, 0));
 				
 				this._revertText = true;
 				
 				this.text
 					.alignRight()
-					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(500, 10, 0))
-					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(Math.PI, 0, 0))
+					.setPosition(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(500, 10, 0))
+					.setRotation(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(Math.PI, 0, 0))
 					.write(this._getLabel());
 				break;
 		}
@@ -8263,7 +8397,7 @@ class TextCanvas {
 		 *
 		 * @type {Mesh}
 		 */
-		this.model = new __WEBPACK_IMPORTED_MODULE_1__api__["a" /* THREE */].Mesh();
+		this.model = new __WEBPACK_IMPORTED_MODULE_1__api__["b" /* THREE */].Mesh();
 		
 		/**
 		 *
@@ -8372,12 +8506,12 @@ class TextCanvas {
 	 * @returns {Mesh}
 	 */
 	write(text) {
-		this.model.geometry = new __WEBPACK_IMPORTED_MODULE_1__api__["a" /* THREE */].PlaneGeometry(this.canvas.width, this.canvas.height, 1, 1);
+		this.model.geometry = new __WEBPACK_IMPORTED_MODULE_1__api__["b" /* THREE */].PlaneGeometry(this.canvas.width, this.canvas.height, 1, 1);
 		this._prepareBackground()._updateText(text);
-		this.model.material = new __WEBPACK_IMPORTED_MODULE_1__api__["a" /* THREE */].MeshBasicMaterial({
+		this.model.material = new __WEBPACK_IMPORTED_MODULE_1__api__["b" /* THREE */].MeshBasicMaterial({
 			transparent: true,
-			side: __WEBPACK_IMPORTED_MODULE_1__api__["a" /* THREE */].DoubleSide,
-			map: new __WEBPACK_IMPORTED_MODULE_1__api__["a" /* THREE */].Texture(this.canvas)
+			side: __WEBPACK_IMPORTED_MODULE_1__api__["b" /* THREE */].DoubleSide,
+			map: new __WEBPACK_IMPORTED_MODULE_1__api__["b" /* THREE */].Texture(this.canvas)
 		});
 		
 		this.model.material.map.needsUpdate = true;
@@ -8507,9 +8641,9 @@ class ArsenalIA20 extends __WEBPACK_IMPORTED_MODULE_0__Arsenal__["a" /* default 
 		 */
 		this.particleClass = new __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__["a" /* default */]();
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].CylinderGeometry(0.2, 0.2, 1, 32);
-		let material = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].MeshPhongMaterial({color: 0x666666});
-		this.setModel(new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Mesh(geometry, material));
+		let geometry = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].CylinderGeometry(0.2, 0.2, 1, 32);
+		let material = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].MeshPhongMaterial({color: 0x666666});
+		this.setModel(new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Mesh(geometry, material));
 	}
 }
 
@@ -8561,7 +8695,7 @@ class HelperPoint {
 		 *
 		 * @type {Mesh}
 		 */
-		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Mesh();
+		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Mesh();
 		
 		/**
 		 *
@@ -8610,8 +8744,8 @@ class HelperPoint {
 	}
 	
 	init() {
-		this.model.geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].SphereGeometry(this._size, 15, 15);
-		this.model.material = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].MeshBasicMaterial({color: this._color});
+		this.model.geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].SphereGeometry(this._size, 15, 15);
+		this.model.material = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].MeshBasicMaterial({color: this._color});
 	}
 }
 
@@ -8783,7 +8917,7 @@ class TargetControls {
 		 * @type {Box3}
 		 * @private
 		 */
-		this._box = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* THREE */].Box3();
+		this._box = new __WEBPACK_IMPORTED_MODULE_2__api__["b" /* THREE */].Box3();
 		
 		/**
 		 *
@@ -8873,6 +9007,14 @@ class TargetControls {
 		}
 		return this;
 	}
+
+    /**
+	 *
+     * @returns {?Particle}
+     */
+	getSelectedParticle() {
+		return this._selected;
+	}
 	
 	/**
 	 *
@@ -8950,13 +9092,13 @@ class Target {
 		 *
 		 * @type {Vector}
 		 */
-		this.size = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector2(5, 95);
+		this.size = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector2(5, 95);
 		
 		/**
 		 *
 		 * @type {Group}
 		 */
-		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Group();
+		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Group();
 		
 		/**
 		 *
@@ -8998,7 +9140,7 @@ class Target {
 		}
 		let distance = this.size.x + this.size.y + this.size.x;
 		
-		this._tempModel = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Object3D();
+		this._tempModel = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Object3D();
 		this._tempModel.position.x = - (distance / 2);
 		this._tempModel.position.y = distance / 2;
 		
@@ -9031,16 +9173,16 @@ class Target {
 		let x = 0,
 			y = - this.size.x;
 		
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Geometry();
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(x, y, 0));
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(x, y + this.size.x, 0));
-		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(x + this.size.x, y + this.size.x, 0));
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Geometry();
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(x, y, 0));
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(x, y + this.size.x, 0));
+		geometry.vertices.push(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(x + this.size.x, y + this.size.x, 0));
 		
-		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].MeshBasicMaterial({
+		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].MeshBasicMaterial({
 			color: this.color
 		});
 		
-		return new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Line(geometry, material);
+		return new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Line(geometry, material);
 	}
 	
 	/**
@@ -9103,9 +9245,9 @@ class TargetDirection {
 		 *
 		 * @type {Object3D}
 		 */
-		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Group();
+		this.model = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Group();
 		this.model.position.z = -5;
-		this.model.scale.copy(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0.0008, 0.0008, 0.0008));
+		this.model.scale.copy(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0.0008, 0.0008, 0.0008));
 		this._sceneControls.camera.add(this.model);
 		
 		/**
@@ -9141,11 +9283,11 @@ class TargetDirection {
 	 */
 	draw() {
 		if (this.model.children.length === 0) {
-			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 200, 0));
-			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 230, 0));
-			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 260, 0));
-			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 290, 0));
-			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 320, 0));
+			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 200, 0));
+			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 230, 0));
+			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 260, 0));
+			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 290, 0));
+			this._drawArrow(new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 320, 0));
 		}
 		this._isExists = true;
 		return this;
@@ -9158,15 +9300,15 @@ class TargetDirection {
 	 * @private
 	 */
 	_drawArrow(p) {
-		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].LineBasicMaterial({color: this._color});
-		let geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Geometry();
+		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].LineBasicMaterial({color: this._color});
+		let geometry = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Geometry();
 		geometry.vertices.push(
-			new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(-30, 0, 0),
-			new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(0, 30, 0),
-			new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector3(30, 0, 0)
+			new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(-30, 0, 0),
+			new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(0, 30, 0),
+			new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector3(30, 0, 0)
 		);
 		
-		let line = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Line(geometry, material);
+		let line = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Line(geometry, material);
 		line.position.copy(p);
 		this.model.add(line);
 	}
@@ -9278,7 +9420,7 @@ class PreLoader {
 		 *
 		 * @type {LoadingManager}
 		 */
-		this._manager = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].LoadingManager();
+		this._manager = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].LoadingManager();
 		
 		/**
 		 *
@@ -9693,7 +9835,7 @@ let OBJLoader = ( function () {
 
 	function OBJLoader( manager ) {
 
-		this.manager = ( manager !== undefined ) ? manager : __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].DefaultLoadingManager;
+		this.manager = ( manager !== undefined ) ? manager : __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].DefaultLoadingManager;
 
 		this.materials = null;
 
@@ -9707,7 +9849,7 @@ let OBJLoader = ( function () {
 
 			var scope = this;
 
-			var loader = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].FileLoader( scope.manager );
+			var loader = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].FileLoader( scope.manager );
 			loader.setPath( this.path );
 			loader.load( url, function ( text ) {
 
@@ -9949,7 +10091,7 @@ let OBJLoader = ( function () {
 
 			state.finalize();
 
-			var container = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Group();
+			var container = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Group();
 			container.materialLibraries = [].concat( state.materialLibraries );
 
 			for ( var i = 0, l = state.objects.length; i < l; i ++ ) {
@@ -9962,13 +10104,13 @@ let OBJLoader = ( function () {
 				// Skip o/g line declarations that did not follow with any faces
 				if ( geometry.vertices.length === 0 ) continue;
 
-				var buffergeometry = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].BufferGeometry();
+				var buffergeometry = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].BufferGeometry();
 
-				buffergeometry.addAttribute( 'position', new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Float32BufferAttribute( geometry.vertices, 3 ) );
+				buffergeometry.addAttribute( 'position', new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Float32BufferAttribute( geometry.vertices, 3 ) );
 
 				if ( geometry.normals.length > 0 ) {
 
-					buffergeometry.addAttribute( 'normal', new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Float32BufferAttribute( geometry.normals, 3 ) );
+					buffergeometry.addAttribute( 'normal', new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Float32BufferAttribute( geometry.normals, 3 ) );
 
 				} else {
 
@@ -9978,13 +10120,13 @@ let OBJLoader = ( function () {
 
 				if ( geometry.colors.length > 0 ) {
 
-					buffergeometry.addAttribute( 'color', new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Float32BufferAttribute( geometry.colors, 3 ) );
+					buffergeometry.addAttribute( 'color', new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Float32BufferAttribute( geometry.colors, 3 ) );
 
 				}
 
 				if ( geometry.uvs.length > 0 ) {
 
-					buffergeometry.addAttribute( 'uv', new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Float32BufferAttribute( geometry.uvs, 2 ) );
+					buffergeometry.addAttribute( 'uv', new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Float32BufferAttribute( geometry.uvs, 2 ) );
 
 				}
 
@@ -10002,9 +10144,9 @@ let OBJLoader = ( function () {
 						material = this.materials.create( sourceMaterial.name );
 
 						// mtl etc. loaders probably can't create line materials correctly, copy properties to a line material.
-						if ( isLine && material && ! ( material instanceof __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].LineBasicMaterial ) ) {
+						if ( isLine && material && ! ( material instanceof __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].LineBasicMaterial ) ) {
 
-							var materialLine = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].LineBasicMaterial();
+							var materialLine = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].LineBasicMaterial();
 							materialLine.copy( material );
 							material = materialLine;
 
@@ -10014,7 +10156,7 @@ let OBJLoader = ( function () {
 
 					if ( ! material ) {
 
-						material = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].MeshPhongMaterial() : new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].LineBasicMaterial() );
+						material = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].MeshPhongMaterial() : new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].LineBasicMaterial() );
 						material.name = sourceMaterial.name;
 
 					}
@@ -10038,11 +10180,11 @@ let OBJLoader = ( function () {
 
 					}
 
-					mesh = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Mesh( buffergeometry, createdMaterials ) : new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].LineSegments( buffergeometry, createdMaterials ) );
+					mesh = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Mesh( buffergeometry, createdMaterials ) : new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].LineSegments( buffergeometry, createdMaterials ) );
 
 				} else {
 
-					mesh = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Mesh( buffergeometry, createdMaterials[ 0 ] ) : new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].LineSegments( buffergeometry, createdMaterials[ 0 ] ) );
+					mesh = ( ! isLine ? new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Mesh( buffergeometry, createdMaterials[ 0 ] ) : new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].LineSegments( buffergeometry, createdMaterials[ 0 ] ) );
 
 				}
 
@@ -10082,7 +10224,7 @@ let OBJLoader = ( function () {
 
 let MTLLoader = function ( manager ) {
 
-	this.manager = ( manager !== undefined ) ? manager : __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].DefaultLoadingManager;
+	this.manager = ( manager !== undefined ) ? manager : __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].DefaultLoadingManager;
 
 };
 
@@ -10107,7 +10249,7 @@ MTLLoader.prototype = {
 
 		var scope = this;
 
-		var loader = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].FileLoader( this.manager );
+		var loader = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].FileLoader( this.manager );
 		loader.setPath( this.path );
 		loader.load( url, function ( text ) {
 
@@ -10269,8 +10411,8 @@ MTLLoader.MaterialCreator = function ( baseUrl, options ) {
 	this.materialsArray = [];
 	this.nameLookup = {};
 
-	this.side = ( this.options && this.options.side ) ? this.options.side : __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].FrontSide;
-	this.wrap = ( this.options && this.options.wrap ) ? this.options.wrap : __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].RepeatWrapping;
+	this.side = ( this.options && this.options.side ) ? this.options.side : __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].FrontSide;
+	this.wrap = ( this.options && this.options.wrap ) ? this.options.wrap : __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].RepeatWrapping;
 
 };
 
@@ -10472,14 +10614,14 @@ MTLLoader.MaterialCreator.prototype = {
 
 					// Diffuse color (color under white light) using RGB values
 
-					params.color = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color().fromArray( value );
+					params.color = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color().fromArray( value );
 
 					break;
 
 				case 'ks':
 
 					// Specular color (color when light is reflected from shiny surface) using RGB values
-					params.specular = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Color().fromArray( value );
+					params.specular = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Color().fromArray( value );
 
 					break;
 
@@ -10554,7 +10696,7 @@ MTLLoader.MaterialCreator.prototype = {
 
 		}
 
-		this.materials[ materialName ] = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].MeshPhongMaterial( params );
+		this.materials[ materialName ] = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].MeshPhongMaterial( params );
 		return this.materials[ materialName ];
 
 	},
@@ -10563,8 +10705,8 @@ MTLLoader.MaterialCreator.prototype = {
 
 		var texParams = {
 
-			scale: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector2( 1, 1 ),
-			offset: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Vector2( 0, 0 )
+			scale: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector2( 1, 1 ),
+			offset: new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Vector2( 0, 0 )
 
 		 };
 
@@ -10606,12 +10748,12 @@ MTLLoader.MaterialCreator.prototype = {
 	loadTexture: function ( url, mapping, onLoad, onProgress, onError ) {
 
 		var texture;
-		var loader = __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].Loader.Handlers.get( url );
-		var manager = ( this.manager !== undefined ) ? this.manager : __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].DefaultLoadingManager;
+		var loader = __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Loader.Handlers.get( url );
+		var manager = ( this.manager !== undefined ) ? this.manager : __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].DefaultLoadingManager;
 
 		if ( loader === null ) {
 
-			loader = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* THREE */].TextureLoader( manager );
+			loader = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].TextureLoader( manager );
 
 		}
 

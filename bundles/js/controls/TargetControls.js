@@ -134,6 +134,14 @@ class TargetControls {
 		}
 		return this;
 	}
+
+    /**
+	 *
+     * @returns {?Particle}
+     */
+	getSelectedParticle() {
+		return this._selected;
+	}
 	
 	/**
 	 *
