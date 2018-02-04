@@ -24,7 +24,7 @@
 
 
 import http from 'http';
-import {socketConfig} from './config';
+import {socketConfig} from './config/server';
 import PlayerInfo from './PlayerInfo';
 
 const server = http.createServer();
