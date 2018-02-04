@@ -1,7 +1,7 @@
 import SceneControls from './js/controls/SceneControls';
 
 import PreLoader from './js/loader/PreLoader';
-import {socketConfig} from './../socket/config';
+import {socketConfig} from './../socket/config/server';
 import io from 'socket.io-client';
 
 

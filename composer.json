@@ -46,6 +46,8 @@
                 {
                     "runtime": "0777",
                     "web/assets": "0777",
+                    "web/bundle": "0777",
+                    "socket/config": "0777",
                     "yii": "0755"
                 }
             ]
