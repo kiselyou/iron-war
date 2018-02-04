@@ -5,60 +5,66 @@ import {socketConfig} from './../socket/config/server';
 import io from 'socket.io-client';
 
 
+let start = false;
+
 new PreLoader().load(() => {
 	/**
 	 * @type {Socket}
 	 */
 	const socket = io(socketConfig.clientConnect());
-	
+
 	socket.on('connect', () => {
 		socket.on('entry', (playerId) => {
-			
-			const controls = new SceneControls(playerId, 'main-container-canvas');
 
-			// console.log('SOCKET: Current Player is', controls.player, '=======================22=============================');
-			
-			controls
-				.init()
-				.start()
-				.addPlayerListener(() => {
-					// Send info about current form to other players
-					socket.emit('send-updated-form-info', {
-						id: playerId,
-						p: controls.player.position,
-						r: {
-							x: controls.player.rotation.x,
-							y: controls.player.rotation.y,
-							z: controls.player.rotation.z,
-							o: controls.player.rotation.order
-						},
-						e: controls.player.ship.engine.getSocketInfo(),
-						fly: controls.flyControls.getSocketInfo(),
-						sk: controls.player.shipKey,
+			if (start) {
+
+				const controls = new SceneControls(playerId, 'main-container-canvas');
+
+				// console.log('SOCKET: Current Player is', controls.player, '=======================22=============================');
+
+				controls
+					.init()
+					.start()
+					.addPlayerListener(() => {
+						// Send info about current form to other players
+						socket.emit('send-updated-form-info', {
+							id: playerId,
+							p: controls.player.position,
+							r: {
+								x: controls.player.rotation.x,
+								y: controls.player.rotation.y,
+								z: controls.player.rotation.z,
+								o: controls.player.rotation.order
+							},
+							e: controls.player.ship.engine.getSocketInfo(),
+							fly: controls.flyControls.getSocketInfo(),
+							sk: controls.player.shipKey,
+						});
+					})
+					.shotListener((target, chargeIds) => {
+						// Send shot info to other players
+						socket.emit('send-shot-target', {
+							id: playerId,
+							t: target,
+							c: chargeIds
+						});
 					});
-				})
-				.shotListener((target, chargeIds) => {
-                    // Send shot info to other players
-                    socket.emit('send-shot-target', {
-                        id: playerId,
-                        t: target,
-                        c: chargeIds
-                    });
+
+
+				// Set default parameters of current form and send it info to other players
+				socket.emit('set-form-info', {
+					p: controls.player.position,
+					r: {
+						x: controls.player.rotation.x,
+						y: controls.player.rotation.y,
+						z: controls.player.rotation.z,
+						o: controls.player.rotation.order
+					},
+					e: controls.player.ship.engine.getSocketInfo(),
+					fly: controls.flyControls.getSocketInfo(),
+					sk: controls.player.shipKey,
 				});
-			
-			// Set default parameters of current form and send it info to other players
-			socket.emit('set-form-info', {
-				p: controls.player.position,
-				r: {
-					x: controls.player.rotation.x,
-					y: controls.player.rotation.y,
-					z: controls.player.rotation.z,
-					o: controls.player.rotation.order
-				},
-				e: controls.player.ship.engine.getSocketInfo(),
-				fly: controls.flyControls.getSocketInfo(),
-				sk: controls.player.shipKey,
-			});
+			}
 
 			// Set target shot from specific model
             socket.on('update-shot-target', (data) => {

@@ -335,10 +335,6 @@ class Player extends User {
                         if (particle instanceof Ship) {
                             // TODO: This is a player -  do something
 						}
-
-						if (this._sceneControls.isTarget(particle)) {
-                            this._sceneControls.hideTarget();
-						}
 					})
                     .setListenerRemoveCharge((charge, type) => {
                         this.removeCharge(charge);

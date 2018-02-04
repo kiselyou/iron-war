@@ -268,6 +268,9 @@ class SceneControls extends SceneControlsPlugin {
      * @private
      */
     _removeObjectById(id) {
+        if (this.isTarget(id)) {
+            this.hideTarget();
+        }
         for (let i = 0; i < this._objects.length; i++) {
             let particle = this._objects[i];
             if (particle.id === id) {
@@ -291,12 +294,12 @@ class SceneControls extends SceneControlsPlugin {
 
     /**
 	 *
-     * @param {Particle} particle
+     * @param {string|number} objectId
      * @returns {boolean}
      */
-	isTarget(particle) {
+	isTarget(objectId) {
         let targetSelected = this.targetControls.getSelectedParticle();
-        return targetSelected && targetSelected.id === particle.id;
+        return targetSelected && targetSelected.id === objectId;
 	}
 	
 	/**

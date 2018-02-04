@@ -19,8 +19,10 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
+
     public $css = [
         'build/bundle.css',
+		'build/components-font-awesome/css/font-awesome.css'
     ];
     public $js = [
         'build/three.js/three.min.js',
