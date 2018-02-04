@@ -44,15 +44,7 @@ new PreLoader().load(() => {
                         t: target,
                         c: chargeIds
                     });
-				})
-                .collisionListener((position, id) => {
-                    // Send info about collision to other players
-                    socket.emit('send-collision', {
-                        id: playerId,
-                        cp: position,
-						cid: id
-                    });
-                });
+				});
 			
 			// Set default parameters of current form and send it info to other players
 			socket.emit('set-form-info', {
@@ -72,17 +64,6 @@ new PreLoader().load(() => {
             socket.on('update-shot-target', (data) => {
                 let player = controls.getPlayer(data['id']);
                 player.shot(data['t'], data['c']);
-            });
-
-            // Set collision from specific model
-            socket.on('update-collision', (data) => {
-                let player = controls.getPlayer(data['id']);
-                let charge = player.getChargeById(data['cid']);
-                if (charge) {
-                    charge.setExplosionToScene(controls.scene, data['cp']);
-                } else {
-                	console.warn('Can not find charge. Probably charge has already removed from the scene');
-				}
             });
 
 			socket.on('update-form-info', (data) => {

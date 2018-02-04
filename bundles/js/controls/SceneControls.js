@@ -7,6 +7,7 @@ import Player from './../player/Player';
 import KeyboardControls from "../keyboard/KeyboardControls";
 import TargetControls from './TargetControls';
 import Particle from './../Particle';
+import Ship from './../particles/ships/Ship';
 
 import HelperPoints from './../helpers/HelperPoints';
 
@@ -95,13 +96,6 @@ class SceneControls extends SceneControlsPlugin {
 		 * @private
 		 */
 		this._shotListener = [];
-
-		/**
-		 *
-		 * @type {Array.<collisionPlayerListener>}
-		 * @private
-		 */
-		this._collisionListener = [];
 		
 		/**
 		 *
@@ -126,46 +120,11 @@ class SceneControls extends SceneControlsPlugin {
 
         this._stats = new Stats();
         this._stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-        this._stats.showPanel(1);
-        this._stats.showPanel(2);
+        // this._stats.showPanel(1);
+        // this._stats.showPanel(2);
         document.body.appendChild(this._stats.dom);
 
 	}
-
-    /**
-	 *
-     * @returns {Array.<Particle>}
-     */
-	getObjects() {
-		return this._objects;
-	}
-
-    /**
-	 *
-     * @param {Particle} value
-     * @returns {SceneControls}
-     */
-    addObject(value) {
-        this._objects.push(value);
-        return this;
-    }
-
-    /**
-     *
-     * @param {Particle} value
-     * @returns {SceneControls}
-     */
-    removeObject(value) {
-        for (let i = 0; i < this._objects.length; i++) {
-            let particle = this._objects[i];
-            if (particle.id === value.id) {
-                this._objects.splice(i, 1);
-                this.scene.remove(particle.model);
-                break;
-            }
-        }
-        return this;
-    }
 	
 	/**
 	 * @callback updatePlayerListener
@@ -197,21 +156,6 @@ class SceneControls extends SceneControlsPlugin {
         return this;
 	}
 
-    /**
-     * @param {Vector3} position
-     * @callback collisionPlayerListener
-     */
-
-    /**
-     *
-     * @param {collisionPlayerListener} listener
-     * @return {SceneControls}
-     */
-    collisionListener(listener) {
-        this._collisionListener.push(listener);
-        return this;
-	}
-	
 	/**
 	 *
 	 * @param {PlayerInfo} playerInfo
@@ -238,7 +182,7 @@ class SceneControls extends SceneControlsPlugin {
 		
 		this.scene.add(model);
 		this._players[id] = player;
-        this._objects.push(player.ship);
+        this.addObject(player.ship);
 		return this;
 	}
 	
@@ -252,20 +196,87 @@ class SceneControls extends SceneControlsPlugin {
 	}
 	
 	/**
+	 * Remove player from scene, and from properties (_players, _objects) by player ID
 	 *
-	 * @param {string|number} id
+	 * @param {string|number} id - This is player ID
 	 * @return {SceneControls}
 	 */
 	destroyPlayer(id) {
 		if (this._players.hasOwnProperty(id)) {
-			let model = this._players[id].getModel();
-			this.scene.remove(model);
-			for (let child of model.children) {
-				model.remove(child);
-			}
+			let player = this._players[id];
+            this._removeObjectById(player.ship.id);
 			delete this._players[id];
 		}
 		return this;
+	}
+
+    /**
+	 * Remove player from scene, and from properties (_players, _objects) by ship ID's
+	 *
+     * @param {string|number} shipId - This is ID of ship
+     * @returns {boolean}
+     */
+    destroyPlayerByShip(shipId) {
+		for (let playerId in this._players) {
+			if (this._players.hasOwnProperty(playerId)) {
+				let player = this._players[playerId];
+				if (player.ship.id === shipId) {
+					this.destroyPlayer(playerId);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+    /**
+     *
+     * @returns {Array.<Particle>}
+     */
+    getObjects() {
+        return this._objects;
+    }
+
+    /**
+     *
+     * @param {Particle} value
+     * @returns {SceneControls}
+     */
+    addObject(value) {
+        this._objects.push(value);
+        return this;
+    }
+
+    /**
+	 * Remove object from scene. It can be any object from properties (_players.<Player.ship>, _objects.<Particle>)
+     *
+     * @param {Particle} value - This is particle
+     * @returns {boolean}
+     */
+    destroyObject(value) {
+        if (value instanceof Ship) {
+            return this.destroyPlayerByShip(value.id);
+        }
+
+        return this._removeObjectById(value.id);
+    }
+
+    /**
+	 *
+     * @param {string|number} id
+     * @returns {boolean}
+     * @private
+     */
+    _removeObjectById(id) {
+        for (let i = 0; i < this._objects.length; i++) {
+            let particle = this._objects[i];
+            if (particle.id === id) {
+                this._objects.splice(i, 1);
+                this.scene.remove(particle.model);
+                return true;
+            }
+        }
+        return false;
 	}
 
     /**
@@ -339,11 +350,7 @@ class SceneControls extends SceneControlsPlugin {
 			KeyboardControls.GROUP_FLY,
 			() => {
 				let target = this.getNextPosition(this.camera, 250000);
-				let chargeIds = this.player.shot(target, {}, (position, id) => {
-					for (let collisionListener of this._collisionListener) {
-                        collisionListener(position, id);
-					}
-				});
+				let chargeIds = this.player.shot(target);
                 for (let shotPlayerListener of this._shotListener) {
                     shotPlayerListener(target, chargeIds);
                 }

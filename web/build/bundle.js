@@ -1344,6 +1344,147 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_ParticleClassI__ = __webpack_require__(4);
+
+
+
+
+
+
+
+class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
+	/**
+	 *
+	 * @param {string} type
+	 * @param {(string|number)} key
+	 */
+	constructor(type, key) {
+		super(type, key);
+		
+		/**
+		 *
+		 * @type {ParticleClass}
+		 */
+		this.particleClass = new __WEBPACK_IMPORTED_MODULE_5__classes_ParticleClassI__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Engine}
+		 */
+		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__["a" /* default */]();
+		
+		/**
+		 * This is base path to model e.g "models/explorer/"
+		 *
+		 * @type {?string}
+		 */
+		this.basePath = null;
+		
+		/**
+		 * This is a path to obj file
+		 *
+		 * @type {?string}
+		 */
+		this.objFileName = null;
+		
+		/**
+		 * This is a path to mtl file
+		 *
+		 * @type {?string}
+		 */
+		this.mtlFileName = null;
+		
+		/**
+		 *
+		 * @type {ArsenalSlots}
+		 */
+		this.arsenalSlots = new __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__["a" /* default */]();
+		
+		/**
+		 *
+		 * @type {Aim}
+		 */
+		this.aim = new __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__["a" /* default */]();
+	}
+	/**
+	 *
+	 * @param {(Mesh|Group)} obj
+	 * @returns {Ship}
+	 */
+	setModel(obj) {
+		super.setModel(obj, Ship.EVENT_MODEL_UPDATE);
+		return this;
+	}
+	
+	/**
+	 * Add models of arsenal to ship model
+	 *
+	 * @returns {Ship}
+	 */
+	updateArsenal() {
+		for (let property in this.arsenalSlots) {
+			if (this.arsenalSlots.hasOwnProperty(property) && this.arsenalSlots[property] instanceof __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__["a" /* default */]) {
+				let slot = this.arsenalSlots[property];
+				let model = slot.arsenal.model;
+				if (model) {
+					model.position.copy(slot.position);
+					model.rotation.copy(slot.rotation);
+					model.matrixAutoUpdate = false;
+					model.updateMatrix();
+					this.model.remove(model);
+					this.model.add(model);
+				}
+			}
+		}
+		return this;
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 * @constructor
+	 */
+	static get EVENT_MODEL_UPDATE() {
+		return 'EVENT_MODEL_UPDATE'
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get I_EXPLORER_KEY() {
+		return 'I_EXPLORER_KEY';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get II_EXPLORER_KEY() {
+		return 'II_EXPLORER_KEY';
+	}
+	
+	/**
+	 *
+	 * @returns {string}
+	 */
+	static get III_EXPLORER_KEY() {
+		return 'III_EXPLORER_KEY';
+	}
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Ship);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
 
 
@@ -1624,147 +1765,6 @@ class Engine extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] 
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Engine);
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Particle__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__classes_ParticleClassI__ = __webpack_require__(4);
-
-
-
-
-
-
-
-class Ship extends __WEBPACK_IMPORTED_MODULE_0__Particle__["a" /* default */] {
-	/**
-	 *
-	 * @param {string} type
-	 * @param {(string|number)} key
-	 */
-	constructor(type, key) {
-		super(type, key);
-		
-		/**
-		 *
-		 * @type {ParticleClass}
-		 */
-		this.particleClass = new __WEBPACK_IMPORTED_MODULE_5__classes_ParticleClassI__["a" /* default */]();
-		
-		/**
-		 *
-		 * @type {Engine}
-		 */
-		this.engine = new __WEBPACK_IMPORTED_MODULE_2__engine_I_EngineIM20__["a" /* default */]();
-		
-		/**
-		 * This is base path to model e.g "models/explorer/"
-		 *
-		 * @type {?string}
-		 */
-		this.basePath = null;
-		
-		/**
-		 * This is a path to obj file
-		 *
-		 * @type {?string}
-		 */
-		this.objFileName = null;
-		
-		/**
-		 * This is a path to mtl file
-		 *
-		 * @type {?string}
-		 */
-		this.mtlFileName = null;
-		
-		/**
-		 *
-		 * @type {ArsenalSlots}
-		 */
-		this.arsenalSlots = new __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalSlots__["a" /* default */]();
-		
-		/**
-		 *
-		 * @type {Aim}
-		 */
-		this.aim = new __WEBPACK_IMPORTED_MODULE_1__decoration_aim_Aim__["a" /* default */]();
-	}
-	/**
-	 *
-	 * @param {(Mesh|Group)} obj
-	 * @returns {Ship}
-	 */
-	setModel(obj) {
-		super.setModel(obj, Ship.EVENT_MODEL_UPDATE);
-		return this;
-	}
-	
-	/**
-	 * Add models of arsenal to ship model
-	 *
-	 * @returns {Ship}
-	 */
-	updateArsenal() {
-		for (let property in this.arsenalSlots) {
-			if (this.arsenalSlots.hasOwnProperty(property) && this.arsenalSlots[property] instanceof __WEBPACK_IMPORTED_MODULE_4__arsenal_ArsenalSlot__["a" /* default */]) {
-				let slot = this.arsenalSlots[property];
-				let model = slot.arsenal.model;
-				if (model) {
-					model.position.copy(slot.position);
-					model.rotation.copy(slot.rotation);
-					model.matrixAutoUpdate = false;
-					model.updateMatrix();
-					this.model.remove(model);
-					this.model.add(model);
-				}
-			}
-		}
-		return this;
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 * @constructor
-	 */
-	static get EVENT_MODEL_UPDATE() {
-		return 'EVENT_MODEL_UPDATE'
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 */
-	static get I_EXPLORER_KEY() {
-		return 'I_EXPLORER_KEY';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 */
-	static get II_EXPLORER_KEY() {
-		return 'II_EXPLORER_KEY';
-	}
-	
-	/**
-	 *
-	 * @returns {string}
-	 */
-	static get III_EXPLORER_KEY() {
-		return 'III_EXPLORER_KEY';
-	}
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Ship);
 
 /***/ }),
 /* 9 */
@@ -3538,7 +3538,7 @@ Transport.prototype.onClose = function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_engine_Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particles_engine_Engine__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(12);
 
 
@@ -4188,7 +4188,7 @@ class FontLoader {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassI__ = __webpack_require__(4);
 
 
@@ -6135,15 +6135,7 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
                         t: target,
                         c: chargeIds
                     });
-				})
-                .collisionListener((position, id) => {
-                    // Send info about collision to other players
-                    socket.emit('send-collision', {
-                        id: playerId,
-                        cp: position,
-						cid: id
-                    });
-                });
+				});
 			
 			// Set default parameters of current form and send it info to other players
 			socket.emit('set-form-info', {
@@ -6163,17 +6155,6 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
             socket.on('update-shot-target', (data) => {
                 let player = controls.getPlayer(data['id']);
                 player.shot(data['t'], data['c']);
-            });
-
-            // Set collision from specific model
-            socket.on('update-collision', (data) => {
-                let player = controls.getPlayer(data['id']);
-                let charge = player.getChargeById(data['cid']);
-                if (charge) {
-                    charge.setExplosionToScene(controls.scene, data['cp']);
-                } else {
-                	console.warn('Can not find charge. Probably charge has already removed from the scene');
-				}
             });
 
 			socket.on('update-form-info', (data) => {
@@ -6239,8 +6220,10 @@ new __WEBPACK_IMPORTED_MODULE_1__js_loader_PreLoader__["a" /* default */]().load
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TargetControls__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Particle__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__helpers_HelperPoints__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__config_asteroids__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__particles_ships_Ship__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__helpers_HelperPoints__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__config_asteroids__ = __webpack_require__(67);
+
 
 
 
@@ -6338,13 +6321,6 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		 * @private
 		 */
 		this._shotListener = [];
-
-		/**
-		 *
-		 * @type {Array.<collisionPlayerListener>}
-		 * @private
-		 */
-		this._collisionListener = [];
 		
 		/**
 		 *
@@ -6369,46 +6345,11 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 
         this._stats = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* Stats */]();
         this._stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-        this._stats.showPanel(1);
-        this._stats.showPanel(2);
+        // this._stats.showPanel(1);
+        // this._stats.showPanel(2);
         document.body.appendChild(this._stats.dom);
 
 	}
-
-    /**
-	 *
-     * @returns {Array.<Particle>}
-     */
-	getObjects() {
-		return this._objects;
-	}
-
-    /**
-	 *
-     * @param {Particle} value
-     * @returns {SceneControls}
-     */
-    addObject(value) {
-        this._objects.push(value);
-        return this;
-    }
-
-    /**
-     *
-     * @param {Particle} value
-     * @returns {SceneControls}
-     */
-    removeObject(value) {
-        for (let i = 0; i < this._objects.length; i++) {
-            let particle = this._objects[i];
-            if (particle.id === value.id) {
-                this._objects.splice(i, 1);
-                this.scene.remove(particle.model);
-                break;
-            }
-        }
-        return this;
-    }
 	
 	/**
 	 * @callback updatePlayerListener
@@ -6440,21 +6381,6 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
         return this;
 	}
 
-    /**
-     * @param {Vector3} position
-     * @callback collisionPlayerListener
-     */
-
-    /**
-     *
-     * @param {collisionPlayerListener} listener
-     * @return {SceneControls}
-     */
-    collisionListener(listener) {
-        this._collisionListener.push(listener);
-        return this;
-	}
-	
 	/**
 	 *
 	 * @param {PlayerInfo} playerInfo
@@ -6481,7 +6407,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		
 		this.scene.add(model);
 		this._players[id] = player;
-        this._objects.push(player.ship);
+        this.addObject(player.ship);
 		return this;
 	}
 	
@@ -6495,20 +6421,87 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 	}
 	
 	/**
+	 * Remove player from scene, and from properties (_players, _objects) by player ID
 	 *
-	 * @param {string|number} id
+	 * @param {string|number} id - This is player ID
 	 * @return {SceneControls}
 	 */
 	destroyPlayer(id) {
 		if (this._players.hasOwnProperty(id)) {
-			let model = this._players[id].getModel();
-			this.scene.remove(model);
-			for (let child of model.children) {
-				model.remove(child);
-			}
+			let player = this._players[id];
+            this._removeObjectById(player.ship.id);
 			delete this._players[id];
 		}
 		return this;
+	}
+
+    /**
+	 * Remove player from scene, and from properties (_players, _objects) by ship ID's
+	 *
+     * @param {string|number} shipId - This is ID of ship
+     * @returns {boolean}
+     */
+    destroyPlayerByShip(shipId) {
+		for (let playerId in this._players) {
+			if (this._players.hasOwnProperty(playerId)) {
+				let player = this._players[playerId];
+				if (player.ship.id === shipId) {
+					this.destroyPlayer(playerId);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+    /**
+     *
+     * @returns {Array.<Particle>}
+     */
+    getObjects() {
+        return this._objects;
+    }
+
+    /**
+     *
+     * @param {Particle} value
+     * @returns {SceneControls}
+     */
+    addObject(value) {
+        this._objects.push(value);
+        return this;
+    }
+
+    /**
+	 * Remove object from scene. It can be any object from properties (_players.<Player.ship>, _objects.<Particle>)
+     *
+     * @param {Particle} value - This is particle
+     * @returns {boolean}
+     */
+    destroyObject(value) {
+        if (value instanceof __WEBPACK_IMPORTED_MODULE_8__particles_ships_Ship__["a" /* default */]) {
+            return this.destroyPlayerByShip(value.id);
+        }
+
+        return this._removeObjectById(value.id);
+    }
+
+    /**
+	 *
+     * @param {string|number} id
+     * @returns {boolean}
+     * @private
+     */
+    _removeObjectById(id) {
+        for (let i = 0; i < this._objects.length; i++) {
+            let particle = this._objects[i];
+            if (particle.id === id) {
+                this._objects.splice(i, 1);
+                this.scene.remove(particle.model);
+                return true;
+            }
+        }
+        return false;
 	}
 
     /**
@@ -6582,11 +6575,7 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 			__WEBPACK_IMPORTED_MODULE_5__keyboard_KeyboardControls__["a" /* default */].GROUP_FLY,
 			() => {
 				let target = this.getNextPosition(this.camera, 250000);
-				let chargeIds = this.player.shot(target, {}, (position, id) => {
-					for (let collisionListener of this._collisionListener) {
-                        collisionListener(position, id);
-					}
-				});
+				let chargeIds = this.player.shot(target);
                 for (let shotPlayerListener of this._shotListener) {
                     shotPlayerListener(target, chargeIds);
                 }
@@ -6672,8 +6661,8 @@ class SceneControls extends __WEBPACK_IMPORTED_MODULE_1__SceneControlsPlugin__["
 		let s = 50;
 		let cube = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].BoxGeometry(s, s, s);
 		let material = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 50});
-		for (let i = 0; i < __WEBPACK_IMPORTED_MODULE_9__config_asteroids__["a" /* default */].length; i ++) {
-			let conf = __WEBPACK_IMPORTED_MODULE_9__config_asteroids__["a" /* default */][i];
+		for (let i = 0; i < __WEBPACK_IMPORTED_MODULE_10__config_asteroids__["a" /* default */].length; i ++) {
+			let conf = __WEBPACK_IMPORTED_MODULE_10__config_asteroids__["a" /* default */][i];
 
 			let mesh = new __WEBPACK_IMPORTED_MODULE_0__api__["b" /* THREE */].Mesh(cube, material);
             mesh.position.copy(conf['p']);
@@ -7398,7 +7387,7 @@ class SkyeBoxControls {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__keyboard_KeyboardControls__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controls_FlyControls__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__systems_Listener__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__particles_arsenal_ArsenalSlot__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__particles_charge_Charge__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__api__ = __webpack_require__(0);
@@ -7702,10 +7691,8 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 	/**
 	 *
 	 * @param {Vector3} target
-	 * @param {Object} [ids]
 	 */
-	shot(target, ids = {}, collisionListener) {
-        let chargeIds = {};
+	shot(target) {
 		let slots = this.ship.arsenalSlots;
 		this._sceneControls.scene.updateMatrixWorld();
 		
@@ -7719,10 +7706,6 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				 * @type {Charge}
                  */
 				let charge = slot.arsenal.getCharge().prepare(target);
-				if (ids && ids.hasOwnProperty(slotName)) {
-                    charge.id = ids[slotName];
-				}
-                chargeIds[slotName] = charge.id;
 				
 				let vector = new __WEBPACK_IMPORTED_MODULE_8__api__["b" /* THREE */].Vector3();
 				for (let el of this.ship.model.children) {
@@ -7736,17 +7719,12 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				charge
 					.addModelToScene(this._sceneControls.scene)
 					.setListenerCollision((charge, particle) => {
-
-                        if (collisionListener) {
-                            collisionListener(charge.model.position, charge.id);
-                        }
-
                         charge
                             .setExplosionToScene(this._sceneControls.scene)
                             .removeModelFromScene(this._sceneControls.scene);
 
                         // TODO: This is a temporary action
-                        this._sceneControls.removeObject(particle);
+                        this._sceneControls.destroyObject(particle);
 
                         if (particle instanceof __WEBPACK_IMPORTED_MODULE_5__particles_ships_Ship__["a" /* default */]) {
                             // TODO: This is a player -  do something
@@ -7767,8 +7745,6 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__User__["a" /* default */] {
 				this.charges.push(charge);
 			}
 		}
-
-		return chargeIds;
 	}
 	
 	/**
@@ -7815,7 +7791,7 @@ class User {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_I_EngineIM20__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__classes_ParticleClassI__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__arsenal_ArsenalIncludes__ = __webpack_require__(27);
@@ -8757,7 +8733,7 @@ class HelperPoint {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_II_EngineIIM20__ = __webpack_require__(61);
 
@@ -8789,7 +8765,7 @@ class ShipExplorerII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassII__ = __webpack_require__(30);
 
 
@@ -8813,7 +8789,7 @@ class EngineIIM20 extends __WEBPACK_IMPORTED_MODULE_0__Engine__["a" /* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ship__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_III_EngineIIIM20__ = __webpack_require__(63);
 
@@ -8845,7 +8821,7 @@ class ShipExplorerIII extends __WEBPACK_IMPORTED_MODULE_0__Ship__["a" /* default
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Engine__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_ParticleClassIII__ = __webpack_require__(31);
 
 
