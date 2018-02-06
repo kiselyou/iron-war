@@ -10,4 +10,29 @@ import Modal from './window/Modal';
 //     .listen();
 
 console.log(123123);
-new Modal().confirm('asdasdsa', 'asdasasd');
+let s = new Modal();
+
+s.alert('asdasdsa', 'asdasasd',
+	() => {
+		console.log('yes');
+	},
+	() => {
+		console.log('no');
+	})
+	.show();
+
+setTimeout(() => {
+	s.alert('12312312', '234234',
+		() => {
+			console.log('yes22');
+		})
+		.show();
+}, 2000);
+
+setTimeout(() => {
+	s.confirm('12312312', '234234',
+		() => {
+			console.log('yes22');
+		})
+		.show();
+}, 4000);
