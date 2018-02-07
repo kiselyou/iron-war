@@ -12,7 +12,7 @@ import Modal from './window/Modal';
 console.log(123123);
 let s = new Modal();
 
-s.alert('asdasdsa', 'asdasasd',
+s.alert('asdasdsa', null,
 	() => {
 		console.log('yes');
 	},
@@ -22,7 +22,7 @@ s.alert('asdasdsa', 'asdasasd',
 	.show();
 
 setTimeout(() => {
-	s.alert('12312312', '234234',
+	s.alert('12312312', null,
 		() => {
 			console.log('yes22');
 		})
@@ -30,7 +30,7 @@ setTimeout(() => {
 }, 2000);
 
 setTimeout(() => {
-	s.confirm('12312312', '234234',
+	s.confirm('12312312', null,
 		() => {
 			console.log('yes22');
 		})

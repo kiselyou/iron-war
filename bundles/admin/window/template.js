@@ -1,4 +1,3 @@
-
 export const template = document.createElement('div');
 
 template.innerHTML = `
@@ -7,7 +6,10 @@ template.innerHTML = `
 			<div class="modal-content" data-modal="container">
 				<div class="modal-header" data-modal="header">
 					<button type="button" class="close" data-modal="close">&times;</button>
-					<h4 class="modal-title" data-modal="header-text"></h4>
+					<h4 class="modal-title">
+						<i class="glyphicon glyphicon-info-sign" data-modal="icon"></i>
+						<span data-modal="header-text"></span>
+					</h4>
 				</div>
 				<div class="modal-body" data-modal="body"></div>
 				<div class="modal-footer" data-modal="footer">
@@ -21,3 +23,5 @@ template.innerHTML = `
 		</div>
 	</div>
 `;
+
+export const iconClass = 'glyphicon glyphicon-';

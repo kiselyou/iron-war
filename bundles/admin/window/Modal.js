@@ -1,4 +1,4 @@
-import {template} from './template';
+import {template, iconClass} from './template';
 
 class Modal {
 	constructor() {
@@ -37,6 +37,13 @@ class Modal {
 		 * @private
 		 */
 		this._headerBtnClose = this._header.querySelector('[data-modal="close"]');
+
+		/**
+		 *
+		 * @type {Element}
+		 * @private
+		 */
+		this._headerIcon = this._header.querySelector('[data-modal="icon"]');
 
 		/**
 		 *
@@ -114,6 +121,20 @@ class Modal {
 		 * @private
 		 */
 		this._shown = false;
+
+		/**
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		this._originIcon = this._headerIcon.getAttribute('class');
+
+		/**
+		 *
+		 * @type {?boolean|string}
+		 * @private
+		 */
+		this._userIcon = null;
 	}
 
 	/**
@@ -170,12 +191,15 @@ class Modal {
 			this._header.style.display = 'none';
 			this._headerText.innerHTML = '';
 		} else {
+			this._header.style.display = '';
 			this._headerText.innerHTML = text ? text : '';
 			if (this._listenerBtnClose !== null) {
 				this._headerBtnClose.removeEventListener('click', this._listenerBtnClose);
 			}
 
-			if (!hideHeader) {
+			this._prepareIcon();
+
+			if (!hideBtnClose) {
 				this._listenerBtnClose = () => {
 					this.hide();
 					if (listener) {
@@ -186,8 +210,21 @@ class Modal {
 
 			this._headerBtnClose.addEventListener('click', this._listenerBtnClose);
 		}
-		if (hideBtnClose || hideHeader) {
-			this._headerBtnClose.style.display = 'none';
+		this._headerBtnClose.style.display = (hideBtnClose || hideHeader) ? 'none' : '';
+		return this;
+	}
+
+	/**
+	 *
+	 * @returns {Modal}
+	 * @private
+	 */
+	_prepareIcon() {
+		if (this._userIcon === false) {
+			this._headerIcon.style.display = 'none';
+		} else {
+			this._headerIcon.style.display = '';
+			this._headerIcon.setAttribute('class', this._userIcon ? this._userIcon : this._originIcon);
 		}
 		return this;
 	}
@@ -283,7 +320,7 @@ class Modal {
 		this
 			._reset()
 			.addButton('Ок', listenerOnClose)
-			._prepareHeader(title, listenerOnClose)
+			._prepareHeader(title ? title : 'Предупреждение', listenerOnClose)
 			._prepareMessage(msg)
 			._prepareFooter()
 			.hide();
@@ -313,15 +350,35 @@ class Modal {
 	 * @returns {Modal}
 	 */
 	confirm(msg, title, listenerOnYes, listenerOnNo, listenerOnClose) {
+		this.setIcon('warning-sign');
 		this
 			._reset()
 			.addButton('Да', listenerOnYes)
 			.addButton('Нет', listenerOnNo)
-			._prepareHeader(title, listenerOnClose)
+			._prepareHeader(title ? title : 'Подтверждение', listenerOnClose)
 			._prepareMessage(msg)
 			._prepareFooter()
 			.hide();
 
+		return this;
+	}
+
+	/**
+	 *
+	 * @param {string} icon
+	 * @returns {Modal}
+	 */
+	setIcon(icon) {
+		this._userIcon = iconClass + (icon.replace(iconClass, ''));
+		return this;
+	}
+
+	/**
+	 *
+	 * @returns {Modal}
+	 */
+	hideIcon() {
+		this._userIcon = false;
 		return this;
 	}
 
