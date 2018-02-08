@@ -24,4 +24,5 @@ template.innerHTML = `
 	</div>
 `;
 
-export const iconClass = 'glyphicon glyphicon-';
+export const ICON_CLASS = 'glyphicon glyphicon-';
+export const DATA_ATTRIBUTE = 'data-modal';

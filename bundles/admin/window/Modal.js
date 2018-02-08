@@ -1,100 +1,91 @@
-import {template, iconClass} from './template';
+import {
+	template,
+	ICON_CLASS,
+	DATA_ATTRIBUTE
+} from './template';
 
-const DATA_ATTR = 'data-modal';
+import Template from './../Template';
 
-class Modal {
+class Modal extends Template {
 	constructor() {
+		super(template, DATA_ATTRIBUTE);
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._templateOrigin = template.children[0];
+		this._header = this.findElement(this.template, 'header');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._template = this._templateOrigin.cloneNode(true);
+		this._headerBtnClose = this.findElement(this._header, 'close');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._header = Modal._attr(this._template, 'header');
+		this._headerIcon = this.findElement(this._header, 'icon');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._headerBtnClose = Modal._attr(this._header, 'close');
+		this._headerText = this.findElement(this._header, 'header-text');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._headerIcon = Modal._attr(this._header, 'icon');
+		this._body = this.findElement(this.template, 'body');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._headerText = Modal._attr(this._header, 'header-text');
+		this._footer = this.findElement(this.template, 'footer');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._body = Modal._attr(this._template, 'body');
+		this._footerBtnDefault = this.findElement(this._footer, 'btn-default');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footer = Modal._attr(this._template, 'footer');
+		this._footerBtnDanger = this.findElement(this._footer, 'btn-danger');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footerBtnDefault = Modal._attr(this._footer, 'btn-default');
+		this._footerBtnWarning = this.findElement(this._footer, 'btn-warning');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footerBtnDanger = Modal._attr(this._footer, 'btn-danger');
+		this._footerBtnSuccess = this.findElement(this._footer, 'btn-success');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footerBtnWarning = Modal._attr(this._footer, 'btn-warning');
-
-		/**
-		 *
-		 * @type {Element}
-		 * @private
-		 */
-		this._footerBtnSuccess = Modal._attr(this._footer, 'btn-success');
-
-		/**
-		 *
-		 * @type {Element}
-		 * @private
-		 */
-		this._footerBtnPrimary = Modal._attr(this._footer, 'btn-primary');
+		this._footerBtnPrimary = this.findElement(this._footer, 'btn-primary');
 
 		/**
 		 *
@@ -131,18 +122,7 @@ class Modal {
 		 */
 		this._userIcon = null;
 
-		this._removeDataAttribute();
-	}
-
-	/**
-	 *
-	 * @param {Element} element
-	 * @param {string} key - This is value of attribute
-	 * @returns {Element}
-	 * @private
-	 */
-	static _attr(element, key) {
-		return element.querySelector(`[${DATA_ATTR}="${key}"]`);
+		this.removeDataAttribute();
 	}
 
 	/**
@@ -183,22 +163,6 @@ class Modal {
 	 */
 	static get BTN_TYPE_DEFAULT() {
 		return 'default';
-	}
-
-	/**
-	 *
-	 * @private
-	 */
-	_removeDataAttribute() {
-		for (let property in this) {
-			if (
-				this.hasOwnProperty(property) &&
-				this[property] instanceof Element &&
-				this[property].hasAttribute(DATA_ATTR)
-			) {
-				this[property].removeAttribute(DATA_ATTR);
-			}
-		}
 	}
 
 	/**
@@ -394,7 +358,7 @@ class Modal {
 	 * @returns {Modal}
 	 */
 	setIcon(icon) {
-		this._userIcon = iconClass + (icon.replace(iconClass, ''));
+		this._userIcon = ICON_CLASS + (icon.replace(ICON_CLASS, ''));
 		return this;
 	}
 
@@ -404,28 +368,6 @@ class Modal {
 	 */
 	hideIcon() {
 		this._userIcon = false;
-		return this;
-	}
-
-	/**
-	 *
-	 * @returns {Modal}
-	 */
-	show() {
-		this._shown = true;
-		document.body.appendChild(this._template);
-		return this;
-	}
-
-	/**
-	 *
-	 * @returns {Modal}
-	 */
-	hide() {
-		if (this._shown) {
-			document.body.removeChild(this._template);
-			this._shown = false;
-		}
 		return this;
 	}
 }

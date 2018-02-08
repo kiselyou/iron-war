@@ -5,6 +5,16 @@ import {socketConfig} from './../socket/config/server';
 import io from 'socket.io-client';
 
 
+import Folding from './admin/folding/Folding';
+
+let folding = new Folding();
+folding
+	.add('Настройки управления', 'fa fa-cogs mg_sm', 'asdasdasd')
+	.add('Moving controls', 'fa fa-cogs mg_sm', 'asdasdasd')
+	.show();
+
+
+
 let start = false;
 
 new PreLoader().load(() => {
