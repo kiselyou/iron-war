@@ -9,30 +9,26 @@ import Modal from './window/Modal';
 //     .btnSave('#form-create-player-save')
 //     .listen();
 
-console.log(123123);
 let s = new Modal();
 
-s.alert('asdasdsa', null,
-	() => {
-		console.log('yes');
-	},
-	() => {
-		console.log('no');
-	})
-	.show();
-
-setTimeout(() => {
-	s.alert('12312312', null,
+let start = (question) => {
+	s.confirm(question, null,
 		() => {
-			console.log('yes22');
+			s.alert('Ок', null, () => {
+				start('Ты молодец!');
+			}).show();
+		},
+		() => {
+			s.alert('Отмена', null, () => {
+				start('Ой! что ты делашь?');
+			}).show();
+		},
+		() => {
+			s.alert('Ооооооо!', null, () => {
+				start('Ты уверен?');
+			}).show();
 		})
 		.show();
-}, 2000);
+};
 
-setTimeout(() => {
-	s.confirm('12312312', null,
-		() => {
-			console.log('yes22');
-		})
-		.show();
-}, 4000);
+start('Привет! Кто ты?');

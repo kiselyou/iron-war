@@ -3,7 +3,7 @@ export const template = document.createElement('div');
 template.innerHTML = `
 	<div class="modal show">
 		<div class="modal-dialog">
-			<div class="modal-content" data-modal="container">
+			<div class="modal-content">
 				<div class="modal-header" data-modal="header">
 					<button type="button" class="close" data-modal="close">&times;</button>
 					<h4 class="modal-title">

@@ -1,5 +1,7 @@
 import {template, iconClass} from './template';
 
+const DATA_ATTR = 'data-modal';
+
 class Modal {
 	constructor() {
 
@@ -22,84 +24,77 @@ class Modal {
 		 * @type {Element}
 		 * @private
 		 */
-		this._container = this._template.querySelector('[data-modal="container"]');
+		this._header = Modal._attr(this._template, 'header');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._header = this._template.querySelector('[data-modal="header"]');
+		this._headerBtnClose = Modal._attr(this._header, 'close');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._headerBtnClose = this._header.querySelector('[data-modal="close"]');
+		this._headerIcon = Modal._attr(this._header, 'icon');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._headerIcon = this._header.querySelector('[data-modal="icon"]');
+		this._headerText = Modal._attr(this._header, 'header-text');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._headerText = this._header.querySelector('[data-modal="header-text"]');
+		this._body = Modal._attr(this._template, 'body');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._body = this._template.querySelector('[data-modal="body"]');
+		this._footer = Modal._attr(this._template, 'footer');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footer = this._template.querySelector('[data-modal="footer"]');
+		this._footerBtnDefault = Modal._attr(this._footer, 'btn-default');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footerBtnDefault = this._footer.querySelector('[data-modal="btn-default"]');
+		this._footerBtnDanger = Modal._attr(this._footer, 'btn-danger');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footerBtnDanger = this._footer.querySelector('[data-modal="btn-danger"]');
+		this._footerBtnWarning = Modal._attr(this._footer, 'btn-warning');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footerBtnWarning = this._footer.querySelector('[data-modal="btn-warning"]');
+		this._footerBtnSuccess = Modal._attr(this._footer, 'btn-success');
 
 		/**
 		 *
 		 * @type {Element}
 		 * @private
 		 */
-		this._footerBtnSuccess = this._footer.querySelector('[data-modal="btn-success"]');
-
-		/**
-		 *
-		 * @type {Element}
-		 * @private
-		 */
-		this._footerBtnPrimary = this._footer.querySelector('[data-modal="btn-primary"]');
+		this._footerBtnPrimary = Modal._attr(this._footer, 'btn-primary');
 
 		/**
 		 *
@@ -110,7 +105,7 @@ class Modal {
 
 		/**
 		 *
-		 * @type {?function}
+		 * @type {?listenerOnClose}
 		 * @private
 		 */
 		this._listenerBtnClose = null;
@@ -135,6 +130,19 @@ class Modal {
 		 * @private
 		 */
 		this._userIcon = null;
+
+		this._removeDataAttribute();
+	}
+
+	/**
+	 *
+	 * @param {Element} element
+	 * @param {string} key - This is value of attribute
+	 * @returns {Element}
+	 * @private
+	 */
+	static _attr(element, key) {
+		return element.querySelector(`[${DATA_ATTR}="${key}"]`);
 	}
 
 	/**
@@ -179,6 +187,22 @@ class Modal {
 
 	/**
 	 *
+	 * @private
+	 */
+	_removeDataAttribute() {
+		for (let property in this) {
+			if (
+				this.hasOwnProperty(property) &&
+				this[property] instanceof Element &&
+				this[property].hasAttribute(DATA_ATTR)
+			) {
+				this[property].removeAttribute(DATA_ATTR);
+			}
+		}
+	}
+
+	/**
+	 *
 	 * @param {string} text
 	 * @param {?listenerOnClose} [listener]
 	 * @param {boolean} [hideBtnClose]
@@ -200,10 +224,10 @@ class Modal {
 			this._prepareIcon();
 
 			if (!hideBtnClose) {
-				this._listenerBtnClose = () => {
+				this._listenerBtnClose = (element, event) => {
 					this.hide();
 					if (listener) {
-						listener();
+						listener(element, event);
 					}
 				};
 			}
@@ -317,6 +341,7 @@ class Modal {
 	 * @returns {Modal}
 	 */
 	alert(msg, title, listenerOnClose) {
+		this.setIcon(this._originIcon);
 		this
 			._reset()
 			.addButton('Ок', listenerOnClose)
