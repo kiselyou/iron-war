@@ -6,12 +6,49 @@ import io from 'socket.io-client';
 
 
 import Folding from './admin/folding/Folding';
+import Size from './admin/Size';
 
 let folding = new Folding();
 folding
-	.add('Настройки управления', 'fa fa-cogs mg_sm', 'asdasdasd')
-	.add('Moving controls', 'fa fa-cogs mg_sm', 'asdasdasd')
-	.show();
+	.add('Настройки управления', 'fa fa-cogs', 'asdasdasd')
+	.add('Moving controls', 'exclamation-triangle', '======2=====')
+	.add('Moving controls - 2', 'fa fa-cogs', new Folding()
+
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
+
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(4, 4, 4, 4))
+		.add('sadasdas', 'fa fa-cogs', '========-------asddsa--------===', new Size(4, 4, 4, 4))
+		.add('sadasdas', 'fa fa-cogs', '========-------sadss--------===', new Size(4, 4, 4, 4))
+
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
+
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(6, 6, 6, 6))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(6, 6, 6, 6))
+
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(3, 3, 3, 3))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(3, 3, 3, 3))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(3, 3, 3, 3))
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(3, 3, 3, 3))
+
+		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===')
+	)
+	.drawIn();
 
 
 

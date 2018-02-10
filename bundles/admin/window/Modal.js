@@ -1,6 +1,5 @@
 import {
 	template,
-	ICON_CLASS,
 	DATA_ATTRIBUTE
 } from './template';
 
@@ -103,24 +102,10 @@ class Modal extends Template {
 
 		/**
 		 *
-		 * @type {boolean}
-		 * @private
-		 */
-		this._shown = false;
-
-		/**
-		 *
 		 * @type {string}
 		 * @private
 		 */
 		this._originIcon = this._headerIcon.getAttribute('class');
-
-		/**
-		 *
-		 * @type {?boolean|string}
-		 * @private
-		 */
-		this._userIcon = null;
 
 		this.removeDataAttribute();
 	}
@@ -189,7 +174,7 @@ class Modal extends Template {
 
 			if (!hideBtnClose) {
 				this._listenerBtnClose = (element, event) => {
-					this.hide();
+					this.remove();
 					if (listener) {
 						listener(element, event);
 					}
@@ -208,11 +193,11 @@ class Modal extends Template {
 	 * @private
 	 */
 	_prepareIcon() {
-		if (this._userIcon === false) {
+		if (this._icon === false) {
 			this._headerIcon.style.display = 'none';
 		} else {
 			this._headerIcon.style.display = '';
-			this._headerIcon.setAttribute('class', this._userIcon ? this._userIcon : this._originIcon);
+			this._headerIcon.setAttribute('class', this._icon ? this._icon : this._originIcon);
 		}
 		return this;
 	}
@@ -272,7 +257,7 @@ class Modal extends Template {
 			let listener = btn['listener'];
 			this._footer.appendChild(element);
 			element.addEventListener('click', (event) => {
-				this.hide();
+				this.remove();
 				if (listener) {
 					listener(event.target, event);
 				}
@@ -312,7 +297,7 @@ class Modal extends Template {
 			._prepareHeader(title ? title : 'Предупреждение', listenerOnClose)
 			._prepareMessage(msg)
 			._prepareFooter()
-			.hide();
+			.remove();
 
 		return this;
 	}
@@ -339,7 +324,7 @@ class Modal extends Template {
 	 * @returns {Modal}
 	 */
 	confirm(msg, title, listenerOnYes, listenerOnNo, listenerOnClose) {
-		this.setIcon('warning-sign');
+		this.setIcon(this._originIcon);
 		this
 			._reset()
 			.addButton('Да', listenerOnYes)
@@ -347,27 +332,8 @@ class Modal extends Template {
 			._prepareHeader(title ? title : 'Подтверждение', listenerOnClose)
 			._prepareMessage(msg)
 			._prepareFooter()
-			.hide();
+			.remove();
 
-		return this;
-	}
-
-	/**
-	 *
-	 * @param {string} icon
-	 * @returns {Modal}
-	 */
-	setIcon(icon) {
-		this._userIcon = ICON_CLASS + (icon.replace(ICON_CLASS, ''));
-		return this;
-	}
-
-	/**
-	 *
-	 * @returns {Modal}
-	 */
-	hideIcon() {
-		this._userIcon = false;
 		return this;
 	}
 }

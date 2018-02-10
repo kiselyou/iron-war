@@ -11,6 +11,10 @@ class AdminAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
 
+	public $css = [
+		'build/components-font-awesome/css/font-awesome.css'
+	];
+
     public $js = [
         'build/bundle-admin.js'
     ];

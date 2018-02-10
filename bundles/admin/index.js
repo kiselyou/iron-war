@@ -16,19 +16,19 @@ let start = (question) => {
 		() => {
 			s.alert('Ок', null, () => {
 				start('Ты молодец!');
-			}).show();
+			}).drawIn();
 		},
 		() => {
 			s.alert('Отмена', null, () => {
 				start('Ой! что ты делашь?');
-			}).show();
+			}).drawIn();
 		},
 		() => {
 			s.alert('Ооооооо!', null, () => {
 				start('Ты уверен?');
-			}).show();
+			}).drawIn();
 		})
-		.show();
+		.drawIn();
 };
 
 start('Привет! Кто ты?');

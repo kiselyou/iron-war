@@ -1,11 +1,15 @@
 
+import Size from './Size';
+
+const PREFIX_ICON = 'fa fa-';
+
 class Template {
 	/**
 	 *
-	 * @param {Element} template
-	 * @param {string} dataAttr
+	 * @param {?Element} [template]
+	 * @param {?string} [dataAttr]
 	 */
-	constructor(template, dataAttr) {
+	constructor(template = null, dataAttr = null) {
 		/**
 		 *
 		 * @type {string}
@@ -17,7 +21,7 @@ class Template {
 		 * @type {Element}
 		 * @private
 		 */
-		this._templateOrigin = template.children[0];
+		this._templateOrigin = template ? template.children[0] : document.createElement('div');
 
 		/**
 		 *
@@ -27,15 +31,42 @@ class Template {
 
 		/**
 		 *
+		 * @type {?boolean|string}
+		 * @private
+		 */
+		this._icon = null;
+
+		/**
+		 *
 		 * @type {?Element}
 		 */
 		this.parent = null;
 
 		/**
 		 *
-		 * @type {Array}
+		 * @type {boolean}
 		 */
-		this.elements = [];
+		this.shown = false;
+
+		/**
+		 *
+		 * @type {boolean}
+		 */
+		this.exists = false;
+	}
+
+	/**
+	 *
+	 * @param {Size} [value]
+	 * @returns {Template}
+	 */
+	setSize(value) {
+		if (value instanceof Size) {
+			value.update(this.template);
+		} else if (value === null || value === true) {
+			new Size().update(this.template);
+		}
+		return this;
 	}
 
 	/**
@@ -67,27 +98,41 @@ class Template {
 
 	/**
 	 *
+	 * @param {string} icon
 	 * @returns {Template}
 	 */
-	clone() {
-		this.elements.push(this.template.cloneNode(true));
+	setIcon(icon) {
+		this._icon = PREFIX_ICON + (icon.replace(PREFIX_ICON, ''));
 		return this;
 	}
 
 	/**
 	 *
+	 * @param {?Element|Template} [element] - By default is "document.body"
 	 * @returns {Template}
 	 */
-	show() {
-		this._shown = true;
-		if (this.elements.length > 0) {
-			for (let element of this.elements) {
-				this.getParent().appendChild(element);
-			}
-		} else {
+	drawIn(element = null) {
+		this.parent = element instanceof Template ? element.template : element;
+		if (!this.exists) {
+			this.exists = true;
 			this.getParent().appendChild(this.template);
 		}
+		return this;
+	}
 
+	/**
+	 *
+	 * @param {?(string|Element|Template)} newChild
+	 * @returns {Template}
+	 */
+	appendChild(newChild) {
+		if (typeof newChild === 'string' || newChild === null) {
+			this.template.innerHTML = newChild;
+		} else if (newChild instanceof Template) {
+			this.template.appendChild(newChild.template);
+		} else {
+			this.template.appendChild(newChild);
+		}
 		return this;
 	}
 
@@ -95,16 +140,11 @@ class Template {
 	 *
 	 * @returns {Template}
 	 */
-	hide() {
-		if (this._shown) {
-			if (this.elements.length > 0) {
-				for (let element of this.elements) {
-					this.getParent().removeChild(element);
-				}
-			} else {
-				this.getParent().removeChild(this.template);
-			}
-			this._shown = false;
+	remove() {
+		if (this.exists) {
+			this.getParent().removeChild(this.template);
+			this.exists = false;
+			this.parent = null;
 		}
 		return this;
 	}
@@ -119,11 +159,28 @@ class Template {
 
 	/**
 	 *
-	 * @param {Element} element
+	 * @param {(string|Array)} className
 	 * @returns {Template}
 	 */
-	appendTo(element) {
-		this.parent = element;
+	setClass(className) {
+		if (typeof className === 'object') {
+			for (let name of className) {
+				this.addClass(name);
+			}
+		} else {
+			this.addClass(className);
+		}
+		return this;
+	}
+
+	/**
+	 *
+	 * @param {string} className
+	 * @returns {Template}
+	 */
+	addClass(className) {
+		this.template.classList.remove(className);
+		this.template.classList.add(className);
 		return this;
 	}
 }

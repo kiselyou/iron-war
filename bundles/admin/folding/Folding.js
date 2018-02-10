@@ -1,9 +1,9 @@
 import {
 	template,
-	ICON_CLASS,
 	DATA_ATTRIBUTE
 } from './template';
 import Template from './../Template';
+import Grid from './../layout/Grid';
 
 class Folding extends Template {
 	constructor() {
@@ -45,44 +45,88 @@ class Folding extends Template {
 		this._bodyEmpty = this.findElement(this._body, 'body-empty');
 
 		this.removeDataAttribute();
+
+		/**
+		 *
+		 * @type {Grid}
+		 */
+		this.grid = new Grid();
+
+		// this.appendChild(this.grid);
 	}
 
 	/**
 	 *
 	 * @param {string} title
-	 * @param {?string} [icon]
 	 * @returns {Folding}
 	 * @private
 	 */
-	_prepareHeader(title, icon) {
+	_prepareHeader(title) {
 		this._headerText.innerHTML = title;
 		return this;
 	}
 
 	/**
 	 *
-	 * @param {string} text
+	 * @returns {Folding}
+	 * @private
+	 */
+	_prepareIcon() {
+		if (this._icon === false) {
+			this._headerIcon.style.display = 'none';
+		} else {
+			this._headerIcon.style.display = '';
+			this._headerIcon.setAttribute('class', this._icon ? this._icon : this._originIcon);
+		}
+		return this;
+	}
+
+	/**
+	 *
+	 * @param {?(string|Template)} text
 	 * @returns {Folding}
 	 * @private
 	 */
 	_prepareBody(text) {
+		if (text === null || text === '') {
+			this._body.innerHTML = '';
+			this._body.appendChild(this._bodyEmpty.cloneNode(false));
+		} else {
+			if (text instanceof Template) {
+				this._body.innerHTML = '';
+				text.drawIn(this._body);
+			} else {
+				this._body.innerHTML = text;
+			}
+		}
 		return this;
 	}
 
 	/**
 	 *
 	 * @param {string} title
-	 * @param {?string} icon
-	 * @param {?string} [text]
+	 * @param {?(string|boolean)} icon
+	 * @param {?(string|Template)} [text]
+	 * @param {Size} size
 	 * @returns {Folding}
 	 */
-	add(title, icon, text) {
+	add(title, icon, text, size = null) {
+
+		// let folding = new Folding();
+		this.setIcon(icon);
 		this
-			._prepareHeader(title, icon)
-			._prepareBody(text)
-			.clone();
-		console.log(this.elements);
+			._prepareHeader(title)
+			._prepareIcon()
+			._prepareBody(text);
+
+		this.grid.addColumn(this.template.cloneNode(true), size);
+
 		return this;
+	}
+
+	drawIn(value) {
+		this.template = this.grid.template;
+		super.drawIn(value);
 	}
 }
 

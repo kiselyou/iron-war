@@ -13,5 +13,4 @@ template.innerHTML = `
 	</div>
 `;
 
-export const ICON_CLASS = 'fa fa-';
 export const DATA_ATTRIBUTE = 'data-folding';

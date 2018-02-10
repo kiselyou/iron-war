@@ -7,7 +7,7 @@ template.innerHTML = `
 				<div class="modal-header" data-modal="header">
 					<button type="button" class="close" data-modal="close">&times;</button>
 					<h4 class="modal-title">
-						<i class="glyphicon glyphicon-info-sign" data-modal="icon"></i>
+						<i class="fas fa-exclamation-triangle" data-modal="icon"></i>
 						<span data-modal="header-text"></span>
 					</h4>
 				</div>
@@ -24,5 +24,4 @@ template.innerHTML = `
 	</div>
 `;
 
-export const ICON_CLASS = 'glyphicon glyphicon-';
 export const DATA_ATTRIBUTE = 'data-modal';
