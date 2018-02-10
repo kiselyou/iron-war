@@ -3,12 +3,12 @@ import Keyboard from './Keyboard';
 class KeyboardControls {
 	/**
 	 *
-	 * @param {HTMLElement|HTMLDocument} container
+	 * @param {?(HTMLElement|HTMLDocument)} [container]
 	 */
 	constructor(container) {
 		/**
 		 *
-		 * @type {HTMLElement|HTMLDocument}
+		 * @type {?(HTMLElement|HTMLDocument)}
 		 */
 		this.container = container;
 		
@@ -25,7 +25,7 @@ class KeyboardControls {
 		 * @private
 		 */
 		this._listeners = {};
-		
+
 		/**
 		 *
 		 * @type {{forward: Keyboard, back: Keyboard, left: Keyboard, right: Keyboard, up: Keyboard, down: Keyboard, rollLeft: Keyboard, rollRight: Keyboard, yawLeft: Keyboard, yawRight: Keyboard, pitchUp: Keyboard, pitchDown: Keyboard, stop: Keyboard, openConsole: Keyboard}}
@@ -85,7 +85,7 @@ class KeyboardControls {
 			
 			openConsole: new Keyboard(66, 'B', 'openConsole')
 				.setEventType(Keyboard.EVENT_TYPE_UP_TOGGLE)
-				.setDescription('Открыть консоль бортового компъютера')
+				.setDescription('Консоль бортового компъютера (Открыть / Закрыть)')
 				.setGroup(KeyboardControls.GROUP_PK)
 		};
 	}

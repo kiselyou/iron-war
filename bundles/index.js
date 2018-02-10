@@ -1,54 +1,30 @@
 import SceneControls from './js/controls/SceneControls';
 
 import PreLoader from './js/loader/PreLoader';
+import KeyboardControls from './js/keyboard/KeyboardControls';
 import {socketConfig} from './../socket/config/server';
 import io from 'socket.io-client';
 
 
 import Folding from './admin/folding/Folding';
+import Keyboard from './admin/keyboard/Keyboard';
 import Size from './admin/Size';
+
+let keyboard = new Keyboard()
+	.setSize(new Size(12, 6, 4, 3));
+
+let config = new KeyboardControls();
+for (let property in config.fly) {
+	if (config.fly.hasOwnProperty(property)) {
+		keyboard.add(config.fly[property]['name'], config.fly[property]['description']);
+	}
+}
 
 let folding = new Folding();
 folding
-	.add('Настройки управления', 'fa fa-cogs', 'asdasdasd')
-	.add('Moving controls', 'exclamation-triangle', '======2=====')
-	.add('Moving controls - 2', 'fa fa-cogs', new Folding()
-
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(12, 12, 6, 1))
-
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(4, 4, 4, 4))
-		.add('sadasdas', 'fa fa-cogs', '========-------asddsa--------===', new Size(4, 4, 4, 4))
-		.add('sadasdas', 'fa fa-cogs', '========-------sadss--------===', new Size(4, 4, 4, 4))
-
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(2, 2, 2, 2))
-
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(6, 6, 6, 6))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(6, 6, 6, 6))
-
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(3, 3, 3, 3))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(3, 3, 3, 3))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(3, 3, 3, 3))
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===', new Size(3, 3, 3, 3))
-
-		.add('sadasdas', 'fa fa-cogs', '========--------sad-------===')
-	)
-	.drawIn();
+	.add('Ship settings', 'cogs', null)
+	.add('Keyboard controls', 'keyboard', keyboard)
+	.drawIn('#block-panels');
 
 
 

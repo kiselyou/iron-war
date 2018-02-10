@@ -108,13 +108,19 @@ class Template {
 
 	/**
 	 *
-	 * @param {?Element|Template} [element] - By default is "document.body"
+	 * @param {?(Element|Template|string)} [element] - By default is "document.body"
 	 * @returns {Template}
 	 */
 	drawIn(element = null) {
-		this.parent = element instanceof Template ? element.template : element;
 		if (!this.exists) {
 			this.exists = true;
+			if (element instanceof Template) {
+				this.parent	= element.template;
+			} else if (typeof element === 'string') {
+				this.parent = document.body.querySelector(element);
+			} else {
+				this.parent = element;
+			}
 			this.getParent().appendChild(this.template);
 		}
 		return this;
@@ -122,7 +128,7 @@ class Template {
 
 	/**
 	 *
-	 * @param {?(string|Element|Template)} newChild
+	 * @param {?(string|Element|Template|Node)} newChild
 	 * @returns {Template}
 	 */
 	appendChild(newChild) {

@@ -1,6 +1,6 @@
 import Template from './../Template';
 
-const ROW_CLASS = ['row', 'm-0'];
+const ROW_CLASS = ['row', 'm-1'];
 
 class Row extends Template {
 	constructor() {

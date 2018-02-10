@@ -1,24 +1,24 @@
 .folding {
-	border: 1px solid @color_base_dark;
+	border: 1px solid @color-light_transparent;
 	color: #fff;
 
 	&__title {
 		padding: 5px;
-		background: @background_color_light;
+		background: @color_dark;
 		overflow: hidden;
 
 		&_icon {
 			margin: 0 @margin_md;
 		}
 	}
-
 	&__body {
-		background: @background_dark_strong;
-		padding: @padding_md;
+		background: @color_dark_transparent;
+		padding: @padding_xs;
+		overflow: auto;
 
 		&_empty {
 			font-style: italic;
-			color: @color_base_disabled;
+			color: @color_disabled;
 			font-size: @font_size_sm;
 		}
 	}

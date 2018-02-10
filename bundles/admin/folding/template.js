@@ -1,7 +1,7 @@
 export const template = document.createElement('div');
 
 template.innerHTML = `
-	<div class="folding mg_sm">
+	<div class="folding">
 		<div class="folding__title" data-folding="header">
 			<i class="fa fa-rocket mg_sm" data-folding="header-icon"></i>
 			<span data-folding="header-text"></span>

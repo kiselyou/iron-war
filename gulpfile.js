@@ -6,6 +6,9 @@ const webpack = require('webpack-stream');
 const less = require('gulp-less');
 const rename = require('gulp-rename');
 const cssnano = require('gulp-cssnano');
+const livereload = require('gulp-livereload');
+
+
 
 const BUILD_DIR = 'web/build';
 let isProd = false;
@@ -70,10 +73,11 @@ gulp.task('build:less', function() {
 			.pipe(gulp.dest(BUILD_DIR));
 	}
 	
-	return build.pipe(gulp.dest(BUILD_DIR));
+	return build.pipe(gulp.dest(BUILD_DIR)).pipe(livereload());
 });
 
 gulp.task('watch', function() {
+	livereload.listen();
 	gulp.watch(['bundles/index.js', 'bundles/api.js', 'bundles/admin/**/*.js', 'bundles/js/**/*.js'], ['build:js']);
 	gulp.watch(['bundles/less/**/*.less'], ['build:less']);
     gulp.watch(['bundles/admin/**/*.js'], ['build:admin:js']);

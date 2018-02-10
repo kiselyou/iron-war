@@ -19,7 +19,7 @@
     "stats.js": "*",
     "three.js": "^0.89.0",
     "ShaderParticleEngine": "0.8.5",
-    "components-font-awesome": "^4.7.0",
+    "components-font-awesome": "5.0.6",
     "bootstrap": "^4.0.0"
   }
 }

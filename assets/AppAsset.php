@@ -22,8 +22,8 @@ class AppAsset extends AssetBundle
 
     public $css = [
         'build/bundle.css',
-		'build/components-font-awesome/css/font-awesome.css',
-		'build/bootstrap/dist/css/bootstrap.css'
+		'build/bootstrap/dist/css/bootstrap.css',
+		'css/fontawesome-all.css'
     ];
     public $js = [
         'build/three.js/three.min.js',

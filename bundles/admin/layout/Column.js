@@ -1,6 +1,6 @@
 import Template from './../Template';
 
-const COLUMN_CLASS = ['column', 'p-0'];
+const COLUMN_CLASS = ['column', 'p-1'];
 
 class Column extends Template {
 	constructor() {

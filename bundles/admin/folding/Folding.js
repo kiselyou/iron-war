@@ -52,7 +52,21 @@ class Folding extends Template {
 		 */
 		this.grid = new Grid();
 
-		// this.appendChild(this.grid);
+		/**
+		 *
+		 * @type {?Size}
+		 */
+		this.size = null;
+	}
+
+	/**
+	 *
+	 * @param {Size} value
+	 * @returns {Folding}
+	 */
+	setSize(value) {
+		this.size = value;
+		return this;
 	}
 
 	/**
@@ -88,8 +102,7 @@ class Folding extends Template {
 	 * @private
 	 */
 	_prepareBody(text) {
-		if (text === null || text === '') {
-			this._body.innerHTML = '';
+		if (text === null || text === '' || text === undefined) {
 			this._body.appendChild(this._bodyEmpty.cloneNode(false));
 		} else {
 			if (text instanceof Template) {
@@ -107,23 +120,23 @@ class Folding extends Template {
 	 * @param {string} title
 	 * @param {?(string|boolean)} icon
 	 * @param {?(string|Template)} [text]
-	 * @param {Size} size
 	 * @returns {Folding}
 	 */
-	add(title, icon, text, size = null) {
-
-		// let folding = new Folding();
+	add(title, icon, text) {
 		this.setIcon(icon);
 		this
 			._prepareHeader(title)
 			._prepareIcon()
 			._prepareBody(text);
 
-		this.grid.addColumn(this.template.cloneNode(true), size);
-
+		this.grid.addColumn(this.template.cloneNode(true), this.size);
 		return this;
 	}
 
+	/**
+	 *
+	 * @param {?(Element|Template|string)} value
+	 */
 	drawIn(value) {
 		this.template = this.grid.template;
 		super.drawIn(value);

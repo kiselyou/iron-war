@@ -32,7 +32,7 @@ class Grid extends Template {
 
 	/**
 	 *
-	 * @param {?(string|Element|Template)} value
+	 * @param {?(string|Element|Template|Node)} value
 	 * @param {?Size} [size]
 	 * @returns {Grid}
 	 */
