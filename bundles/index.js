@@ -22,7 +22,6 @@ for (let property in config.fly) {
 
 let folding = new Folding();
 folding
-	.add('Ship settings', 'cogs', null)
 	.add('Keyboard controls', 'keyboard', keyboard)
 	.drawIn('#block-panels');
 

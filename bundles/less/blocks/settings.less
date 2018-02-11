@@ -2,18 +2,33 @@
 	width: 100%;
 	overflow: hidden;
 
-	&__board {
-		height: 102px;
-		overflow: hidden;
-		display: inline-flex;
+	&__item {
+		width: 100%;
+		overflow: auto;
+		border-top: 1px solid transparent;
+		border-left: 1px solid transparent;
+		border-right: 1px solid transparent;
+		border-bottom: 1px solid @color_light_transparent;
+		padding: 4px;
+		margin-top: 2px;
+
+		&:nth-last-child(1) {
+			border-bottom-color: transparent;
+		}
+
+		&:hover {
+			border-radius: @border_radius_sm;
+			border: 1px solid @color_light_transparent;
+			background: @color_light_middle_transparent;
+		}
 	}
 
-	&__img {
+	&__container-img {
 		width: 100px;
 		height: 100px;
-		border-radius: 4px;
-		border: 1px solid @color-light_transparent;
-		background: @color_dark_strong;
+		border-radius: @border_radius_sm;
+		border: 1px solid @color_light_transparent;
+		background: @color_dark_middle;
 		text-align: center;
 		display: flex;
 		flex-direction: column;
@@ -23,18 +38,104 @@
 		cursor: pointer;
 		margin: @margin_xs;
 
-		&_center {
-			width: 80px;
-			height: 80px;
-			border-radius: 50%;
-			margin: 0 auto;
-			cursor: pointer;
+		&_big {
+			width: 200px;
+			height: 200px;
 		}
+
+		&_small {
+			width: 60px;
+			height: 60px;
+			font-size: 10px;
+		}
+	}
+
+	&__container-text {
+		min-height: 100px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding: 0 @padding_lg;
+
+		&_big {
+			min-height: 200px;
+		}
+
+		&_small {
+			min-height: 50px;
+		}
+	}
+
+	&__img {
+		width: 80%;
+		margin: 0 auto;
+		cursor: pointer;
 	}
 
 	&__radio {
 		position: absolute;
 		bottom: 5px;
 		right: 5px;
+	}
+
+	&__info {
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		color: #fff;
+	}
+
+	&__btn {
+		background: @color_dark;
+		border: 1px solid @color_light_transparent;
+		outline: none;
+		cursor: pointer;
+		border-radius: @border_radius_sm;
+		color: #fff;
+		padding: 2px 10px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+
+		&:hover {
+			color: @color_disabled;
+		}
+
+		&:active {
+			border: 1px solid @color_light;
+		}
+		&:active,
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&__table {
+		width: 100%;
+
+		& td,
+		& th {
+			padding: 0 10px;
+		}
+
+		& td:nth-child(1) {
+			//width: 50%;
+		}
+
+		&-header {
+			background: @color_light_middle_transparent;
+
+			& th {
+				padding: @padding_xs @padding_lg;
+			}
+		}
+
+		&_bordered {
+			border-collapse: collapse;
+
+			& td,
+			& th {
+				border: 1px solid @color_dark;
+			}
+		}
 	}
 }
