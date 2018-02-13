@@ -10,6 +10,33 @@ import Folding from './admin/folding/Folding';
 import Keyboard from './admin/keyboard/Keyboard';
 import Size from './admin/Size';
 
+import ProgressBar from 'progressbar.js';
+
+let container = document.getElementById('container');
+
+let bar = new ProgressBar.Circle(container, {
+	strokeWidth: 2,
+	easing: 'easeInOut',
+	duration: 1000,
+	color: '#FF0000',
+	trailColor: 'transparent',
+	trailWidth: 1,
+	svgStyle: null,
+	step: function(state, path, attachment) {
+		console.log(state, path, attachment);
+		// Do any modifications to attachment and/or path attributes
+	}
+});
+
+function test() {
+
+	bar.animate(1.0, {}, () => {
+		// bar.set(0);
+		// test();
+	});
+}
+test();
+
 let keyboard = new Keyboard()
 	.setSize(new Size(12, 6, 4, 3));
 

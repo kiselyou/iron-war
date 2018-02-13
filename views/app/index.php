@@ -3,10 +3,24 @@ use yii\helpers\Url;
 ?>
 
 <div id="main-container-canvas"></div>
+
+
+
+
+<div id="container"></div>
+
+<style>
+
+	#container {
+		margin: 20px;
+		width: 200px;
+		height: 200px;
+	}
+
+</style>
+
 <div class="container-fluid" id="block-panels">
 
-
-	<div class="row m-1">
 
 		<div class="settings">
 
@@ -649,7 +663,5 @@ use yii\helpers\Url;
 			</div>
 
 		</div>
-
-	</div>
 
 </div>
