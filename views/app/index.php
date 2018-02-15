@@ -6,12 +6,10 @@ use yii\helpers\Url;
 
 <div class="container-fluid" id="block-panels">
 
-
 		<div class="settings">
 
 			<div class="row m-1">
 				<div class="column p-1 col-12 col-sm-12 col-md-12 col-lg-6">
-
 
 					<div class="folding mt-1">
 						<div class="folding__title">
@@ -31,6 +29,7 @@ use yii\helpers\Url;
 								<div class="column p-1 col-12 col-sm-12 col-md-12 col-lg-12">
 									<h4>Explorer II</h4>
 								</div>
+
 							</div>
 
 							<div class="row m-0 mt-1">
