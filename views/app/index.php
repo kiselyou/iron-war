@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Url;
+use app\widgets\table\Table;
+
 ?>
 
 <div id="main-container-canvas"></div>
@@ -36,162 +38,73 @@ use yii\helpers\Url;
 
 								<div class="column p-1 col-12 col-sm-12 col-md-12 col-lg-12">
 
-									<table class="settings__table settings__table_bordered">
-										<thead class="settings__table-header">
-											<tr>
-												<th>Елементы</th>
-												<th width="100px">Текущее</th>
-												<th width="100px">Макс.</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Класс</td>
-												<td>II</td>
-												<td>II</td>
-											</tr>
-											<tr>
-												<td>Корпус</td>
-												<td>2000 ед.</td>
-												<td>3500 ед.</td>
-											</tr>
-											<tr>
-												<td>Броня</td>
-												<td>4%</td>
-												<td>8%</td>
-											</tr>
-											<tr>
-												<td>Щиты</td>
-												<td>2 x 2500</td>
-												<td>4 x 2500</td>
-											</tr>
-											<tr>
-												<td>Грузовой отсек</td>
-												<td>1500 ед.</td>
-												<td>2800 ед.</td>
-											</tr>
-										</tbody>
-									</table>
+									<?=
+										Table::factory()
+											->addColumn('Елементы')
+											->addColumn('Текущее')
+											->addColumn('Макс.')
+											->setData([
+												['Класс', 'II', 'III'],
+												['Корпус', '2000 ед.', '3500 ед.'],
+												['Броня', '4%', '8%'],
+												['Щиты', '2 x 2500', '4 x 2500'],
+												['Грузовой отсек', '1500 ед.', '2800 ед.']
+											])
+											->toHtml();
+									?>
 
 								</div>
-
+<!--
 								<div class="column p-1 col-12 col-sm-12 col-md-12 col-lg-12">
 
-									<table class="settings__table settings__table_bordered">
-										<thead class="settings__table-header">
-											<tr>
-												<th>Оборудование</th>
-												<th width="1%"></th>
-												<th width="55px">Класс</th>
-												<th width="100px">Вес</th>
-												<th width="100px">Слот</th>
-											</tr>
-										</thead>
-										<tbody>
-
-											<tr>
-												<td>Генератор энергии</td>
-												<td class="text-center">
-													<i class="fa fa-info-circle"></i>
-												</td>
-												<td>I</td>
-												<td>100</td>
-												<td>Ядро</td>
-											</tr>
-
-											<tr>
-												<td>Щит - 2500</td>
-												<td class="text-center">
-													<i class="fa fa-info-circle"></i>
-												</td>
-												<td>I</td>
-												<td>100</td>
-												<td>Ядро</td>
-											</tr>
-
-											<tr>
-												<td>Щит - 2500</td>
-												<td class="text-center">
-													<i class="fa fa-info-circle"></i>
-												</td>
-												<td>I</td>
-												<td>100</td>
-												<td>Ядро</td>
-											</tr>
-
-											<tr>
-												<td>Лазерная пушка</td>
-												<td class="text-center">
-													<i class="fa fa-info-circle"></i>
-												</td>
-												<td>I</td>
-												<td>200</td>
-												<td>
+									<?/*=
+										Table::factory()
+											->addColumn('Оборудование', null, 2)
+											->addColumn('Класс')
+											->addColumn('Вес')
+											->addColumn('Слот')
+											->setData([
+												['Генератор энергии', '<i class="fa fa-info-circle"></i>', 'I', 100, 'Ядро'],
+												['Щит - 2500', '<i class="fa fa-info-circle"></i>', 'I', 100, 'Ядро'],
+												['Щит - 2500', '<i class="fa fa-info-circle"></i>', 'I', 100, 'Ядро'],
+												['Лазерная пушка', '<i class="fa fa-info-circle"></i>', 'I', 200, '
 													<select style="width: 80px">
 														<option>------ / ------</option>
 														<option>Левый слот</option>
 														<option>Правый слот</option>
 													</select>
-												</td>
-											</tr>
-
-											<tr>
-												<td>Лазерная пушка</td>
-												<td class="text-center">
-													<i class="fa fa-info-circle"></i>
-												</td>
-												<td>II</td>
-												<td>250</td>
-												<td>
+												'],
+												['Лазерная пушка', '<i class="fa fa-info-circle"></i>', 'I', 200, '
 													<select style="width: 80px">
 														<option>------ / ------</option>
 														<option>Левый слот</option>
 														<option>Правый слот</option>
 													</select>
-												</td>
-											</tr>
-
-										</tbody>
-									</table>
+												'],
+											])
+											->toHtml();
+									*/?>
 
 								</div>
 
 								<div class="column p-1 col-12 col-sm-12 col-md-12 col-lg-12">
 
-									<table class="settings__table settings__table_bordered">
-										<thead class="settings__table-header">
-											<tr>
-												<th>Боеприпасы</th>
-												<th width="1%"></th>
-												<th width="55px">Класс</th>
-												<th width="100px">Вес</th>
-												<th width="100px">Кол-во</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Ракета "К1"</td>
-												<td class="text-center">
-													<i class="fa fa-info-circle"></i>
-												</td>
-												<td>I</td>
-												<td>200</td>
-												<td>20</td>
-											</tr>
-											<tr>
-												<td>Ракета "К2"</td>
-												<td class="text-center">
-													<i class="fa fa-info-circle"></i>
-												</td>
-												<td>II</td>
-												<td>300</td>
-												<td>20</td>
-											</tr>
-										</tbody>
-									</table>
+									<?/*=
+										Table::factory()
+											->addColumn('Боеприпасы')
+											->addColumn('', '1%')
+											->addColumn('Класс', '55px')
+											->addColumn('Вес', '100px')
+											->addColumn('Кол-во', '100px')
+											->setData([
+												['Ракета "К1"', '<i class="fa fa-info-circle"></i>', 'I', 200, 20],
+												['Ракета "К2"', '<i class="fa fa-info-circle"></i>', 'II', 300, 20]
+											])
+											->toHtml();
+									*/?>
 
 								</div>
-
+								-->
 							</div>
 
 							<div class="row m-0 mt-1">
@@ -210,11 +123,13 @@ use yii\helpers\Url;
 				<div class="column p-1 col-12 col-sm-12 col-md-12 col-lg-6">
 
 					<?= $this->render('/app/layout/folding.php', ['title' => 'Карабли', 'render' => '/app/layout/ships.php']) ?>
-					<?= $this->render('/app/layout/folding.php', ['title' => 'Дрон', 'render' => '/app/layout/drones.php']) ?>
-					<?= $this->render('/app/layout/folding.php', ['title' => 'Оружие', 'render' => '/app/layout/weapons.php']) ?>
-					<?= $this->render('/app/layout/folding.php', ['title' => 'Ракеты', 'render' => '/app/layout/rockets.php']) ?>
-					<?= $this->render('/app/layout/folding.php', ['title' => 'Защитный щит', 'render' => '/app/layout/armors.php']) ?>
-					<?= $this->render('/app/layout/folding.php', ['title' => 'Генераторы энергии', 'render' => '/app/layout/energy.php']) ?>
+					<!--
+					<?/*= $this->render('/app/layout/folding.php', ['title' => 'Дрон', 'render' => '/app/layout/drones.php']) */?>
+					<?/*= $this->render('/app/layout/folding.php', ['title' => 'Оружие', 'render' => '/app/layout/weapons.php']) */?>
+					<?/*= $this->render('/app/layout/folding.php', ['title' => 'Ракеты', 'render' => '/app/layout/rockets.php']) */?>
+					<?/*= $this->render('/app/layout/folding.php', ['title' => 'Защитный щит', 'render' => '/app/layout/armors.php']) */?>
+					<?/*= $this->render('/app/layout/folding.php', ['title' => 'Генераторы энергии', 'render' => '/app/layout/energy.php']) */?>
+					-->
 
 				</div>
 
